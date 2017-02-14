@@ -211,4 +211,88 @@ class Bp_Shortcodes_Admin {
         return $output;
     }
 
+    public function bpsh_generate_members_listing($atts, $content = null) {
+        $sliderrandomid = rand();
+        $atts = shortcode_atts(array(
+            'type' => 'active', // active, popular,online
+            'page' => 1,
+            'per_page' => 20,
+            'max' => false,
+            'page_arg' => 'upage', // See https://buddypress.trac.wordpress.org/ticket/3679.
+            'include' => false, // Pass a user_id or a list (comma-separated or array) of user_ids to only show these users.
+            'exclude' => false, // Pass a user_id or a list (comma-separated or array) of user_ids to exclude these users.
+            'user_id' => false, // Pass a user_id to only show friends of this user.
+            'member_type' => false, // Can be a comma-separated list.
+            'member_type__in' => '',
+            'member_type__not_in' => '',
+            'search_terms' => false,
+            'meta_key' => false, // Only return users with this usermeta.
+            'meta_value' => false, // Only return users where the usermeta value matches. Requires meta_key.
+            'populate_extras' => true      // Fetch usermeta? Friend count, last active etc.
+                ), $atts);
+
+        ob_start();
+        ?> 
+        <div class="clearfix"></div>
+        <div id="buddypress">
+            <?php if (function_exists('bp_is_active')) { ?>  
+                <?php if ($atts['title']) { ?> 
+                    <h3 class="section-title"><span><?php echo $atts['title']; ?></span></h3>
+                    <?php
+                }
+                require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/bp-shortcodes-members-loop.php';
+            }
+            ?>
+        </div>
+        <div class="clearfix"></div>
+        <?php
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
+    }
+
+    public function bpsh_generate_group_listing($atts, $content = null) {
+        $sliderrandomid = rand();
+        $atts = shortcode_atts(array(
+            'type' => 'alphabetical', //popular, alphabetical, invites, single-group
+            'order' => 'DESC',
+            'orderby' => 'last_activity',
+            'page' => 1,
+            'per_page' => 20,
+            'max' => false,
+            'show_hidden' => false,
+            'page_arg' => 'grpage',
+            'user_id' => 1,
+            'slug' => false,
+            'search_terms' => false,
+            'group_type' => false,
+            'group_type__in' => '',
+            'group_type__not_in' => '',
+            'meta_query' => false,
+            'include' => false,
+            'exclude' => false,
+            'parent_id' => null,
+            'update_meta_cache' => true,
+            'update_admin_cache' => bp_is_groups_directory() || bp_is_user_groups(),
+                ), $atts);
+        ob_start();
+        ?> 
+        <div class="clearfix"></div>
+        <div id="buddypress">
+            <?php if (function_exists('bp_is_active')) { ?>  
+                <?php if ($atts['title']) { ?> 
+                    <h3 class="section-title"><span><?php echo $atts['title'] ?></span></h3>
+                    <?php
+                }
+                require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/bp-shortcodes-groups-loop.php';
+            }
+            ?>     
+        </div><!-- #buddypress -->
+        <div class="clearfix"></div>
+        <?php
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
+    }
+
 }

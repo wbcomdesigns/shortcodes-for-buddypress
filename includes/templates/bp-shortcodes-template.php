@@ -8,7 +8,7 @@
         </div>
         <div class="bpsh-admin-shortcode-content">
             <p>Here is the way you can specify options</p>
-            <p>
+            <p class="bpsh-admin-shortcode">
                 <strong>[activity-listing option_name=option_val option_name2=option_val2  and so on]</strong>
             </p>
             <p>The accepted parameters:-</p>
@@ -72,18 +72,20 @@
                 </li>
             </ul>
             <p>We will see some examples in a minute. Before that, I will just like to clarify that you can use the combination of above options to list any type of activity you want.</p>
-            <h3>Examples:-</h3>
-            <p>
-            <p>[activity-listing user_id=1]</p>
-            <p>
-            <p>[activity-listing per_page=10]</p>
-            <p>
-            <p>[activity-listing search_terms=’awesome’]</p>
-            <p>
-            <p>[activity-listing object=groups]</p>
-            <p>
-            <p>[activity-listing object=groups primary_id=2]</p>
-            <p>Well guys, It’s up to you to explore the possibilities.</p>
+            <div class="bpsh-admin-shortcode">
+                <h3>Examples:-</h3>
+
+                <p><b>[activity-listing user_id=1]</b></p>
+
+                <p><b>[activity-listing per_page=10]</b></p>
+
+                <p><b>[activity-listing search_terms='awesome']</b></p>
+
+                <p><b>[activity-listing object=groups]</b></p>
+
+                <p><b>[activity-listing object=groups primary_id=2]</b></p>
+            </div>
+            <p>Well guys, It’s up to you to explore the possibilities.</b></p>
         </div>
         <div class="bpsh-admin-shortcode-title"> Members Shortcodes :- </div>
         <div class="bpsh-admin-shortcode">
@@ -91,7 +93,7 @@
         </div>
         <div class="bpsh-admin-shortcode-title"> Group Shortcodes :- </div>
         <div class="bpsh-admin-shortcode">
-            <b>[group-listing]</b>
+            <b>[groups-listing]</b>
         </div>
     </div>
 </div>
