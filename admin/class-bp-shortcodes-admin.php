@@ -121,7 +121,7 @@ class Bp_Shortcodes_Admin {
             // Scope - pre-built activity filters for a user (friends/groups/favorites/mentions)
             'scope' => false,
             // Filtering
-            'user_id' => false, // user_id to filter on
+            'user_id' => 47, // user_id to filter on
             'object' => false, // object to filter on e.g. groups, profile, status, friends
             'action' => false, // action to filter on e.g. activity_update, new_forum_post, profile_updated
             'primary_id' => false, // object ID to filter on e.g. a group_id or forum_id or blog_id etc.
@@ -139,76 +139,18 @@ class Bp_Shortcodes_Admin {
                 function_exists('bp_is_group_home') && bp_is_group_home() )) {
             return '';
         }
-
-        //start buffering
-        ob_start();
         ?>
 
         <?php if ($atts['use_compat']) : ?>
             <div id="buddypress">
-            <?php endif; ?>
-
-            <?php if ($atts['title']) : ?>
-                <h3 class="activity-shortcode-title"><?php echo $atts['title']; ?></h3>
-            <?php endif; ?>
-
-            <?php do_action('bp_before_activity_loop'); ?>
-
-            <?php if ($atts['allow_posting'] && is_user_logged_in()) : ?>
-                <?php bp_locate_template(array('activity/post-form.php'), true); ?>
-            <?php endif; ?>
-
-            <?php if (bp_has_activities($atts)) : ?>
-
-                <div class="<?php echo esc_attr($atts['container_class']); ?> <?php if (!$atts['display_comments']) : ?> hide-activity-comments<?php endif; ?> shortcode-activity-stream">
-
-                    <?php if (empty($_POST['page'])) : ?>
-                        <ul id="activity-stream" class="activity-list item-list">
-                        <?php endif; ?>
-
-                        <?php while (bp_activities()) : bp_the_activity(); ?>
-                            <?php bp_get_template_part('activity/entry'); ?>
-                        <?php endwhile; ?>
-
-                        <?php if ($atts['load_more'] && bp_activity_has_more_items()) : ?>
-                            <li class="load-more">
-                                <a href="<?php bp_activity_load_more_link() ?>"><?php _e('Load More', 'buddypress'); ?></a>
-                            </li>
-                        <?php endif; ?>
-
-                        <?php if (empty($_POST['page'])) : ?>
-                        </ul>
-                    <?php endif; ?>
-
-                    <?php if ($atts['pagination'] && !$atts['load_more']) : ?>
-                        <div class="pagination">
-                            <div class="pag-count"><?php bp_activity_pagination_count(); ?></div>
-                            <div class="pagination-links"><?php bp_activity_pagination_links(); ?></div>
-                        </div>
-                    <?php endif; ?>
-
-                </div>
-
-            <?php else : ?>
-                <div id="message" class="info">
-                    <p><?php _e('Sorry, there was no activity found. Please try a different filter.', 'buddypress'); ?></p>
-                </div>
-            <?php endif; ?>
-
-            <?php do_action('bp_after_activity_loop'); ?>
-
-            <form action="" name="activity-loop-form" id="activity-loop-form" method="post">
-                <?php wp_nonce_field('activity_filter', '_wpnonce_activity_filter'); ?>
-            </form>
-
-            <?php if ($atts['use_compat']) : ?>
+                <?php
+            endif;
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/bp-shortcodes-activity-loop.php';
+            if ($atts['use_compat']) :
+                ?>
             </div>
-        <?php endif; ?>
-
-        <?php
-        $output = ob_get_clean();
-
-        return $output;
+            <?php
+        endif;
     }
 
     public function bpsh_generate_members_listing($atts, $content = null) {
@@ -230,11 +172,20 @@ class Bp_Shortcodes_Admin {
             'meta_value' => false, // Only return users where the usermeta value matches. Requires meta_key.
             'populate_extras' => true      // Fetch usermeta? Friend count, last active etc.
                 ), $atts);
-
-        ob_start();
         ?> 
         <div class="clearfix"></div>
         <div id="buddypress">
+            <div class="bpsh-members-filter">
+                <label for="members-order-by"><?php _e('Order By:', 'buddypress'); ?></label>
+                <select id="activity-filter-by">
+                    <option value="-1"><?php _e('&mdash; Everything &mdash;', 'buddypress'); ?></option>
+
+                    <?php bp_activity_show_filters('members'); ?>
+
+                    <?php do_action('bp_activity_filter_options'); ?>
+
+                </select>
+            </div>
             <?php if (function_exists('bp_is_active')) { ?>  
                 <?php if ($atts['title']) { ?> 
                     <h3 class="section-title"><span><?php echo $atts['title']; ?></span></h3>
@@ -246,9 +197,6 @@ class Bp_Shortcodes_Admin {
         </div>
         <div class="clearfix"></div>
         <?php
-        $content = ob_get_contents();
-        ob_end_clean();
-        return $content;
     }
 
     public function bpsh_generate_group_listing($atts, $content = null) {
@@ -262,7 +210,7 @@ class Bp_Shortcodes_Admin {
             'max' => false,
             'show_hidden' => false,
             'page_arg' => 'grpage',
-            'user_id' => 1,
+            'user_id' => false,
             'slug' => false,
             'search_terms' => false,
             'group_type' => false,
@@ -275,7 +223,6 @@ class Bp_Shortcodes_Admin {
             'update_meta_cache' => true,
             'update_admin_cache' => bp_is_groups_directory() || bp_is_user_groups(),
                 ), $atts);
-        ob_start();
         ?> 
         <div class="clearfix"></div>
         <div id="buddypress">
@@ -290,9 +237,6 @@ class Bp_Shortcodes_Admin {
         </div><!-- #buddypress -->
         <div class="clearfix"></div>
         <?php
-        $content = ob_get_contents();
-        ob_end_clean();
-        return $content;
     }
 
 }
