@@ -92,6 +92,7 @@ class Bp_Shortcodes_Admin {
          * class.
          */
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/bp-shortcodes-admin.js', array('jquery'), $this->version, false);
+        wp_localize_script($this->plugin_name, 'bpsh_ajax_obj', array('ajaxurl' => admin_url('admin-ajax.php')));
     }
 
     public function bpsh_add_option_page() {
@@ -145,7 +146,7 @@ class Bp_Shortcodes_Admin {
             <div id="buddypress">
                 <?php
             endif;
-            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/bp-shortcodes-activity-loop.php';
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/activity/bp-shortcodes-activity-loop.php';
             if ($atts['use_compat']) :
                 ?>
             </div>
@@ -154,7 +155,6 @@ class Bp_Shortcodes_Admin {
     }
 
     public function bpsh_generate_members_listing($atts, $content = null) {
-        $sliderrandomid = rand();
         $atts = shortcode_atts(array(
             'type' => 'active', // active, popular,online
             'page' => 1,
@@ -163,38 +163,26 @@ class Bp_Shortcodes_Admin {
             'page_arg' => 'upage', // See https://buddypress.trac.wordpress.org/ticket/3679.
             'include' => false, // Pass a user_id or a list (comma-separated or array) of user_ids to only show these users.
             'exclude' => false, // Pass a user_id or a list (comma-separated or array) of user_ids to exclude these users.
-            'user_id' => false, // Pass a user_id to only show friends of this user.
+            'user_id' => 1, // Pass a user_id to only show friends of this user.
             'member_type' => false, // Can be a comma-separated list.
             'member_type__in' => '',
             'member_type__not_in' => '',
             'search_terms' => false,
+            'use_compat' => bp_use_theme_compat_with_current_theme(),
             'meta_key' => false, // Only return users with this usermeta.
             'meta_value' => false, // Only return users where the usermeta value matches. Requires meta_key.
             'populate_extras' => true      // Fetch usermeta? Friend count, last active etc.
                 ), $atts);
-        ?> 
-        <div class="clearfix"></div>
-        <div id="buddypress">
-            <div class="bpsh-members-filter">
-                <label for="members-order-by"><?php _e('Order By:', 'buddypress'); ?></label>
-                <select id="activity-filter-by">
-                    <option value="-1"><?php _e('&mdash; Everything &mdash;', 'buddypress'); ?></option>
 
-                    <?php bp_activity_show_filters('members'); ?>
-
-                    <?php do_action('bp_activity_filter_options'); ?>
-
-                </select>
-            </div>
-            <?php if (function_exists('bp_is_active')) { ?>  
-                <?php if ($atts['title']) { ?> 
-                    <h3 class="section-title"><span><?php echo $atts['title']; ?></span></h3>
-                    <?php
-                }
-                require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/bp-shortcodes-members-loop.php';
+        if (function_exists('bp_is_active')) {
+            ?>  
+            <?php if ($atts['title']) { ?> 
+                <h3 class="section-title"><span><?php echo $atts['title']; ?></span></h3>
+                <?php
             }
-            ?>
-        </div>
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/members/bp-shortcodes-members.php';
+        }
+        ?>
         <div class="clearfix"></div>
         <?php
     }
@@ -217,26 +205,47 @@ class Bp_Shortcodes_Admin {
             'group_type__in' => '',
             'group_type__not_in' => '',
             'meta_query' => false,
+            'use_compat' => bp_use_theme_compat_with_current_theme(),
             'include' => false,
             'exclude' => false,
             'parent_id' => null,
             'update_meta_cache' => true,
             'update_admin_cache' => bp_is_groups_directory() || bp_is_user_groups(),
                 ), $atts);
-        ?> 
-        <div class="clearfix"></div>
-        <div id="buddypress">
+        if ($atts['use_compat']) :
+            ?>
+            <div id="buddypress">
+                <?php
+            endif;
+            ?>
             <?php if (function_exists('bp_is_active')) { ?>  
                 <?php if ($atts['title']) { ?> 
                     <h3 class="section-title"><span><?php echo $atts['title'] ?></span></h3>
                     <?php
                 }
-                require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/bp-shortcodes-groups-loop.php';
+                require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/groups/bp-shortcodes-groups-loop.php';
             }
-            ?>     
-        </div><!-- #buddypress -->
+
+            if ($atts['use_compat']) :
+                ?>
+            </div>
+            <?php
+        endif;
+        ?>
         <div class="clearfix"></div>
         <?php
+    }
+
+    function bpsh_bp_dtheme_ajax_querystring($query_string, $object) {
+
+        /* Now pass the querystring to override default values. */
+        $query_string .= '&type=active&action=active&include=' . $list_of_members . '&page=1';
+
+        return $query_string;
+    }
+
+    function bpsh_members_filter() {
+        add_filter('bp_dtheme_ajax_querystring', 'bpsh_bp_dtheme_ajax_querystring', 11, 2);
     }
 
 }

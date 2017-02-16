@@ -15,10 +15,7 @@ do_action( 'bp_before_activity_loop' ); ?>
 
 <?php 
 
-$serialized = json_encode($atts);
-$data = 'activity=' . rawurlencode($serialized);
-
-if ( bp_has_activities( bp_ajax_querystring( $data ) ) ) :
+if ( bp_has_activities( $atts ) ) :
    
     ?>
     

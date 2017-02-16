@@ -17,9 +17,10 @@ do_action( 'bp_before_members_loop' ); ?>
 
 <?php if ( bp_get_current_member_type() ) : ?>
 	<p class="current-member-type"><?php bp_current_member_type_message() ?></p>
-<?php endif; ?>
+<?php endif; 
+?>
 
-<?php if ( bp_has_members( bp_ajax_querystring( 'bpsh_members' ) ) ) : ?>
+<?php if ( bp_has_members( $atts ) ) : ?>
 
 	<div id="pag-top" class="pagination">
 
