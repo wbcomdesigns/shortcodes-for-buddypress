@@ -104,10 +104,10 @@ class Bp_Shortcodes_Admin {
     }
 
     public function bpsh_generate_activity_listing($atts, $content = null) {
-
+        $inc_atts = $atts;
         //allow to use all those args awesome!
         $atts = shortcode_atts(array(
-            'title' => 'Latest Activity', //title of the section
+            'title' => '', //title of the section
             'pagination' => 1, //show or not
             'load_more' => 0,
             'display_comments' => 'threaded',
@@ -122,7 +122,7 @@ class Bp_Shortcodes_Admin {
             // Scope - pre-built activity filters for a user (friends/groups/favorites/mentions)
             'scope' => false,
             // Filtering
-            'user_id' => 47, // user_id to filter on
+            'user_id' => false, // user_id to filter on
             'object' => false, // object to filter on e.g. groups, profile, status, friends
             'action' => false, // action to filter on e.g. activity_update, new_forum_post, profile_updated
             'primary_id' => false, // object ID to filter on e.g. a group_id or forum_id or blog_id etc.
@@ -134,28 +134,70 @@ class Bp_Shortcodes_Admin {
             'container_class' => 'activity', //default container,
             'hide_on_activity' => 1, //hide on user and group activity pages
                 ), $atts);
+        $bpsh_query = http_build_query($inc_atts, '', '&amp;');
 
         //hide on user activity, activity directory and group activity
         if ($atts['hide_on_activity'] && ( function_exists('bp_is_activity_component') && bp_is_activity_component() ||
                 function_exists('bp_is_group_home') && bp_is_group_home() )) {
             return '';
         }
-        ?>
-
-        <?php if ($atts['use_compat']) : ?>
-            <div id="buddypress">
+        if (function_exists('bp_is_active')) {
+            ?>  
+            <?php if ($atts['title']) { ?> 
+                <h3 class="section-title"><span><?php echo $atts['title']; ?></span></h3>
                 <?php
-            endif;
-            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/activity/bp-shortcodes-activity-loop.php';
-            if ($atts['use_compat']) :
-                ?>
-            </div>
-            <?php
-        endif;
+            }
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/activity/bp-shortcodes-activity.php';
+        }
+        ?>
+        <div class="clearfix"></div>
+        <?php
     }
 
     public function bpsh_generate_members_listing($atts, $content = null) {
+        $inc_atts = $atts;
+        if ($atts['exclude_member_role']) {
+            if (strpos($atts['exclude_member_role'], ',') !== false) {
+                $exclude_roles = explode(',', $atts['exclude_member_role']);
+            } else {
+                $exclude_roles = $atts['exclude_member_role'];
+            }
+            if (strpos($atts['exclude'], ',') !== false) {
+                $exclude_ids = explode(',', $atts['exclude']);
+            } else {
+                $exclude_ids = array($atts['exclude']);
+            }
+            $users_data = get_users(array('role__in' => $exclude_roles));
+            $uid_collection = array();
+            foreach ($users_data as $key => $users) {
+                $uid_collection[] = $users->ID;
+            }
+            $u = array_unique(array_merge($uid_collection, $exclude_ids));
+            $inc_atts['exclude'] = rtrim(implode(',', $u),',');
+            unset($inc_atts['exclude_member_role']);
+        }
+        if ($atts['include_member_role']) {
+            if (strpos($atts['include_member_role'], ',') !== false) {
+                $exclude_roles = explode(',', $atts['include_member_role']);
+            } else {
+                $exclude_roles = $atts['include_member_role'];
+            }
+            if (strpos($atts['include'], ',') !== false) {
+                $exclude_ids = explode(',', $atts['include']);
+            } else {
+                $exclude_ids = array($atts['include']);
+            }
+            $users_data = get_users(array('role__in' => $exclude_roles));
+            $uid_collection = array();
+            foreach ($users_data as $key => $users) {
+                $uid_collection[] = $users->ID;
+            }
+            $u = array_unique(array_merge($uid_collection, $exclude_ids));
+            $inc_atts['include'] = rtrim(implode(',', $u),',');
+            unset($inc_atts['include_member_role']);
+        }
         $atts = shortcode_atts(array(
+            'title' => '',
             'type' => 'active', // active, popular,online
             'page' => 1,
             'per_page' => 20,
@@ -163,8 +205,10 @@ class Bp_Shortcodes_Admin {
             'page_arg' => 'upage', // See https://buddypress.trac.wordpress.org/ticket/3679.
             'include' => false, // Pass a user_id or a list (comma-separated or array) of user_ids to only show these users.
             'exclude' => false, // Pass a user_id or a list (comma-separated or array) of user_ids to exclude these users.
-            'user_id' => 1, // Pass a user_id to only show friends of this user.
+            'user_id' => array(), // Pass a user_id to only show friends of this user.
             'member_type' => false, // Can be a comma-separated list.
+            'include_member_role' => '', // Can be a comma-separated list.
+            'exclude_member_role' => '', // Can be a comma-separated list.
             'member_type__in' => '',
             'member_type__not_in' => '',
             'search_terms' => false,
@@ -174,6 +218,7 @@ class Bp_Shortcodes_Admin {
             'populate_extras' => true      // Fetch usermeta? Friend count, last active etc.
                 ), $atts);
 
+        $bpsh_query = http_build_query($inc_atts, '', '&amp;');
         if (function_exists('bp_is_active')) {
             ?>  
             <?php if ($atts['title']) { ?> 
@@ -187,9 +232,25 @@ class Bp_Shortcodes_Admin {
         <?php
     }
 
+    public function bpsh_get_user_roles_by_user_id($user_id) {
+        $user = get_userdata($user_id);
+        return empty($user) ? array() : $user->roles;
+    }
+
+    public function bpsh_is_user_in_role($user_id, $roles) {
+        if (!is_array($roles)) {
+            return in_array($roles, $this->bpsh_get_user_roles_by_user_id($user_id));
+        } else {
+            foreach ($roles as $key => $r) {
+                
+            }
+        }
+    }
+
     public function bpsh_generate_group_listing($atts, $content = null) {
-        $sliderrandomid = rand();
+        $inc_atts = $atts;
         $atts = shortcode_atts(array(
+            'title' => '',
             'type' => 'alphabetical', //popular, alphabetical, invites, single-group
             'order' => 'DESC',
             'orderby' => 'last_activity',
@@ -212,40 +273,25 @@ class Bp_Shortcodes_Admin {
             'update_meta_cache' => true,
             'update_admin_cache' => bp_is_groups_directory() || bp_is_user_groups(),
                 ), $atts);
-        if ($atts['use_compat']) :
-            ?>
-            <div id="buddypress">
+        $bpsh_query = http_build_query($inc_atts, '', '&amp;');
+        ?>
+        <?php if (function_exists('bp_is_active')) { ?>  
+            <?php if ($atts['title']) { ?> 
+                <h3 class="section-title"><span><?php echo $atts['title'] ?></span></h3>
                 <?php
-            endif;
-            ?>
-            <?php if (function_exists('bp_is_active')) { ?>  
-                <?php if ($atts['title']) { ?> 
-                    <h3 class="section-title"><span><?php echo $atts['title'] ?></span></h3>
-                    <?php
-                }
-                require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/groups/bp-shortcodes-groups-loop.php';
             }
-
-            if ($atts['use_compat']) :
-                ?>
-            </div>
-            <?php
-        endif;
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/groups/bp-shortcodes-groups.php';
+        }
         ?>
         <div class="clearfix"></div>
         <?php
     }
 
-    function bpsh_bp_dtheme_ajax_querystring($query_string, $object) {
+    function my_body_classes($classes) {
 
-        /* Now pass the querystring to override default values. */
-        $query_string .= '&type=active&action=active&include=' . $list_of_members . '&page=1';
+        $classes[] = 'bpsh-buddypress';
 
-        return $query_string;
-    }
-
-    function bpsh_members_filter() {
-        add_filter('bp_dtheme_ajax_querystring', 'bpsh_bp_dtheme_ajax_querystring', 11, 2);
+        return $classes;
     }
 
 }

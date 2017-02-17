@@ -35,18 +35,9 @@ do_action('bp_before_directory_members_content');
 ?>
 
 <?php /* Backward compatibility for inline search form. Use template part instead. */ ?>
-<?php if (has_filter('bp_directory_members_search_form')) : ?>
-
-    <div id="members-dir-search" class="dir-search" role="search">
-        <?php bp_directory_members_search_form(); ?>
-    </div><!-- #members-dir-search -->
-
-<?php else: ?>
-
-    <?php bp_get_template_part('common/search/dir-search-form'); ?>
-
-<?php endif; ?>
-
+<?php
+require_once plugin_dir_path(dirname(__FILE__)) . 'members/search.php';
+?>
 <?php
 /**
  * Fires before the display of the members list tabs.
@@ -71,7 +62,7 @@ do_action('bp_before_directory_members_tabs');
 
             <li id="members-order-select" class="last filter">
                 <label for="bpsh-members-order-by"><?php _e('Order By:', 'buddypress'); ?></label>
-                <select id="bpsh-members-order-by">
+                <select id="members-order-by">
                     <option value="active"><?php _e('Last Active', 'buddypress'); ?></option>
                     <option value="newest"><?php _e('Newest Registered', 'buddypress'); ?></option>
 
@@ -110,10 +101,19 @@ do_action('bp_before_directory_members_tabs');
 
         <?php if (bp_get_current_member_type()) : ?>
             <p class="current-member-type"><?php bp_current_member_type_message() ?></p>
-        <?php endif;
-        ?>
+            <?php
+        endif;
+        if (!empty($inc_atts)) {
+            $bpsh_query = '&' . $bpsh_query;
+        }
+//        echo $bpsh_query;die;
+//        add_action('bp_dtheme_ajax_querystring', function ($qs, $object, $filter, $scope) use ($bpsh_query) {
+//            $qs .= $bpsh_query;
+//            return $qs;
+//        });
 
-        <?php if (bp_has_members($atts)) : ?>
+        if (bp_has_members(bp_ajax_querystring('members') . $bpsh_query)) :
+            ?>
 
             <div id="pag-top" class="pagination">
 
@@ -142,7 +142,9 @@ do_action('bp_before_directory_members_tabs');
 
             <ul id="members-list" class="item-list" aria-live="assertive" aria-relevant="all">
 
-                <?php while (bp_members()) : bp_the_member(); ?>
+                <?php
+                while (bp_members()) : bp_the_member();
+                    ?>
 
                     <li <?php bp_member_class(); ?>>
                         <div class="item-avatar">

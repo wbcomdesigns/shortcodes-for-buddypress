@@ -1,4 +1,4 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
+.bpsh-buddypress #page a {
+    box-shadow: none;
+    text-decoration: none !important;
+}

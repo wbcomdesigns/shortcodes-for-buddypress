@@ -154,8 +154,9 @@ class Bp_Shortcodes {
         $this->loader->add_shortcode('activity-listing', $plugin_admin, 'bpsh_generate_activity_listing');
         $this->loader->add_shortcode("members-listing", $plugin_admin, "bpsh_generate_members_listing");
         $this->loader->add_shortcode("groups-listing", $plugin_admin, "bpsh_generate_group_listing");
-        $this->loader->add_action('wp_ajax_members_filter', $plugin_admin, 'bpsh_members_filter');
-        $this->loader->add_action('wp_ajax_nopriv_members_filter', $plugin_admin, 'bpsh_members_filter');
+        $this->loader->add_filter( 'body_class', $plugin_admin, 'my_body_classes' );
+//        $this->loader->add_action('wp_ajax_members_filter', $plugin_admin, 'bpsh_members_filter');
+//        $this->loader->add_action('wp_ajax_nopriv_members_filter', $plugin_admin, 'bpsh_members_filter');
     }
 
 
