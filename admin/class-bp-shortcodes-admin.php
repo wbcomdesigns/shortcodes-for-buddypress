@@ -92,7 +92,6 @@ class Bp_Shortcodes_Admin {
          * class.
          */
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/bp-shortcodes-admin.js', array('jquery'), $this->version, false);
-        wp_localize_script($this->plugin_name, 'bpsh_ajax_obj', array('ajaxurl' => admin_url('admin-ajax.php')));
     }
 
     public function bpsh_add_option_page() {
@@ -134,8 +133,11 @@ class Bp_Shortcodes_Admin {
             'container_class' => 'activity', //default container,
             'hide_on_activity' => 1, //hide on user and group activity pages
                 ), $atts);
-        $bpsh_query = http_build_query($inc_atts, '', '&amp;');
-
+        $bpsh_query = build_query($inc_atts);
+        if (!empty($bpsh_query)) {
+            $bpsh_query = '&' . $bpsh_query;
+        }
+        update_option('bpsh_queryargs', $bpsh_query);
         //hide on user activity, activity directory and group activity
         if ($atts['hide_on_activity'] && ( function_exists('bp_is_activity_component') && bp_is_activity_component() ||
                 function_exists('bp_is_group_home') && bp_is_group_home() )) {
@@ -173,7 +175,7 @@ class Bp_Shortcodes_Admin {
                 $uid_collection[] = $users->ID;
             }
             $u = array_unique(array_merge($uid_collection, $exclude_ids));
-            $inc_atts['exclude'] = rtrim(implode(',', $u),',');
+            $inc_atts['exclude'] = rtrim(implode(',', $u), ',');
             unset($inc_atts['exclude_member_role']);
         }
         if ($atts['include_member_role']) {
@@ -193,7 +195,7 @@ class Bp_Shortcodes_Admin {
                 $uid_collection[] = $users->ID;
             }
             $u = array_unique(array_merge($uid_collection, $exclude_ids));
-            $inc_atts['include'] = rtrim(implode(',', $u),',');
+            $inc_atts['include'] = rtrim(implode(',', $u), ',');
             unset($inc_atts['include_member_role']);
         }
         $atts = shortcode_atts(array(
@@ -218,7 +220,11 @@ class Bp_Shortcodes_Admin {
             'populate_extras' => true      // Fetch usermeta? Friend count, last active etc.
                 ), $atts);
 
-        $bpsh_query = http_build_query($inc_atts, '', '&amp;');
+        $bpsh_query = build_query($inc_atts);
+        if (!empty($bpsh_query)) {
+            $bpsh_query = '&' . $bpsh_query;
+        }
+        update_option('bpsh_queryargs', $bpsh_query);
         if (function_exists('bp_is_active')) {
             ?>  
             <?php if ($atts['title']) { ?> 
@@ -273,7 +279,11 @@ class Bp_Shortcodes_Admin {
             'update_meta_cache' => true,
             'update_admin_cache' => bp_is_groups_directory() || bp_is_user_groups(),
                 ), $atts);
-        $bpsh_query = http_build_query($inc_atts, '', '&amp;');
+        $bpsh_query = build_query($inc_atts);
+        if (!empty($bpsh_query)) {
+            $bpsh_query = '&' . $bpsh_query;
+        }
+        update_option('bpsh_queryargs', $bpsh_query);
         ?>
         <?php if (function_exists('bp_is_active')) { ?>  
             <?php if ($atts['title']) { ?> 
@@ -287,11 +297,8 @@ class Bp_Shortcodes_Admin {
         <?php
     }
 
-    function my_body_classes($classes) {
-
+    public function bpsh_body_classes($classes) {
         $classes[] = 'bpsh-buddypress';
-
         return $classes;
     }
-
 }

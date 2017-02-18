@@ -18,10 +18,9 @@
  * Text Domain:       bp-shortcodes
  * Domain Path:       /languages
  */
-
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if (!defined('WPINC')) {
+    die;
 }
 
 /**
@@ -29,8 +28,8 @@ if ( ! defined( 'WPINC' ) ) {
  * This action is documented in includes/class-bp-shortcodes-activator.php
  */
 function activate_bp_shortcodes() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-shortcodes-activator.php';
-	Bp_Shortcodes_Activator::activate();
+    require_once plugin_dir_path(__FILE__) . 'includes/class-bp-shortcodes-activator.php';
+    Bp_Shortcodes_Activator::activate();
 }
 
 /**
@@ -38,18 +37,18 @@ function activate_bp_shortcodes() {
  * This action is documented in includes/class-bp-shortcodes-deactivator.php
  */
 function deactivate_bp_shortcodes() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bp-shortcodes-deactivator.php';
-	Bp_Shortcodes_Deactivator::deactivate();
+    require_once plugin_dir_path(__FILE__) . 'includes/class-bp-shortcodes-deactivator.php';
+    Bp_Shortcodes_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_bp_shortcodes' );
-register_deactivation_hook( __FILE__, 'deactivate_bp_shortcodes' );
+register_activation_hook(__FILE__, 'activate_bp_shortcodes');
+register_deactivation_hook(__FILE__, 'deactivate_bp_shortcodes');
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-bp-shortcodes.php';
+require plugin_dir_path(__FILE__) . 'includes/class-bp-shortcodes.php';
 
 /**
  * Begins execution of the plugin.
@@ -62,8 +61,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-bp-shortcodes.php';
  */
 function run_bp_shortcodes() {
 
-	$plugin = new Bp_Shortcodes();
-	$plugin->run();
-
+    $plugin = new Bp_Shortcodes();
+    $plugin->run();
 }
+
 run_bp_shortcodes();

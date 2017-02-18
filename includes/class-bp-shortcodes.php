@@ -147,18 +147,14 @@ class Bp_Shortcodes {
     private function define_admin_hooks() {
 
         $plugin_admin = new Bp_Shortcodes_Admin($this->get_plugin_name(), $this->get_version());
-
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
         $this->loader->add_action('admin_menu', $plugin_admin, 'bpsh_add_option_page');
         $this->loader->add_shortcode('activity-listing', $plugin_admin, 'bpsh_generate_activity_listing');
         $this->loader->add_shortcode("members-listing", $plugin_admin, "bpsh_generate_members_listing");
         $this->loader->add_shortcode("groups-listing", $plugin_admin, "bpsh_generate_group_listing");
-        $this->loader->add_filter( 'body_class', $plugin_admin, 'my_body_classes' );
-//        $this->loader->add_action('wp_ajax_members_filter', $plugin_admin, 'bpsh_members_filter');
-//        $this->loader->add_action('wp_ajax_nopriv_members_filter', $plugin_admin, 'bpsh_members_filter');
+        $this->loader->add_filter('body_class', $plugin_admin, 'bpsh_body_classes');
     }
-
 
     /**
      * Register all of the hooks related to the public-facing functionality
@@ -168,11 +164,14 @@ class Bp_Shortcodes {
      * @access   private
      */
     private function define_public_hooks() {
-
         $plugin_public = new Bp_Shortcodes_Public($this->get_plugin_name(), $this->get_version());
-
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+        $this->loader->add_action('bp_before_members_loop', $plugin_public, 'bp_follow_blogs_set_activity_scope_on_user_activity');
+        $this->loader->add_action('wp_ajax_bpsh_members_filter', $plugin_public, 'bpsh_legacy_theme_object_template_loader');
+        $this->loader->add_action('wp_ajax_nopriv_bpsh_members_filter', $plugin_public, 'bpsh_legacy_theme_object_template_loader');
+        $this->loader->add_action('wp_ajax_bpsh_groups_filter', $plugin_public, 'bpsh_legacy_theme_object_template_loader');
+        $this->loader->add_action('wp_ajax_nopriv_bpsh_groups_filter', $plugin_public, 'bpsh_legacy_theme_object_template_loader');
     }
 
     /**
