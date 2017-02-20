@@ -128,10 +128,6 @@ class Bp_Shortcodes_Public {
         if (!bp_current_action())
             bp_update_is_directory(true, bp_current_component());
 
-//        if (!$object === 'members') {
-//            setcookie('bp-members-filter', ' ');
-//            setcookie('bp-members-scope', ' ');
-//        }
         add_filter('bp_ajax_querystring', function($qs) {
             return $qs .= get_option('bpsh_queryargs');
         });
@@ -147,4 +143,63 @@ class Bp_Shortcodes_Public {
 
         exit();
     }
+
+    /**
+     * Load the activity loop template when activity is requested via AJAX.
+     *
+     * @return string JSON object containing 'contents' (output of the template loop
+     * for the Activity component) and 'feed_url' (URL to the relevant RSS feed).
+     *
+     * @since 1.2.0
+     */
+    public function bpsh_activity_widget_filter() {
+        // Bail if not a POST action.
+        if ('POST' !== strtoupper($_SERVER['REQUEST_METHOD']))
+            return;
+
+        $scope = '';
+        if (!empty($_POST['scope']))
+            $scope = $_POST['scope'];
+
+        // We need to calculate and return the feed URL for each scope.
+        switch ($scope) {
+            case 'friends':
+                $feed_url = bp_loggedin_user_domain() . bp_get_activity_slug() . '/friends/feed/';
+                break;
+            case 'groups':
+                $feed_url = bp_loggedin_user_domain() . bp_get_activity_slug() . '/groups/feed/';
+                break;
+            case 'favorites':
+                $feed_url = bp_loggedin_user_domain() . bp_get_activity_slug() . '/favorites/feed/';
+                break;
+            case 'mentions':
+                $feed_url = bp_loggedin_user_domain() . bp_get_activity_slug() . '/mentions/feed/';
+                bp_activity_clear_new_mentions(bp_loggedin_user_id());
+                break;
+            default:
+                $feed_url = home_url(bp_get_activity_root_slug() . '/feed/');
+                break;
+        }
+        add_filter('bp_ajax_querystring', function($qs) {
+            return $qs .= get_option('bpsh_queryargs');
+        });
+        // Buffer the loop in the template to a var for JS to spit out.
+        ob_start();
+        bp_get_template_part('activity/activity-loop');
+        $result['contents'] = ob_get_contents();
+
+        /**
+         * Filters the feed URL for when activity is requested via AJAX.
+         *
+         * @since 1.7.0
+         *
+         * @param string $feed_url URL for the feed to be used.
+         * @param string $scope    Scope for the activity request.
+         */
+        $result['feed_url'] = apply_filters('bp_legacy_theme_activity_feed_url', $feed_url, $scope);
+        ob_end_clean();
+
+        exit(json_encode($result));
+    }
+
 }

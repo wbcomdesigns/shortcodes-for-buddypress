@@ -50,7 +50,7 @@ do_action('bp_before_directory_members_tabs');
 <form action="" method="post" id="members-directory-form" class="dir-form">
 
     <div class="item-list-tabs" id="subnav" aria-label="<?php esc_attr_e('Members directory secondary navigation', 'buddypress'); ?>" role="navigation">
-        <ul>
+        <div class="bpsh-order-select">
             <?php
             /**
              * Fires inside the members directory member sub-types.
@@ -60,8 +60,8 @@ do_action('bp_before_directory_members_tabs');
             do_action('bp_members_directory_member_sub_types');
             ?>
 
-            <li id="members-order-select" class="last bpsh-filter">
-                <label for="bpsh-members-order-by"><?php _e('Order By:', 'buddypress'); ?></label>
+            <div id="bpsh-members-order-select" class="last bpsh-filter bpsh-dropdown">
+                <label for="members-order-by"><?php _e('Order By:', 'buddypress'); ?></label>
                 <select id="members-order-by">
                     <option value="active"><?php _e('Last Active', 'buddypress'); ?></option>
                     <option value="newest"><?php _e('Newest Registered', 'buddypress'); ?></option>
@@ -79,8 +79,8 @@ do_action('bp_before_directory_members_tabs');
                     do_action('bp_members_directory_order_options');
                     ?>
                 </select>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 
     <h2 class="bp-screen-reader-text"><?php

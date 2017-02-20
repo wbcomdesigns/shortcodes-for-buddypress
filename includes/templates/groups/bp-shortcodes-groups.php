@@ -48,7 +48,7 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
     </div>
 
     <div class="item-list-tabs" id="subnav" aria-label="<?php esc_attr_e('Groups directory secondary navigation', 'buddypress'); ?>" role="navigation">
-        <ul>
+        <div class="bpsh-order-select">
             <?php
             /**
              * Fires inside the groups directory group types.
@@ -58,7 +58,7 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
             do_action('bp_groups_directory_group_types');
             ?>
 
-            <li id="groups-order-select" class="last bpsh-filter">
+            <div id="groups-order-select" class="last bpsh-filter bpsh-dropdown">
 
                 <label for="groups-order-by"><?php _e('Order By:', 'buddypress'); ?></label>
 
@@ -77,8 +77,8 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
                     do_action('bp_groups_directory_order_options');
                     ?>
                 </select>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 
     <h2 class="bp-screen-reader-text"><?php

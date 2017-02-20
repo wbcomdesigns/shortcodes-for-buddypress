@@ -172,6 +172,8 @@ class Bp_Shortcodes {
         $this->loader->add_action('wp_ajax_nopriv_bpsh_members_filter', $plugin_public, 'bpsh_legacy_theme_object_template_loader');
         $this->loader->add_action('wp_ajax_bpsh_groups_filter', $plugin_public, 'bpsh_legacy_theme_object_template_loader');
         $this->loader->add_action('wp_ajax_nopriv_bpsh_groups_filter', $plugin_public, 'bpsh_legacy_theme_object_template_loader');
+        $this->loader->add_action('wp_ajax_bpsh_activity_widget_filter', $plugin_public, 'bpsh_activity_widget_filter');
+        $this->loader->add_action('wp_ajax_nopriv_bpsh_activity_widget_filter', $plugin_public, 'bpsh_activity_widget_filter');
     }
 
     /**

@@ -30,9 +30,26 @@
      */
     jq(function () {
         /* When the filter select box is changed re-query */
-        jq('li.bpsh-filter select').change(function () {
+        jq('.bpsh-order-select .bpsh-filter select').change(function () {
             var a, b, c, d, e, f, g, h;
             return a = jq(jq(".item-list-tabs li.selected").length ? ".item-list-tabs li.selected" : this), b = a.attr("id").split("-"), c = b[0], d = b[1], e = jq(this).val(), f = !1, g = null, jq(".dir-search input").length && (f = jq(".dir-search input").val()), h = jq(".groups-members-search input"), h.length && (f = h.val(), c = "members", d = "groups"), "members" === c && "groups" === d && (c = "group_members", g = "groups/single/members"), "friends" === c && (c = "members"), bpsh_filter_request(c, e, d, "div." + c, f, 1, jq.cookie("bp-" + c + "-extras"), null, g), !1
+        });
+
+        /* Activity filter select */
+        jq('#bpsh-activity-filter-select select').change(function () {
+            var selected_tab = jq('div.activity-type-tabs li.selected'),
+                    filter = jq(this).val(),
+                    scope;
+
+            if (!selected_tab.length) {
+                scope = null;
+            } else {
+                scope = selected_tab.attr('id').substr(9, selected_tab.attr('id').length);
+            }
+
+            bpsh_activity_request(scope, filter);
+
+            return false;
         });
     });
     /* Filter the current content list (groups/members/blogs/topics) */
@@ -105,5 +122,69 @@
 
             jq('.item-list-tabs li.selected').removeClass('loading');
         });
+    }
+    /* Activity Loop Requesting */
+    function bpsh_activity_request(scope, filter) {
+        /* Save the type and filter to a session cookie */
+        if (null !== scope) {
+            jq.cookie('bp-activity-scope', scope, {
+                path: '/',
+                secure: ('https:' === window.location.protocol)
+            });
+        }
+        if (null !== filter) {
+            jq.cookie('bp-activity-filter', filter, {
+                path: '/',
+                secure: ('https:' === window.location.protocol)
+            });
+        }
+        jq.cookie('bp-activity-oldestpage', 1, {
+            path: '/',
+            secure: ('https:' === window.location.protocol)
+        });
+
+        /* Remove selected and loading classes from tabs */
+        jq('.item-list-tabs li').each(function () {
+            jq(this).removeClass('selected loading');
+        });
+        /* Set the correct selected nav and filter */
+        jq('#activity-' + scope + ', .item-list-tabs li.current').addClass('selected');
+        jq('#object-nav.item-list-tabs li.selected, div.activity-type-tabs li.selected').addClass('loading');
+        jq('#bpsh-activity-filter-select select option[value="' + filter + '"]').prop('selected', true);
+
+        /* Reload the activity stream based on the selection */
+        jq('.widget_bp_activity_widget h2 span.ajax-loader').show();
+
+        if (bp_ajax_request) {
+            bp_ajax_request.abort();
+        }
+
+        bp_ajax_request = jq.post(bpsh_ajax_obj.ajaxurl, {
+            action: 'bpsh_activity_widget_filter',
+            'cookie': bp_get_cookies(),
+            '_wpnonce_activity_filter': jq('#_wpnonce_activity_filter').val(),
+            'scope': scope,
+            'filter': filter
+        },
+        function (response)
+        {
+            jq('.widget_bp_activity_widget h2 span.ajax-loader').hide();
+
+            jq('div.activity').fadeOut(100, function () {
+                jq(this).html(response.contents);
+                jq(this).fadeIn(100);
+
+                /* Selectively hide comments */
+                bp_legacy_theme_hide_comments();
+            });
+
+            /* Update the feed link */
+            if (undefined !== response.feed_url) {
+                jq('.directory #subnav li.feed a, .home-page #subnav li.feed a').attr('href', response.feed_url);
+            }
+
+            jq('.item-list-tabs li.selected').removeClass('loading');
+
+        }, 'json');
     }
 })(jQuery);

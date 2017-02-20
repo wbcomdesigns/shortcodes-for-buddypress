@@ -44,7 +44,7 @@ do_action('bp_before_directory_activity_content');
 </div>
 
 <div class="item-list-tabs no-ajax" id="subnav" aria-label="<?php esc_attr_e('Activity secondary navigation', 'buddypress'); ?>" role="navigation">
-    <ul>
+    <div>
         <?php
         /**
          * Fires before the display of the activity syndication options.
@@ -54,9 +54,9 @@ do_action('bp_before_directory_activity_content');
         do_action('bp_activity_syndication_options');
         ?>
 
-        <li id="activity-filter-select" class="last">
+        <div id="bpsh-activity-filter-select" class="last bpsh-dropdown bpsh-activity-dropdown-filter">
             <label for="activity-filter-by"><?php _e('Show:', 'buddypress'); ?></label>
-            <select id="activity-filter-by">
+            <select id="bpsh-activity-filter-by">
                 <option value="-1"><?php _e('&mdash; Everything &mdash;', 'buddypress'); ?></option>
 
                 <?php bp_activity_show_filters(); ?>
@@ -71,8 +71,8 @@ do_action('bp_before_directory_activity_content');
                 ?>
 
             </select>
-        </li>
-    </ul>
+        </div>
+    </div>
 </div><!-- .item-list-tabs -->
 
 <?php
