@@ -115,6 +115,16 @@ class Bp_Shortcodes_Public {
         // Sanitize the object.
         $object = sanitize_title($_POST['object']);
 
+        if ($object === 'members') {
+            setcookie('bp-activity-filter', '', time() - 300);
+            setcookie('bp-groups-filter', '', time() - 300);
+            setcookie('bp-groups-scope', '', time() - 300);
+        }
+        if ($object === 'groups') {
+            setcookie('bp-activity-filter', '', time() - 300);
+            setcookie('bp-members-filter', '', time() - 300);
+            setcookie('bp-members-scope', '', time() - 300);
+        }
         // Bail if object is not an active component to prevent arbitrary file inclusion.
         if (!bp_is_active($object))
             return;
@@ -180,6 +190,12 @@ class Bp_Shortcodes_Public {
                 $feed_url = home_url(bp_get_activity_root_slug() . '/feed/');
                 break;
         }
+
+        setcookie('bp-groups-filter', '', time() - 300);
+        setcookie('bp-groups-scope', '', time() - 300);
+        setcookie('bp-members-filter', '', time() - 300);
+        setcookie('bp-members-scope', '', time() - 300);
+
         add_filter('bp_ajax_querystring', function($qs) {
             return $qs .= get_option('bpsh_queryargs');
         });

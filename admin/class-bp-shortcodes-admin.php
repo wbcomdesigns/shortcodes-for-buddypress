@@ -107,8 +107,6 @@ class Bp_Shortcodes_Admin {
         //allow to use all those args awesome!
         $atts = shortcode_atts(array(
             'title' => '', //title of the section
-            'pagination' => 1, //show or not
-            'load_more' => 0,
             'display_comments' => 'threaded',
             'include' => false, // pass an activity_id or string of IDs comma-separated
             'exclude' => false, // pass an activity_id or string of IDs comma-separated

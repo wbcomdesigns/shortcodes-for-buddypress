@@ -17,25 +17,29 @@
                     <strong>title</strong>(string) :- What should be the title of the activities section
                 </li>
                 <li>
-                    <strong>pagination</strong>(int):- 0 or 1(do you want to hide or show the activity pagination at the bottom of the list)
+                    <strong>display_comments</strong>(sting|bool):- How to handle activity comments.<br/>
+                    <b>Possible values:</b> - 'threaded' - comments appear in a threaded tree, under their parent items.<br/>
+                    - 'stream' - the activity stream is presented in a flat manner, with comments sorted in chronological order alongside other activity items.<br/>
+                    - false - don't fetch activity comments at all.<br/>
+                    Default: 'threaded'.
                 </li>
                 <li>
-                    <strong>display_comments</strong>(sting, int):- possible values are threaded|stream|0(use 0 to hide activity comments)
+                    <strong>include</strong>(array|bool):- Array of exact activity IDs to query. Providing an 'include' array will override all other filters passed in the argument array. When viewing the permalink page for a single activity item, this value defaults to the ID of that item. Otherwise the default is false.
                 </li>
                 <li>
-                    <strong>include</strong>(int|string):- individual activity id or comma separated list of activities, useful in case you want to list specific activities
+                    <strong>in</strong>(array|bool):- Array of IDs to limit query by (IN). 'in' is intended to be used in conjunction with other filter parameters. Default: false.
                 </li>
                 <li>
-                    <strong>exclude</strong>(int|string):-individual activity id or comma separated list of activities, useful in case you want to exclude specific activities from the list
+                    <strong>exclude</strong>(array|bool):- Array of activity IDs to exclude. Default: false.
                 </li>
                 <li>
-                    <strong>sort</strong>(string):- ASC|DESC (how to sort the activities in ascending or descending order)
+                    <strong>sort</strong>(string):- 'ASC' or 'DESC'. Default: 'DESC'.
                 </li>
                 <li>
-                    <strong>page</strong> (int):- which page to load, e.g 1st page or 10th page of activity
+                    <strong>page</strong> (int):- Which page of results to fetch. Using page=1 without per_page will result in no pagination. Default: 1.
                 </li>
                 <li>
-                    <strong>per_page</strong>(int):- How many activities per page(default is 5)
+                    <strong>per_page</strong>(int):- Number of results per page. Default: 5.
                 </li>
                 <li>
                     <strong>page_args</strong>(int):- String used as a query parameter in pagination links. Default: 'acpage'.
@@ -44,7 +48,18 @@
                     <strong>max</strong>(int):- Limit the maximum no. of activities to be included in the list
                 </li>
                 <li>
-                    <strong>scope</strong>(string):-&nbsp;&ndash; pre-built activity filters for a user (possible values are friends/groups/favorites/mentions)
+                    <strong>fields</strong>(string):- Activity fields to retrieve. 'all' to fetch entire activity objects, 'ids' to get only the activity IDs. Default 'all'.
+                </li>
+                <li>
+                    <strong>scope</strong>(string):- Use a BuddyPress pre-built filter.
+                    <br/>   - 'just-me' retrieves items belonging only to a user; this is equivalent to passing a 'user_id' argument.
+                    <br/>   - 'friends' retrieves items belonging to the friends of a user.
+                    <br/>   - 'groups' retrieves items belonging to groups to which a user belongs to.
+                    <br/>   - 'favorites' retrieves a user's favorited activity items.
+                    <br/>   - 'mentions' retrieves items where a user has received an @-mention.
+                    <br/>   The default value of 'scope' is set to one of the above if that value appears in the appropriate place in the URL; eg, 'scope' will be 'groups'
+                    <br/>   when visiting http://example.com/members/joe/activity/groups/.
+                    <br/>   Otherwise defaults to false.
                 </li>
                 <li>
                     <strong>user_id</strong>(int):- If you want to list a&nbsp;particular&nbsp;user’s activity
