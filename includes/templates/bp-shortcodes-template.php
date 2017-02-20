@@ -14,7 +14,7 @@
             <p>The accepted parameters:-</p>
             <ul>
                 <li>
-                    <strong>title</strong>(string) :- what should be the title of the activities section
+                    <strong>title</strong>(string) :- What should be the title of the activities section
                 </li>
                 <li>
                     <strong>pagination</strong>(int):- 0 or 1(do you want to hide or show the activity pagination at the bottom of the list)
@@ -36,6 +36,9 @@
                 </li>
                 <li>
                     <strong>per_page</strong>(int):- How many activities per page(default is 5)
+                </li>
+                <li>
+                    <strong>page_args</strong>(int):- String used as a query parameter in pagination links. Default: 'acpage'.
                 </li>
                 <li>
                     <strong>max</strong>(int):- Limit the maximum no. of activities to be included in the list
@@ -71,7 +74,6 @@
                     <strong>container_class</strong>(string):- Default ‘activity’ . Allows to change the class of the shortcode contents wrapper. If you have the hide_on_activity=0, then please set it to some other value than ‘activity'(May be ‘activities’ or something else). If you do not change it, On the user/group/site activity page, the activity filter will affect the content of the shotrcode. It is suggested to change it if hide_on_activity=0 is set.
                 </li>
             </ul>
-            <p>We will see some examples in a minute. Before that, I will just like to clarify that you can use the combination of above options to list any type of activity you want.</p>
             <div class="bpsh-admin-shortcode">
                 <h3>Examples:-</h3>
 
@@ -85,15 +87,160 @@
 
                 <p><b>[activity-listing object=groups primary_id=2]</b></p>
             </div>
-            <p>Well guys, It’s up to you to explore the possibilities.</b></p>
         </div>
         <div class="bpsh-admin-shortcode-title"> Members Shortcodes :- </div>
         <div class="bpsh-admin-shortcode">
             <b>[members-listing]</b>
         </div>
+        <div class="bpsh-admin-shortcode-content">
+            <p>Here is the way you can specify options</p>
+            <p class="bpsh-admin-shortcode">
+                <strong>[members-listing option_name=option_val option_name2=option_val2  and so on]</strong>
+            </p>
+            <p>The accepted parameters:-</p>
+            <ul>
+                <li>
+                    <strong>title</strong>(string) :- What should be the title of the members section
+                </li>
+                <li>
+                    <strong>type</strong>(string):- Sort order. Accepts 'active', 'random', 'newest', 'popular', 'online', 'alphabetical'. Default: 'active'.
+                </li>
+                <li>
+                    <strong>per_page</strong>(int|bool):- Number of results per page. Default: 20.
+                </li>
+                <li>
+                    <strong>page</strong>(int|bool):- Page of results to display. Default: 1.
+                </li>
+                <li>
+                    <strong>max</strong>(int|bool):- Maximum number of results to return. Default: false (unlimited).
+                </li>
+                <li>
+                    <strong>include</strong>(array|int|string|bool):- Limit results by a list of user IDs. Accepts an array, a single integer, a comma-separated list of IDs, or false (to disable this limiting). Accepts 'active', 'alphabetical','newest', or 'random'. Default: false.
+                </li>
+                <li>
+                    <strong>exclude</strong>(array|int|string|bool):- Exclude users from results by ID. Accepts an array, a single integer, a comma-separated list of IDs, or false (to disable this limiting). Default: false.
+                </li>
+                <li>
+                    <strong>user_id</strong>(int):- If provided, results are limited to the friends of the specified user. When on a user's Friends page, defaults to the ID of the displayed user. Otherwise defaults to 0.
+                </li>
+                <li>
+                    <strong>member_type</strong>(string):- Can be a comma-separated list. (Note: BuddyPress itself does not register any member types. Plugins and themes can register member types using the bp_register_member_type() or the bp_register_member_types() function.)
+                </li>
+                <li>
+                    <strong>include_member_role</strong>(string):- Can be a comma-separated list of members role.
+                </li>
+                <li>
+                    <strong>exclude_member_role</strong>(string):- Can be a comma-separated list of members role.
+                </li>
+                <li>
+                    <strong>member_type__in</strong> (string):- list only these members type
+                </li>
+                <li>
+                    <strong>member_type__not_in</strong> (string):- not list these members type
+                </li>
+                <li>
+                    <strong>search_terms</strong> (string):- Limit results by a search term. Default: value of `$_REQUEST['members_search']` or `$_REQUEST['s']`, if present. Otherwise false.
+                </li>
+                <li>
+                    <strong>meta_key</strong> (string):- Limit results by the presence of a usermeta key. Default: false.
+                </li>
+                <li>
+                    <strong>meta_value</strong> (string):- When used with meta_key, limits results by the a matching usermeta value. Default: false. Requires meta_key.
+                </li>
+            </ul>
+            <div class="bpsh-admin-shortcode">
+                <h3>Examples:-</h3>
+
+                <p><b>[members-listing user_id=1]</b></p>
+
+                <p><b>[members-listing per_page=10]</b></p>
+
+                <p><b>[members-listing search_terms='awesome']</b></p>
+
+                <p><b>[members-listing include_member_role='subscriber,author']</b></p>
+            </div>
+        </div>
         <div class="bpsh-admin-shortcode-title"> Group Shortcodes :- </div>
         <div class="bpsh-admin-shortcode">
             <b>[groups-listing]</b>
         </div>
+        <div class="bpsh-admin-shortcode-content">
+            <p>Here is the way you can specify options</p>
+            <p class="bpsh-admin-shortcode">
+                <strong>[groups-listing option_name=option_val option_name2=option_val2  and so on]</strong>
+            </p>
+            <p>The accepted parameters:-</p>
+            <ul>
+                <li>
+                    <strong>title</strong>(string) :- What should be the title of the groups section.
+                </li>
+                <li>
+                    <strong>type</strong>(string):- Shorthand for certain orderby/order combinations. 'newest', 'active', 'popular', 'alphabetical', 'random'. When present, will override orderby and order params. Default: null.
+                </li>
+                <li>
+                    <strong>order</strong>(string):- Sort order. 'ASC' or 'DESC'. Default: 'DESC'.
+                </li>
+                <li>
+                    <strong>orderby</strong>(string):- Property to sort by. 'date_created', 'last_activity', 'total_member_count', 'name', 'random'. Default: 'last_activity'.
+                </li>
+                <li>
+                    <strong>per_page</strong>(int|bool):- Number of items to return per page of results. Default: 20.
+                </li>
+                <li>
+                    <strong>page</strong>(int|bool):- Page offset of results to return. Default: 1 (first page of results).
+                </li>
+                <li>
+                    <strong>max</strong>(int|bool):- Does NOT affect query. May change the reported number of total groups found, but not the actual number of found groups. Default: false.
+                </li>
+                <li>
+                    <strong>show_hidden</strong>(bool):- Whether to include hidden groups in results. Default: false.
+                </li>
+                <li>
+                    <strong>page_arg</strong>(string):- Query argument used for pagination. Default: 'grpage'.
+                </li>
+                <li>
+                    <strong>slug</strong>(string):- If provided, only the group with the matching slug will be returned. Default: false.
+                </li>
+                <li>
+                    <strong>include</strong>(int|string):- Array or comma-separated list of group IDs. Results will be limited to groups within the list. Default: false.
+                </li>
+                <li>
+                    <strong>exclude</strong>(int|string):- Array or comma-separated list of group IDs. Results will exclude the listed groups. Default: false.
+                </li>
+                <li>
+                    <strong>user_id</strong>(int):- If provided, results will be limited to groups of which the specified user is a member. Default: value of bp_displayed_user_id().
+                </li>
+                <li>
+                    <strong>group_type</strong>(array|string):- Array or comma-separated list of group types to limit results to.
+                </li>
+                <li>
+                    <strong>member_type__in</strong> (array|string):- Array or comma-separated list of group types to limit results to.
+                </li>
+                <li>
+                    <strong>member_type__not_in</strong> (array|string):- Array or comma-separated list of group types that will be excluded from results.
+                </li>
+                <li>
+                    <strong>search_terms</strong> (string):- If provided, only groups whose names or descriptions match the search terms will be returned. Default: value of `$_REQUEST['groups_search']` or `$_REQUEST['s']`, if present. Otherwise false.
+                </li>
+                <li>
+                    <strong>meta_query</strong> (array):- An array of meta_query conditions.
+                </li>
+                <li>
+                    <strong>parent_id</strong> (array|string):- Array or comma-separated list of group IDs. Results will include only child groups of the listed groups. Default: null.
+                </li>
+            </ul>
+            <div class="bpsh-admin-shortcode">
+                <h3>Examples:-</h3>
+
+                <p><b>[groups-listing user_id=1]</b></p>
+
+                <p><b>[groups-listing per_page=10]</b></p>
+
+                <p><b>[groups-listing search_terms='awesome']</b></p>
+
+                <p><b>[groups-listing exclude='47,50']</b></p>
+            </div>
+        </div>
+        <p><b>Well guys, It’s up to you to explore the possibilities.</b></p>
     </div>
 </div>

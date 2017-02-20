@@ -118,7 +118,6 @@ class Bp_Shortcodes_Admin {
             'per_page' => 5, //how many per page
             'max' => false, // max number to return
             'count_total' => true,
-            // Scope - pre-built activity filters for a user (friends/groups/favorites/mentions)
             'scope' => false,
             // Filtering
             'user_id' => false, // user_id to filter on
@@ -200,14 +199,14 @@ class Bp_Shortcodes_Admin {
         }
         $atts = shortcode_atts(array(
             'title' => '',
-            'type' => 'active', // active, popular,online
+            'type' => 'active', // Type: active ( default ) | random | newest | popular | online | alphabetical.
             'page' => 1,
             'per_page' => 20,
             'max' => false,
             'page_arg' => 'upage', // See https://buddypress.trac.wordpress.org/ticket/3679.
             'include' => false, // Pass a user_id or a list (comma-separated or array) of user_ids to only show these users.
             'exclude' => false, // Pass a user_id or a list (comma-separated or array) of user_ids to exclude these users.
-            'user_id' => array(), // Pass a user_id to only show friends of this user.
+            'user_id' => false, // Pass a user_id to only show friends of this user.
             'member_type' => false, // Can be a comma-separated list.
             'include_member_role' => '', // Can be a comma-separated list.
             'exclude_member_role' => '', // Can be a comma-separated list.
@@ -301,4 +300,5 @@ class Bp_Shortcodes_Admin {
         $classes[] = 'bpsh-buddypress';
         return $classes;
     }
+
 }

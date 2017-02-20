@@ -25,10 +25,8 @@ if ($atts['use_compat']) {
 do_action('bp_before_directory_activity_content');
 ?>
 
-<?php if (is_user_logged_in()) : ?>
-
-    <?php bp_get_template_part('activity/post-form'); ?>
-
+<?php if ($atts['allow_posting'] && is_user_logged_in()) : ?>
+    <?php bp_locate_template(array('activity/post-form.php'), true); ?>
 <?php endif; ?>
 
 <div id="template-notices" role="alert" aria-atomic="true">
