@@ -1,7 +1,7 @@
 === BuddyPress Shortcodes ===
 Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
-Tags: Activity, BuddyPress, Members, Group, BuddyPress Shortcode
+Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcode
 Requires at least: 3.0.1
 Tested up to: 4.7.2
 Stable tag: 1.0.0
@@ -18,7 +18,7 @@ This plugin will add an extended feature to the big name “BuddyPress” that w
 This section describes how to install the plugin and get it working.
 
 1. Download the zip file and extract it.
-2. Upload `buddypress-shortcodes` directory to the `/wp-content/plugins/` directory
+2. Upload this plugin to the `/wp-content/plugins/` directory
 3. Activate the plugin through the \'Plugins\' menu.
 4. Alternatively you can use WordPress Plugin installer from Dashboard->Plugins->Add New to add this plugin
 5. Enjoy
@@ -37,7 +37,9 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 == Screenshots ==
 
 1. It is displaying admin documentation page screenshot-1.png
-2. It is displaying shortcode default output screenshot-2.png
+2. It is displaying members listing based on given user id screenshot-2.png
+3. It is displaying activity listing based on given user id and allow_posting=true screenshot-3.png
+4. It is displaying groups listing based on given user id screenshot-4.png
 
 == Changelog ==
 = 1.0.0 =

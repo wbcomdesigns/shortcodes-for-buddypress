@@ -56,6 +56,14 @@ class Bp_Shortcodes {
      * @var      string    $version    The current version of the plugin.
      */
     protected $version;
+    /**
+     * The basename of the plugin
+     *
+     * @since    1.0.0
+     * @access   protected
+     * @var      string    $plugin_basename    The basename of the plugin.
+     */
+    protected $plugin_basename;
 
     /**
      * Define the core functionality of the plugin.
@@ -70,7 +78,8 @@ class Bp_Shortcodes {
 
         $this->plugin_name = 'bp-shortcodes';
         $this->version = '1.0.0';
-
+        $this->plugin_basename = BPSH_PLUGIN_BASENAME;
+//        echo $this->plugin_basename;die
         $this->load_dependencies();
         $this->set_locale();
         $this->define_admin_hooks();
@@ -149,6 +158,7 @@ class Bp_Shortcodes {
         $plugin_admin = new Bp_Shortcodes_Admin($this->get_plugin_name(), $this->get_version());
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        $this->loader->add_action("plugin_action_links_$this->plugin_basename", $plugin_admin, 'bpsh_add_settings_link');
         $this->loader->add_action('admin_menu', $plugin_admin, 'bpsh_add_option_page');
         $this->loader->add_shortcode('activity-listing', $plugin_admin, 'bpsh_generate_activity_listing');
         $this->loader->add_shortcode("members-listing", $plugin_admin, "bpsh_generate_members_listing");

@@ -23,6 +23,36 @@ if (!defined('WPINC')) {
     die;
 }
 
+function bpsh_plugin_init() {
+    // If BuddyPress is NOT active
+    if (current_user_can('activate_plugins') && !class_exists('BuddyPress')) {
+        add_action('admin_init', 'bpsh_plugin_deactivate');
+        add_action('admin_notices', 'bpsh_plugin_admin_notice');
+
+        // Deactivate the bp-shortcodes Plugin
+        function bpsh_plugin_deactivate() {
+            deactivate_plugins(plugin_basename(__FILE__));
+        }
+
+        // Throw an Alert to tell the Admin why it didn't activate
+        function bpsh_plugin_admin_notice() {
+            $bpsh_plugin = __('BuddyPress Shortcode', 'bp-shortcodes');
+            $buddypress_plugin = __('BuddyPress', 'bp-shortcodes');
+            echo '<div class="error"><p>'
+            . sprintf(__('%1$s requires %2$s to function correctly. Please activate %2$s before activating %1$s. For now, the plugin has been deactivated.', 'bp-shortcodes'), '<strong>' . esc_html($bpsh_plugin) . '</strong>', '<strong>' . esc_html($buddypress_plugin) . '</strong>')
+            . '</p></div>';
+            if (isset($_GET['activate']))
+                unset($_GET['activate']);
+        }
+
+    }
+}
+
+add_action('plugins_loaded', 'bpsh_plugin_init');
+if (!defined('BPSH_PLUGIN_BASENAME')) {
+    define('BPSH_PLUGIN_BASENAME', plugin_basename(__FILE__));
+}
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-bp-shortcodes-activator.php

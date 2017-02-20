@@ -235,21 +235,6 @@ class Bp_Shortcodes_Admin {
         <?php
     }
 
-    public function bpsh_get_user_roles_by_user_id($user_id) {
-        $user = get_userdata($user_id);
-        return empty($user) ? array() : $user->roles;
-    }
-
-    public function bpsh_is_user_in_role($user_id, $roles) {
-        if (!is_array($roles)) {
-            return in_array($roles, $this->bpsh_get_user_roles_by_user_id($user_id));
-        } else {
-            foreach ($roles as $key => $r) {
-                
-            }
-        }
-    }
-
     public function bpsh_generate_group_listing($atts, $content = null) {
         $inc_atts = $atts;
         $atts = shortcode_atts(array(
@@ -299,4 +284,9 @@ class Bp_Shortcodes_Admin {
         return $classes;
     }
 
+    public function bpsh_add_settings_link($links) {
+        $settings_link = '<a href="options-general.php?page=bpsh-shortcodes">' . __('Documentation') . '</a>';
+        array_push($links, $settings_link);
+        return $links;
+    }
 }

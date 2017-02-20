@@ -1,14 +1,8 @@
 <?php
 /**
- * BuddyPress - Groups
- *
- * @package BuddyPress
- * @subpackage bp-legacy
- */
-/**
  * Fires at the top of the groups directory template file.
  *
- * @since 1.5.0
+ * @since 1.0.0
  */
 do_action('bp_before_directory_groups_page');
 
@@ -19,7 +13,7 @@ if ($atts['use_compat']) {
 /**
  * Fires before the display of the groups.
  *
- * @since 1.1.0
+ * @since 1.0.0
  */
 do_action('bp_before_directory_groups');
 ?>
@@ -28,7 +22,7 @@ do_action('bp_before_directory_groups');
 /**
  * Fires before the display of the groups content.
  *
- * @since 1.1.0
+ * @since 1.0.0
  */
 do_action('bp_before_directory_groups_content');
 ?>
@@ -53,7 +47,7 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
             /**
              * Fires inside the groups directory group types.
              *
-             * @since 1.2.0
+             * @since 1.0.0
              */
             do_action('bp_groups_directory_group_types');
             ?>
@@ -72,7 +66,7 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
                     /**
                      * Fires inside the groups directory group order options.
                      *
-                     * @since 1.2.0
+                     * @since 1.0.0
                      */
                     do_action('bp_groups_directory_order_options');
                     ?>
@@ -97,7 +91,7 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
     /**
      * Fires and displays the group content.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      */
     do_action('bp_directory_groups_content');
     ?>
@@ -108,7 +102,7 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
     /**
      * Fires after the display of the groups content.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      */
     do_action('bp_after_directory_groups_content');
     ?>
@@ -119,7 +113,7 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
 /**
  * Fires after the display of the groups.
  *
- * @since 1.1.0
+ * @since 1.0.0
  */
 do_action('bp_after_directory_groups');
 
@@ -129,6 +123,6 @@ if ($atts['use_compat']) {
 /**
  * Fires at the bottom of the groups directory template file.
  *
- * @since 1.5.0
+ * @since 1.0.0
  */
 do_action('bp_after_directory_groups_page');

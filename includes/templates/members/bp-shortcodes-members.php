@@ -1,14 +1,8 @@
 <?php
 /**
- * BuddyPress - Members
- *
- * @package BuddyPress
- * @subpackage bp-legacy
- */
-/**
  * Fires at the top of the members directory template file.
  *
- * @since 1.5.0
+ * @since 1.0.0
  */
 do_action('bp_before_directory_members_page');
 
@@ -20,7 +14,7 @@ if ($atts['use_compat']) {
 /**
  * Fires before the display of the members.
  *
- * @since 1.1.0
+ * @since 1.0.0
  */
 do_action('bp_before_directory_members');
 ?>
@@ -29,7 +23,7 @@ do_action('bp_before_directory_members');
 /**
  * Fires before the display of the members content.
  *
- * @since 1.1.0
+ * @since 1.0.0
  */
 do_action('bp_before_directory_members_content');
 ?>
@@ -42,7 +36,7 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'members/search.php';
 /**
  * Fires before the display of the members list tabs.
  *
- * @since 1.8.0
+ * @since 1.0.0
  */
 do_action('bp_before_directory_members_tabs');
 ?>
@@ -55,7 +49,7 @@ do_action('bp_before_directory_members_tabs');
             /**
              * Fires inside the members directory member sub-types.
              *
-             * @since 1.5.0
+             * @since 1.0.0
              */
             do_action('bp_members_directory_member_sub_types');
             ?>
@@ -74,7 +68,7 @@ do_action('bp_before_directory_members_tabs');
                     /**
                      * Fires inside the members directory member order options.
                      *
-                     * @since 1.2.0
+                     * @since 1.0.0
                      */
                     do_action('bp_members_directory_order_options');
                     ?>
@@ -101,7 +95,7 @@ do_action('bp_before_directory_members_tabs');
     /**
      * Fires and displays the members content.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      */
     do_action('bp_directory_members_content');
     ?>
@@ -112,7 +106,7 @@ do_action('bp_before_directory_members_tabs');
     /**
      * Fires after the display of the members content.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      */
     do_action('bp_after_directory_members_content');
     ?>
@@ -123,7 +117,7 @@ do_action('bp_before_directory_members_tabs');
 /**
  * Fires after the display of the members.
  *
- * @since 1.1.0
+ * @since 1.0.0
  */
 do_action('bp_after_directory_members');
 
@@ -135,6 +129,6 @@ if ($atts['use_compat']) {
 /**
  * Fires at the bottom of the members directory template file.
  *
- * @since 1.5.0
+ * @since 1.0.0
  */
 do_action('bp_after_directory_members_page');

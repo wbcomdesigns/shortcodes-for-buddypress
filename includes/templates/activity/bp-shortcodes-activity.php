@@ -1,16 +1,8 @@
 <?php
 /**
- * BuddyPress Activity templates
- *
- * @since 2.3.0
- *
- * @package BuddyPress
- * @subpackage bp-legacy
- */
-/**
  * Fires before the activity directory listing.
  *
- * @since 1.5.0
+ * @since 1.0.0
  */
 do_action('bp_before_directory_activity');
 
@@ -20,7 +12,7 @@ if ($atts['use_compat']) {
 /**
  * Fires before the activity directory display content.
  *
- * @since 1.2.0
+ * @since 1.0.0
  */
 do_action('bp_before_directory_activity_content');
 ?>
@@ -47,7 +39,7 @@ do_action('bp_before_directory_activity_content');
         /**
          * Fires before the display of the activity syndication options.
          *
-         * @since 1.2.0
+         * @since 1.0.0
          */
         do_action('bp_activity_syndication_options');
         ?>
@@ -63,7 +55,7 @@ do_action('bp_before_directory_activity_content');
                 /**
                  * Fires inside the select input for activity filter by options.
                  *
-                 * @since 1.2.0
+                 * @since 1.0.0
                  */
                 do_action('bp_activity_filter_options');
                 ?>
@@ -77,7 +69,7 @@ do_action('bp_before_directory_activity_content');
 /**
  * Fires before the display of the activity list.
  *
- * @since 1.5.0
+ * @since 1.0.0
  */
 do_action('bp_before_directory_activity_list');
 ?>
@@ -95,7 +87,7 @@ do_action('bp_before_directory_activity_list');
 /**
  * Fires after the display of the activity list.
  *
- * @since 1.5.0
+ * @since 1.0.0
  */
 do_action('bp_after_directory_activity_list');
 ?>
@@ -111,7 +103,7 @@ do_action('bp_directory_activity_content');
 /**
  * Fires after the activity directory display content.
  *
- * @since 1.2.0
+ * @since 1.0.0
  */
 do_action('bp_after_directory_activity_content');
 ?>
@@ -120,7 +112,7 @@ do_action('bp_after_directory_activity_content');
 /**
  * Fires after the activity directory listing.
  *
- * @since 1.5.0
+ * @since 1.0.0
  */
 do_action('bp_after_directory_activity');
 

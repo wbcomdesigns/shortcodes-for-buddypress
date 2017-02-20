@@ -39,7 +39,7 @@
                     <strong>page</strong> (int):- Which page of results to fetch. Using page=1 without per_page will result in no pagination. Default: 1.
                 </li>
                 <li>
-                    <strong>per_page</strong>(int):- Number of results per page. Default: 5.
+                    <strong>per_page</strong>(int):- Number of results per page. Default: 20.
                 </li>
                 <li>
                     <strong>page_args</strong>(int):- String used as a query parameter in pagination links. Default: 'acpage'.
