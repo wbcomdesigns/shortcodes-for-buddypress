@@ -79,7 +79,6 @@ class Bp_Shortcodes {
         $this->plugin_name = 'bp-shortcodes';
         $this->version = '1.0.0';
         $this->plugin_basename = BPSH_PLUGIN_BASENAME;
-//        echo $this->plugin_basename;die
         $this->load_dependencies();
         $this->set_locale();
         $this->define_admin_hooks();

@@ -45,19 +45,21 @@ function bpsh_plugin_init() {
                 unset($_GET['activate']);
         }
 
+    }else {
+        if (!defined('BPSH_PLUGIN_BASENAME')) {
+            define('BPSH_PLUGIN_BASENAME', plugin_basename(__FILE__));
+        }
+
+        /**
+         * The core plugin class that is used to define internationalization,
+         * admin-specific hooks, and public-facing site hooks.
+         */
+        require plugin_dir_path(__FILE__) . 'includes/class-bp-shortcodes.php';
+        run_bp_shortcodes();
     }
 }
 
 add_action('plugins_loaded', 'bpsh_plugin_init');
-if (!defined('BPSH_PLUGIN_BASENAME')) {
-    define('BPSH_PLUGIN_BASENAME', plugin_basename(__FILE__));
-}
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path(__FILE__) . 'includes/class-bp-shortcodes.php';
 
 /**
  * Begins execution of the plugin.
@@ -69,9 +71,6 @@ require plugin_dir_path(__FILE__) . 'includes/class-bp-shortcodes.php';
  * @since    1.0.0
  */
 function run_bp_shortcodes() {
-
     $plugin = new Bp_Shortcodes();
     $plugin->run();
 }
-
-run_bp_shortcodes();
