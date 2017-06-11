@@ -1,5 +1,5 @@
 === BuddyPress Shortcodes ===
-Contributors: vapvarun,wbcomdesigns
+Contributors: wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcode
 Requires at least: 3.0.1
