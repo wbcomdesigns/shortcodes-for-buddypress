@@ -1,4 +1,4 @@
-=== BP Shortcodes ===
+=== Shortcodes for BuddyPress ===
 Contributors: wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcode
