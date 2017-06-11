@@ -7,7 +7,7 @@
  * @package           Bp_Shortcodes
  *
  * @wordpress-plugin
- * Plugin Name:       BuddyPress Shortcodes
+ * Plugin Name:       BP Shortcodes
  * Plugin URI:        http://wbcomdesigns.com
  * Description:       This plugin will add an extended feature to the big name “BuddyPress” that will generate Shortcode for Listing Activity Streams , Members and Groups on any post/page in website.
  * Version:           1.0.0
