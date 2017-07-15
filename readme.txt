@@ -1,7 +1,7 @@
 === Shortcodes for BuddyPress ===
 Contributors: wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
-Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcode
+Tags: BuddyPress Shortcode , Shortcodes for BuddyPress ,Shortcodes , BP Shortcodes, Activity Shortcode, Members Shortcode
 Requires at least: 3.0.1
 Tested up to: 4.8
 Stable tag: 1.0.0
