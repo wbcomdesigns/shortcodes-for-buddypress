@@ -1,10 +1,10 @@
 === Shortcodes for BuddyPress ===
 Contributors: wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
-Tags: BuddyPress Shortcode , Shortcodes for BuddyPress ,Shortcodes , BP Shortcodes, Activity Shortcode, Members Shortcode
+Tags: BuddyPress Shortcode , Shortcodes for BuddyPress ,Shortcodes, BP Shortcodes, Activity Shortcode, Members Shortcode, Group shortcode
 Requires at least: 3.0.1
-Tested up to: 4.8
-Stable tag: 1.0.0
+Tested up to: 4.8.1
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,10 @@ This plugin will generate Shortcode for Listing Activity Streams , Members and G
 == Description ==
 
 This plugin will add an extended feature to the big name “BuddyPress” that will generate Shortcode for Listing Activity Streams , Members and Groups on any post/page in website.
+
+* [Plugin Homepage](https://wbcomdesigns.com/downloads/shortcodes-for-buddypress/)
+* [FAQ](https://wbcomdesigns.com/helpdesk/article-categories/shortcodes-for-buddypress/)
+
 
 == Installation ==
 This section describes how to install the plugin and get it working.
