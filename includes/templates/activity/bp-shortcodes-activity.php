@@ -73,7 +73,7 @@ do_action('bp_before_directory_activity_content');
  */
 do_action('bp_before_directory_activity_list');
 ?>
-<div class="activity" aria-live="polite" aria-atomic="true" aria-relevant="all">
+<div id="content">
 
     <?php
     add_filter('bp_ajax_querystring', function($qs) {
