@@ -155,7 +155,7 @@ class Bp_Shortcodes_Admin {
 
     public function bpsh_generate_members_listing($atts, $content = null) {
         $inc_atts = $atts;
-        if ($atts['exclude_member_role']) {
+        if( array_key_exists( 'exclude_member_role', $atts )) {
             if (strpos($atts['exclude_member_role'], ',') !== false) {
                 $exclude_roles = explode(',', $atts['exclude_member_role']);
             } else {
@@ -175,7 +175,7 @@ class Bp_Shortcodes_Admin {
             $inc_atts['exclude'] = rtrim(implode(',', $u), ',');
             unset($inc_atts['exclude_member_role']);
         }
-        if ($atts['include_member_role']) {
+        if( array_key_exists( 'include_member_role', $atts )) {       
             if (strpos($atts['include_member_role'], ',') !== false) {
                 $exclude_roles = explode(',', $atts['include_member_role']);
             } else {
