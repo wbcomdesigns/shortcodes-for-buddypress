@@ -101,12 +101,6 @@
                 <p><b>[activity-listing object=groups]</b></p>
 
                 <p><b>[activity-listing object=groups primary_id=2]</b></p>
-
-                <p><b>[activity-listing in='19,18']</b></p>
-
-                <p><b>[activity-listing include='19,18']</b></p>
-                
-                <p><b>[activity-listing exclude='19,18']</b></p>
             </div>
         </div>
         <div class="bpsh-admin-shortcode-title"> Members Shortcodes :- </div>
@@ -154,10 +148,10 @@
                     <strong>exclude_member_role</strong>(string):- Can be a comma-separated list of members role.
                 </li>
                 <li>
-                    <strong>member_type__in</strong> (string):- list only these members type
+                    <strong>member_type__in</strong> (string):- list only these members type ( Note: This parameter will work when member types exist.)
                 </li>
                 <li>
-                    <strong>member_type__not_in</strong> (string):- not list these members type
+                    <strong>member_type__not_in</strong> (string):- not list these members type ( Note: This parameter will work when member types exist.)
                 </li>
                 <li>
                     <strong>search_terms</strong> (string):- Limit results by a search term. Default: value of `$_REQUEST['members_search']` or `$_REQUEST['s']`, if present. Otherwise false.
