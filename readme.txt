@@ -44,3 +44,12 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 == Changelog ==
 = 1.0.0 =
 * first version.
+
+= 1.0.1 =
+* Fix - Wrong plugin name spelling
+* Enhancement - Need more explanation with examples inside plugin tab
+* Fix - In Activity Shortcodes and Group Shortcodes, some parameters are not working.
+* Fix - member_type___in not showing result
+* Fix - updated language file
+* Fix - Notices and Warning fixes
+
