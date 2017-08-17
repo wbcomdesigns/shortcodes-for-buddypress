@@ -101,6 +101,12 @@
                 <p><b>[activity-listing object=groups]</b></p>
 
                 <p><b>[activity-listing object=groups primary_id=2]</b></p>
+
+                <p><b>[activity-listing in='19,18']</b></p>
+
+                <p><b>[activity-listing include='19,18']</b></p>
+                
+                <p><b>[activity-listing exclude='19,18']</b></p>
             </div>
         </div>
         <div class="bpsh-admin-shortcode-title"> Members Shortcodes :- </div>
