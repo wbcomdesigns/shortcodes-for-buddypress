@@ -73,11 +73,10 @@ do_action('bp_before_directory_activity_content');
  */
 do_action('bp_before_directory_activity_list');
 ?>
-<div id="content">
-
+<div class="activity" aria-live="polite" aria-atomic="true" aria-relevant="all">
     <?php
     add_filter('bp_ajax_querystring', function($qs) {
-        return $qs .= get_option('bpsh_queryargs');
+        return $qs .= bp_get_option('bpsh_queryargs');
     });
     bp_get_template_part('activity/activity-loop');
     ?>

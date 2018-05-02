@@ -140,7 +140,7 @@ class Bp_Shortcodes_Public {
             bp_update_is_directory(true, bp_current_component());
 
         add_filter('bp_ajax_querystring', function($qs) {
-            return $qs .= get_option('bpsh_queryargs');
+            return $qs .= bp_get_option('bpsh_queryargs');
         });
 
         $template_part = $object . '/' . $object . '-loop';
@@ -198,7 +198,7 @@ class Bp_Shortcodes_Public {
         setcookie('bp-members-scope', '', time() - 300);
 
         add_filter('bp_ajax_querystring', function($qs) {
-            return $qs .= get_option('bpsh_queryargs');
+            return $qs .= bp_get_option('bpsh_queryargs');
         });
         // Buffer the loop in the template to a var for JS to spit out.
         ob_start();

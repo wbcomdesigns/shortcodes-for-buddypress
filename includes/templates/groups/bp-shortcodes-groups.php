@@ -29,7 +29,7 @@ do_action('bp_before_directory_groups_content');
 
 <?php /* Backward compatibility for inline search form. Use template part instead. */ ?>
 <?php
-require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
+//require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
 ?>
 <form action="" method="post" id="groups-directory-form" class="dir-form">
 
@@ -41,40 +41,6 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
 
     </div>
 
-    <div class="item-list-tabs" id="subnav" aria-label="<?php esc_attr_e('Groups directory secondary navigation', 'buddypress'); ?>" role="navigation">
-        <div class="bpsh-order-select">
-            <?php
-            /**
-             * Fires inside the groups directory group types.
-             *
-             * @since 1.0.0
-             */
-            do_action('bp_groups_directory_group_types');
-            ?>
-
-            <div id="groups-order-select" class="last bpsh-filter bpsh-dropdown">
-
-                <label for="groups-order-by"><?php _e('Order By:', 'buddypress'); ?></label>
-
-                <select id="groups-order-by">
-                    <option value="active"><?php _e('Last Active', 'buddypress'); ?></option>
-                    <option value="popular"><?php _e('Most Members', 'buddypress'); ?></option>
-                    <option value="newest"><?php _e('Newly Created', 'buddypress'); ?></option>
-                    <option value="alphabetical"><?php _e('Alphabetical', 'buddypress'); ?></option>
-
-                    <?php
-                    /**
-                     * Fires inside the groups directory group order options.
-                     *
-                     * @since 1.0.0
-                     */
-                    do_action('bp_groups_directory_order_options');
-                    ?>
-                </select>
-            </div>
-        </div>
-    </div>
-
     <h2 class="bp-screen-reader-text"><?php
         /* translators: accessibility text */
         _e('Groups directory', 'buddypress');
@@ -82,7 +48,7 @@ require_once plugin_dir_path(dirname(__FILE__)) . 'groups/search.php';
     <div id="groups-dir-list" class="groups dir-list">
         <?php
         add_filter('bp_ajax_querystring', function($qs) {
-            return $qs .= get_option('bpsh_queryargs');
+            return $qs .= bp_get_option('bpsh_queryargs');
         });
         bp_get_template_part('groups/groups-loop');
         ?>

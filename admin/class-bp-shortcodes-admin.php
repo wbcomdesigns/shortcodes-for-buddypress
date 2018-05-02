@@ -95,11 +95,32 @@ class Bp_Shortcodes_Admin {
     }
 
     public function bpsh_add_option_page() {
-        add_submenu_page('options-general.php', __('BP Shortcodes', $this->plugin_name), __('BP Shortcodes', $this->plugin_name), 'manage_options', 'bpsh-shortcodes', array($this, 'bpsh_add_page_callback'));
+        $settings_page = bp_core_do_network_admin() ? 'settings.php' : 'options-general.php';
+        add_submenu_page($settings_page, __('BP Shortcodes', $this->plugin_name), __('BP Shortcodes', $this->plugin_name), 'manage_options', 'bpsh-shortcodes', array($this, 'bpsh_add_page_callback'));
     }
 
     public function bpsh_add_page_callback() {
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/templates/bp-shortcodes-template.php';
+        $current = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'groups';
+        ?>
+        <div class="wrap">
+            <h1> <?php esc_html_e( 'Shortcodes For BuddyPress', 'bp-shortcodes' ); ?></h1>
+            <p><?php _e('BuddyPress Shortcode plugin allows you to embed BuddyPress Activities, BuddyPress Members and Groups in posts/pages using shortcodes.','bp-shortcodes');?></p>
+        </div>
+        <?php
+        $short_tabs = array(
+            'groups'        => __( 'Groups Shortcodes', 'bp-shortcodes' ),
+            'activity' => __( 'Activity Shortcodes', 'bp-shortcodes' ),
+            'members'  => __( 'Members Shortcodes', 'bp-shortcodes' ),
+        );
+
+        $tab_html = '<h2 class="nav-tab-wrapper">';
+        foreach ( $short_tabs as $short_tab => $short_name ) {
+            $class     = ( $short_tab == $current ) ? 'active' : '';
+            $tab_html .= '<a class="nav-tab ' . $class . '" href="admin.php?page=bpsh-shortcodes&tab=' . $short_tab . '">' . $short_name . '</a>';
+        }
+        $tab_html .= '</h2>';
+        echo $tab_html;
+        include 'inc/bp-tabs-options.php';
     }
 
     public function bpsh_generate_activity_listing($atts, $content = null) {
@@ -134,7 +155,7 @@ class Bp_Shortcodes_Admin {
         if (!empty($bpsh_query)) {
             $bpsh_query = '&' . $bpsh_query;
         }
-        update_option('bpsh_queryargs', $bpsh_query);
+        bp_update_option('bpsh_queryargs', $bpsh_query);
         //hide on user activity, activity directory and group activity
         if ($atts['hide_on_activity'] && ( function_exists('bp_is_activity_component') && bp_is_activity_component() ||
                 function_exists('bp_is_group_home') && bp_is_group_home() )) {
@@ -155,7 +176,7 @@ class Bp_Shortcodes_Admin {
 
     public function bpsh_generate_members_listing($atts, $content = null) {
         $inc_atts = $atts;
-        if( array_key_exists( 'exclude_member_role', $atts )) {
+        if( !empty($atts) && array_key_exists( 'exclude_member_role', $atts )) {
             if (strpos($atts['exclude_member_role'], ',') !== false) {
                 $exclude_roles = explode(',', $atts['exclude_member_role']);
             } else {
@@ -175,7 +196,7 @@ class Bp_Shortcodes_Admin {
             $inc_atts['exclude'] = rtrim(implode(',', $u), ',');
             unset($inc_atts['exclude_member_role']);
         }
-        if( array_key_exists( 'include_member_role', $atts )) {       
+        if( !empty($atts) && array_key_exists( 'include_member_role', $atts )) {     
             if (strpos($atts['include_member_role'], ',') !== false) {
                 $exclude_roles = explode(',', $atts['include_member_role']);
             } else {
@@ -221,7 +242,7 @@ class Bp_Shortcodes_Admin {
         if (!empty($bpsh_query)) {
             $bpsh_query = '&' . $bpsh_query;
         }
-        update_option('bpsh_queryargs', $bpsh_query);
+        bp_update_option('bpsh_queryargs', $bpsh_query);
         if (function_exists('bp_is_active')) {
             ?>  
             <?php if ($atts['title']) { ?> 
@@ -265,7 +286,7 @@ class Bp_Shortcodes_Admin {
         if (!empty($bpsh_query)) {
             $bpsh_query = '&' . $bpsh_query;
         }
-        update_option('bpsh_queryargs', $bpsh_query);
+        bp_update_option('bpsh_queryargs', $bpsh_query);
         ?>
         <?php if (function_exists('bp_is_active')) { ?>  
             <?php if ($atts['title']) { ?> 

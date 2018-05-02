@@ -21,34 +21,11 @@
 if (!defined('WPINC')) {
     die;
 }
-
+if (!defined('BPSH_PLUGIN_BASENAME')) {
+    define('BPSH_PLUGIN_BASENAME', plugin_basename(__FILE__));
+}
 function bpsh_plugin_init() {
-    // If BuddyPress is NOT active
-    if (current_user_can('activate_plugins') && !class_exists('BuddyPress')) {
-        add_action('admin_init', 'bpsh_plugin_deactivate');
-        add_action('admin_notices', 'bpsh_plugin_admin_notice');
-
-        // Deactivate the bp-shortcodes Plugin
-        function bpsh_plugin_deactivate() {
-            deactivate_plugins(plugin_basename(__FILE__));
-        }
-
-        // Throw an Alert to tell the Admin why it didn't activate
-        function bpsh_plugin_admin_notice() {
-            $bpsh_plugin = __('BuddyPress Shortcode', 'bp-shortcodes');
-            $buddypress_plugin = __('BuddyPress', 'bp-shortcodes');
-            echo '<div class="error"><p>'
-            . sprintf(__('%1$s requires %2$s to function correctly. Please activate %2$s before activating %1$s. For now, the plugin has been deactivated.', 'bp-shortcodes'), '<strong>' . esc_html($bpsh_plugin) . '</strong>', '<strong>' . esc_html($buddypress_plugin) . '</strong>')
-            . '</p></div>';
-            if (isset($_GET['activate']))
-                unset($_GET['activate']);
-        }
-
-    }else {
-        if (!defined('BPSH_PLUGIN_BASENAME')) {
-            define('BPSH_PLUGIN_BASENAME', plugin_basename(__FILE__));
-        }
-
+    if ( bpsh_check_config() ){
         /**
          * The core plugin class that is used to define internationalization,
          * admin-specific hooks, and public-facing site hooks.
@@ -58,7 +35,72 @@ function bpsh_plugin_init() {
     }
 }
 
-add_action('plugins_loaded', 'bpsh_plugin_init');
+add_action('bp_loaded', 'bpsh_plugin_init');
+
+function bpsh_check_config(){
+    global $bp;
+    $config = array(
+        'blog_status'    => false, 
+        'network_active' => false, 
+        'network_status' => true 
+    );
+    if ( get_current_blog_id() == bp_get_root_blog_id() ) {
+        $config['blog_status'] = true;
+    }
+    
+    $network_plugins = get_site_option( 'active_sitewide_plugins', array() );
+
+    // No Network plugins
+    if ( empty( $network_plugins ) )
+
+    // Looking for BuddyPress and bp-activity plugin
+    $check[] = $bp->basename;
+    $check[] = BPSH_PLUGIN_BASENAME;
+
+    // Are they active on the network ?
+    $network_active = array_diff( $check, array_keys( $network_plugins ) );
+    
+    // If result is 1, your plugin is network activated
+    // and not BuddyPress or vice & versa. Config is not ok
+    if ( count( $network_active ) == 1 )
+        $config['network_status'] = false;
+
+    // We need to know if the plugin is network activated to choose the right
+    // notice ( admin or network_admin ) to display the warning message.
+    $config['network_active'] = isset( $network_plugins[ BPSH_PLUGIN_BASENAME ] );
+
+    // if BuddyPress config is different than bp-activity plugin
+    if ( !$config['blog_status'] || !$config['network_status'] ) {
+
+        $warnings = array();
+        if ( !bp_core_do_network_admin() && !$config['blog_status'] ) {
+            add_action( 'admin_notices', 'bpsh_same_blog' );
+            $warnings[] = __( 'Shortcodes For BuddyPress requires to be activated on the blog where BuddyPress is activated.', 'bp-shortcodes' );
+        }
+
+        if ( bp_core_do_network_admin() && !$config['network_status'] ) {
+            add_action( 'admin_notices', 'bpsh_same_network_config' );
+            $warnings[] = __( 'Shortcodes For BuddyPress and BuddyPress need to share the same network configuration.', 'bp-shortcodes' );
+        }
+
+        if ( ! empty( $warnings ) ) :
+            return false;
+        endif;
+    }
+    return true;
+}
+
+function bpsh_same_blog(){
+    echo '<div class="error"><p>'
+    . esc_html( __( 'Shortcodes For BuddyPress requires to be activated on the blog where BuddyPress is activated.', 'bp-shortcodes' ) )
+    . '</p></div>';
+}
+
+function bpsh_same_network_config(){
+    echo '<div class="error"><p>'
+    . esc_html( __( 'Shortcodes For BuddyPress and BuddyPress need to share the same network configuration.', 'bp-shortcodes' ) )
+    . '</p></div>';
+}
 
 /**
  * Begins execution of the plugin.

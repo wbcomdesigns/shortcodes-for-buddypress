@@ -158,7 +158,7 @@ class Bp_Shortcodes {
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
         $this->loader->add_action("plugin_action_links_$this->plugin_basename", $plugin_admin, 'bpsh_add_settings_link');
-        $this->loader->add_action('admin_menu', $plugin_admin, 'bpsh_add_option_page');
+        $this->loader->add_action(bp_core_admin_hook(), $plugin_admin, 'bpsh_add_option_page');
         $this->loader->add_shortcode('activity-listing', $plugin_admin, 'bpsh_generate_activity_listing');
         $this->loader->add_shortcode("members-listing", $plugin_admin, "bpsh_generate_members_listing");
         $this->loader->add_shortcode("groups-listing", $plugin_admin, "bpsh_generate_group_listing");
