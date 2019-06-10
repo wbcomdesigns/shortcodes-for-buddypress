@@ -6,11 +6,11 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://wbcomdesigns.com
+ * @link       https://wbcomdesigns.com/plugins
  * @since      1.0.0
  *
- * @package    Bp_Shortcodes
- * @subpackage Bp_Shortcodes/includes
+ * @package    Shortcodes_For_Buddypress
+ * @subpackage Shortcodes_For_Buddypress/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Bp_Shortcodes
- * @subpackage Bp_Shortcodes/includes
+ * @package    Shortcodes_For_Buddypress
+ * @subpackage Shortcodes_For_Buddypress/includes
  * @author     Wbcom Designs <admin@wbcomdesigns.com>
  */
-class Bp_Shortcodes_i18n {
+class Shortcodes_For_Buddypress_i18n {
 
 
 	/**
@@ -35,7 +35,7 @@ class Bp_Shortcodes_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'bp-shortcodes',
+			'shortcodes-for-buddypress',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
