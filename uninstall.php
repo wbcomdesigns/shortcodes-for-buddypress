@@ -19,10 +19,10 @@
  * For more information, see the following discussion:
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
- * @link       http://wbcomdesigns.com
+ * @link       https://wbcomdesigns.com/plugins
  * @since      1.0.0
  *
- * @package    Bp_Shortcodes
+ * @package    Shortcodes_For_Buddypress
  */
 
 // If uninstall not called from WordPress, then exit.
