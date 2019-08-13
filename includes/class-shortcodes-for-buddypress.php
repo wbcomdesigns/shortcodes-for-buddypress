@@ -73,7 +73,7 @@ class Shortcodes_For_Buddypress {
 			$this->version = '1.0.0';
 		}
 		$this->plugin_name = 'shortcodes-for-buddypress';
-
+		$this->plugin_basename = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME;
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -156,6 +156,8 @@ class Shortcodes_For_Buddypress {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'plugin_action_links_' . $this->plugin_basename, $plugin_admin, 'buddypress_shortcodes_settings_link');
+		$this->loader->add_action('admin_menu', $plugin_admin, 'buddypress_shortcodes_option_page');
 
 	}
 
@@ -169,9 +171,18 @@ class Shortcodes_For_Buddypress {
 	private function define_public_hooks() {
 
 		$plugin_public = new Shortcodes_For_Buddypress_Public( $this->get_plugin_name(), $this->get_version() );
-
+	
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		
+		$this->loader->add_filter( 'bp_is_current_component', $plugin_public, 'buddypress_shortcodes_bp_is_current_component', 5, 1 );
+		$this->loader->add_filter( 'bp_current_component', $plugin_public, 'buddypress_shortcodes_bp_is_current_component', 5, 1 );
+		
+		$this->loader->add_filter('body_class', $plugin_public, 'buddypress_shortcodes_body_classes');
+		$this->loader->add_shortcode( 'activity-listing', $plugin_public, 'buddypress_shortcodes_activity_listing' );
+		$this->loader->add_shortcode( 'members-listing', $plugin_public, 'buddypress_shortcodes_members_listing' );
+        $this->loader->add_shortcode( 'groups-listing', $plugin_public, 'buddypress_shortcodes_group_listing' );		
+		
 
 	}
 

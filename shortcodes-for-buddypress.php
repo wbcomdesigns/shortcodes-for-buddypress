@@ -37,6 +37,18 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'SHORTCODES_FOR_BUDDYPRESS_VERSION', '1.0.0' );
 
+if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR' ) ) {
+	define( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR', plugin_dir_path(__FILE__) );
+}
+
+if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL' ) ) {
+	define( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL', plugins_url('/', __FILE__) );
+}
+if ( !defined('SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME') ) {
+	define('SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME', plugin_basename(__FILE__));
+}
+
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-shortcodes-for-buddypress-activator.php

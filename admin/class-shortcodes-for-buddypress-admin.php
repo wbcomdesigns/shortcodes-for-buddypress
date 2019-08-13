@@ -99,5 +99,18 @@ class Shortcodes_For_Buddypress_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
-
+	
+	public function buddypress_shortcodes_option_page() {
+		add_submenu_page('options-general.php', esc_html__('BP Shortcodes', $this->plugin_name), esc_html__('BP Shortcodes', $this->plugin_name), 'manage_options', 'bpsh-shortcodes', array($this, 'buddypress_shortcodes_option_page_callback'));
+	}
+	
+	public function buddypress_shortcodes_option_page_callback() {
+        require_once plugin_dir_path(dirname(__FILE__)) . 'templates/bp-shortcodes-template.php';
+    }
+	public function buddypress_shortcodes_settings_link( $links ) {		
+        $settings_link = '<a href="options-general.php?page=bpsh-shortcodes">' . esc_html__('Documentation', 'shortcodes-for-buddypress' ) . '</a>';
+        array_push($links, $settings_link);
+		
+        return $links;    
+	}
 }
