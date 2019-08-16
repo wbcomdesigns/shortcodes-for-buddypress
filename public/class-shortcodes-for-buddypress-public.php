@@ -107,7 +107,7 @@ class Shortcodes_For_Buddypress_Public {
 			$current_component = 'activity';
 		}
 		
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'members-listing' ) ) ) {
+		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'notification' ) ) ) {
 			$current_component = 'members';
 		}
 		
@@ -129,7 +129,7 @@ class Shortcodes_For_Buddypress_Public {
 	public function buddypress_shortcodes_body_classes( $classes ) {
 		global $post;
 
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) || has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
+		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) || has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'groups-listing' ) || has_shortcode( $post->post_content, 'notification' ) ) ) {
 			$classes[] = 'bpsh-buddypress';
 			$classes[] = 'buddypress';			
 		}
@@ -348,6 +348,19 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_group_listing( $atts, $content = null ) {
 		global $groups_atts;
+		
+		/* Check Groups Components not activated then return shortcode */
+		$bp_components = get_option( 'bp-active-components' );		
+		if ( !isset($bp_components['groups']) ){
+			return $content;
+		}
+		
+		
+		/* Check Scope is personal then pass current user id */
+		if ( isset($atts['scope']) && $atts['scope'] == 'personal') {
+			$user_id = ( bp_displayed_user_id() ) ? bp_displayed_user_id() : bp_loggedin_user_id();
+			$atts['user_id'] = $user_id;
+		}		
 		$bpsh_query = build_query($atts);
 		if (!empty($bpsh_query)) {
             $bpsh_query = '&' . $bpsh_query;
@@ -398,6 +411,43 @@ class Shortcodes_For_Buddypress_Public {
 				$this->buddypress_shortcodes_template( 'nouveau/groups/bp-shortcodes-groups.php' );
 			}
         }
+		return ob_get_clean(); 
+	}
+	
+	/**
+	 * Display Loggedin User Notifications
+	 *
+	 * @since    1.0.0
+	 */
+	public function buddypress_shortcodes_notifications( $atts, $content = null ){
+		
+		$default_atts = array(
+							'title' 			=> '',							
+							'order'	 			=> 'DESC',
+							'orderby' 			=> 'last_activity',
+							'page' 				=> 1,
+							'per_page' 			=> 20,							
+							'user_id' 			=> false,							
+							'container_class'	=> 'notification', //default container,							
+						);
+						
+		$groups_atts = shortcode_atts( $default_atts, $atts );
+		extract($groups_atts);
+		$_bp_theme_package = get_option( '_bp_theme_package_id' );
+		ob_start();
+		if (function_exists('bp_is_active')) {
+			
+			if ( $title != '' ) { ?> 
+                <h3 class="section-title"><span><?php echo $title; ?></span></h3>
+                <?php
+            }
+			if ( $_bp_theme_package == 'legacy' ) {
+				$this->buddypress_shortcodes_template( 'legacy/notifications/notifications-loop.php' );
+			} else {
+				$this->buddypress_shortcodes_template( 'nouveau/notifications/notifications-loop.php' );
+			}
+        }
+		
 		return ob_get_clean(); 
 	}
 
