@@ -176,7 +176,9 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		
 		$this->loader->add_filter( 'bp_is_current_component', $plugin_public, 'buddypress_shortcodes_bp_is_current_component', 5, 1 );
-		$this->loader->add_filter( 'bp_current_component', $plugin_public, 'buddypress_shortcodes_bp_is_current_component', 5, 1 );
+		$this->loader->add_filter( 'bp_current_component', $plugin_public, 'buddypress_shortcodes_bp_current_component', 5, 1 );
+		
+		$this->loader->add_filter( 'bp_nouveau_get_search_primary_object', $plugin_public, 'buddypress_shortcodes_bp_nouveau_get_search_primary_object', 10, 1 );
 		
 		$this->loader->add_filter('body_class', $plugin_public, 'buddypress_shortcodes_body_classes');
 		$this->loader->add_shortcode( 'activity-listing', $plugin_public, 'buddypress_shortcodes_activity_listing' );

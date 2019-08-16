@@ -102,9 +102,27 @@ class Shortcodes_For_Buddypress_Public {
 	
 	public function buddypress_shortcodes_bp_is_current_component( $current_component ) {
 		global $post;
+		
 		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 			$current_component = 'activity';
 		}
+		
+		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'members-listing' ) ) ) {
+			$current_component = 'members';
+		}
+		
+		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
+			$current_component = 'groups';
+		}
+		return $current_component;
+	}
+	
+	public function buddypress_shortcodes_bp_current_component( $current_component ) {
+		
+		if ( isset($_REQUEST['object']) &&  $_REQUEST['object'] != '' ) {
+			$current_component = $_REQUEST['object'];
+		}
+		
 		return $current_component;
 	}
 	
@@ -116,8 +134,17 @@ class Shortcodes_For_Buddypress_Public {
 			$classes[] = 'buddypress';			
 		}
 		
-        return $classes;
+        return $classes;		
+	}
+	
+	public function buddypress_shortcodes_bp_nouveau_get_search_primary_object( $object ) {
+		global $post;
+
+		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) )  ) {
+			$object = 'dir';		
+		}
 		
+		return $object;
 	}
 	
 	/**
@@ -163,7 +190,7 @@ class Shortcodes_For_Buddypress_Public {
 						'in' 				=> false, // comma-separated list or array of activity IDs among which to search
 						'sort' 				=> 'DESC', // sort DESC or ASC
 						'page' 				=> 1, // which page to load
-						'per_page' 			=> 5, //how many per page
+						'per_page' 			=> 10, //how many per page
 						'max' 				=> false, // max number to return
 						'count_total' 		=> true,
 						'scope' 			=> false,
@@ -189,7 +216,9 @@ class Shortcodes_For_Buddypress_Public {
                 function_exists('bp_is_group_home') && bp_is_group_home() )) {
             return '';
         }			
-			
+		
+		$_bp_theme_package = get_option( '_bp_theme_package_id' );
+		
 		ob_start();
 		
 		if (function_exists('bp_is_active')) {
@@ -198,7 +227,11 @@ class Shortcodes_For_Buddypress_Public {
                 <h3 class="section-title"><span><?php echo esc_html($title); ?></span></h3>
                 <?php
             }
-			$this->buddypress_shortcodes_template( 'activity/bp-shortcodes-activity.php' );
+			if ( $_bp_theme_package == 'legacy' ) {
+				$this->buddypress_shortcodes_template( 'legacy/activity/bp-shortcodes-activity.php' );
+			} else {
+				$this->buddypress_shortcodes_template( 'nouveau/activity/bp-shortcodes-activity.php' );
+			}
         }
 		
 		return ob_get_clean(); 
@@ -211,10 +244,98 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_members_listing( $atts, $content = null ) {
 		
+		global $members_atts;
+		if( !empty($atts) && array_key_exists( 'exclude_member_role', $atts )) {
+            if (strpos($atts['exclude_member_role'], ',') !== false) {
+                $exclude_roles = explode(',', $atts['exclude_member_role']);
+            } else {
+                $exclude_roles = $atts['exclude_member_role'];
+            }
+            if (strpos($atts['exclude'], ',') !== false) {
+                $exclude_ids = explode(',', $atts['exclude']);
+            } else {
+                $exclude_ids = array($atts['exclude']);
+            }
+            $users_data = get_users(array('role__in' => $exclude_roles));
+            $uid_collection = array();
+            foreach ($users_data as $key => $users) {
+                $uid_collection[] = $users->ID;
+            }
+            $u = array_unique(array_merge($uid_collection, $exclude_ids));
+            $atts['exclude'] = rtrim(implode(',', $u), ',');
+            unset($atts['exclude_member_role']);
+        }
+        if( !empty($atts) && array_key_exists( 'include_member_role', $atts )) {       
+            if (strpos($atts['include_member_role'], ',') !== false) {
+                $exclude_roles = explode(',', $atts['include_member_role']);
+            } else {
+                $exclude_roles = $atts['include_member_role'];
+            }
+            if (strpos($atts['include'], ',') !== false) {
+                $exclude_ids = explode(',', $atts['include']);
+            } else {
+                $exclude_ids = array($atts['include']);
+            }
+            $users_data = get_users(array('role__in' => $exclude_roles));
+            $uid_collection = array();
+            foreach ($users_data as $key => $users) {
+                $uid_collection[] = $users->ID;
+            }
+            $u = array_unique(array_merge($uid_collection, $exclude_ids));
+            $atts['include'] = rtrim(implode(',', $u), ',');
+            unset($atts['include_member_role']);
+        }
 		
-		$atts = shortcode_atts( $default_atts, $atts );
-		extract($atts);
+		
+		$bpsh_query = build_query($atts);
+		if (!empty($bpsh_query)) {
+            $bpsh_query = '&' . $bpsh_query;
+        }		
+		$default_atts = array(
+							'title' 				=> '',
+							'type' 					=> 'active', // Type: active ( default ) | random | newest | popular | online | alphabetical.
+							'page' 					=> 1,
+							'per_page' 				=> 20,
+							'max' 					=> false,
+							'page_arg' 				=> 'upage', // See https://buddypress.trac.wordpress.org/ticket/3679.
+							'include' 				=> false, // Pass a user_id or a list (comma-separated or array) of user_ids to only show these users.
+							'exclude' 				=> false, // Pass a user_id or a list (comma-separated or array) of user_ids to exclude these users.
+							'user_id' 				=> false, // Pass a user_id to only show friends of this user.
+							'member_type' 			=> false, // Can be a comma-separated list.
+							'include_member_role' 	=> '', // Can be a comma-separated list.
+							'exclude_member_role' 	=> '', // Can be a comma-separated list.
+							'member_type__in' 		=> '',
+							'member_type__not_in'	=> '',
+							'search_terms' 			=> false,
+							'use_compat' 			=> bp_use_theme_compat_with_current_theme(),
+							'meta_key' 				=> false, // Only return users with this usermeta.
+							'meta_value' 			=> false, // Only return users where the usermeta value matches. Requires meta_key.
+							'populate_extras' 		=> true,      // Fetch usermeta? Friend count, last active etc.
+							'container_class' 		=> 'members', //default container,
+							'bpsh_query'			=> $bpsh_query
+						);
+		
+		
+		$members_atts = shortcode_atts( $default_atts, $atts );
+		
+		update_option('bpsh_membe_queryargs', $bpsh_query);
+		extract($members_atts);
+		
+		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 		ob_start();
+		
+		if (function_exists('bp_is_active')) {
+			
+			if ( $title != '' ) { ?> 
+                <h3 class="section-title"><span><?php echo $title; ?></span></h3>
+                <?php
+            }
+			if ( $_bp_theme_package == 'legacy' ) {
+				$this->buddypress_shortcodes_template( 'legacy/members/bp-shortcodes-members.php' );
+			} else {
+				$this->buddypress_shortcodes_template( 'nouveau/members/bp-shortcodes-members.php' );
+			}
+        }        
 		
 		return ob_get_clean(); 
 	}
@@ -226,13 +347,57 @@ class Shortcodes_For_Buddypress_Public {
 	 * @since    1.0.0
 	 */
 	public function buddypress_shortcodes_group_listing( $atts, $content = null ) {
+		global $groups_atts;
+		$bpsh_query = build_query($atts);
+		if (!empty($bpsh_query)) {
+            $bpsh_query = '&' . $bpsh_query;
+        }	
 		
+		$default_atts = array(
+							'title' 				=> '',
+							'type' 					=> 'alphabetical', //popular, alphabetical, invites, single-group
+							'order'	 				=> 'DESC',
+							'orderby' 				=> 'last_activity',
+							'page' 					=> 1,
+							'per_page' 				=> 20,
+							'max' 					=> false,
+							'show_hidden' 			=> false,
+							'page_arg' 				=> 'grpage',							
+							'user_id' 				=> false,
+							'slug' 					=> false,
+							'search_terms' 			=> false,
+							'group_type' 			=> false,
+							'group_type__in' 		=> '',
+							'group_type__not_in' 	=> '',
+							'meta_query' 			=> false,
+							'use_compat' 			=> bp_use_theme_compat_with_current_theme(),
+							'include' 				=> false,
+							'exclude' 				=> false,
+							'parent_id' 			=> null,
+							'update_meta_cache' 	=> true,
+							'update_admin_cache' 	=> bp_is_groups_directory() || bp_is_user_groups(),
+							'container_class' 		=> 'group', //default container,
+							'bpsh_query'			=> $bpsh_query
+						);
 		
-		$atts = shortcode_atts( $default_atts, $atts );
-		extract($atts);
+		$groups_atts = shortcode_atts( $default_atts, $atts );
+		extract($groups_atts);
 		
+		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 		ob_start();
-		
+		if (function_exists('bp_is_active')) {
+			
+			if ( $title != '' ) { ?> 
+                <h3 class="section-title"><span><?php echo $title; ?></span></h3>
+                <?php
+            }
+			
+			if ( $_bp_theme_package == 'legacy' ) {
+				$this->buddypress_shortcodes_template( 'legacy/groups/bp-shortcodes-groups.php' );
+			} else {
+				$this->buddypress_shortcodes_template( 'nouveau/groups/bp-shortcodes-groups.php' );
+			}
+        }
 		return ob_get_clean(); 
 	}
 
