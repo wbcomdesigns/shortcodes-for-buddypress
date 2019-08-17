@@ -114,6 +114,7 @@ class Shortcodes_For_Buddypress_Public {
 		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
 			$current_component = 'groups';
 		}
+		
 		return $current_component;
 	}
 	
@@ -420,6 +421,11 @@ class Shortcodes_For_Buddypress_Public {
 	 * @since    1.0.0
 	 */
 	public function buddypress_shortcodes_notifications( $atts, $content = null ){
+		global $notifications_atts;
+		$bpsh_query = build_query($atts);
+		if (!empty($bpsh_query)) {
+            $bpsh_query = '&' . $bpsh_query;
+        }	
 		
 		$default_atts = array(
 							'title' 			=> '',							
@@ -427,13 +433,17 @@ class Shortcodes_For_Buddypress_Public {
 							'orderby' 			=> 'last_activity',
 							'page' 				=> 1,
 							'per_page' 			=> 20,							
+							'max' 				=> '',							
 							'user_id' 			=> false,							
 							'container_class'	=> 'notification', //default container,							
+							'bpsh_query'			=> $bpsh_query
 						);
 						
-		$groups_atts = shortcode_atts( $default_atts, $atts );
-		extract($groups_atts);
+		$notifications_atts = shortcode_atts( $default_atts, $atts );		
+		extract($notifications_atts);
+		
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
+		
 		ob_start();
 		if (function_exists('bp_is_active')) {
 			
