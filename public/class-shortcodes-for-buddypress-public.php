@@ -99,79 +99,79 @@ class Shortcodes_For_Buddypress_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-public.js', array( 'jquery' ), $this->version, false );
 
 	}
-	
+
 	public function buddypress_shortcodes_bp_is_current_component( $current_component ) {
 		global $post;
-		
+
 		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 			$current_component = 'activity';
 		}
-		
+
 		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'notification' ) ) ) {
 			$current_component = 'members';
 		}
-		
+
 		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
 			$current_component = 'groups';
 		}
-		
+
 		return $current_component;
 	}
-	
+
 	public function buddypress_shortcodes_bp_current_component( $current_component ) {
-		
+
 		if ( isset($_REQUEST['object']) &&  $_REQUEST['object'] != '' ) {
 			$current_component = $_REQUEST['object'];
 		}
-		
+
 		return $current_component;
 	}
-	
+
 	public function buddypress_shortcodes_body_classes( $classes ) {
 		global $post;
 
 		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) || has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'groups-listing' ) || has_shortcode( $post->post_content, 'notification' ) ) ) {
 			$classes[] = 'bpsh-buddypress';
-			$classes[] = 'buddypress';			
+			$classes[] = 'buddypress';
 		}
-		
-        return $classes;		
+
+        return $classes;
 	}
-	
+
 	public function buddypress_shortcodes_bp_nouveau_get_search_primary_object( $object ) {
 		global $post;
 
 		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) )  ) {
-			$object = 'dir';		
+			$object = 'dir';
 		}
-		
+
 		return $object;
 	}
-	
+
 	/**
 	 * Include EDD sell services template file.
 	 *
 	 * @since    1.0.0
 	 */
 	public function buddypress_shortcodes_template( $file_name ) {
-		
+
 		$template_name ='shortcodes-for-buddypress/' . $file_name;
-		
+
 		if ( file_exists( STYLESHEETPATH . '/' . $template_name ) ) {
-			
+
 			include STYLESHEETPATH . '/' . $template_name;
-			
+
 		} elseif ( file_exists( TEMPLATEPATH . '/' . $template_name ) ) {
-			
+
 			include TEMPLATEPATH . '/' . $template_name;
-			
+
 		} else {
-			
+
 			include SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR . 'templates/' . $file_name;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Call BuddyPress Activity Listing shortcode
 	 *
@@ -182,7 +182,7 @@ class Shortcodes_For_Buddypress_Public {
 		$bpsh_query = build_query($atts);
 		if (!empty($bpsh_query)) {
             $bpsh_query = '&' . $bpsh_query;
-        }		
+        }
 		$default_atts = array(
 						'title' 			=> '', //title of the section
 						'display_comments' 	=> 'threaded',
@@ -209,22 +209,22 @@ class Shortcodes_For_Buddypress_Public {
 						'hide_on_activity' 	=> 1, //hide on user and group activity pages
 						'bpsh_query'		=> $bpsh_query
 				);
-		
-		$activity_atts = shortcode_atts( $default_atts, $atts );		
+
+		$activity_atts = shortcode_atts( $default_atts, $atts );
 		extract($activity_atts);
-		
+
 		if ( $atts['hide_on_activity'] && ( function_exists('bp_is_activity_component') && bp_is_activity_component() ||
                 function_exists('bp_is_group_home') && bp_is_group_home() )) {
             return '';
-        }			
-		
+        }
+
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
-		
+
 		ob_start();
-		
+
 		if (function_exists('bp_is_active')) {
-			
-			if ( $title != '' ) { ?> 
+
+			if ( $title != '' ) { ?>
                 <h3 class="section-title"><span><?php echo esc_html($title); ?></span></h3>
                 <?php
             }
@@ -234,17 +234,17 @@ class Shortcodes_For_Buddypress_Public {
 				$this->buddypress_shortcodes_template( 'nouveau/activity/bp-shortcodes-activity.php' );
 			}
         }
-		
-		return ob_get_clean(); 
+
+		return ob_get_clean();
 	}
-	
+
 	/**
 	 * Call BuddyPress Members Listing shortcode
 	 *
 	 * @since    1.0.0
 	 */
 	public function buddypress_shortcodes_members_listing( $atts, $content = null ) {
-		
+
 		global $members_atts;
 		if( !empty($atts) && array_key_exists( 'exclude_member_role', $atts )) {
             if (strpos($atts['exclude_member_role'], ',') !== false) {
@@ -266,7 +266,7 @@ class Shortcodes_For_Buddypress_Public {
             $atts['exclude'] = rtrim(implode(',', $u), ',');
             unset($atts['exclude_member_role']);
         }
-        if( !empty($atts) && array_key_exists( 'include_member_role', $atts )) {       
+        if( !empty($atts) && array_key_exists( 'include_member_role', $atts )) {
             if (strpos($atts['include_member_role'], ',') !== false) {
                 $exclude_roles = explode(',', $atts['include_member_role']);
             } else {
@@ -286,12 +286,12 @@ class Shortcodes_For_Buddypress_Public {
             $atts['include'] = rtrim(implode(',', $u), ',');
             unset($atts['include_member_role']);
         }
-		
-		
+
+
 		$bpsh_query = build_query($atts);
 		if (!empty($bpsh_query)) {
             $bpsh_query = '&' . $bpsh_query;
-        }		
+        }
 		$default_atts = array(
 							'title' 				=> '',
 							'type' 					=> 'active', // Type: active ( default ) | random | newest | popular | online | alphabetical.
@@ -315,19 +315,19 @@ class Shortcodes_For_Buddypress_Public {
 							'container_class' 		=> 'members', //default container,
 							'bpsh_query'			=> $bpsh_query
 						);
-		
-		
+
+
 		$members_atts = shortcode_atts( $default_atts, $atts );
-		
+
 		update_option('bpsh_membe_queryargs', $bpsh_query);
 		extract($members_atts);
-		
+
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 		ob_start();
-		
+
 		if (function_exists('bp_is_active')) {
-			
-			if ( $title != '' ) { ?> 
+
+			if ( $title != '' ) { ?>
                 <h3 class="section-title"><span><?php echo $title; ?></span></h3>
                 <?php
             }
@@ -336,12 +336,12 @@ class Shortcodes_For_Buddypress_Public {
 			} else {
 				$this->buddypress_shortcodes_template( 'nouveau/members/bp-shortcodes-members.php' );
 			}
-        }        
-		
-		return ob_get_clean(); 
+        }
+
+		return ob_get_clean();
 	}
-	
-	
+
+
 	/**
 	 * Call BuddyPress Group Listing shortcode
 	 *
@@ -349,24 +349,24 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_group_listing( $atts, $content = null ) {
 		global $groups_atts;
-		
+
 		/* Check Groups Components not activated then return shortcode */
-		$bp_components = get_option( 'bp-active-components' );		
+		$bp_components = get_option( 'bp-active-components' );
 		if ( !isset($bp_components['groups']) ){
 			return $content;
 		}
-		
-		
+
+
 		/* Check Scope is personal then pass current user id */
 		if ( isset($atts['scope']) && $atts['scope'] == 'personal') {
 			$user_id = ( bp_displayed_user_id() ) ? bp_displayed_user_id() : bp_loggedin_user_id();
 			$atts['user_id'] = $user_id;
-		}		
+		}
 		$bpsh_query = build_query($atts);
 		if (!empty($bpsh_query)) {
             $bpsh_query = '&' . $bpsh_query;
-        }	
-		
+        }
+
 		$default_atts = array(
 							'title' 				=> '',
 							'type' 					=> 'alphabetical', //popular, alphabetical, invites, single-group
@@ -376,7 +376,7 @@ class Shortcodes_For_Buddypress_Public {
 							'per_page' 				=> 20,
 							'max' 					=> false,
 							'show_hidden' 			=> false,
-							'page_arg' 				=> 'grpage',							
+							'page_arg' 				=> 'grpage',
 							'user_id' 				=> false,
 							'slug' 					=> false,
 							'search_terms' 			=> false,
@@ -393,28 +393,28 @@ class Shortcodes_For_Buddypress_Public {
 							'container_class' 		=> 'group', //default container,
 							'bpsh_query'			=> $bpsh_query
 						);
-		
+
 		$groups_atts = shortcode_atts( $default_atts, $atts );
 		extract($groups_atts);
-		
+
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 		ob_start();
 		if (function_exists('bp_is_active')) {
-			
-			if ( $title != '' ) { ?> 
+
+			if ( $title != '' ) { ?>
                 <h3 class="section-title"><span><?php echo $title; ?></span></h3>
                 <?php
             }
-			
+
 			if ( $_bp_theme_package == 'legacy' ) {
 				$this->buddypress_shortcodes_template( 'legacy/groups/bp-shortcodes-groups.php' );
 			} else {
 				$this->buddypress_shortcodes_template( 'nouveau/groups/bp-shortcodes-groups.php' );
 			}
         }
-		return ob_get_clean(); 
+		return ob_get_clean();
 	}
-	
+
 	/**
 	 * Display Loggedin User Notifications
 	 *
@@ -425,29 +425,28 @@ class Shortcodes_For_Buddypress_Public {
 		$bpsh_query = build_query($atts);
 		if (!empty($bpsh_query)) {
             $bpsh_query = '&' . $bpsh_query;
-        }	
-		
+        }
+
 		$default_atts = array(
-							'title' 			=> '',							
+							'title' 			=> '',
 							'order'	 			=> 'DESC',
 							'orderby' 			=> 'last_activity',
 							'page' 				=> 1,
-							'per_page' 			=> 20,							
-							'max' 				=> '',							
-							'user_id' 			=> false,							
-							'container_class'	=> 'notification', //default container,							
-							'bpsh_query'			=> $bpsh_query
+							'per_page' 			=> 20,
+							'max' 				=> '',
+							'container_class'	=> 'notification', //default container,
+							'bpsh_query'		=> $bpsh_query
 						);
-						
-		$notifications_atts = shortcode_atts( $default_atts, $atts );		
+
+		$notifications_atts = shortcode_atts( $default_atts, $atts );
 		extract($notifications_atts);
-		
+
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
-		
+
 		ob_start();
 		if (function_exists('bp_is_active')) {
-			
-			if ( $title != '' ) { ?> 
+
+			if ( $title != '' ) { ?>
                 <h3 class="section-title"><span><?php echo $title; ?></span></h3>
                 <?php
             }
@@ -457,8 +456,8 @@ class Shortcodes_For_Buddypress_Public {
 				$this->buddypress_shortcodes_template( 'nouveau/notifications/notifications-loop.php' );
 			}
         }
-		
-		return ob_get_clean(); 
+
+		return ob_get_clean();
 	}
 
 }

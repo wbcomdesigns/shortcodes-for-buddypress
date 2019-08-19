@@ -162,6 +162,9 @@
                 <li>
                     <strong>meta_value</strong> (string):- When used with meta_key, limits results by the a matching usermeta value. Default: false. Requires meta_key.
                 </li>
+				<li>
+                    <strong>container_class</strong>(string):- Default ‘members’ . Allows to change the class of the shortcode contents wrapper.
+                </li>
             </ul>
             <div class="bpsh-admin-shortcode">
                 <h3>Examples:-</h3>
@@ -236,12 +239,12 @@
                 </li>
                 <li>
                     <strong>search_terms</strong> (string):- If provided, only groups whose names or descriptions match the search terms will be returned. Default: value of `$_REQUEST['groups_search']` or `$_REQUEST['s']`, if present. Otherwise false.
-                </li>
-                <li>
-                    <strong>meta_query</strong> (array):- An array of meta_query conditions.
-                </li>
+                </li>                
                 <li>
                     <strong>parent_id</strong> (array|string):- Array or comma-separated list of group IDs. Results will include only child groups of the listed groups. Default: null.
+                </li>
+				<li>
+                    <strong>container_class</strong>(string):- Default ‘group’ . Allows to change the class of the shortcode contents wrapper.
                 </li>
             </ul>
             <div class="bpsh-admin-shortcode">
@@ -256,6 +259,50 @@
                 <p><b>[groups-listing exclude='47,50']</b></p>
             </div>
         </div>
+		<div class="bpsh-admin-shortcode-title"> Notification Shortcodes :- </div>
+        <div class="bpsh-admin-shortcode">
+            <b>[notifications-listing]</b>
+        </div>
+		<div class="bpsh-admin-shortcode-content">
+            <p>Here is the way you can specify options</p>
+            <p class="bpsh-admin-shortcode">
+                <strong>[notifications-listing order="ACS" per_page=10  and so on]</strong>
+            </p>
+            <p>The accepted parameters:-</p>
+            <ul>
+                <li>
+                    <strong>title</strong>(string) :- What should be the title of the groups section.
+                </li>               
+                <li>
+                    <strong>order</strong>(string):- Sort order. 'ASC' or 'DESC'. Default: 'DESC'.
+                </li>
+                <li>
+                    <strong>orderby</strong>(string):- Property to sort by. 'date_created', 'last_activity', 'total_member_count', 'name', 'random'. Default: 'last_activity'.
+                </li>
+                <li>
+                    <strong>per_page</strong>(int|bool):- Number of items to return per page of results. Default: 20.
+                </li>
+                <li>
+                    <strong>page</strong>(int|bool):- Page offset of results to return. Default: 1 (first page of results).
+                </li>
+                <li>
+                    <strong>max</strong>(int|bool):- Does NOT affect query. May change the reported number of total groups found, but not the actual number of found groups. Default: false.
+                </li>
+				<li>
+                    <strong>container_class</strong>(string):- Default ‘notification’ . Allows to change the class of the shortcode contents wrapper.
+                </li>
+            </ul>
+            <div class="bpsh-admin-shortcode">
+                <h3>Examples:-</h3>
+
+                <p><b>[notifications-listing order="ACS"]</b></p>
+
+                <p><b>[notifications-listing per_page=10]</b></p>
+				
+                <p><b>[notifications-listing page=1]</b></p>
+            </div>
+        </div>
+		
         <p><b>Well guys, It’s up to you to explore the possibilities.</b></p>
     </div>
 </div>

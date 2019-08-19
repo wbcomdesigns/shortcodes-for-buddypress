@@ -184,7 +184,7 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_shortcode( 'activity-listing', $plugin_public, 'buddypress_shortcodes_activity_listing' );
 		$this->loader->add_shortcode( 'members-listing', $plugin_public, 'buddypress_shortcodes_members_listing' );
         $this->loader->add_shortcode( 'groups-listing', $plugin_public, 'buddypress_shortcodes_group_listing' );
-		$this->loader->add_shortcode( 'notification', $plugin_public, 'buddypress_shortcodes_notifications' );
+		$this->loader->add_shortcode( 'notifications-listing', $plugin_public, 'buddypress_shortcodes_notifications' );
 
 	}
 
