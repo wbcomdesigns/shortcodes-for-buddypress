@@ -123,6 +123,9 @@ class Shortcodes_For_Buddypress_Public {
 		if ( isset($_REQUEST['object']) &&  $_REQUEST['object'] != '' ) {
 			$current_component = $_REQUEST['object'];
 		}
+		if ( isset($_REQUEST['action']) &&  $_REQUEST['action'] == 'post_update' ) {
+			$current_component = 'activity';
+		}		
 
 		return $current_component;
 	}
@@ -203,7 +206,7 @@ class Shortcodes_For_Buddypress_Public {
 						'secondary_id' 		=> false, // secondary object ID to filter on e.g. a post_id
 						// Searching
 						'search_terms' 		=> false, // specify terms to search on
-						'use_compat' 		=> bp_use_theme_compat_with_current_theme(),
+						'use_compat' 		=> ( function_exists( 'bp_use_theme_compat_with_current_theme' )) ? bp_use_theme_compat_with_current_theme() : '',
 						'allow_posting' 	=> true, //experimental, some of the themes may not support it.
 						'container_class' 	=> 'activity', //default container,
 						'hide_on_activity' 	=> 1, //hide on user and group activity pages
@@ -308,7 +311,7 @@ class Shortcodes_For_Buddypress_Public {
 							'member_type__in' 		=> '',
 							'member_type__not_in'	=> '',
 							'search_terms' 			=> false,
-							'use_compat' 			=> bp_use_theme_compat_with_current_theme(),
+							( function_exists( 'bp_use_theme_compat_with_current_theme' )) ? bp_use_theme_compat_with_current_theme() : '',
 							'meta_key' 				=> false, // Only return users with this usermeta.
 							'meta_value' 			=> false, // Only return users where the usermeta value matches. Requires meta_key.
 							'populate_extras' 		=> true,      // Fetch usermeta? Friend count, last active etc.
@@ -384,12 +387,11 @@ class Shortcodes_For_Buddypress_Public {
 							'group_type__in' 		=> '',
 							'group_type__not_in' 	=> '',
 							'meta_query' 			=> false,
-							'use_compat' 			=> bp_use_theme_compat_with_current_theme(),
+							( function_exists( 'bp_use_theme_compat_with_current_theme' )) ? bp_use_theme_compat_with_current_theme() : '',
 							'include' 				=> false,
 							'exclude' 				=> false,
 							'parent_id' 			=> null,
-							'update_meta_cache' 	=> true,
-							'update_admin_cache' 	=> bp_is_groups_directory() || bp_is_user_groups(),
+							'update_meta_cache' 	=> true,							
 							'container_class' 		=> 'group', //default container,
 							'bpsh_query'			=> $bpsh_query
 						);
