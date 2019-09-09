@@ -21,9 +21,11 @@ global $groups_atts;
 
 	<div class="screen-content">
 
-	<?php //bp_get_template_part( 'common/search-and-filters-bar' ); ?>
-		
 		<input type="hidden" data-bp-filter="groups" value="<?php echo $groups_atts['bpsh_query']?>" />		
+		<?php //bp_get_template_part( 'common/search-and-filters-bar' ); ?>
+		
+		
+		
 		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups">
 			<div id="bp-ajax-loader"><?php bp_nouveau_user_feedback( 'directory-groups-loading' ); ?></div>
 		</div><!-- #groups-dir-list -->

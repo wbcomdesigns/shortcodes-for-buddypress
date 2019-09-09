@@ -16,10 +16,9 @@ global $members_atts;
 	<?php //endif; ?>
 
 	<div class="screen-content">
-
-	<?php //bp_get_template_part( 'common/search-and-filters-bar' ); ?>
-		
 		<input type="hidden" data-bp-filter="members" value="<?php echo $members_atts['bpsh_query']?>" />		
+		<?php //bp_get_template_part( 'common/search-and-filters-bar' ); ?>
+				
 		<div id="members-dir-list" class="members dir-list" data-bp-list="members">
 			<div id="bp-ajax-loader"><?php bp_nouveau_user_feedback( 'directory-members-loading' ); ?></div>
 		</div><!-- #members-dir-list -->

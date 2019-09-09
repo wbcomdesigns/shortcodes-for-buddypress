@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Shortcode For BuddyPress
  * Plugin URI:        https://github.com/wbcomdesigns/shortcodes-for-buddypress
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       This plugin will add an extended feature to the big name “BuddyPress” that will generate Shortcode for Listing Activity Streams, Members and Groups on any post/page in website.
  * Version:           1.0.0
  * Author:            Wbcom Designs
  * Author URI:        https://wbcomdesigns.com/plugins

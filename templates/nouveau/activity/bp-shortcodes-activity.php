@@ -39,14 +39,15 @@ if ( $activity_atts['use_compat'] ) {
 		<?php //bp_get_template_part( 'common/nav/directory-nav' ); ?>
 
 	<?php //endif; ?>
-
+	
+	<input type="hidden" data-bp-filter="activity" value="<?php echo $activity_atts['bpsh_query']?>" />		
 	<div class="screen-content">
 
 		<?php bp_get_template_part( 'common/search-and-filters-bar' ); ?>
 
 		<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
 		
-		<input type="hidden" data-bp-filter="activity" value="<?php echo $activity_atts['bpsh_query']?>" />		
+		
 		
 		<div id="activity-stream" class="activity" data-bp-list="activity" >
 

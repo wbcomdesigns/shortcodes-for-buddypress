@@ -212,8 +212,8 @@ class Shortcodes_For_Buddypress_Public {
 
 		$activity_atts = shortcode_atts( $default_atts, $atts );
 		extract($activity_atts);
-
-		if ( $atts['hide_on_activity'] && ( function_exists('bp_is_activity_component') && bp_is_activity_component() ||
+		
+		if ( isset($atts['hide_on_activity']) && $atts['hide_on_activity'] && ( function_exists('bp_is_activity_component') && bp_is_activity_component() ||
                 function_exists('bp_is_group_home') && bp_is_group_home() )) {
             return '';
         }
