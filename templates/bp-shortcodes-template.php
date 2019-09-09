@@ -24,13 +24,13 @@
                     Default: 'threaded'.
                 </li>
                 <li>
-                    <strong>include</strong>(array|bool):- Array of exact activity IDs to query. Providing an 'include' array will override all other filters passed in the argument array. When viewing the permalink page for a single activity item, this value defaults to the ID of that item. Otherwise the default is false.
+                    <strong>include</strong>(string):- Activity IDs or string of activity IDs comma separated to query. Providing an 'include' activity IDs will override all other filters passed in the argument. When viewing the permalink page for a single activity item, this value defaults to the ID of that item. Otherwise the default is false.
                 </li>
                 <li>
-                    <strong>in</strong>(array|bool):- Array of IDs to limit query by (IN). 'in' is intended to be used in conjunction with other filter parameters. Default: false.
+                    <strong>in</strong>(string):- Activity IDs or string of activity IDs comma separated to limit query by (IN). 'in' is intended to be used in conjunction with other filter parameters. Default: false.
                 </li>
                 <li>
-                    <strong>exclude</strong>(array|bool):- Array of activity IDs to exclude. Default: false.
+                    <strong>exclude</strong>(string):- Activity IDs or string of activity IDs comma separated to exclude. Default: false.
                 </li>
                 <li>
                     <strong>sort</strong>(string):- 'ASC' or 'DESC'. Default: 'DESC'.
@@ -130,10 +130,10 @@
                     <strong>max</strong>(int|bool):- Maximum number of results to return. Default: false (unlimited).
                 </li>
                 <li>
-                    <strong>include</strong>(array|int|string|bool):- Limit results by a list of user IDs. Accepts an array, a single integer, a comma-separated list of IDs, or false (to disable this limiting). Accepts 'active', 'alphabetical','newest', or 'random'. Default: false.
+                    <strong>include</strong>(int|string):- Limit results by a list of user IDs. Accepts  a single integer, a comma-separated list of IDs  (to disable this limiting). Accepts 'active', 'alphabetical','newest', or 'random'. Default: false.
                 </li>
                 <li>
-                    <strong>exclude</strong>(array|int|string|bool):- Exclude users from results by ID. Accepts an array, a single integer, a comma-separated list of IDs, or false (to disable this limiting). Default: false.
+                    <strong>exclude</strong>(int|string):- Exclude users from results by ID. Accepts a single integer, a comma-separated list of IDs (to disable this limiting). Default: false.
                 </li>
                 <li>
                     <strong>user_id</strong>(int):- If provided, results are limited to the friends of the specified user. When on a user's Friends page, defaults to the ID of the displayed user. Otherwise defaults to 0.
@@ -220,28 +220,28 @@
                     <strong>slug</strong>(string):- If provided, only the group with the matching slug will be returned. Default: false.
                 </li>
                 <li>
-                    <strong>include</strong>(int|string):- Array or comma-separated list of group IDs. Results will be limited to groups within the list. Default: false.
+                    <strong>include</strong>(int|string):- Single integer or comma-separated list of group IDs. Results will be limited to groups within the list. Default: false.
                 </li>
                 <li>
-                    <strong>exclude</strong>(int|string):- Array or comma-separated list of group IDs. Results will exclude the listed groups. Default: false.
+                    <strong>exclude</strong>(int|string):- Single integer or comma-separated list of group IDs. Results will exclude the listed groups. Default: false.
                 </li>
                 <li>
                     <strong>user_id</strong>(int):- If provided, results will be limited to groups of which the specified user is a member. Default: value of bp_displayed_user_id().
                 </li>
                 <li>
-                    <strong>group_type</strong>(array|string):- Array or comma-separated list of group types to limit results to.
+                    <strong>group_type</strong>(string):- Single group type or comma-separated list of group types to limit results to.
                 </li>
                 <li>
-                    <strong>member_type__in</strong> (array|string):- Array or comma-separated list of group types to limit results to.
+                    <strong>member_type__in</strong> (string):- Single group type or comma-separated list of group types to limit results to.
                 </li>
                 <li>
-                    <strong>member_type__not_in</strong> (array|string):- Array or comma-separated list of group types that will be excluded from results.
+                    <strong>member_type__not_in</strong> (string):- Single group type or comma-separated list of group types that will be excluded from results.
                 </li>
                 <li>
                     <strong>search_terms</strong> (string):- If provided, only groups whose names or descriptions match the search terms will be returned. Default: value of `$_REQUEST['groups_search']` or `$_REQUEST['s']`, if present. Otherwise false.
                 </li>                
                 <li>
-                    <strong>parent_id</strong> (array|string):- Array or comma-separated list of group IDs. Results will include only child groups of the listed groups. Default: null.
+                    <strong>parent_id</strong> (string|int):- Single group IDs or comma-separated list of group IDs. Results will include only child groups of the listed groups. Default: null.
                 </li>
 				<li>
                     <strong>container_class</strong>(string):- Default ‘group’ . Allows to change the class of the shortcode contents wrapper.
