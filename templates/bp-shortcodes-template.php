@@ -34,10 +34,7 @@
                 </li>
                 <li>
                     <strong>sort</strong>(string):- 'ASC' or 'DESC'. Default: 'DESC'.
-                </li>
-                <li>
-                    <strong>page</strong> (int):- Which page of results to fetch. Using page=1 without per_page will result in no pagination. Default: 1.
-                </li>
+                </li>                
                 <li>
                     <strong>per_page</strong>(int):- Number of results per page. Default: 20.
                 </li>
@@ -122,10 +119,7 @@
                 </li>
                 <li>
                     <strong>per_page</strong>(int|bool):- Number of results per page. Default: 20.
-                </li>
-                <li>
-                    <strong>page</strong>(int|bool):- Page of results to display. Default: 1.
-                </li>
+                </li>                
                 <li>
                     <strong>max</strong>(int|bool):- Maximum number of results to return. Default: false (unlimited).
                 </li>
@@ -203,10 +197,7 @@
                 </li>
                 <li>
                     <strong>per_page</strong>(int|bool):- Number of items to return per page of results. Default: 20.
-                </li>
-                <li>
-                    <strong>page</strong>(int|bool):- Page offset of results to return. Default: 1 (first page of results).
-                </li>
+                </li>                
                 <li>
                     <strong>max</strong>(int|bool):- Does NOT affect query. May change the reported number of total groups found, but not the actual number of found groups. Default: false.
                 </li>
@@ -281,10 +272,7 @@
                 </li>
                 <li>
                     <strong>per_page</strong>(int|bool):- Number of items to return per page of results. Default: 20.
-                </li>
-                <li>
-                    <strong>page</strong>(int|bool):- Page offset of results to return. Default: 1 (first page of results).
-                </li>
+                </li>                
                 <li>
                     <strong>max</strong>(int|bool):- Does NOT affect query. May change the reported number of total groups found, but not the actual number of found groups. Default: false.
                 </li>
