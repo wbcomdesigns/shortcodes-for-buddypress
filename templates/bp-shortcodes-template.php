@@ -43,10 +43,7 @@
                 </li>
                 <li>
                     <strong>max</strong>(int):- Limit the maximum no. of activities to be included in the list
-                </li>
-                <li>
-                    <strong>fields</strong>(string):- Activity fields to retrieve. 'all' to fetch entire activity objects, 'ids' to get only the activity IDs. Default 'all'.
-                </li>
+                </li>                
                 <li>
                     <strong>scope</strong>(string):- Use a BuddyPress pre-built filter.
                     <br/>   - 'just-me' retrieves items belonging only to a user; this is equivalent to passing a 'user_id' argument.
