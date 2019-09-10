@@ -125,7 +125,12 @@ class Shortcodes_For_Buddypress_Public {
 		}
 		if ( isset($_REQUEST['action']) &&  $_REQUEST['action'] == 'post_update' ) {
 			$current_component = 'activity';
-		}		
+		}
+		
+		/* Set Current component activity when submit post from activity listing shortcode */
+		if ( isset($_REQUEST['data']['bp_activity_last_recorded']) &&  $_REQUEST['data']['bp_activity_last_recorded'] != '' ) {
+			$current_component = 'activity';
+		}
 
 		return $current_component;
 	}
