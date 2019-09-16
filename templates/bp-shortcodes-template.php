@@ -218,13 +218,7 @@
                 </li>
                 <li>
                     <strong>group_type</strong>(string):- Single group type or comma-separated list of group types to limit results to.
-                </li>
-                <li>
-                    <strong>member_type__in</strong> (string):- Single group type or comma-separated list of group types to limit results to.
-                </li>
-                <li>
-                    <strong>member_type__not_in</strong> (string):- Single group type or comma-separated list of group types that will be excluded from results.
-                </li>
+                </li>                
                 <li>
                     <strong>search_terms</strong> (string):- If provided, only groups whose names or descriptions match the search terms will be returned. Default: value of `$_REQUEST['groups_search']` or `$_REQUEST['s']`, if present. Otherwise false.
                 </li>                
