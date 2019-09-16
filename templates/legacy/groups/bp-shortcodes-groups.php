@@ -33,19 +33,7 @@ do_action( 'bp_before_directory_groups_page' ); ?>
 	 */
 	do_action( 'bp_before_directory_groups_content' ); ?>
 
-	<?php /* Backward compatibility for inline search form. Use template part instead. */ ?>
-	<?php if ( has_filter( 'bp_directory_groups_search_form' ) ) : ?>
-
-		<div id="group-dir-search" class="dir-search" role="search">
-			<?php bp_directory_groups_search_form(); ?>
-		</div><!-- #group-dir-search -->
-
-	<?php else: ?>
-
-		<?php bp_get_template_part( 'common/search/dir-search-form' ); ?>
-
-	<?php endif; ?>
-
+	
 	<form action="" method="post" id="groups-directory-form" class="dir-form">
 
 		<div id="template-notices" role="alert" aria-atomic="true">
@@ -54,60 +42,6 @@ do_action( 'bp_before_directory_groups_page' ); ?>
 			/** This action is documented in bp-templates/bp-legacy/buddypress/activity/index.php */
 			do_action( 'template_notices' ); ?>
 
-		</div>
-
-		<div class="item-list-tabs" aria-label="<?php esc_attr_e( 'Groups directory main navigation', 'buddypress' ); ?>">
-			<ul>
-				<li class="selected" id="groups-all"><a href="<?php bp_groups_directory_permalink(); ?>"><?php printf( __( 'All Groups %s', 'buddypress' ), '<span>' . bp_get_total_group_count() . '</span>' ); ?></a></li>
-
-				<?php if ( is_user_logged_in() && bp_get_total_group_count_for_user( bp_loggedin_user_id() ) ) : ?>
-					<li id="groups-personal"><a href="<?php echo bp_loggedin_user_domain() . bp_get_groups_slug() . '/my-groups/'; ?>"><?php printf( __( 'My Groups %s', 'buddypress' ), '<span>' . bp_get_total_group_count_for_user( bp_loggedin_user_id() ) . '</span>' ); ?></a></li>
-				<?php endif; ?>
-
-				<?php
-
-				/**
-				 * Fires inside the groups directory group filter input.
-				 *
-				 * @since 1.5.0
-				 */
-				do_action( 'bp_groups_directory_group_filter' ); ?>
-
-			</ul>
-		</div><!-- .item-list-tabs -->
-
-		<div class="item-list-tabs" id="subnav" aria-label="<?php esc_attr_e( 'Groups directory secondary navigation', 'buddypress' ); ?>" role="navigation">
-			<ul>
-				<?php
-
-				/**
-				 * Fires inside the groups directory group types.
-				 *
-				 * @since 1.2.0
-				 */
-				do_action( 'bp_groups_directory_group_types' ); ?>
-
-				<li id="groups-order-select" class="last filter">
-
-					<label for="groups-order-by"><?php _e( 'Order By:', 'buddypress' ); ?></label>
-
-					<select id="groups-order-by">
-						<option value="active"><?php _e( 'Last Active', 'buddypress' ); ?></option>
-						<option value="popular"><?php _e( 'Most Members', 'buddypress' ); ?></option>
-						<option value="newest"><?php _e( 'Newly Created', 'buddypress' ); ?></option>
-						<option value="alphabetical"><?php _e( 'Alphabetical', 'buddypress' ); ?></option>
-
-						<?php
-
-						/**
-						 * Fires inside the groups directory group order options.
-						 *
-						 * @since 1.2.0
-						 */
-						do_action( 'bp_groups_directory_order_options' ); ?>
-					</select>
-				</li>
-			</ul>
 		</div>
 
 		<h2 class="bp-screen-reader-text"><?php
@@ -119,7 +53,7 @@ do_action( 'bp_before_directory_groups_page' ); ?>
 			<?php 
 			add_filter('bp_ajax_querystring', function($qs) {
 				global $groups_atts;
-				return $qs .= $groups_atts['bpsh_queryargs'];
+				return $qs .= $groups_atts['bpsh_query'];
 			});
 			
 			bp_get_template_part( 'groups/groups-loop' ); ?>

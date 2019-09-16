@@ -39,8 +39,9 @@ do_action( 'bp_before_directory_members_page' ); ?>
 		<div id="members-dir-list" class="members dir-list">
 			
 			<?php 
-			add_filter('bp_ajax_querystring', function($qs) {				
-				return $qs .= get_option('bpsh_membe_queryargs');
+			add_filter('bp_ajax_querystring', function($qs) {
+				global $members_atts;
+				return $qs .= $members_atts['bpsh_query'];
 			});
 			
 

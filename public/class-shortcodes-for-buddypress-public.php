@@ -404,7 +404,7 @@ class Shortcodes_For_Buddypress_Public {
 
 		$groups_atts = shortcode_atts( $default_atts, $atts );
 		extract($groups_atts);
-
+		
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 		ob_start();
 		if (function_exists('bp_is_active')) {
