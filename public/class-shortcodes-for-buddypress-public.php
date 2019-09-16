@@ -255,12 +255,12 @@ class Shortcodes_For_Buddypress_Public {
 
 		global $members_atts;
 		if( !empty($atts) && array_key_exists( 'exclude_member_role', $atts )) {
-            if (strpos($atts['exclude_member_role'], ',') !== false) {
+            if ( strpos($atts['exclude_member_role'], ',') !== false) {
                 $exclude_roles = explode(',', $atts['exclude_member_role']);
             } else {
                 $exclude_roles = $atts['exclude_member_role'];
             }
-            if (strpos($atts['exclude'], ',') !== false) {
+            if ( strpos($atts['exclude'], ',') !== false) {
                 $exclude_ids = explode(',', $atts['exclude']);
             } else {
                 $exclude_ids = array($atts['exclude']);
@@ -275,12 +275,12 @@ class Shortcodes_For_Buddypress_Public {
             unset($atts['exclude_member_role']);
         }
         if( !empty($atts) && array_key_exists( 'include_member_role', $atts )) {
-            if (strpos($atts['include_member_role'], ',') !== false) {
+            if ( strpos($atts['include_member_role'], ',') !== false) {
                 $exclude_roles = explode(',', $atts['include_member_role']);
             } else {
                 $exclude_roles = $atts['include_member_role'];
             }
-            if (strpos($atts['include'], ',') !== false) {
+            if ( strpos($atts['include'], ',') !== false) {
                 $exclude_ids = explode(',', $atts['include']);
             } else {
                 $exclude_ids = array($atts['include']);
