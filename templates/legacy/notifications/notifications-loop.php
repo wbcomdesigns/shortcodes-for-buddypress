@@ -17,6 +17,7 @@ $args = array(
 				'page' 		=> $notifications_atts['page'],
 				'per_page' 	=> $notifications_atts['per_page'],
 				'max' 		=> $notifications_atts['per_page'],
+				'sort_order'=> $notifications_atts['order'],				
 			);
 
 add_filter( 'bp_current_action', function($current_action) { return 'unread'; });

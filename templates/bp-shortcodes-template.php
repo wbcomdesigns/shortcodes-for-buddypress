@@ -254,10 +254,7 @@
                 </li>               
                 <li>
                     <strong>order</strong>(string):- Sort order. 'ASC' or 'DESC'. Default: 'DESC'.
-                </li>
-                <li>
-                    <strong>orderby</strong>(string):- Property to sort by. 'date_created', 'last_activity', 'total_member_count', 'name', 'random'. Default: 'last_activity'.
-                </li>
+                </li>                
                 <li>
                     <strong>per_page</strong>(int|bool):- Number of items to return per page of results. Default: 20.
                 </li>                

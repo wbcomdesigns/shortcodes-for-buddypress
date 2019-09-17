@@ -451,8 +451,7 @@ class Shortcodes_For_Buddypress_Public {
 
 		$default_atts = array(
 							'title' 			=> '',
-							'order'	 			=> 'DESC',
-							'orderby' 			=> 'last_activity',
+							'order'	 			=> 'DESC',							
 							'page' 				=> 1,
 							'per_page' 			=> 20,
 							'max' 				=> '',
