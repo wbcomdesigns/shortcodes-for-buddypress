@@ -250,7 +250,7 @@
             <p>The accepted parameters:-</p>
             <ul>
                 <li>
-                    <strong>title</strong>(string) :- What should be the title of the groups section.
+                    <strong>title</strong>(string) :- What should be the title of the notifications section.
                 </li>               
                 <li>
                     <strong>order</strong>(string):- Sort order. 'ASC' or 'DESC'. Default: 'DESC'.
@@ -259,7 +259,7 @@
                     <strong>per_page</strong>(int|bool):- Number of items to return per page of results. Default: 20.
                 </li>                
                 <li>
-                    <strong>max</strong>(int|bool):- Does NOT affect query. May change the reported number of total groups found, but not the actual number of found groups. Default: false.
+                    <strong>max</strong>(int|bool):- Does NOT affect query. May change the reported number of total notifications found, but not the actual number of found notifications. Default: false.
                 </li>
 				<li>
                     <strong>container_class</strong>(string):- Default ‘notification’ . Allows to change the class of the shortcode contents wrapper.
