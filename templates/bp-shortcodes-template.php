@@ -271,8 +271,6 @@
                 <p><b>[notifications-listing order="ACS"]</b></p>
 
                 <p><b>[notifications-listing per_page=10]</b></p>
-				
-                <p><b>[notifications-listing page=1]</b></p>
             </div>
         </div>
 		
