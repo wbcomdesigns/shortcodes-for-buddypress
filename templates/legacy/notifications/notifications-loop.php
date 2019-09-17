@@ -19,6 +19,7 @@ $args = array(
 				'max' 		=> $notifications_atts['per_page'],
 			);
 
+add_filter( 'bp_current_action', function($current_action) { return 'unread'; });
 ?>
 <div id="buddypress" class="<?php echo esc_attr($notifications_atts['container_class']);?>">
 
