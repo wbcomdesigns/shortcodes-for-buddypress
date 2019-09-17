@@ -114,12 +114,16 @@ class Shortcodes_For_Buddypress_Public {
 		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
 			$current_component = 'groups';
 		}
-
+		
+		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
+			$current_component = 'notifications';
+		}
+		
 		return $current_component;
 	}
 
 	public function buddypress_shortcodes_bp_current_component( $current_component ) {
-
+		global $post;
 		if ( isset($_REQUEST['object']) &&  $_REQUEST['object'] != '' ) {
 			$current_component = $_REQUEST['object'];
 		}
@@ -131,6 +135,16 @@ class Shortcodes_For_Buddypress_Public {
 		if ( isset($_REQUEST['data']['bp_activity_last_recorded']) &&  $_REQUEST['data']['bp_activity_last_recorded'] != '' ) {
 			$current_component = 'activity';
 		}
+		
+		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
+			$current_component = 'notifications';
+			
+			/* redirect to home page when user not loggedin on notifications listing page */
+			if ( !is_user_logged_in() ) {
+				wp_redirect( site_url( '/' ) );
+				exit();
+			}
+		}		
 
 		return $current_component;
 	}
@@ -138,7 +152,7 @@ class Shortcodes_For_Buddypress_Public {
 	public function buddypress_shortcodes_body_classes( $classes ) {
 		global $post;
 
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) || has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'groups-listing' ) || has_shortcode( $post->post_content, 'notification' ) ) ) {
+		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) || has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'groups-listing' ) || has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
 			$classes[] = 'bpsh-buddypress';
 			$classes[] = 'buddypress';
 		}
@@ -452,7 +466,7 @@ class Shortcodes_For_Buddypress_Public {
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 
 		ob_start();
-		if (function_exists('bp_is_active')) {
+		if (function_exists('bp_is_active') && is_user_logged_in() ) {
 
 			if ( $title != '' ) { ?>
                 <h3 class="section-title"><span><?php echo $title; ?></span></h3>
@@ -463,7 +477,9 @@ class Shortcodes_For_Buddypress_Public {
 			} else {
 				$this->buddypress_shortcodes_template( 'nouveau/notifications/notifications-loop.php' );
 			}
-        }
+        } else {
+			
+		}
 
 		return ob_get_clean();
 	}

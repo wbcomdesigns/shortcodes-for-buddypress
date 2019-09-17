@@ -203,10 +203,7 @@
                 </li>
                 <li>
                     <strong>page_arg</strong>(string):- Query argument used for pagination. Default: 'grpage'.
-                </li>
-                <li>
-                    <strong>slug</strong>(string):- If provided, only the group with the matching slug will be returned. Default: false.
-                </li>
+                </li>                
                 <li>
                     <strong>include</strong>(int|string):- Single integer or comma-separated list of group IDs. Results will be limited to groups within the list. Default: false.
                 </li>
