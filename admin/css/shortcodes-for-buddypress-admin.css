@@ -2,7 +2,7 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
- 
+
 .bpsh-admin-content {
     max-width: 70%;
     margin: 0 auto;
@@ -24,4 +24,30 @@
     line-height: 1.2;
     border: 1px solid;
     padding: 10px;
+}
+
+/**
+* Shortcode Lists
+*/
+.buddypress-shortcode-lists thead td {
+    background: #0073aa;
+    color: #fff !important;
+}
+
+.buddypress-shortcode-lists td {
+    border-left: 1px solid #e5e5e5;
+}
+
+.buddypress-shortcode-lists td:first-child {
+    border-left: 0;
+}
+
+@media (min-width: 768px) {
+    .buddypress-shortcode-lists thead td:first-child {
+        width: 25%;
+    }
+
+    .buddypress-shortcode-lists thead td:nth-child(2) {
+        width: 25%;
+    }
 }
