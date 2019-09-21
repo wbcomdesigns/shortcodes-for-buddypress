@@ -23,7 +23,7 @@
 						<?php
 						esc_html_e( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
 						?>
-						<a href="" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
+						<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-activity-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
 						</p>
 					</td>
 				</tr>
@@ -35,7 +35,7 @@
 						<?php
 						esc_html_e( 'BuddyPress Members Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
 						?>
-						<a href="" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
+						<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-members-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
 						</p>
 					</td>
 				</tr>
@@ -47,7 +47,7 @@
 						<?php
 						esc_html_e( 'BuddyPress Groups Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
 						?>
-						<a href="" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
+						<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-group-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
 						</p>
 					</td>
 				</tr>
@@ -59,7 +59,7 @@
 						<?php
 						esc_html_e( 'BuddyPress Notification Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
 						?>
-						<a href="" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
+						<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-users-notification-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
 						</p>
 					</td>
 				</tr>
