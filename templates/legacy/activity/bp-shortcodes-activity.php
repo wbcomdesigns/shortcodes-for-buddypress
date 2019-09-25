@@ -25,7 +25,7 @@ do_action( 'bp_before_directory_activity' ); ?>
 	 */
 	do_action( 'bp_before_directory_activity_content' ); ?>
 
-	<?php if ( $activity_atts['allow_posting'] && is_user_logged_in() ) : ?>
+	<?php if ( $activity_atts['allow_posting'] == 'true' && is_user_logged_in() ) : ?>
 
 		<?php bp_get_template_part( 'activity/post-form' ); ?>
 
@@ -42,40 +42,7 @@ do_action( 'bp_before_directory_activity' ); ?>
 		do_action( 'template_notices' ); ?>
 
 	</div>
-
 	
-
-	<div class="item-list-tabs no-ajax" id="subnav" aria-label="<?php esc_attr_e( 'Activity secondary navigation', 'buddypress' ); ?>" role="navigation">
-		<ul>			
-			<?php
-
-			/**
-			 * Fires before the display of the activity syndication options.
-			 *
-			 * @since 1.2.0
-			 */
-			do_action( 'bp_activity_syndication_options' ); ?>
-
-			<li id="activity-filter-select" class="last">
-				<label for="activity-filter-by"><?php _e( 'Show:', 'buddypress' ); ?></label>
-				<select id="activity-filter-by">
-					<option value="-1"><?php _e( '&mdash; Everything &mdash;', 'buddypress' ); ?></option>
-
-					<?php bp_activity_show_filters(); ?>
-
-					<?php
-
-					/**
-					 * Fires inside the select input for activity filter by options.
-					 *
-					 * @since 1.2.0
-					 */
-					do_action( 'bp_activity_filter_options' ); ?>
-
-				</select>
-			</li>
-		</ul>
-	</div><!-- .item-list-tabs -->
 
 	<?php
 

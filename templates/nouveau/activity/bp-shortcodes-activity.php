@@ -20,13 +20,12 @@ add_filter( 'bp_current_component', function() { return 'activity'; });
  */
 do_action('bp_before_directory_activity');
 
-
 if ( $activity_atts['use_compat'] ) {
     echo '<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav ' . esc_attr($activity_atts['container_class']). '">';
 }
 	bp_nouveau_before_activity_directory_content(); ?>
 
-	<?php if ( $activity_atts['allow_posting'] && is_user_logged_in() ) : ?>
+	<?php if ( $activity_atts['allow_posting'] == 'true' && is_user_logged_in() ) : ?>
 
 		<?php bp_get_template_part( 'activity/post-form' ); ?>
 
