@@ -1,11 +1,11 @@
 <div class="bpsh-admin-screen">
-    <h3><?php esc_html_e( 'BuddyPress Shortcodes', 'shortcodes-for-buddypress' );?></h3>	
-	
+    <h3><?php esc_html_e( 'BuddyPress Shortcodes', 'shortcodes-for-buddypress' );?></h3>
+
     <div class="bpsh-admin-content">
         <p class="description">
 			<?php esc_html_e( 'BuddyPress Shortcode plugin allows you to embed BuddyPress Activities, BuddyPress Members and Groups in posts/pages using shortcodes.', 'shortcodes-for-buddypress' );?>
 		</p>
-		
+
 		<table class="widefat fixed striped buddypress-shortcode-lists">
 			<thead>
 				<tr>
@@ -33,7 +33,7 @@
 					<td>
 						<p class="description">
 						<?php
-						esc_html_e( 'BuddyPress Members Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
+						esc_html_e( 'BuddyPress Members Shortcode allows you to embed BuddyPress members in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
 						?>
 						<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-members-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
 						</p>
@@ -45,7 +45,7 @@
 					<td>
 						<p class="description">
 						<?php
-						esc_html_e( 'BuddyPress Groups Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
+						esc_html_e( 'BuddyPress Groups Shortcode allows you to embed BuddyPress groups in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
 						?>
 						<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-group-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
 						</p>
@@ -57,7 +57,7 @@
 					<td>
 						<p class="description">
 						<?php
-						esc_html_e( 'BuddyPress Notification Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
+						esc_html_e( 'BuddyPress Notification Shortcode allows you to embed BuddyPress notificaition list in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
 						?>
 						<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-users-notification-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
 						</p>
