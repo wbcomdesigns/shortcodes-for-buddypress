@@ -44,7 +44,7 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 == Changelog ==
 
 = 2.0.0 =
-** Code Rerwite
+** Code Rewrite
 
 = 1.0.0 =
 * first version.
