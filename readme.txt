@@ -42,6 +42,8 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying groups listing based on given user id screenshot-4.png
 
 == Changelog ==
+= 2.0.1 =
+** BP 5.0.o compatibility testing
 
 = 2.0.0 =
 ** Code Rewrite
