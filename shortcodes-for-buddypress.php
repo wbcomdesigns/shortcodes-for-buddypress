@@ -96,6 +96,24 @@ run_shortcodes_for_buddypress();
 
 
 
+/**
+ * BuddyPress Activity Elements.
+ *
+ * @since 2.2.0  
+ */
+function buddypress_shortcodes_categories_registered( $elements_manager  ){
+
+   $elements_manager->add_category(
+        'wbcomdesign-elements',
+        [
+            'title'  => 'WBComdesign Elements',
+            'icon' => 'fa fa-plug'
+        ]
+    );
+}
+
+add_action( 'elementor/elements/categories_registered', 'buddypress_shortcodes_categories_registered' );
+
 function shortcodes_for_buddypress_widgets_registered() {
 	require plugin_dir_path( __FILE__ ) . 'buddypress-shortcodes-element.php';
 }

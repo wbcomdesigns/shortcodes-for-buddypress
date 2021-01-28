@@ -5,23 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-/**
- * BuddyPress Activity Elements.
- *
- * @since 2.2.0  
- */
-function buddypress_shortcodes_categories_registered( $elements_manager  ){
 
-   $elements_manager->add_category(
-        'wbcomdesign-elements',
-        [
-            'title'  => 'WBComdesign Elements',
-            'icon' => 'fa fa-plug'
-        ]
-    );
-}
-
-add_action( 'elementor/elements/categories_registered', 'buddypress_shortcodes_categories_registered' );
 
 
 
@@ -36,7 +20,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-bp_listing';
+		return 'dashicons dashicons-buddicons-buddypress-logo';
 	}
 
 	public function get_categories() {
