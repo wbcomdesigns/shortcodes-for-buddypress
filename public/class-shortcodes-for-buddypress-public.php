@@ -124,11 +124,21 @@ class Shortcodes_For_Buddypress_Public {
 
 	public function buddypress_shortcodes_bp_current_component( $current_component ) {
 		global $post;
+		$current_component = 'activity';
 		if ( isset($_REQUEST['object']) &&  $_REQUEST['object'] != '' ) {
 			$current_component = $_REQUEST['object'];
 		}
 		if ( isset($_REQUEST['action']) &&  $_REQUEST['action'] == 'post_update' ) {
 			$current_component = 'activity';
+		}
+		
+		$_elementor_controls_usage = get_post_meta($post->ID, '_elementor_controls_usage', true);
+		if (  !empty($_elementor_controls_usage)) {
+			foreach($_elementor_controls_usage as $key=>$value) {
+				if ( $key == 'buddypress_shortcode_activity_widget' ) {
+					$current_component = 'activity';
+				}
+			}
 		}
 		
 		/* Set Current component activity when submit post from activity listing shortcode */
@@ -144,8 +154,7 @@ class Shortcodes_For_Buddypress_Public {
 				wp_redirect( site_url( '/' ) );
 				exit();
 			}
-		}		
-
+		}
 		return $current_component;
 	}
 
@@ -481,6 +490,147 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		return ob_get_clean();
+	}
+	
+	/*
+	 * Set Activity Params when activity elementor widget load on page
+	 */
+	public function buddypress_shortcodes_activity_localize_scripts( $params = array() ) {
+		$_elementor_controls_usage = get_post_meta(get_the_ID(), '_elementor_controls_usage', true);
+		$current_component = '';
+		if (  !empty($_elementor_controls_usage)) {
+			foreach($_elementor_controls_usage as $key=>$value) {
+				if ( $key == 'buddypress_shortcode_activity_widget' ) {
+					$current_component = 'activity';
+				}
+			}
+		}
+		
+		if ( $current_component == '' ) {
+			return $params;
+		}
+		$activity_params = array(
+			'user_id'     => bp_loggedin_user_id(),
+			'object'      => 'user',
+			'backcompat'  => array(
+				'before_post_form'  => (bool) has_action( 'bp_before_activity_post_form' ),
+				'post_form_options' => (bool) has_action( 'bp_activity_post_form_options' ),
+			),
+			'post_nonce'  => wp_create_nonce( 'post_update', '_wpnonce_post_update' ),
+		);
+
+		$user_displayname = bp_get_loggedin_user_fullname();
+
+		if ( buddypress()->avatar->show_avatars ) {
+			$width  = bp_core_avatar_thumb_width();
+			$height = bp_core_avatar_thumb_height();
+			$activity_params = array_merge( $activity_params, array(
+				'avatar_url'    => bp_get_loggedin_user_avatar( array(
+					'width'  => $width,
+					'height' => $height,
+					'html'   => false,
+				) ),
+				'avatar_width'  => $width,
+				'avatar_height' => $height,
+				'user_domain'   => bp_loggedin_user_domain(),
+				'avatar_alt'    => sprintf(
+					/* translators: %s: member name */
+					__( 'Profile photo of %s', 'buddypress' ),
+					$user_displayname
+				),
+			) );
+		}
+
+		/**
+		 * Filters the included, specific, Action buttons.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @param array $value The array containing the button params. Must look like:
+		 * array( 'buttonid' => array(
+		 *  'id'      => 'buttonid',                            // Id for your action
+		 *  'caption' => __( 'Button caption', 'text-domain' ),
+		 *  'icon'    => 'dashicons-*',                         // The dashicon to use
+		 *  'order'   => 0,
+		 *  'handle'  => 'button-script-handle',                // The handle of the registered script to enqueue
+		 * );
+		 */
+		$activity_buttons = apply_filters( 'bp_nouveau_activity_buttons', array() );
+
+		if ( ! empty( $activity_buttons ) ) {
+			$activity_params['buttons'] = bp_sort_by_key( $activity_buttons, 'order', 'num' );
+
+			// Enqueue Buttons scripts and styles
+			foreach ( $activity_params['buttons'] as $key_button => $buttons ) {
+				if ( empty( $buttons['handle'] ) ) {
+					continue;
+				}
+
+				if ( wp_style_is( $buttons['handle'], 'registered' ) ) {
+					wp_enqueue_style( $buttons['handle'] );
+				}
+
+				if ( wp_script_is( $buttons['handle'], 'registered' ) ) {
+					wp_enqueue_script( $buttons['handle'] );
+				}
+
+				unset( $activity_params['buttons'][ $key_button ]['handle'] );
+			}
+		}
+
+		// Activity Objects
+		if ( ! bp_is_single_item() && ! bp_is_user() ) {
+			$activity_objects = array(
+				'profile' => array(
+					'text'                     => __( 'Post in: Profile', 'buddypress' ),
+					'autocomplete_placeholder' => '',
+					'priority'                 => 5,
+				),
+			);
+
+			// the groups component is active & the current user is at least a member of 1 group
+			if ( bp_is_active( 'groups' ) && bp_has_groups( array( 'user_id' => bp_loggedin_user_id(), 'max' => 1 ) ) ) {
+				$activity_objects['group'] = array(
+					'text'                     => __( 'Post in: Group', 'buddypress' ),
+					'autocomplete_placeholder' => __( 'Start typing the group name...', 'buddypress' ),
+					'priority'                 => 10,
+				);
+			}
+
+			/**
+			 * Filters the activity objects to apply for localized javascript data.
+			 *
+			 * @since 3.0.0
+			 *
+			 * @param array $activity_objects Array of activity objects.
+			 */
+			$activity_params['objects'] = apply_filters( 'bp_nouveau_activity_objects', $activity_objects );
+		}
+
+		$activity_strings = array(
+			'whatsnewPlaceholder' => sprintf( __( "What's new, %s?", 'buddypress' ), bp_get_user_firstname( $user_displayname ) ),
+			'whatsnewLabel'       => __( 'Post what\'s new', 'buddypress' ),
+			'whatsnewpostinLabel' => __( 'Post in', 'buddypress' ),
+			'postUpdateButton'    => __( 'Post Update', 'buddypress' ),
+			'cancelButton'        => __( 'Cancel', 'buddypress' ),
+		);
+
+		if ( bp_is_group() ) {
+			$activity_params = array_merge(
+				$activity_params,
+				array(
+					'object'  => 'group',
+					'item_id' => bp_get_current_group_id(),
+				)
+			);
+		}
+
+		$params['activity'] = array(
+			'params'  => $activity_params,
+			'strings' => $activity_strings,
+		);
+
+		return $params;
 	}
 
 }

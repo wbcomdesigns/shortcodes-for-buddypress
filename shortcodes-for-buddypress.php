@@ -92,3 +92,12 @@ function run_shortcodes_for_buddypress() {
 
 }
 run_shortcodes_for_buddypress();
+
+
+
+
+function shortcodes_for_buddypress_widgets_registered() {
+	require plugin_dir_path( __FILE__ ) . 'buddypress-shortcodes-element.php';
+}
+
+add_action( 'elementor/widgets/widgets_registered', 'shortcodes_for_buddypress_widgets_registered', 15 );
