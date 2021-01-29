@@ -496,6 +496,7 @@ class Shortcodes_For_Buddypress_Public {
 	 * Set Activity Params when activity elementor widget load on page
 	 */
 	public function buddypress_shortcodes_activity_localize_scripts( $params = array() ) {
+		global $post;
 		$_elementor_controls_usage = get_post_meta(get_the_ID(), '_elementor_controls_usage', true);
 		$current_component = '';
 		if (  !empty($_elementor_controls_usage)) {
@@ -504,6 +505,10 @@ class Shortcodes_For_Buddypress_Public {
 					$current_component = 'activity';
 				}
 			}
+		}
+		
+		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
+			$current_component = 'activity';
 		}
 		
 		if ( $current_component == '' ) {
