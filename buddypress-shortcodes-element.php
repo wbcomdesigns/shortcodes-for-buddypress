@@ -24,7 +24,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wbcomdesign-elements' ];
+		return [ 'buddypress-widgets' ];
 	}
 	
 	protected function _register_controls() {
