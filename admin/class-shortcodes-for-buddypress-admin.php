@@ -44,13 +44,13 @@ class Shortcodes_For_Buddypress_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of this plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -99,18 +99,18 @@ class Shortcodes_For_Buddypress_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
-	
+
 	public function buddypress_shortcodes_option_page() {
-		add_submenu_page('options-general.php', esc_html__('BP Shortcodes', $this->plugin_name), esc_html__('BP Shortcodes', $this->plugin_name), 'manage_options', 'bpsh-shortcodes', array($this, 'buddypress_shortcodes_option_page_callback'));
+		add_submenu_page( 'options-general.php', esc_html__( 'BP Shortcodes', $this->plugin_name ), esc_html__( 'BP Shortcodes', $this->plugin_name ), 'manage_options', 'bpsh-shortcodes', array( $this, 'buddypress_shortcodes_option_page_callback' ) );
 	}
-	
+
 	public function buddypress_shortcodes_option_page_callback() {
-        require_once plugin_dir_path(dirname(__FILE__)) . 'templates/bp-shortcodes-template.php';
-    }
-	public function buddypress_shortcodes_settings_link( $links ) {		
-        $settings_link = '<a href="options-general.php?page=bpsh-shortcodes">' . esc_html__('Documentation', 'shortcodes-for-buddypress' ) . '</a>';
-        array_push($links, $settings_link);
-		
-        return $links;    
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'templates/bp-shortcodes-template.php';
+	}
+	public function buddypress_shortcodes_settings_link( $links ) {
+		$settings_link = '<a href="options-general.php?page=bpsh-shortcodes">' . esc_html__( 'Documentation', 'shortcodes-for-buddypress' ) . '</a>';
+		array_push( $links, $settings_link );
+
+		return $links;
 	}
 }
