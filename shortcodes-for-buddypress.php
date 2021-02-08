@@ -38,14 +38,14 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'SHORTCODES_FOR_BUDDYPRESS_VERSION', '2.1.0' );
 
 if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR' ) ) {
-	define( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR', plugin_dir_path(__FILE__) );
+	define( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 }
 
 if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL' ) ) {
-	define( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL', plugins_url('/', __FILE__) );
+	define( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
 }
-if ( !defined('SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME') ) {
-	define('SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME', plugin_basename(__FILE__));
+if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME' ) ) {
+	define( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 }
 
 
@@ -94,24 +94,24 @@ function run_shortcodes_for_buddypress() {
 run_shortcodes_for_buddypress();
 
 
-add_action('admin_notices','shortcodes_for_buddypress_plugin_admin_notice');
+add_action( 'admin_notices', 'shortcodes_for_buddypress_plugin_admin_notice' );
 /**
  * Function to through admin notice if BuddyPress is not active.
  */
 function shortcodes_for_buddypress_plugin_admin_notice() {
 
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		require_once ABSPATH . '/wp-admin/includes/plugin.php';
 	}
 	$check_active = false;
 
-	if ( ! is_plugin_active_for_network( 'buddypress/bp-loader.php' ) && !in_array( 'buddypress/bp-loader.php', get_option( 'active_plugins' )) ) {
+	if ( ! is_plugin_active_for_network( 'buddypress/bp-loader.php' ) && ! in_array( 'buddypress/bp-loader.php', get_option( 'active_plugins' ) ) ) {
 		$check_active = true;
 	}
 
-	if ( $check_active ){
+	if ( $check_active ) {
 		$bmpro_plugin = 'Shortcode For BuddyPress';
-		$bp_plugin   = 'BuddyPress';
+		$bp_plugin    = 'BuddyPress';
 
 		echo '<div class="error"><p>'
 		. sprintf( esc_html( __( '%1$s is ineffective as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ) ), '<strong>' . esc_html( $bmpro_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' )
@@ -123,15 +123,13 @@ function shortcodes_for_buddypress_plugin_admin_notice() {
 /**
  *  Check if buddypress activate.
  */
-function shortcodes_for_buddypress_requires_buddypress()
-{
-
-    if ( !class_exists( 'Buddypress' ) ) {
-        deactivate_plugins( plugin_basename( __FILE__ ) );
-        //deactivate_plugins('buddypress-polls/buddypress-polls.php');
-        add_action( 'admin_notices', 'shortcodes_for_buddypress_required_plugin_admin_notice' );
-        unset($_GET['activate']);
-    }
+function shortcodes_for_buddypress_requires_buddypress() {
+	if ( ! class_exists( 'Buddypress' ) ) {
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+		// deactivate_plugins('buddypress-polls/buddypress-polls.php');
+		add_action( 'admin_notices', 'shortcodes_for_buddypress_required_plugin_admin_notice' );
+		unset( $_GET['activate'] );
+	}
 }
 
 add_action( 'admin_init', 'shortcodes_for_buddypress_requires_buddypress' );
@@ -143,14 +141,14 @@ add_action( 'admin_init', 'shortcodes_for_buddypress_requires_buddypress' );
  */
 function shortcodes_for_buddypress_required_plugin_admin_notice() {
 
-    $bpquotes_plugin          = esc_html__(' Shortcode For BuddyPress', 'shortcodes-for-buddypress');
-    $bp_plugin                = esc_html__('BuddyPress', 'shortcodes-for-buddypress');
-    echo '<div class="error"><p>';
-    echo sprintf(esc_html__('%1$s is ineffective now as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress'), '<strong>' . esc_html($bpquotes_plugin) . '</strong>', '<strong>' . esc_html($bp_plugin) . '</strong>');
-    echo '</p></div>';
-    if (isset($_GET['activate']) ) {
-        unset($_GET['activate']);
-    }
+	$bpquotes_plugin = esc_html__( ' Shortcode For BuddyPress', 'shortcodes-for-buddypress' );
+	$bp_plugin       = esc_html__( 'BuddyPress', 'shortcodes-for-buddypress' );
+	echo '<div class="error"><p>';
+	echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bpquotes_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
+	echo '</p></div>';
+	if ( isset( $_GET['activate'] ) ) {
+		unset( $_GET['activate'] );
+	}
 }
 
 
@@ -158,17 +156,17 @@ function shortcodes_for_buddypress_required_plugin_admin_notice() {
 /**
  * BuddyPress Activity Elements.
  *
- * @since 2.2.0  
+ * @since 2.2.0
  */
-function buddypress_shortcodes_categories_registered( $elements_manager  ){
+function buddypress_shortcodes_categories_registered( $elements_manager ) {
 
-   $elements_manager->add_category(
-        'buddypress-widgets',
-        [
-            'title'  => 'BuddyPress Widgets',
-            'icon' => 'fa fa-plug'
-        ]
-    );
+	$elements_manager->add_category(
+		'buddypress-widgets',
+		array(
+			'title' => 'BuddyPress Widgets',
+			'icon'  => 'fa fa-plug',
+		)
+	);
 }
 
 add_action( 'elementor/elements/categories_registered', 'buddypress_shortcodes_categories_registered' );
