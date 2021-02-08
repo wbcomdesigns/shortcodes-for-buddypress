@@ -28,7 +28,7 @@ add_filter( 'bp_current_action', function($current_action) { return 'unread'; })
 
 		<h2 class="bp-screen-reader-text"><?php
 			/* translators: accessibility text */
-			_e( 'Unread notifications', 'buddypress' );
+			esc_html_e( 'Unread notifications', 'buddypress' );
 		?></h2>
 
 		<div id="pag-top" class="pagination no-ajax">

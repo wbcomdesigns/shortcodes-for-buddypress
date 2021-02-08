@@ -360,7 +360,7 @@ class Shortcodes_For_Buddypress_Public {
 		if (function_exists('bp_is_active')) {
 
 			if ( $title != '' ) { ?>
-                <h3 class="section-title"><span><?php echo $title; ?></span></h3>
+                <h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
                 <?php
             }
 			if ( $_bp_theme_package == 'legacy' ) {
@@ -433,7 +433,7 @@ class Shortcodes_For_Buddypress_Public {
 		if (function_exists('bp_is_active')) {
 
 			if ( $title != '' ) { ?>
-                <h3 class="section-title"><span><?php echo $title; ?></span></h3>
+                <h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
                 <?php
             }
 
@@ -477,7 +477,7 @@ class Shortcodes_For_Buddypress_Public {
 		if (function_exists('bp_is_active') && is_user_logged_in() ) {
 
 			if ( $title != '' ) { ?>
-                <h3 class="section-title"><span><?php echo $title; ?></span></h3>
+                <h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
                 <?php
             }
 			if ( $_bp_theme_package == 'legacy' ) {

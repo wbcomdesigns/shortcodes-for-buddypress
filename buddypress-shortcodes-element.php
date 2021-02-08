@@ -476,7 +476,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			
 
 			<?php if ( $atts['title'] ) : ?>
-				<h3 class="activity-shortcode-title"><?php echo $atts['title']; ?></h3>
+				<h3 class="activity-shortcode-title"><?php echo esc_html( $atts['title'] ); ?></h3>
 			<?php endif; ?>
 
 			<?php if ( $atts['allow_posting'] == 'true' && is_user_logged_in() ) : ?>
@@ -498,7 +498,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 
 						<?php if ( bp_activity_has_more_items() ) : ?>
 							<li class="load-more">
-								<a href="<?php bp_activity_load_more_link() ?>"><?php _e( 'Load More', 'buddypress' ); ?></a>
+								<a href="<?php bp_activity_load_more_link() ?>"><?php esc_html_e( 'Load More', 'buddypress' ); ?></a>
 							</li>
 						<?php endif; ?>
 					</ul>
@@ -507,7 +507,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 
 			<?php else : ?>
 				<div id="message" class="info">
-					<p><?php _e( 'Sorry, there was no activity found. Please try a different filter.', 'buddypress' ); ?></p>
+					<p><?php esc_html_e( 'Sorry, there was no activity found. Please try a different filter.', 'buddypress' ); ?></p>
 				</div>
 			<?php endif; ?>
 			

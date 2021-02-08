@@ -31,7 +31,7 @@ do_action( 'bp_before_directory_members_page' ); ?>
 		
 		<h2 class="bp-screen-reader-text"><?php
 			/* translators: accessibility text */
-			_e( 'Members directory', 'buddypress' );
+			esc_html_e( 'Members directory', 'buddypress' );
 		?></h2>
 		
 		

@@ -21,7 +21,7 @@ global $groups_atts;
 
 	<div class="screen-content">
 
-		<input type="hidden" data-bp-filter="groups" value="<?php echo $groups_atts['bpsh_query']?>" />		
+		<input type="hidden" data-bp-filter="groups" value="<?php echo esc_attr( $groups_atts['bpsh_query'] ) ?>" />		
 		<?php //bp_get_template_part( 'common/search-and-filters-bar' ); ?>
 		
 		

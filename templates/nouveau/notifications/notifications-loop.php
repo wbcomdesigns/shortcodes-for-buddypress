@@ -18,7 +18,7 @@ $args = array(
 add_filter( 'bp_current_action', function($current_action) { return 'unread'; });
 ?>
 <div id="buddypress" class="buddypress-wrap bp-dir-hori-nav <?php echo esc_attr($notifications_atts['container_class']);?>">
-	<input type="hidden" data-bp-filter="notifications" value="<?php echo $notifications_atts['bpsh_query']?>" />		
+	<input type="hidden" data-bp-filter="notifications" value="<?php echo esc_attr( $notifications_atts['bpsh_query'] ) ?>" />		
 	<?php
 	if ( bp_has_notifications( $args ) ) :
 

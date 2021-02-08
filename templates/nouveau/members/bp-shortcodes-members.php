@@ -16,7 +16,7 @@ global $members_atts;
 	<?php //endif; ?>
 
 	<div class="screen-content">
-		<input type="hidden" data-bp-filter="members" value="<?php echo $members_atts['bpsh_query']?>" />		
+		<input type="hidden" data-bp-filter="members" value="<?php echo esc_attr( $members_atts['bpsh_query'] ) ?>" />		
 		<?php //bp_get_template_part( 'common/search-and-filters-bar' ); ?>
 				
 		<div id="members-dir-list" class="members dir-list" data-bp-list="members">
