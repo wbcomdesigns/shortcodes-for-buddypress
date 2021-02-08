@@ -10,26 +10,33 @@
 global $notifications_atts;
 
 
-$user_id = (isset($notifications_atts['user_id']) && $notifications_atts['user_id'] != '' ) ? : get_current_user_id();
-$args = array(
-				'user_id' 	=> $user_id,
-				'is_new' 	=> true,
-				'page' 		=> $notifications_atts['page'],
-				'per_page' 	=> $notifications_atts['per_page'],
-				'max' 		=> $notifications_atts['per_page'],
-				'sort_order'=> $notifications_atts['order'],				
-			);
+$user_id = ( isset( $notifications_atts['user_id'] ) && $notifications_atts['user_id'] != '' ) ? : get_current_user_id();
+$args    = array(
+	'user_id'    => $user_id,
+	'is_new'     => true,
+	'page'       => $notifications_atts['page'],
+	'per_page'   => $notifications_atts['per_page'],
+	'max'        => $notifications_atts['per_page'],
+	'sort_order' => $notifications_atts['order'],
+);
 
-add_filter( 'bp_current_action', function($current_action) { return 'unread'; });
+add_filter(
+	'bp_current_action',
+	function( $current_action ) {
+		return 'unread';
+	}
+);
 ?>
-<div id="buddypress" class="<?php echo esc_attr($notifications_atts['container_class']);?>">
+<div id="buddypress" class="<?php echo esc_attr( $notifications_atts['container_class'] ); ?>">
 
-	<?php if ( bp_has_notifications( $args) ) : ?>
+	<?php if ( bp_has_notifications( $args ) ) : ?>
 
-		<h2 class="bp-screen-reader-text"><?php
+		<h2 class="bp-screen-reader-text">
+		<?php
 			/* translators: accessibility text */
 			esc_html_e( 'Unread notifications', 'buddypress' );
-		?></h2>
+		?>
+		</h2>
 
 		<div id="pag-top" class="pagination no-ajax">
 			<div class="pag-count" id="notifications-count-top">

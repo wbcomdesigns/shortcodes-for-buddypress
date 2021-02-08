@@ -7,22 +7,22 @@
  */
 global $groups_atts;
 ?>
-<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav <?php echo esc_attr($groups_atts['container_class']);?>">
+<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav <?php echo esc_attr( $groups_atts['container_class'] ); ?>">
 
 	<?php bp_nouveau_before_groups_directory_content(); ?>
 
 	<?php bp_nouveau_template_notices(); ?>
 
-	<?php //if ( ! bp_nouveau_is_object_nav_in_sidebar() ) : ?>
+	<?php // if ( ! bp_nouveau_is_object_nav_in_sidebar() ) : ?>
 
-		<?php //bp_get_template_part( 'common/nav/directory-nav' ); ?>
+		<?php // bp_get_template_part( 'common/nav/directory-nav' ); ?>
 
-	<?php //endif; ?>
+	<?php // endif; ?>
 
 	<div class="screen-content">
 
-		<input type="hidden" data-bp-filter="groups" value="<?php echo esc_attr( $groups_atts['bpsh_query'] ) ?>" />		
-		<?php //bp_get_template_part( 'common/search-and-filters-bar' ); ?>
+		<input type="hidden" data-bp-filter="groups" value="<?php echo esc_attr( $groups_atts['bpsh_query'] ); ?>" />		
+		<?php // bp_get_template_part( 'common/search-and-filters-bar' ); ?>
 		
 		
 		

@@ -6,23 +6,29 @@
  * @version 3.1.0
  */
 global $notifications_atts;
-$user_id = (isset($notifications_atts['user_id']) && $notifications_atts['user_id'] != '' ) ? : get_current_user_id();
-$args = array(
-				'user_id' 	=> $user_id,
-				'is_new' 	=> true,
-				'page' 		=> $notifications_atts['page'],
-				'per_page' 	=> $notifications_atts['per_page'],
-				'max' 		=> $notifications_atts['per_page'],
-				'sort_order'=> $notifications_atts['order'],				
-			);
-add_filter( 'bp_current_action', function($current_action) { return 'unread'; });
+$user_id = ( isset( $notifications_atts['user_id'] ) && $notifications_atts['user_id'] != '' ) ? : get_current_user_id();
+$args    = array(
+	'user_id'    => $user_id,
+	'is_new'     => true,
+	'page'       => $notifications_atts['page'],
+	'per_page'   => $notifications_atts['per_page'],
+	'max'        => $notifications_atts['per_page'],
+	'sort_order' => $notifications_atts['order'],
+);
+add_filter(
+	'bp_current_action',
+	function( $current_action ) {
+		return 'unread';
+	}
+);
 ?>
-<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav <?php echo esc_attr($notifications_atts['container_class']);?>">
-	<input type="hidden" data-bp-filter="notifications" value="<?php echo esc_attr( $notifications_atts['bpsh_query'] ) ?>" />		
+<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav <?php echo esc_attr( $notifications_atts['container_class'] ); ?>">
+	<input type="hidden" data-bp-filter="notifications" value="<?php echo esc_attr( $notifications_atts['bpsh_query'] ); ?>" />		
 	<?php
 	if ( bp_has_notifications( $args ) ) :
 
-		bp_nouveau_pagination( 'top' ); ?>
+		bp_nouveau_pagination( 'top' );
+		?>
 
 		<form action="" method="post" id="notifications-bulk-management" class="standard-form">
 			<table class="notifications bp-tables-user">
@@ -44,7 +50,7 @@ add_filter( 'bp_current_action', function($current_action) { return 'unread'; })
 					<?php
 					while ( bp_the_notifications() ) :
 						bp_the_notification();
-					?>
+						?>
 
 						<tr>
 							<td></td>

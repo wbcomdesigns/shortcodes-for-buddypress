@@ -1,27 +1,35 @@
 <?php
 global $activity_atts;
 
-add_filter('bp_ajax_querystring', function($qs) {
-	 global $activity_atts;
-	return $qs .= $activity_atts['bpsh_query'];
-});
-add_filter( 'bp_current_component', function() { return 'activity'; });
+add_filter(
+	'bp_ajax_querystring',
+	function( $qs ) {
+		global $activity_atts;
+		return $qs .= $activity_atts['bpsh_query'];
+	}
+);
+add_filter(
+	'bp_current_component',
+	function() {
+		return 'activity';
+	}
+);
 
 /**
  * Fires before the activity directory listing.
  *
  * @since 1.0.0
  */
- 
+
 /**
  * Fires before the activity directory listing.
  *
  * @since 1.5.0
  */
-do_action('bp_before_directory_activity');
+do_action( 'bp_before_directory_activity' );
 
 if ( $activity_atts['use_compat'] ) {
-    echo '<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav ' . esc_attr($activity_atts['container_class']). '">';
+	echo '<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav ' . esc_attr( $activity_atts['container_class'] ) . '">';
 }
 	bp_nouveau_before_activity_directory_content(); ?>
 
@@ -33,13 +41,13 @@ if ( $activity_atts['use_compat'] ) {
 
 	<?php bp_nouveau_template_notices(); ?>
 
-	<?php //if ( ! bp_nouveau_is_object_nav_in_sidebar() ) : ?>
+	<?php // if ( ! bp_nouveau_is_object_nav_in_sidebar() ) : ?>
 
-		<?php //bp_get_template_part( 'common/nav/directory-nav' ); ?>
+		<?php // bp_get_template_part( 'common/nav/directory-nav' ); ?>
 
-	<?php //endif; ?>
+	<?php // endif; ?>
 	
-	<input type="hidden" data-bp-filter="activity" value="<?php //echo $activity_atts['bpsh_query']?>" />		
+	<input type="hidden" data-bp-filter="activity" value="<?php // echo $activity_atts['bpsh_query'] ?>" />		
 	<div class="screen-content">
 
 		<?php bp_get_template_part( 'common/search-and-filters-bar' ); ?>
@@ -61,5 +69,5 @@ if ( $activity_atts['use_compat'] ) {
 <?php
 
 if ( $activity_atts['use_compat'] ) {
-    echo '</div>';
+	echo '</div>';
 }

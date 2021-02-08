@@ -10,11 +10,11 @@
  *
  * @since 1.5.0
  */
- 
+
 global $activity_atts;
 do_action( 'bp_before_directory_activity' ); ?>
 
-<div id="buddypress" class="<?php echo esc_attr($activity_atts['container_class']);?>">
+<div id="buddypress" class="<?php echo esc_attr( $activity_atts['container_class'] ); ?>">
 
 	<?php
 
@@ -23,7 +23,8 @@ do_action( 'bp_before_directory_activity' ); ?>
 	 *
 	 * @since 1.2.0
 	 */
-	do_action( 'bp_before_directory_activity_content' ); ?>
+	do_action( 'bp_before_directory_activity_content' );
+	?>
 
 	<?php if ( $activity_atts['allow_posting'] == 'true' && is_user_logged_in() ) : ?>
 
@@ -39,7 +40,8 @@ do_action( 'bp_before_directory_activity' ); ?>
 		 *
 		 * @since 1.0.0
 		 */
-		do_action( 'template_notices' ); ?>
+		do_action( 'template_notices' );
+		?>
 
 	</div>
 	
@@ -51,17 +53,22 @@ do_action( 'bp_before_directory_activity' ); ?>
 	 *
 	 * @since 1.5.0
 	 */
-	do_action( 'bp_before_directory_activity_list' ); ?>
+	do_action( 'bp_before_directory_activity_list' );
+	?>
 
 	<div class="activity" aria-live="polite" aria-atomic="true" aria-relevant="all">
 
-		<?php 
-		add_filter('bp_ajax_querystring', function( $qs ) {
-			global $activity_atts;
-			return $qs .= $activity_atts['bpsh_query'];
-		});
-		
-		bp_get_template_part( 'activity/activity-loop' ); ?>
+		<?php
+		add_filter(
+			'bp_ajax_querystring',
+			function( $qs ) {
+				global $activity_atts;
+				return $qs .= $activity_atts['bpsh_query'];
+			}
+		);
+
+		bp_get_template_part( 'activity/activity-loop' );
+		?>
 
 	</div><!-- .activity -->
 
@@ -72,14 +79,16 @@ do_action( 'bp_before_directory_activity' ); ?>
 	 *
 	 * @since 1.5.0
 	 */
-	do_action( 'bp_after_directory_activity_list' ); ?>
+	do_action( 'bp_after_directory_activity_list' );
+	?>
 
 	<?php
 
 	/**
 	 * Fires inside and displays the activity directory display content.
 	 */
-	do_action( 'bp_directory_activity_content' ); ?>
+	do_action( 'bp_directory_activity_content' );
+	?>
 
 	<?php
 
@@ -88,7 +97,8 @@ do_action( 'bp_before_directory_activity' ); ?>
 	 *
 	 * @since 1.2.0
 	 */
-	do_action( 'bp_after_directory_activity_content' ); ?>
+	do_action( 'bp_after_directory_activity_content' );
+	?>
 
 	<?php
 
@@ -97,6 +107,7 @@ do_action( 'bp_before_directory_activity' ); ?>
 	 *
 	 * @since 1.5.0
 	 */
-	do_action( 'bp_after_directory_activity' ); ?>
+	do_action( 'bp_after_directory_activity' );
+	?>
 
 </div>

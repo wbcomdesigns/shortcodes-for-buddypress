@@ -9,11 +9,11 @@
  *
  * @since 1.5.0
  */
- 
+
 global $groups_atts;
 do_action( 'bp_before_directory_groups_page' ); ?>
 
-<div id="buddypress" class="<?php echo esc_attr($groups_atts['container_class']);?>">
+<div id="buddypress" class="<?php echo esc_attr( $groups_atts['container_class'] ); ?>">
 
 	<?php
 
@@ -22,7 +22,8 @@ do_action( 'bp_before_directory_groups_page' ); ?>
 	 *
 	 * @since 1.1.0
 	 */
-	do_action( 'bp_before_directory_groups' ); ?>
+	do_action( 'bp_before_directory_groups' );
+	?>
 
 	<?php
 
@@ -31,7 +32,8 @@ do_action( 'bp_before_directory_groups_page' ); ?>
 	 *
 	 * @since 1.1.0
 	 */
-	do_action( 'bp_before_directory_groups_content' ); ?>
+	do_action( 'bp_before_directory_groups_content' );
+	?>
 
 	
 	<form action="" method="post" id="groups-directory-form" class="dir-form">
@@ -40,23 +42,30 @@ do_action( 'bp_before_directory_groups_page' ); ?>
 			<?php
 
 			/** This action is documented in bp-templates/bp-legacy/buddypress/activity/index.php */
-			do_action( 'template_notices' ); ?>
+			do_action( 'template_notices' );
+			?>
 
 		</div>
 
-		<h2 class="bp-screen-reader-text"><?php
+		<h2 class="bp-screen-reader-text">
+		<?php
 			/* translators: accessibility text */
 			esc_html_e( 'Groups directory', 'buddypress' );
-		?></h2>
+		?>
+		</h2>
 
 		<div id="groups-dir-list" class="groups dir-list">
-			<?php 
-			add_filter('bp_ajax_querystring', function($qs) {
-				global $groups_atts;
-				return $qs .= $groups_atts['bpsh_query'];
-			});
-			
-			bp_get_template_part( 'groups/groups-loop' ); ?>
+			<?php
+			add_filter(
+				'bp_ajax_querystring',
+				function( $qs ) {
+					global $groups_atts;
+					return $qs .= $groups_atts['bpsh_query'];
+				}
+			);
+
+			bp_get_template_part( 'groups/groups-loop' );
+			?>
 		</div><!-- #groups-dir-list -->
 
 		<?php
@@ -66,7 +75,8 @@ do_action( 'bp_before_directory_groups_page' ); ?>
 		 *
 		 * @since 1.1.0
 		 */
-		do_action( 'bp_directory_groups_content' ); ?>
+		do_action( 'bp_directory_groups_content' );
+		?>
 
 		<?php wp_nonce_field( 'directory_groups', '_wpnonce-groups-filter' ); ?>
 
@@ -77,7 +87,8 @@ do_action( 'bp_before_directory_groups_page' ); ?>
 		 *
 		 * @since 1.1.0
 		 */
-		do_action( 'bp_after_directory_groups_content' ); ?>
+		do_action( 'bp_after_directory_groups_content' );
+		?>
 
 	</form><!-- #groups-directory-form -->
 
@@ -88,7 +99,8 @@ do_action( 'bp_before_directory_groups_page' ); ?>
 	 *
 	 * @since 1.1.0
 	 */
-	do_action( 'bp_after_directory_groups' ); ?>
+	do_action( 'bp_after_directory_groups' );
+	?>
 
 </div><!-- #buddypress -->
 

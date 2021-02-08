@@ -9,14 +9,14 @@
  *
  * @since 1.5.0
  */
- 
+
 global $members_atts;
 do_action( 'bp_before_directory_members_page' ); ?>
 
-<div id="buddypress" class="<?php echo esc_attr($members_atts['container_class']);?>">
+<div id="buddypress" class="<?php echo esc_attr( $members_atts['container_class'] ); ?>">
 	
 	<div class="groups-members-search">
-		<!--input type="hidden" data-bp-filter="members" value="<?php //echo $members_atts['bpsh_query']?>" /-->
+		<!--input type="hidden" data-bp-filter="members" value="<?php // echo $members_atts['bpsh_query'] ?>" /-->
 	</div>
 
 	<?php
@@ -25,27 +25,34 @@ do_action( 'bp_before_directory_members_page' ); ?>
 	 *
 	 * @since 1.8.0
 	 */
-	do_action( 'bp_before_directory_members_tabs' ); ?>
+	do_action( 'bp_before_directory_members_tabs' );
+	?>
 
 	<form action="" method="post" id="members-directory-form" class="dir-form">
 		
-		<h2 class="bp-screen-reader-text"><?php
+		<h2 class="bp-screen-reader-text">
+		<?php
 			/* translators: accessibility text */
 			esc_html_e( 'Members directory', 'buddypress' );
-		?></h2>
+		?>
+		</h2>
 		
 		
 
 		<div id="members-dir-list" class="members dir-list">
 			
-			<?php 
-			add_filter('bp_ajax_querystring', function($qs) {
-				global $members_atts;
-				return $qs .= $members_atts['bpsh_query'];
-			});
-			
+			<?php
+			add_filter(
+				'bp_ajax_querystring',
+				function( $qs ) {
+					global $members_atts;
+					return $qs .= $members_atts['bpsh_query'];
+				}
+			);
 
-			bp_get_template_part( 'members/members-loop' ); ?>
+
+			bp_get_template_part( 'members/members-loop' );
+			?>
 		</div><!-- #members-dir-list -->
 
 		<?php
@@ -55,7 +62,8 @@ do_action( 'bp_before_directory_members_page' ); ?>
 		 *
 		 * @since 1.1.0
 		 */
-		do_action( 'bp_directory_members_content' ); ?>
+		do_action( 'bp_directory_members_content' );
+		?>
 
 		<?php wp_nonce_field( 'directory_members', '_wpnonce-member-filter' ); ?>
 
@@ -66,7 +74,8 @@ do_action( 'bp_before_directory_members_page' ); ?>
 		 *
 		 * @since 1.1.0
 		 */
-		do_action( 'bp_after_directory_members_content' ); ?>
+		do_action( 'bp_after_directory_members_content' );
+		?>
 
 	</form><!-- #members-directory-form -->
 
@@ -77,7 +86,8 @@ do_action( 'bp_before_directory_members_page' ); ?>
 	 *
 	 * @since 1.1.0
 	 */
-	do_action( 'bp_after_directory_members' ); ?>
+	do_action( 'bp_after_directory_members' );
+	?>
 
 </div><!-- #buddypress -->
 
