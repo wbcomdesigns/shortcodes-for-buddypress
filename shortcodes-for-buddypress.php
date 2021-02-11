@@ -173,6 +173,8 @@ add_action( 'elementor/elements/categories_registered', 'buddypress_shortcodes_c
 
 function shortcodes_for_buddypress_widgets_registered() {
 	require plugin_dir_path( __FILE__ ) . 'buddypress-shortcodes-element.php';
+	require plugin_dir_path( __FILE__ ) . 'buddypress-members-element.php';
+	require plugin_dir_path( __FILE__ ) . 'buddypress-groups-element.php';
 }
 
 add_action( 'elementor/widgets/widgets_registered', 'shortcodes_for_buddypress_widgets_registered', 15 );
