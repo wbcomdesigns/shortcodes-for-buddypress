@@ -386,6 +386,8 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 					'title'  		=> $settings['sfb_title'],					
 					'per_page' 		=> ( isset($settings['sfb_number']) ) ? $settings['sfb_number'] : 20,
 					'allow_posting' =>  'false',
+					'display_comments'	=> 'threaded',
+					'container_class'	=> 'activity'
 				];
 
 		if ( isset($_REQUEST['action']) && ( $_REQUEST['action'] == 'elementor' || $_REQUEST['action'] == 'elementor_ajax' ) && is_admin() ) {
