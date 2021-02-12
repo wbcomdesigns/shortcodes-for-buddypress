@@ -257,7 +257,7 @@ class Shortcodes_For_Buddypress_Public {
 						// Searching
 						'search_terms' 		=> false, // specify terms to search on
 						'use_compat' 		=> ( function_exists( 'bp_use_theme_compat_with_current_theme' )) ? bp_use_theme_compat_with_current_theme() : '',
-						'allow_posting' 	=> true, //experimental, some of the themes may not support it.
+						'allow_posting' 	=> false, //experimental, some of the themes may not support it.
 						'container_class' 	=> 'activity', //default container,
 						'hide_on_activity' 	=> 1, //hide on user and group activity pages
 						'bpsh_query'		=> $bpsh_query
