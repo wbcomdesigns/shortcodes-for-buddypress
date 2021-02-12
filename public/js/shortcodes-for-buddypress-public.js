@@ -28,5 +28,17 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
+	 
+	$(document).ready( function() {
+		
+		$( document  ).on('click', '#aw-whats-new-reset, #aw-whats-new-submit', function(){						
+			bp.Nouveau.setStorage( 'bp-activity','filter','');
+			setTimeout(function(){				
+				bp.Nouveau.setStorage( 'bp-activity','filter',$('#activity_filters_objects').val() );
+			}, 3000);
+				
+			
+		});
+	});
 
 })( jQuery );

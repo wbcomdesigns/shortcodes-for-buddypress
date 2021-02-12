@@ -47,7 +47,7 @@ if ( $activity_atts['use_compat'] ) {
 
 	<?php // endif; ?>
 	
-	<input type="hidden" data-bp-filter="activity" value="<?php  echo ( $activity_atts['allow_posting'] == 'true' && is_user_logged_in() ) ? '' : $activity_atts['bpsh_query'] ?>" />		
+	<input type="hidden" id="activity_filters_objects" data-bp-filter="activity" value="<?php  echo $activity_atts['bpsh_query'] ?>" />
 	<div class="screen-content">
 
 		<?php bp_get_template_part( 'common/search-and-filters-bar' ); ?>
