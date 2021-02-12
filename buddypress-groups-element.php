@@ -230,6 +230,15 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		if ( isset($_REQUEST['action']) && ( $_REQUEST['action'] == 'elementor' || $_REQUEST['action'] == 'elementor_ajax' ) && is_admin() ) {
 			$atts = $args;
 			
+			$current_component_groups = static function () {
+				return true;
+			};
+			
+			add_filter( 'bp_current_component', $current_component );
+			add_filter( 'bp_is_current_component', $current_component_groups );
+			add_filter( 'groups_get_current_group', $current_component_groups );
+			add_filter( 'bp_is_active', $current_component_groups);
+			
 			add_filter( 'bp_get_groups_pagination_count', '__return_zero' );
 			add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
 			

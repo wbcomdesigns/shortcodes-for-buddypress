@@ -165,12 +165,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			return 'members';
 		};
 		
-		$current_component_members = static function () {
-			return true;
-		};
-		add_filter( 'bp_is_current_component', $current_component_members );
-		add_filter( 'groups_get_current_group', $current_component_members );
-		add_filter( 'bp_is_active', $current_component_members);
+		
 		
 		add_filter( 'bp_current_component', $current_component );
 		
@@ -183,6 +178,12 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 				
 		if ( isset($_REQUEST['action']) && ( $_REQUEST['action'] == 'elementor' || $_REQUEST['action'] == 'elementor_ajax' ) && is_admin() ) {
 			$atts = $args;
+			$current_component_members = static function () {
+				return true;
+			};
+			add_filter( 'bp_is_current_component', $current_component_members );
+			add_filter( 'groups_get_current_group', $current_component_members );
+			add_filter( 'bp_is_active', $current_component_members);
 			
 			add_filter( 'bp_members_pagination_count', '__return_zero' );
 			add_filter( 'bp_get_members_pagination_links', '__return_zero' );
