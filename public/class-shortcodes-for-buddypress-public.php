@@ -284,6 +284,7 @@ class Shortcodes_For_Buddypress_Public {
 			if ( $_bp_theme_package == 'legacy' ) {
 				$this->buddypress_shortcodes_template( 'legacy/activity/bp-shortcodes-activity.php' );
 			} else {
+				wp_enqueue_script( 'bp-nouveau-activity' );
 				$this->buddypress_shortcodes_template( 'nouveau/activity/bp-shortcodes-activity.php' );
 			}
         }
