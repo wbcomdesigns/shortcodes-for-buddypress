@@ -76,7 +76,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 						'messages' => [
 							__( 'Power up up your listing with custom queries and templates.', 'shortcodes-for-buddypress' ),
 						],
-						'link'     => 'https://wbcomdesigns.com/downloads/shortcodes-for-buddypress/-pro',
+						'link'     => 'https://wbcomdesigns.com/downloads/shortcodes-for-buddypress-pro',
 					]
 				),
 			]
