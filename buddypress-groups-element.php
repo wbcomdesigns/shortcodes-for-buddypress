@@ -66,6 +66,21 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			]
 		);
 		
+		$this->add_control(
+			'go_sfb_pro_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw'  => \Shortcodes_For_Buddypress_Public::sfb_go_pro_template(
+					[
+						'title'    => __( 'Shortcodes for BuddyPress PRO', 'shortcodes-for-buddypress' ),
+						'messages' => [
+							__( 'Power up up your listing with custom queries and templates.', 'shortcodes-for-buddypress' ),
+						],
+						'link'     => 'https://wbcomdesigns.com/downloads/shortcodes-for-buddypress/-pro',
+					]
+				),
+			]
+		);
 		
 		
 		$this->end_controls_section();

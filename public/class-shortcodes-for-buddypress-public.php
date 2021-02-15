@@ -664,5 +664,32 @@ class Shortcodes_For_Buddypress_Public {
 
 		return $params;
 	}
+	
+	/**
+	 * @param $texts
+	 *
+	 * @return false|string
+	 */
+	public function sfb_go_pro_template( $texts ) {
+		ob_start();
+
+		?>
+		<div class="elementor-nerd-box">
+			<div class="elementor-nerd-box-title"><?php echo $texts['title']; ?></div>
+			<?php foreach ( $texts['messages'] as $message ) : ?>
+				<div class="elementor-nerd-box-message"><?php echo $message; ?></div>
+			<?php endforeach; ?>
+
+			<?php if ( $texts['link'] ) : ?>
+				<a class="elementor-button elementor-panel-scheme-title" href="<?php echo $texts['link']; ?>"
+				   target="_blank">
+					<?php echo __( 'Go PRO', 'stax-buddy-builder' ); ?>
+				</a>
+			<?php endif; ?>
+		</div>
+		<?php
+
+		return ob_get_clean();
+	}
 
 }
