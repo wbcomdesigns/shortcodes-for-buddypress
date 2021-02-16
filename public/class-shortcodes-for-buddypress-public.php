@@ -520,7 +520,7 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_activity_localize_scripts( $params = array() ) {
 		global $post;
-		
+		$current_component = '';
 		if ( isset($post->ID) && $post->ID != '' && $post->ID != '0') {
 			$_elementor_controls_usage = get_post_meta(get_the_ID(), '_elementor_controls_usage', true);
 			$current_component = '';
