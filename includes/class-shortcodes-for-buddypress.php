@@ -117,6 +117,11 @@ class Shortcodes_For_Buddypress {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-shortcodes-for-buddypress-admin.php';
 
 		/**
+		 * The class responsible review on plugin by user.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-shortcode-for-buddypress-user-review.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
