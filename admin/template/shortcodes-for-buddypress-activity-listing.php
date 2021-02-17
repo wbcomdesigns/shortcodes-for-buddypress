@@ -13,7 +13,7 @@
  */
 ?>
 <div class="wb_shortcodes_description">
-	<div class="description-title"><?php esc_html_e( 'Description' ); ?></div>
+	<div class="description-title"></div>
 	<p><?php esc_html_e( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?></p>
 	<p><?php esc_html_e( 'The [activity-listing] is work as same as site-wide activity page work. ', 'shortcodes-for-buddypress' ); ?>
 	</p>
@@ -47,7 +47,7 @@
 				);
 				?>
 				</td>
-			</tr>			
+			</tr>
 			<tr>
 				<td><?php esc_html_e( 'per_page', 'shortcodes-for-buddypress' ); ?></td>
 				<td><?php esc_html_e( 'int', 'shortcodes-for-buddypress' ); ?></td>
@@ -133,8 +133,8 @@
 				<td>
 				<?php
 				esc_html_e(
-					' Array of exact activity IDs to query. 
-						Providing an "include" array will override all other filters passed in the argument array. 
+					' Array of exact activity IDs to query.
+						Providing an "include" array will override all other filters passed in the argument array.
 						When viewing the permalink page for a single activity item, this value defaults to the ID of
 						that item.',
 					'shortcodes-for-buddypress'

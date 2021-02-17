@@ -13,7 +13,7 @@
  */
 ?>
 <div class="wb_shortcodes_description">
-	<div class="description-title"><?php esc_html_e( 'Description' ); ?></div>
+	<div class="description-title"></div>
 	<p><?php esc_html_e( ' The [groups-listing] shortcode allows you to display listing of groups in posts/pages.', 'shortcodes-for-buddypress' ); ?></p>
 </div>
 <div class="bp-shortcode-attributes shortcode-attributes">
