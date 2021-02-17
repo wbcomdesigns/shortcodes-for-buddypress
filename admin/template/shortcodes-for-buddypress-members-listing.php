@@ -13,9 +13,9 @@
  */
 ?>
   
-<div class="description">
+<div class="wb_shortcodes_description">
 	<div class="description-title"><?php esc_html_e( 'Description' ); ?></div>
-	<?php esc_html_e( 'The [members-listing] shortcode allows you to display listing of members listing in posts/pages.', 'shortcodes-for-buddypress' ); ?>
+	<p><?php esc_html_e( 'The [members-listing] shortcode allows you to display listing of members listing in posts/pages.', 'shortcodes-for-buddypress' ); ?></p>
 </div>
 <div class="bp-shortcode-attributes shortcode-attributes">
   <table class="widefat fixed striped buddypress-shortcode-lists">

@@ -12,10 +12,11 @@
  * @subpackage Shortcodes_For_Buddypress/admin/template
  */
 ?>
-<div class="description">
+<div class="wb_shortcodes_description">
 	<div class="description-title"><?php esc_html_e( 'Description' ); ?></div>
-	<?php esc_html_e( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?>
-	<?php esc_html_e( 'The [activity-listing] is work as same as site-wide activity page work. ', 'shortcodes-for-buddypress' ); ?>
+	<p><?php esc_html_e( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?></p>
+	<p><?php esc_html_e( 'The [activity-listing] is work as same as site-wide activity page work. ', 'shortcodes-for-buddypress' ); ?>
+	</p>
 </div>
 <div class="bp-shortcode-attributes shortcode-attributes">
   <table class="widefat fixed striped buddypress-shortcode-lists">
