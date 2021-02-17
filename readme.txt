@@ -48,7 +48,8 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 
 == Changelog ==
 = 2.3.0 =
-* Added : Added Widgets for Activity, Member Direcotry and Group Directory with Elementor
+* New Feature: Added Widgets for Activity, Member Directory, and Group Directory with Elementor
+* Update: Shortcode compatibility upto BuddyPress v7.2.0
 
 = 2.1.0 =
 * Fixed #72 - Not working with reign learndash addon
