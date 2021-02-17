@@ -12,7 +12,12 @@ This plugin will generate Shortcode for Listing Activity Streams , Members and G
 
 == Description ==
 
-This plugin will add an extended feature to the big name “BuddyPress” that will generate Shortcode for Listing Activity Streams , Members and Groups on any post/page in website.
+This plugin will add an extended feature to BuddyPress. It will use Shortcode for Listing Activity Streams, Members directory, and Groups directory on any post/page within the website.
+
+With our current update, we have also added three widgets to display activity stream, member directory, and group directory using Elementor. 
+
+=== THEME - WORDPRESS THEME WITH OUTSTANDING BUDDYPRESS SUPPORT ===
+* [FREE BuddyPress Theme: BuddyX](https://wordpress.org/themes/buddyx/) - Offers unique layouts with clean code and easy-to-customize options giving you a whole new way to visualize BuddyPress.
 
 == Installation ==
 This section describes how to install the plugin and get it working.
