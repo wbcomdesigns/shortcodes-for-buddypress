@@ -101,7 +101,7 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	public function buddypress_shortcodes_option_page() {
-		add_submenu_page( 'options-general.php', esc_html__( 'BP Shortcodes', $this->plugin_name ), esc_html__( 'BP Shortcodes', $this->plugin_name ), 'manage_options', 'bpsh-shortcodes', array( $this, 'buddypress_shortcodes_option_page_callback' ) );
+		add_submenu_page( 'options-general.php', esc_html__( 'Shortcodes for BP', $this->plugin_name ), esc_html__( 'Shortcodes for BP', $this->plugin_name ), 'manage_options', 'bpsh-shortcodes', array( $this, 'buddypress_shortcodes_option_page_callback' ) );
 	}
 
 	public function buddypress_shortcodes_option_page_callback() {
