@@ -15,6 +15,7 @@
 <div class="description">
 	<div class="description-title"><?php esc_html_e( 'Description' ); ?></div>
 	<?php esc_html_e( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?>
+	<?php esc_html_e( 'The [activity-listing] is work as same as site-wide activity page work. ', 'shortcodes-for-buddypress' ); ?>
 </div>
 <div class="bp-shortcode-attributes shortcode-attributes">
   <table class="widefat fixed striped buddypress-shortcode-lists">
