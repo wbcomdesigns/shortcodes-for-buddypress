@@ -105,8 +105,71 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	public function buddypress_shortcodes_option_page_callback() {
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'templates/bp-shortcodes-template.php';
+		?>
+		<div class="wrap">
+			<div id="icon-themes" class="icon32"></div>
+			<div class="bpsh-admin-screen">
+				<div class="bpsh-admin-content">
+					<h1 class="wp-heading-inline"><?php esc_html_e( 'BuddyPress Shortcodes', 'shortcodes-for-buddypress' ); ?></h1>
+					<?php
+					if ( isset( $_GET['tab'] ) ) {
+						$this->buddypress_shortcode_admin_tabs( $_GET['tab'] );
+						$this->buddypress_shortcode_option_pages( $_GET['tab'] );
+					} else {
+						$this->buddypress_shortcode_admin_tabs( 'activity-listing' );
+					}
+
+					?>
+					<p class="description">
+						<strong><?php esc_html_e( "Well guys, It's up to you to explore the possibilities", 'shortcodes-for-buddypress' ); ?></strong>
+					</p>
+				</div>
+			</div>
+	</div>
+		<?php
 	}
+
+	public function buddypress_shortcode_admin_tabs( $current = 'activity-listing' ) {
+		$tabs = array(
+			'activity-listing'      => __( 'Activities', 'shortcodes-for-buddypress' ),
+			'members-listing'       => __( 'Members', 'shortcodes-for-buddypress' ),
+			'groups-listing'        => __( 'Groups', 'shortcodes-for-buddypress' ),
+			'notifications-listing' => __( 'User Notification', 'shortcodes-for-buddypress' ),
+		);
+		echo '<h2 class="nav-tab-wrapper">';
+		foreach ( $tabs as $tab => $name ) {
+			$class = ( $tab == $current ) ? 'nav-tab-active' : '';
+			echo '<a class="nav-tab ' . $class . '" href="?page=bpsh-shortcodes&tab=' . $tab . '">' . $name . '</a>';
+
+		}
+		echo '</h2>';
+
+	}
+
+	public function buddypress_shortcode_option_pages( $current = 'activity-listing' ) {
+		if ( empty( $current ) ) {
+			return;
+		}
+		switch ( $current ) {
+			case 'activity-listing':
+				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/template/shortcodes-for-buddypress-activity-listing.php';
+				break;
+			case 'members-listing':
+				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/template/shortcodes-for-buddypress-members-listing.php';
+				break;
+			case 'groups-listing':
+				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/template/shortcodes-for-buddypress-groups-listing.php';
+				break;
+			case 'notifications-listing':
+				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/template/shortcodes-for-buddypress-notifications-listing.php';
+				break;
+			default:
+				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/template/shortcodes-for-buddypress-activity-listing.php';
+				break;
+		}
+
+	}
+
 	public function buddypress_shortcodes_settings_link( $links ) {
 		$settings_link = '<a href="options-general.php?page=bpsh-shortcodes">' . esc_html__( 'Documentation', 'shortcodes-for-buddypress' ) . '</a>';
 		array_push( $links, $settings_link );

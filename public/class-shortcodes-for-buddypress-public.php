@@ -44,13 +44,13 @@ class Shortcodes_For_Buddypress_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of the plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -103,57 +103,57 @@ class Shortcodes_For_Buddypress_Public {
 	public function buddypress_shortcodes_bp_is_current_component( $current_component ) {
 		global $post;
 
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
+		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 			$current_component = 'activity';
 		}
 
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'notification' ) ) ) {
+		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'notification' ) ) ) {
 			$current_component = 'members';
 		}
 
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
+		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
 			$current_component = 'groups';
 		}
-		
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
+
+		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
 			$current_component = 'notifications';
 		}
-		
+
 		return $current_component;
 	}
 
 	public function buddypress_shortcodes_bp_current_component( $current_component ) {
 		global $post;
-		
+
 		if ( $current_component == '' ) {
-			//$current_component = 'activity';
+			// $current_component = 'activity';
 		}
-		
-		if ( empty($post) && !isset($_REQUEST['object'])) {
+
+		if ( empty( $post ) && ! isset( $_REQUEST['object'] ) ) {
 			return $current_component;
 		}
-		
-		if ( isset($_REQUEST['object']) &&  $_REQUEST['object'] != '' ) {
+
+		if ( isset( $_REQUEST['object'] ) && $_REQUEST['object'] != '' ) {
 			$current_component = $_REQUEST['object'];
 		}
-		if ( isset($_REQUEST['action']) &&  $_REQUEST['action'] == 'post_update' ) {
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'post_update' ) {
 			$current_component = 'activity';
 		}
-		
-		if ( isset($post->ID) && $post->ID != '' && $post->ID != '0') {
-			$_elementor_controls_usage = get_post_meta($post->ID, '_elementor_controls_usage', true);
-			if (  !empty($_elementor_controls_usage)) {
-				foreach($_elementor_controls_usage as $key=>$value) {
+
+		if ( isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
+			$_elementor_controls_usage = get_post_meta( $post->ID, '_elementor_controls_usage', true );
+			if ( ! empty( $_elementor_controls_usage ) ) {
+				foreach ( $_elementor_controls_usage as $key => $value ) {
 					if ( $key == 'buddypress_shortcode_activity_widget' ) {
 						$current_component = 'activity';
 						break;
 					}
-					
+
 					if ( $key == 'buddypress_shortcode_members_widget' ) {
 						$current_component = 'members';
 						break;
 					}
-					
+
 					if ( $key == 'buddypress_shortcode_groups_widget' ) {
 						$current_component = 'groups';
 						break;
@@ -161,40 +161,40 @@ class Shortcodes_For_Buddypress_Public {
 				}
 			}
 		}
-		
+
 		/* Set Current component activity when submit post from activity listing shortcode */
-		if ( isset($_REQUEST['data']['bp_activity_last_recorded']) &&  $_REQUEST['data']['bp_activity_last_recorded'] != '' ) {
+		if ( isset( $_REQUEST['data']['bp_activity_last_recorded'] ) && $_REQUEST['data']['bp_activity_last_recorded'] != '' ) {
 			$current_component = 'activity';
 		}
-		
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'notifications-listing' ) ) && isset($post->ID) && $post->ID != '' && $post->ID != '0' ) {
+
+		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'notifications-listing' ) ) && isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
 			$current_component = 'notifications';
-			
+
 			/* redirect to home page when user not loggedin on notifications listing page */
-			if ( !is_user_logged_in() ) {
+			if ( ! is_user_logged_in() ) {
 				wp_redirect( site_url( '/' ) );
 				exit();
 			}
 		}
-		
+
 		return $current_component;
 	}
 
 	public function buddypress_shortcodes_body_classes( $classes ) {
 		global $post;
 
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) || has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'groups-listing' ) || has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
+		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'activity-listing' ) || has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'groups-listing' ) || has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
 			$classes[] = 'bpsh-buddypress';
 			$classes[] = 'buddypress';
 		}
 
-        return $classes;
+		return $classes;
 	}
 
 	public function buddypress_shortcodes_bp_nouveau_get_search_primary_object( $object ) {
 		global $post;
 
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) )  ) {
+		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 			$object = 'dir';
 		}
 
@@ -208,7 +208,7 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_template( $file_name ) {
 
-		$template_name ='shortcodes-for-buddypress/' . $file_name;
+		$template_name = 'shortcodes-for-buddypress/' . $file_name;
 
 		if ( file_exists( STYLESHEETPATH . '/' . $template_name ) ) {
 
@@ -232,62 +232,62 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_activity_listing( $atts, $content = null ) {
 		global $activity_atts;
-		$bpsh_query = build_query($atts);
-		if (!empty($bpsh_query)) {
-            $bpsh_query = '&' . $bpsh_query;
-        }
+		$bpsh_query = build_query( $atts );
+		if ( ! empty( $bpsh_query ) ) {
+			$bpsh_query = '&' . $bpsh_query;
+		}
 		$default_atts = array(
-						'title' 			=> '', //title of the section
-						'display_comments' 	=> 'threaded',
-						'include' 			=> false, // pass an activity_id or string of IDs comma-separated
-						'exclude' 			=> false, // pass an activity_id or string of IDs comma-separated
-						'in' 				=> false, // comma-separated list or array of activity IDs among which to search
-						'sort' 				=> 'DESC', // sort DESC or ASC
-						'page' 				=> false, // which page to load
-						'per_page' 			=> 10, //how many per page
-						'max' 				=> false, // max number to return
-						'count_total' 		=> true,
-						'scope' 			=> false,
-						// Filtering
-						'user_id' 			=> false, // user_id to filter on
-						'object' 			=> false, // object to filter on e.g. groups, profile, status, friends
-						'action' 			=> false, // action to filter on e.g. activity_update, new_forum_post, profile_updated
-						'primary_id' 		=> false, // object ID to filter on e.g. a group_id or forum_id or blog_id etc.
-						'secondary_id' 		=> false, // secondary object ID to filter on e.g. a post_id
+			'title'            => '', // title of the section
+			'display_comments' => 'threaded',
+			'include'          => false, // pass an activity_id or string of IDs comma-separated
+			'exclude'          => false, // pass an activity_id or string of IDs comma-separated
+			'in'               => false, // comma-separated list or array of activity IDs among which to search
+			'sort'             => 'DESC', // sort DESC or ASC
+			'page'             => false, // which page to load
+			'per_page'         => 10, // how many per page
+			'max'              => false, // max number to return
+			'count_total'      => true,
+			'scope'            => false,
+			// Filtering
+			'user_id'          => false, // user_id to filter on
+			'object'           => false, // object to filter on e.g. groups, profile, status, friends
+			'action'           => false, // action to filter on e.g. activity_update, new_forum_post, profile_updated
+			'primary_id'       => false, // object ID to filter on e.g. a group_id or forum_id or blog_id etc.
+			'secondary_id'     => false, // secondary object ID to filter on e.g. a post_id
 						// Searching
-						'search_terms' 		=> false, // specify terms to search on
-						'use_compat' 		=> ( function_exists( 'bp_use_theme_compat_with_current_theme' )) ? bp_use_theme_compat_with_current_theme() : '',
-						'allow_posting' 	=> false, //experimental, some of the themes may not support it.
-						'container_class' 	=> 'activity', //default container,
-						'hide_on_activity' 	=> 1, //hide on user and group activity pages
-						'bpsh_query'		=> $bpsh_query
-				);
+			'search_terms'     => false, // specify terms to search on
+			'use_compat'       => ( function_exists( 'bp_use_theme_compat_with_current_theme' ) ) ? bp_use_theme_compat_with_current_theme() : '',
+			'allow_posting'    => false, // experimental, some of the themes may not support it.
+			'container_class'  => 'activity', // default container,
+			'hide_on_activity' => 1, // hide on user and group activity pages
+			'bpsh_query'       => $bpsh_query,
+		);
 
 		$activity_atts = shortcode_atts( $default_atts, $atts );
-		extract($activity_atts);
-		
-		if ( isset($atts['hide_on_activity']) && $atts['hide_on_activity'] && ( function_exists('bp_is_activity_component') && bp_is_activity_component() ||
-                function_exists('bp_is_group_home') && bp_is_group_home() )) {
-            return '';
-        }
+		extract( $activity_atts );
+
+		if ( isset( $atts['hide_on_activity'] ) && $atts['hide_on_activity'] && ( function_exists( 'bp_is_activity_component' ) && bp_is_activity_component() ||
+				function_exists( 'bp_is_group_home' ) && bp_is_group_home() ) ) {
+			return '';
+		}
 
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
-		
+
 		ob_start();
 
-		if (function_exists('bp_is_active')) {
+		if ( function_exists( 'bp_is_active' ) ) {
 
 			if ( $title != '' ) { ?>
-                <h3 class="section-title"><span><?php echo esc_html($title); ?></span></h3>
-                <?php
-            }
+		  <h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
+				<?php
+			}
 			if ( $_bp_theme_package == 'legacy' ) {
 				$this->buddypress_shortcodes_template( 'legacy/activity/bp-shortcodes-activity.php' );
 			} else {
 				wp_enqueue_script( 'bp-nouveau-activity' );
 				$this->buddypress_shortcodes_template( 'nouveau/activity/bp-shortcodes-activity.php' );
 			}
-        }
+		}
 
 		return ob_get_clean();
 	}
@@ -300,98 +300,98 @@ class Shortcodes_For_Buddypress_Public {
 	public function buddypress_shortcodes_members_listing( $atts, $content = null ) {
 
 		global $members_atts;
-		if( !empty($atts) && array_key_exists( 'exclude_member_role', $atts )) {
-			
-            if ( strpos($atts['exclude_member_role'], ',') !== false) {
-                $exclude_roles = explode(',', $atts['exclude_member_role']);
-            } else {
-                $exclude_roles = $atts['exclude_member_role'];
-            }
-            if ( isset($atts['exclude']) && strpos($atts['exclude'], ',') !== false) {
-                $exclude_ids = explode(',', $atts['exclude']);
-            } else {
-                $exclude_ids = array();
-            }
-            $users_data = get_users(array('role__in' => $exclude_roles));
-            $uid_collection = array();
-            foreach ($users_data as $key => $users) {
-                $uid_collection[] = $users->ID;
-            }
-            $u = array_unique(array_merge($uid_collection, $exclude_ids));
-            $atts['exclude'] = rtrim(implode(',', $u), ',');
-            unset($atts['exclude_member_role']);
-        }
-        if( !empty($atts) && array_key_exists( 'include_member_role', $atts )) {
-            if ( strpos($atts['include_member_role'], ',') !== false) {
-                $exclude_roles = explode(',', $atts['include_member_role']);
-            } else {
-                $exclude_roles = $atts['include_member_role'];
-            }
-            if ( isset($atts['include']) && strpos($atts['include'], ',') !== false) {
-                $exclude_ids = explode(',', $atts['include']);
-            } else {
-                $exclude_ids = array();
-            }
-            $users_data = get_users(array('role__in' => $exclude_roles));
-            $uid_collection = array();
-            foreach ($users_data as $key => $users) {
-                $uid_collection[] = $users->ID;
-            }
-            $u = array_unique(array_merge($uid_collection, $exclude_ids));
-            $atts['include'] = rtrim(implode(',', $u), ',');
-            unset($atts['include_member_role']);
-        }
+		if ( ! empty( $atts ) && array_key_exists( 'exclude_member_role', $atts ) ) {
 
+			if ( strpos( $atts['exclude_member_role'], ',' ) !== false ) {
+				$exclude_roles = explode( ',', $atts['exclude_member_role'] );
+			} else {
+				$exclude_roles = $atts['exclude_member_role'];
+			}
+			if ( isset( $atts['exclude'] ) && strpos( $atts['exclude'], ',' ) !== false ) {
+				$exclude_ids = explode( ',', $atts['exclude'] );
+			} else {
+				$exclude_ids = array();
+			}
+			$users_data     = get_users( array( 'role__in' => $exclude_roles ) );
+			$uid_collection = array();
+			foreach ( $users_data as $key => $users ) {
+				$uid_collection[] = $users->ID;
+			}
+			$u               = array_unique( array_merge( $uid_collection, $exclude_ids ) );
+			$atts['exclude'] = rtrim( implode( ',', $u ), ',' );
+			unset( $atts['exclude_member_role'] );
+		}
+		if ( ! empty( $atts ) && array_key_exists( 'include_member_role', $atts ) ) {
+			if ( strpos( $atts['include_member_role'], ',' ) !== false ) {
+				$exclude_roles = explode( ',', $atts['include_member_role'] );
+			} else {
+				$exclude_roles = $atts['include_member_role'];
+			}
+			if ( isset( $atts['include'] ) && strpos( $atts['include'], ',' ) !== false ) {
+				$exclude_ids = explode( ',', $atts['include'] );
+			} else {
+				$exclude_ids = array();
+			}
+			$users_data     = get_users( array( 'role__in' => $exclude_roles ) );
+			$uid_collection = array();
+			foreach ( $users_data as $key => $users ) {
+				$uid_collection[] = $users->ID;
+			}
+			$u               = array_unique( array_merge( $uid_collection, $exclude_ids ) );
+			$atts['include'] = rtrim( implode( ',', $u ), ',' );
+			unset( $atts['include_member_role'] );
+		}
 
-		$bpsh_query = build_query($atts);
-		if (!empty($bpsh_query)) {
-            $bpsh_query = '&' . $bpsh_query;
-        }
+		$bpsh_query = build_query( $atts );
+		if ( ! empty( $bpsh_query ) ) {
+			$bpsh_query = '&' . $bpsh_query;
+		}
 		$default_atts = array(
-							'title' 				=> '',
-							'type' 					=> 'active', // Type: active ( default ) | random | newest | popular | online | alphabetical.
-							'page' 					=> false,
-							'per_page' 				=> 20,
-							'max' 					=> false,
-							'page_arg' 				=> 'upage', // See https://buddypress.trac.wordpress.org/ticket/3679.
-							'include' 				=> false, // Pass a user_id or a list (comma-separated or array) of user_ids to only show these users.
-							'exclude' 				=> false, // Pass a user_id or a list (comma-separated or array) of user_ids to exclude these users.
-							'user_id' 				=> false, // Pass a user_id to only show friends of this user.
-							'member_type' 			=> false, // Can be a comma-separated list.
-							'include_member_role' 	=> '', // Can be a comma-separated list.
-							'exclude_member_role' 	=> '', // Can be a comma-separated list.
-							'member_type__in' 		=> '',
-							'member_type__not_in'	=> '',
-							'search_terms' 			=> false,
-							( function_exists( 'bp_use_theme_compat_with_current_theme' )) ? bp_use_theme_compat_with_current_theme() : '',
-							'meta_key' 				=> false, // Only return users with this usermeta.
-							'meta_value' 			=> false, // Only return users where the usermeta value matches. Requires meta_key.
-							'populate_extras' 		=> true,      // Fetch usermeta? Friend count, last active etc.
-							'container_class' 		=> 'members', //default container,
-							'bpsh_query'			=> $bpsh_query
-						);
-
+			'title'               => '',
+			'type'                => 'active', // Type: active ( default ) | random | newest | popular | online | alphabetical.
+			'page'                => false,
+			'per_page'            => 20,
+			'max'                 => false,
+			'page_arg'            => 'upage', // See https://buddypress.trac.wordpress.org/ticket/3679.
+			'include'             => false, // Pass a user_id or a list (comma-separated or array) of user_ids to only show these users.
+			'exclude'             => false, // Pass a user_id or a list (comma-separated or array) of user_ids to exclude these users.
+			'user_id'             => false, // Pass a user_id to only show friends of this user.
+			'user_ids'            => false, // Pass a user_id to only show friends of this user.
+			'member_type'         => false, // Can be a comma-separated list.
+			'include_member_role' => '', // Can be a comma-separated list.
+			'exclude_member_role' => '', // Can be a comma-separated list.
+			'member_type__in'     => '',
+			'member_type__not_in' => '',
+			'search_terms'        => false,
+			( function_exists( 'bp_use_theme_compat_with_current_theme' ) ) ? bp_use_theme_compat_with_current_theme() : '',
+			'meta_key'            => false, // Only return users with this usermeta.
+			'meta_value'          => false, // Only return users where the usermeta value matches. Requires meta_key.
+			'populate_extras'     => true,      // Fetch usermeta? Friend count, last active etc.
+			'container_class'     => 'members', // default container,
+			'bpsh_query'          => $bpsh_query,
+		);
 
 		$members_atts = shortcode_atts( $default_atts, $atts );
 
-		update_option('bpsh_membe_queryargs', $bpsh_query);
-		extract($members_atts);
+		update_option( 'bpsh_membe_queryargs', $bpsh_query );
+		extract( $members_atts );
 
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 		ob_start();
 
-		if (function_exists('bp_is_active')) {
+		if ( function_exists( 'bp_is_active' ) ) {
 
-			if ( $title != '' ) { ?>
-                <h3 class="section-title"><span><?php echo $title; ?></span></h3>
-                <?php
-            }
+			if ( $title != '' ) {
+				?>
+				<h3 class="section-title"><span><?php echo $title; ?></span></h3>
+				<?php
+			}
 			if ( $_bp_theme_package == 'legacy' ) {
 				$this->buddypress_shortcodes_template( 'legacy/members/bp-shortcodes-members.php' );
 			} else {
 				$this->buddypress_shortcodes_template( 'nouveau/members/bp-shortcodes-members.php' );
 			}
-        }
+		}
 
 		return ob_get_clean();
 	}
@@ -407,65 +407,65 @@ class Shortcodes_For_Buddypress_Public {
 
 		/* Check Groups Components not activated then return shortcode */
 		$bp_components = get_option( 'bp-active-components' );
-		if ( !isset($bp_components['groups']) ){
+		if ( ! isset( $bp_components['groups'] ) ) {
 			return $content;
 		}
 
-
 		/* Check Scope is personal then pass current user id */
-		if ( isset($atts['scope']) && $atts['scope'] == 'personal') {
-			$user_id = ( bp_displayed_user_id() ) ? bp_displayed_user_id() : bp_loggedin_user_id();
+		if ( isset( $atts['scope'] ) && $atts['scope'] == 'personal' ) {
+			$user_id         = ( bp_displayed_user_id() ) ? bp_displayed_user_id() : bp_loggedin_user_id();
 			$atts['user_id'] = $user_id;
 		}
-		$bpsh_query = build_query($atts);
-		if (!empty($bpsh_query)) {
-            $bpsh_query = '&' . $bpsh_query;
-        }
+		$bpsh_query = build_query( $atts );
+		if ( ! empty( $bpsh_query ) ) {
+			$bpsh_query = '&' . $bpsh_query;
+		}
 
 		$default_atts = array(
-							'title' 				=> '',
-							'type' 					=> 'alphabetical', //popular, alphabetical, invites, single-group
-							'order'	 				=> 'DESC',
-							'orderby' 				=> 'last_activity',
-							'page' 					=> 1,
-							'per_page' 				=> 20,
-							'max' 					=> false,
-							'show_hidden' 			=> false,
-							'page_arg' 				=> 'grpage',
-							'user_id' 				=> false,
-							'slug' 					=> false,
-							'search_terms' 			=> false,
-							'group_type' 			=> false,
-							'group_type__in' 		=> '',
-							'group_type__not_in' 	=> '',
-							'meta_query' 			=> false,
-							( function_exists( 'bp_use_theme_compat_with_current_theme' )) ? bp_use_theme_compat_with_current_theme() : '',
-							'include' 				=> false,
-							'exclude' 				=> false,
-							'parent_id' 			=> null,
-							'update_meta_cache' 	=> true,							
-							'container_class' 		=> 'group', //default container,
-							'bpsh_query'			=> $bpsh_query
-						);
+			'title'              => '',
+			'type'               => 'alphabetical', // popular, alphabetical, invites, single-group
+			'order'              => 'DESC',
+			'orderby'            => 'last_activity',
+			'page'               => 1,
+			'per_page'           => 20,
+			'max'                => false,
+			'show_hidden'        => false,
+			'page_arg'           => 'grpage',
+			'user_id'            => false,
+			'slug'               => false,
+			'search_terms'       => false,
+			'group_type'         => false,
+			'group_type__in'     => '',
+			'group_type__not_in' => '',
+			'meta_query'         => false,
+			( function_exists( 'bp_use_theme_compat_with_current_theme' ) ) ? bp_use_theme_compat_with_current_theme() : '',
+			'include'            => false,
+			'exclude'            => false,
+			'parent_id'          => null,
+			'update_meta_cache'  => true,
+			'container_class'    => 'group', // default container,
+			'bpsh_query'         => $bpsh_query,
+		);
 
 		$groups_atts = shortcode_atts( $default_atts, $atts );
-		extract($groups_atts);
-		
+		extract( $groups_atts );
+
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 		ob_start();
-		if (function_exists('bp_is_active')) {
+		if ( function_exists( 'bp_is_active' ) ) {
 
-			if ( $title != '' ) { ?>
-                <h3 class="section-title"><span><?php echo $title; ?></span></h3>
-                <?php
-            }
+			if ( $title != '' ) {
+				?>
+				<h3 class="section-title"><span><?php echo $title; ?></span></h3>
+				<?php
+			}
 
 			if ( $_bp_theme_package == 'legacy' ) {
 				$this->buddypress_shortcodes_template( 'legacy/groups/bp-shortcodes-groups.php' );
 			} else {
 				$this->buddypress_shortcodes_template( 'nouveau/groups/bp-shortcodes-groups.php' );
 			}
-        }
+		}
 		return ob_get_clean();
 	}
 
@@ -474,58 +474,59 @@ class Shortcodes_For_Buddypress_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function buddypress_shortcodes_notifications( $atts, $content = null ){
+	public function buddypress_shortcodes_notifications( $atts, $content = null ) {
 		global $notifications_atts;
-		$bpsh_query = build_query($atts);
-		if (!empty($bpsh_query)) {
-            $bpsh_query = '&' . $bpsh_query;
-        }
+		$bpsh_query = build_query( $atts );
+		if ( ! empty( $bpsh_query ) ) {
+			$bpsh_query = '&' . $bpsh_query;
+		}
 
 		$default_atts = array(
-							'title' 			=> '',
-							'order'	 			=> 'DESC',							
-							'page' 				=> 1,
-							'per_page' 			=> 20,
-							'max' 				=> '',
-							'container_class'	=> 'notification', //default container,
-							'bpsh_query'		=> $bpsh_query
-						);
+			'title'           => '',
+			'order'           => 'DESC',
+			'page'            => 1,
+			'per_page'        => 20,
+			'max'             => '',
+			'container_class' => 'notification', // default container,
+			'bpsh_query'      => $bpsh_query,
+		);
 
 		$notifications_atts = shortcode_atts( $default_atts, $atts );
-		extract($notifications_atts);
+		extract( $notifications_atts );
 
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 
 		ob_start();
-		if (function_exists('bp_is_active') && is_user_logged_in() ) {
+		if ( function_exists( 'bp_is_active' ) && is_user_logged_in() ) {
 
-			if ( $title != '' ) { ?>
-                <h3 class="section-title"><span><?php echo $title; ?></span></h3>
-                <?php
-            }
+			if ( $title != '' ) {
+				?>
+				<h3 class="section-title"><span><?php echo $title; ?></span></h3>
+				<?php
+			}
 			if ( $_bp_theme_package == 'legacy' ) {
 				$this->buddypress_shortcodes_template( 'legacy/notifications/notifications-loop.php' );
 			} else {
 				$this->buddypress_shortcodes_template( 'nouveau/notifications/notifications-loop.php' );
 			}
-        } else {
-			
+		} else {
+
 		}
 
 		return ob_get_clean();
 	}
-	
+
 	/*
 	 * Set Activity Params when activity elementor widget load on page
 	 */
 	public function buddypress_shortcodes_activity_localize_scripts( $params = array() ) {
 		global $post;
 		$current_component = '';
-		if ( isset($post->ID) && $post->ID != '' && $post->ID != '0') {
-			$_elementor_controls_usage = get_post_meta(get_the_ID(), '_elementor_controls_usage', true);
-			$current_component = '';
-			if (  !empty($_elementor_controls_usage)) {
-				foreach($_elementor_controls_usage as $key=>$value) {
+		if ( isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
+			$_elementor_controls_usage = get_post_meta( get_the_ID(), '_elementor_controls_usage', true );
+			$current_component         = '';
+			if ( ! empty( $_elementor_controls_usage ) ) {
+				foreach ( $_elementor_controls_usage as $key => $value ) {
 					if ( $key == 'buddypress_shortcode_activity_widget' ) {
 						$current_component = 'activity';
 						break;
@@ -533,44 +534,49 @@ class Shortcodes_For_Buddypress_Public {
 				}
 			}
 		}
-		
-		if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
+
+		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 			$current_component = 'activity';
 		}
-		
+
 		if ( $current_component == '' ) {
 			return $params;
 		}
 		$activity_params = array(
-			'user_id'     => bp_loggedin_user_id(),
-			'object'      => 'user',
-			'backcompat'  => array(
+			'user_id'    => bp_loggedin_user_id(),
+			'object'     => 'user',
+			'backcompat' => array(
 				'before_post_form'  => (bool) has_action( 'bp_before_activity_post_form' ),
 				'post_form_options' => (bool) has_action( 'bp_activity_post_form_options' ),
 			),
-			'post_nonce'  => wp_create_nonce( 'post_update', '_wpnonce_post_update' ),
+			'post_nonce' => wp_create_nonce( 'post_update', '_wpnonce_post_update' ),
 		);
 
 		$user_displayname = bp_get_loggedin_user_fullname();
 
 		if ( buddypress()->avatar->show_avatars ) {
-			$width  = bp_core_avatar_thumb_width();
-			$height = bp_core_avatar_thumb_height();
-			$activity_params = array_merge( $activity_params, array(
-				'avatar_url'    => bp_get_loggedin_user_avatar( array(
-					'width'  => $width,
-					'height' => $height,
-					'html'   => false,
-				) ),
-				'avatar_width'  => $width,
-				'avatar_height' => $height,
-				'user_domain'   => bp_loggedin_user_domain(),
-				'avatar_alt'    => sprintf(
-					/* translators: %s: member name */
-					__( 'Profile photo of %s', 'buddypress' ),
-					$user_displayname
-				),
-			) );
+			$width           = bp_core_avatar_thumb_width();
+			$height          = bp_core_avatar_thumb_height();
+			$activity_params = array_merge(
+				$activity_params,
+				array(
+					'avatar_url'    => bp_get_loggedin_user_avatar(
+						array(
+							'width'  => $width,
+							'height' => $height,
+							'html'   => false,
+						)
+					),
+					'avatar_width'  => $width,
+					'avatar_height' => $height,
+					'user_domain'   => bp_loggedin_user_domain(),
+					'avatar_alt'    => sprintf(
+						   /* translators: %s: member name */
+						__( 'Profile photo of %s', 'buddypress' ),
+						$user_displayname
+					),
+				)
+			);
 		}
 
 		/**
@@ -621,7 +627,12 @@ class Shortcodes_For_Buddypress_Public {
 			);
 
 			// the groups component is active & the current user is at least a member of 1 group
-			if ( bp_is_active( 'groups' ) && bp_has_groups( array( 'user_id' => bp_loggedin_user_id(), 'max' => 1 ) ) ) {
+			if ( bp_is_active( 'groups' ) && bp_has_groups(
+				array(
+					'user_id' => bp_loggedin_user_id(),
+					'max'     => 1,
+				)
+			) ) {
 				$activity_objects['group'] = array(
 					'text'                     => __( 'Post in: Group', 'buddypress' ),
 					'autocomplete_placeholder' => __( 'Start typing the group name...', 'buddypress' ),
@@ -664,7 +675,7 @@ class Shortcodes_For_Buddypress_Public {
 
 		return $params;
 	}
-	
+
 	/**
 	 * @param $texts
 	 *
