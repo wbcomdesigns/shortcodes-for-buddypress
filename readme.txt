@@ -1,4 +1,4 @@
-=== BuddyPress Shortcodes ===
+=== Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress ===
 Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcode

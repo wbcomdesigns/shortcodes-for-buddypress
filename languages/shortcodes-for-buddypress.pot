@@ -30,7 +30,7 @@ msgid "Documentation"
 msgstr ""
 
 #: templates/bp-shortcodes-template.php:2
-msgid "BuddyPress Shortcodes"
+msgid "Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress"
 msgstr ""
 
 #: templates/bp-shortcodes-template.php:6

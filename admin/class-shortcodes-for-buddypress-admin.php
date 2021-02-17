@@ -110,7 +110,7 @@ class Shortcodes_For_Buddypress_Admin {
 			<div id="icon-themes" class="icon32"></div>
 			<div class="bpsh-admin-screen">
 				<div class="bpsh-admin-content">
-					<h1 class="wp-heading-inline"><?php esc_html_e( 'BuddyPress Shortcodes', 'shortcodes-for-buddypress' ); ?></h1>
+					<h1 class="wp-heading-inline"><?php esc_html_e( 'Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress', 'shortcodes-for-buddypress' ); ?></h1>
 					<?php
 					if ( isset( $_GET['tab'] ) ) {
 						$this->buddypress_shortcode_admin_tabs( $_GET['tab'] );
@@ -120,17 +120,79 @@ class Shortcodes_For_Buddypress_Admin {
 					}
 
 					?>
-					<p class="description">
-						<strong><?php esc_html_e( "Well guys, It's up to you to explore the possibilities", 'shortcodes-for-buddypress' ); ?></strong>
-					</p>
+					<div class="description-title"> </div>
+
+						<p>	<?php esc_html_e( 'BuddyPress Shortcode plugin allows you to embed BuddyPress Activities, BuddyPress Members and Groups in posts/pages using shortcodes.', 'shortcodes-for-buddypress' );?>
+							</p>
+
+						<table class="widefat fixed striped buddypress-shortcode-lists">
+							<thead>
+								<tr>
+									<td><?php esc_html_e( 'Block', 'shortcodes-for-buddypress');?></td>
+									<td><?php esc_html_e( 'Shortcode', 'shortcodes-for-buddypress');?></td>
+									<td><?php esc_html_e( 'Description', 'shortcodes-for-buddypress');?></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><?php esc_html_e( 'Activities', 'shortcodes-for-buddypress' );?></td>
+									<td>[activity-listing]</td>
+									<td>
+										<p class="description">
+										<?php
+										esc_html_e( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
+										?>
+										<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-activity-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
+										</p>
+									</td>
+								</tr>
+								<tr>
+									<td><?php esc_html_e( 'Members', 'shortcodes-for-buddypress' );?></td>
+									<td>[members-listing]</td>
+									<td>
+										<p class="description">
+										<?php
+										esc_html_e( 'BuddyPress Members Shortcode allows you to embed BuddyPress members in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
+										?>
+										<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-members-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
+										</p>
+									</td>
+								</tr>
+								<tr>
+									<td><?php esc_html_e( 'Groups', 'shortcodes-for-buddypress' );?></td>
+									<td>[groups-listing]</td>
+									<td>
+										<p class="description">
+										<?php
+										esc_html_e( 'BuddyPress Groups Shortcode allows you to embed BuddyPress groups in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
+										?>
+										<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-group-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
+										</p>
+									</td>
+								</tr>
+								<tr>
+									<td><?php esc_html_e( 'User Notification', 'shortcodes-for-buddypress' );?></td>
+									<td>[notifications-listing]</td>
+									<td>
+										<p class="description">
+										<?php
+										esc_html_e( 'BuddyPress Notification Shortcode allows you to embed BuddyPress notificaition list in posts/pages using shortcodes.', 'shortcodes-for-buddypress');
+										?>
+										<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-users-notification-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' );?></a>
+										</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 				</div>
 			</div>
 	</div>
 		<?php
 	}
 
-	public function buddypress_shortcode_admin_tabs( $current = 'activity-listing' ) {
+	public function buddypress_shortcode_admin_tabs( $current = 'general' ) {
 		$tabs = array(
+			'general'      => __( 'General', 'shortcodes-for-buddypress' ),
 			'activity-listing'      => __( 'Activities', 'shortcodes-for-buddypress' ),
 			'members-listing'       => __( 'Members', 'shortcodes-for-buddypress' ),
 			'groups-listing'        => __( 'Groups', 'shortcodes-for-buddypress' ),
@@ -146,7 +208,7 @@ class Shortcodes_For_Buddypress_Admin {
 
 	}
 
-	public function buddypress_shortcode_option_pages( $current = 'activity-listing' ) {
+	public function buddypress_shortcode_option_pages( $current = 'general' ) {
 		if ( empty( $current ) ) {
 			return;
 		}
@@ -163,15 +225,12 @@ class Shortcodes_For_Buddypress_Admin {
 			case 'notifications-listing':
 				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/template/shortcodes-for-buddypress-notifications-listing.php';
 				break;
-			default:
-				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/template/shortcodes-for-buddypress-activity-listing.php';
-				break;
 		}
 
 	}
 
 	public function buddypress_shortcodes_settings_link( $links ) {
-		$settings_link = '<a href="options-general.php?page=bpsh-shortcodes&tab=activity-listing">' . esc_html__( 'Documentation', 'shortcodes-for-buddypress' ) . '</a>';
+		$settings_link = '<a href="options-general.php?page=bpsh-shortcodes">' . esc_html__( 'Documentation', 'shortcodes-for-buddypress' ) . '</a>';
 		array_push( $links, $settings_link );
 
 		return $links;

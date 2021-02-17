@@ -13,7 +13,7 @@
  * @package           Shortcodes_For_Buddypress
  *
  * @wordpress-plugin
- * Plugin Name:       Shortcode For BuddyPress
+ * Plugin Name:       Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress
  * Plugin URI:        https://github.com/wbcomdesigns/shortcodes-for-buddypress
  * Description:       This plugin will add an extended feature to the big name “BuddyPress” that will generate Shortcode for Listing Activity Streams, Members and Groups on any post/page in website.
  * Version:           2.1.0
