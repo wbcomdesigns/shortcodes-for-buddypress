@@ -3,8 +3,8 @@ Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcode
 Requires at least: 5.0.0
-Tested up to: 5.4.1
-Stable tag: 2.1.0
+Tested up to: 5.6.1
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,9 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying groups listing based on given user id screenshot-4.png
 
 == Changelog ==
+= 2.3.0 =
+* Added : Added Widgets for Activity, Member Direcotry and Group Directory with Elementor
+
 = 2.1.0 =
 * Fixed #72 - Not working with reign learndash addon
 
