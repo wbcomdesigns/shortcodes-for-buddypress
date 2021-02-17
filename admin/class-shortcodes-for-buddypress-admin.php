@@ -171,7 +171,7 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	public function buddypress_shortcodes_settings_link( $links ) {
-		$settings_link = '<a href="options-general.php?page=bpsh-shortcodes">' . esc_html__( 'Documentation', 'shortcodes-for-buddypress' ) . '</a>';
+		$settings_link = '<a href="options-general.php?page=bpsh-shortcodes&tab=activity-listing">' . esc_html__( 'Documentation', 'shortcodes-for-buddypress' ) . '</a>';
 		array_push( $links, $settings_link );
 
 		return $links;
