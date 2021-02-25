@@ -59,7 +59,7 @@ class Shortcodes_For_Buddypress_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $hook ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -72,8 +72,9 @@ class Shortcodes_For_Buddypress_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-admin.css', array(), $this->version, 'all' );
+		if ( 'settings_page_bpsh-shortcodes' === $hook ) {
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-admin.css', array(), $this->version, 'all' );
+		}
 
 	}
 
@@ -82,7 +83,7 @@ class Shortcodes_For_Buddypress_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $hook ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -95,8 +96,9 @@ class Shortcodes_For_Buddypress_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-admin.js', array( 'jquery' ), $this->version, false );
+		if ( 'settings_page_bpsh-shortcodes' === $hook ) {
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-admin.js', array( 'jquery' ), $this->version, false );
+		}
 
 	}
 
