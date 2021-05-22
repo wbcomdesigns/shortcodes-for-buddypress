@@ -390,96 +390,82 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 	}
 	
 	protected function render() {
-	
+		global $activity_args;
+		
 		$settings = $this->get_settings_for_display();
 		
 		$current_component = static function () {
 			return 'activity';
 		};
 		
-		add_filter( 'bp_current_component', $current_component );		
+		add_filter( 'bp_current_component', $current_component );
+		//add_filter( 'bp_is_current_component', $current_component );	
+		
 		$args = [ 
 					'title'  		=> $settings['sfb_title'],					
 					'per_page' 		=> ( isset($settings['sfb_number']) ) ? $settings['sfb_number'] : 20,
-					'allow_posting' =>  'false',
 					'display_comments'	=> 'threaded',
 					'container_class'	=> 'activity'
 				];
 
-		if ( isset($_REQUEST['action']) && ( $_REQUEST['action'] == 'elementor' || $_REQUEST['action'] == 'elementor_ajax' ) && is_admin() ) {
-			$atts = $args;
-			$is_nouveau = function_exists( 'bp_nouveau' );
+		$activity_args = $args;
+		unset($activity_args['title']);
+		
+		$activity_ajax_querystring = static function ( $ajax_querystring, $object ) {
+			global $activity_args;
+			$qs = array();
 			
-			$activity_list_classes = 'activity-list item-list ';
-
-			if ( $is_nouveau ) {
-				$activity_list_classes .= ' bp-list';
-			}
-
-			$activity_list_classes = apply_filters( 'bpas_activity_list_classes', $activity_list_classes )
-			?>
-
-			
-			<div id="buddypress" class="buddypress-wrap">
-			
-
-			<?php if ( $atts['title'] ) : ?>
-				<h3 class="activity-shortcode-title"><?php echo $atts['title']; ?></h3>
-			<?php endif; ?>
-
-			<?php if ( $atts['allow_posting'] == 'true' && is_user_logged_in() ) : ?>
-			<div class="bpas-post-form-wrapper">
-				<?php bp_locate_template( array( 'activity/post-form.php' ), true ); ?>
-
-			</div>
-			<?php endif; ?>
-
-			<?php if ( bp_has_activities( $atts ) ) : ?>
-
-				<div class="bpas-shortcode-activities activity  <?php echo esc_attr( $atts['container_class'] ); ?> <?php if ( ! $atts['display_comments'] ) : ?> hide-activity-comments<?php endif; ?> shortcode-activity-stream">
-
-					<ul id="activity-stream" class="<?php echo esc_attr( $activity_list_classes ); ?> ">
-
-						<?php while ( bp_activities() ) : bp_the_activity(); ?>
-							<?php bp_get_template_part( 'activity/entry' ); ?>
-						<?php endwhile; ?>
-
-						<?php if ( bp_activity_has_more_items() ) : ?>
-							<li class="load-more">
-								<a href="<?php bp_activity_load_more_link() ?>"><?php _e( 'Load More', 'buddypress' ); ?></a>
-							</li>
-						<?php endif; ?>
-					</ul>
-
-				</div>
-
-			<?php else : ?>
-				<div id="message" class="info">
-					<p><?php _e( 'Sorry, there was no activity found. Please try a different filter.', 'buddypress' ); ?></p>
-				</div>
-			<?php endif; ?>
-			
-			</div>
-			<?php
-			
-			
-		} else {
-			
-			$atts = '';
-			foreach( $args as $key=>$val ) {
-				if ( $val != '' ) {
-					$atts .= $key . '="'.$val.'" ';
+			if( !empty($activity_args) ) {
+				foreach( $activity_args as $key=>$value) {
+					if ( $value != '' ) {
+						$qs[] = $key . "=" . $value;
+					}
 				}
-			}		
-			echo do_shortcode('[activity-listing '. $atts.']');			
-			if ( isset($settings['sfb_hide_load_more']) && $settings['sfb_hide_load_more'] == 'yes') {	
-				?>
-				<style>
-				.elementor-element-<?php echo $this->get_id();?> #buddypress .load-more{ display:none}
-				</style>
-				<?php
 			}
-		}
+			
+			$query_string = empty( $qs ) ? '' : join( '&', (array) $qs );
+			if ( $query_string != '' ) {
+				$ajax_querystring .= '&' . $query_string;
+			}
+			
+			return $ajax_querystring;
+		};
+		
+		add_filter( 'bp_ajax_querystring', $activity_ajax_querystring, 99, 2 );	
+		
+		?>
+		
+		<div class="buddypress-activity-element">
+			<?php if ( $args['title'] ) : ?>
+				<h3 class="activity-shortcode-title"><?php echo $args['title']; ?></h3>
+			<?php endif; ?>
+		
+			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav activity">
+		
+				<?php bp_nouveau_before_activity_directory_content(); ?>
+
+				<div class="screen-content">
+					<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
+
+					<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
+						<?php bp_get_template_part( 'activity/activity-loop' ); ?>
+					</div>
+
+					<?php bp_nouveau_after_activity_directory_content(); ?>
+
+				</div>
+			</div>
+		</div>
+		<?php
+		remove_filter( 'bp_current_component', $current_component );
+		remove_filter( 'bp_ajax_querystring', $activity_ajax_querystring, 99, 2 );	
+		
+		?>
+		<style>
+		.elementor-element-<?php echo $this->get_id();?> #buddypress .load-more{ display:none}
+		</style>
+		<?php
+		
 	}
 	
 }

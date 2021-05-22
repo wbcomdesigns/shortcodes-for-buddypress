@@ -702,5 +702,39 @@ class Shortcodes_For_Buddypress_Public {
 
 		return ob_get_clean();
 	}
+	
+	public function buddypress_shortcodes_bp_nouveau_register_scripts( $scripts_args ) {
+		
+		if ( function_exists('buddypress') && isset(buddypress()->buddyboss )) {			
+			return $scripts_args;
+		}
+		
+		if ( isset($scripts_args['bp-nouveau'])) {
+			$scripts_args['bp-nouveau']['file'] = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL. 'public/js/buddypress-nouveau%s.js';
+		}		
+		return $scripts_args;
+	}
+	
+	public function buddypress_shortcodes_activity_heartbeat_strings( $strings = array() ) {
+		global $post;
+		
+		$flg = false;
+		if ( isset($post->ID) && $post->ID != '' && $post->ID != '0') {
+			$_elementor_controls_usage = get_post_meta($post->ID, '_elementor_controls_usage', true);
+			if (  !empty($_elementor_controls_usage)) {
+				foreach($_elementor_controls_usage as $key=>$value) {
+					if ( $key == 'buddypress_shortcode_activity_widget' ) {
+						$flg = true;
+						break;
+					}
+				}
+			}
+		}
+		if ( $flg == true ) {
+			unset($strings['pulse']);			
+		}
+		
+		return $strings;
+	}
 
 }
