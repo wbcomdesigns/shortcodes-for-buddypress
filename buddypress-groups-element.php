@@ -59,7 +59,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		$this->add_control(
 			'sfb_per_page',
 			[
-				'label'       => __( 'Per Page', 'shortcodes-for-buddypress' ),
+				'label'       => __( 'Display number of group', 'shortcodes-for-buddypress' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => 20,
 				'description' => __( 'How many members display on page.', 'shortcodes-for-buddypress' )
@@ -222,8 +222,8 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	}
 	
 	protected function render() {
-
-		$settings = $this->get_settings_for_display();
+		global $groups_args;
+		$settings          = $this->get_settings_for_display();
 		$current_component = static function () {
 			return 'groups';
 		};
@@ -232,9 +232,12 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		};
 		
 		add_filter( 'bp_current_component', $current_component );
-		add_filter( 'bp_is_current_component', $current_component_groups );
-		add_filter( 'groups_get_current_group', $current_component_groups );
-		add_filter( 'bp_is_active', $current_component_groups);
+		//add_filter( 'bp_is_current_component', $current_component );
+		//add_filter( 'groups_get_current_group', $current_component_groups );
+		//add_filter( 'bp_is_active', $current_component_groups );
+		
+		add_filter( 'bp_get_groups_pagination_count', '__return_zero' );
+		add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
 		
 		$args = [
 					'title'  	=> $settings['sfb_title'],	
@@ -242,117 +245,61 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 					'object' 	=> 'groups',								
 				];
 				
-		if ( isset($_REQUEST['action']) && ( $_REQUEST['action'] == 'elementor' || $_REQUEST['action'] == 'elementor_ajax' ) && is_admin() ) {
-			$atts = $args;
+		$groups_args = $args;
+		unset($groups_args['title']);
+		
+		$groups_ajax_querystring = static function ( $ajax_querystring, $object ) {
+			global $groups_args;
+			$qs = array();
 			
-			$current_component_groups = static function () {
-				return true;
-			};
-			
-			add_filter( 'bp_current_component', $current_component );
-			add_filter( 'bp_is_current_component', $current_component_groups );
-			add_filter( 'groups_get_current_group', $current_component_groups );
-			add_filter( 'bp_is_active', $current_component_groups);
-			
-			add_filter( 'bp_get_groups_pagination_count', '__return_zero' );
-			add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
-			
-			?>
-			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav groups">
-			
-				<?php if ( $atts['title'] ) : ?>
-					<h3 class="activity-shortcode-title"><?php echo $atts['title']; ?></h3>
-				<?php endif; ?>
-				
-				<div class="screen-content">
-					<div id="groups-dir-list" class="groups dir-list" data-bp-list="">
-						<?php if ( bp_has_groups( $atts ) ) : ?>
-
-							<?php bp_nouveau_pagination( 'top' ); ?>
-
-							<ul id="groups-list" class="<?php bp_nouveau_loop_classes(); ?>">
-
-								<?php while ( bp_groups() ) : bp_the_group(); ?>
-
-									<li <?php bp_group_class( array( 'item-entry' ) ); ?> data-bp-item-id="<?php bp_group_id(); ?>" data-bp-item-component="groups">
-										<div class="list-wrap">
-
-											<?php if ( ! bp_disable_group_avatar_uploads() ) : ?>
-												<div class="item-avatar">
-													<a href="<?php bp_group_permalink(); ?>"><?php bp_group_avatar( bp_nouveau_avatar_args() ); ?></a>
-												</div>
-											<?php endif; ?>
-
-											<div class="item">
-
-												<div class="item-block">
-
-													<h2 class="list-title groups-title"><?php bp_group_link(); ?></h2>
-
-													<?php if ( bp_nouveau_group_has_meta() && function_exists( 'bp_nouveau_the_group_meta' ) ) : ?>
-
-														<p class="item-meta group-details"><?php bp_nouveau_the_group_meta( array( 'keys' => array( 'status', 'count' ) ) ); ?></p>
-
-													<?php endif; ?>
-
-													<p class="last-activity item-meta">
-														<?php
-															printf(
-																/* translators: %s: last activity timestamp (e.g. "Active 1 hour ago") */
-																esc_html__( 'Active %s', 'buddypress' ),
-																sprintf(
-																	'<span data-livestamp="%1$s">%2$s</span>',
-																	bp_core_get_iso8601_date( bp_get_group_last_active( 0, array( 'relative' => false ) ) ),
-																	esc_html( bp_get_group_last_active() )
-																)
-															);
-														?>
-													</p>
-
-												</div>
-												<?php if( function_exists('bp_nouveau_group_description_excerpt') ):?>
-												<div class="group-desc"><p><?php bp_nouveau_group_description_excerpt(); ?></p></div>
-												<?php endif;?>
-
-												<?php bp_nouveau_groups_loop_item(); ?>
-
-												<?php bp_nouveau_groups_loop_buttons(); ?>
-
-											</div>
-
-										</div>
-
-									</li>
-
-								<?php endwhile; ?>
-
-							</ul>
-
-							<?php bp_nouveau_pagination( 'bottom' ); ?>
-
-						<?php else : ?>
-
-							<?php bp_nouveau_user_feedback( 'groups-loop-none' ); ?>
-
-						<?php endif; ?>
-					</div>
-				</div>
-			</div>
-			<?php
-			
-			remove_filter( 'bp_get_groups_pagination_count', '__return_zero' );
-			remove_filter( 'bp_get_groups_pagination_links', '__return_zero' );
-			
-		} else {
-			$atts = '';
-			foreach( $args as $key=>$val ) {
-				if ( $val != '' ) {
-					$atts .= $key . '="'.$val.'" ';
+			if( !empty($groups_args) ) {
+				foreach( $groups_args as $key=>$value) {
+					if ( $value != '' ) {
+						$qs[] = $key . "=" . $value;
+					}
 				}
 			}
 			
-			echo do_shortcode('[groups-listing '. $atts.']');
-		}
+			$query_string = empty( $qs ) ? '' : join( '&', (array) $qs );
+			if ( $query_string != '' ) {
+				$ajax_querystring .= '&' . $query_string;
+			}
+			
+			return $ajax_querystring;
+		};
+		
+		add_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );	
+		
+
+		?>
+		<div class="buddypress-groups-element">
+		
+			<?php if ( $args['title'] ) : ?>
+				<h3 class="activity-shortcode-title"><?php echo $args['title']; ?></h3>
+			<?php endif; ?>
+			
+			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav groups">
+				<?php bp_nouveau_before_groups_directory_content(); ?>
+				<?php bp_nouveau_template_notices(); ?>
+
+				<div class="screen-content">
+					<div id="groups-dir-list" class="groups dir-list" data-bp-list="">
+						<?php bp_get_template_part( 'groups/groups-loop' ); ?>
+					</div>
+
+					<?php bp_nouveau_after_groups_directory_content(); ?>
+				</div>
+			</div>
+		</div>
+		
+		<?php
+		
+		remove_filter( 'bp_current_component', $current_component );
+		//remove_filter( 'bp_is_current_component', $current_component );
+		
+		remove_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );
+		remove_filter( 'bp_get_groups_pagination_count', '__return_zero' );
+		remove_filter( 'bp_get_groups_pagination_links', '__return_zero' );
 				
 	}
 	
