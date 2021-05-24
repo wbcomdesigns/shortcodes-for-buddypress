@@ -3,8 +3,8 @@ Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcode
 Requires at least: 5.0.0
-Tested up to: 5.6.1
-Stable tag: 2.3.0
+Tested up to: 5.7.3
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,12 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying groups listing based on given user id screenshot-4.png
 
 == Changelog ==
+= 2.4.0 =
+Fix: updated widget logic to be used together
+Fix: Group views as per BP l\oop grid column count setting
+Fix: #119 - Comment is navigating to page not count
+Fix:  enqueue admin js and css on plugin page
+
 = 2.3.0 =
 * New Feature: Added Widgets for Activity, Member Directory, and Group Directory with Elementor
 * Update: Shortcode compatibility upto BuddyPress v7.2.0
