@@ -239,6 +239,37 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		add_filter( 'bp_get_groups_pagination_count', '__return_zero' );
 		add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
 		
+		$loop_classes = static function () use ( $classes ) {
+			
+			$classes = [];
+			$classes[] = 'item-list';
+			$classes[] = 'groups-list';
+			$classes[] = 'bp-list';
+			
+			$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
+			$groups_layout = ( isset($bp_nouveau_appearance['groups_layout']) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : '3';
+			
+			if ( function_exists( 'bp_nouveau_customizer_grid_choices' )) {
+				$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );			
+				if ( isset( $grid_classes[ $groups_layout ] ) ) {
+					$classes = array_merge( $classes, array(
+						'grid',
+						$grid_classes[ $groups_layout ],
+					) );
+				}
+			} else {
+				$classes = array_merge( $classes, array(
+						'grid',
+						'three',
+					) );
+			}
+			
+			
+			
+			return $classes;
+		};
+		add_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
+		
 		$args = [
 					'title'  	=> $settings['sfb_title'],	
 					'per_page' 	=> $settings['sfb_per_page'],					
@@ -296,6 +327,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		
 		remove_filter( 'bp_current_component', $current_component );
 		//remove_filter( 'bp_is_current_component', $current_component );
+		remove_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
 		
 		remove_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );
 		remove_filter( 'bp_get_groups_pagination_count', '__return_zero' );

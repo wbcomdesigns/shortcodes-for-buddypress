@@ -195,14 +195,32 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 		add_filter( 'bp_members_pagination_count', '__return_zero' );
 		add_filter( 'bp_get_members_pagination_links', '__return_zero' );
 
-		$loop_classes = static function () use ( $settings ) {
-			return [
-				'item-list',
-				'members-list',
-				'bp-list',
-				'grid',
-				'three'
-			];
+		$loop_classes = static function () use ( $classes ) {
+			
+			$classes = [];
+			$classes[] = 'item-list';
+			$classes[] = 'members-list';
+			$classes[] = 'bp-list';
+			
+			$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
+			$members_layout = ( isset($bp_nouveau_appearance['members_layout']) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '3';
+						
+			if ( function_exists( 'bp_nouveau_customizer_grid_choices' )) {
+				$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );			
+				if ( isset( $grid_classes[ $members_layout ] ) ) {
+					$classes = array_merge( $classes, array(
+						'grid',
+						$grid_classes[ $members_layout ],
+					) );
+				}
+			} else {
+				$classes = array_merge( $classes, array(
+						'grid',
+						'three',
+					) );
+			}
+			
+			return $classes;
 		};
 		add_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
 
