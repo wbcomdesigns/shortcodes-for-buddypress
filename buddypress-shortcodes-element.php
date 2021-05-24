@@ -53,17 +53,15 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 		);		
 
 		
-		if ( $this->is_buddypress_plugin_activate() ) {
-			$this->add_control(
-				'sfb_number',
-				[
-					'label'       => __( 'Total items', 'shortcodes-for-buddypress' ),
-					'type'        => Controls_Manager::NUMBER,
-					'default'     => 20,
-					'description' => __( 'How many activity items to get.', 'shortcodes-for-buddypress' )
-				]
-			);
-		}
+		$this->add_control(
+			'sfb_number',
+			[
+				'label'       => __( 'display number of activities', 'shortcodes-for-buddypress' ),
+				'type'        => Controls_Manager::NUMBER,
+				'default'     => 20,
+				'description' => __( 'How many activity items to display.', 'shortcodes-for-buddypress' )
+			]
+		);
 		
 		
 		$this->add_control(
