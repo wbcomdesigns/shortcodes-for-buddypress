@@ -392,6 +392,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 	protected function render() {
 		global $activity_args;
 		
+		wp_enqueue_script( 'bp-nouveau-activity' );
 		$settings = $this->get_settings_for_display();
 		
 		$current_component = static function () {
