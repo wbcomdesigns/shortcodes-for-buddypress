@@ -43,7 +43,7 @@
 		  <?php
 			esc_html_e( 'BuddyPress Groups Shortcode allows you to embed BuddyPress groups in posts/pages using shortcodes.', 'shortcodes-for-buddypress' );
 			?>
-		  <a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-group-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' ); ?></a>
+		  <a href="https://wbcomdesigns.com/docs/shortcodes-for-buddypress/what-are-accepted-parameters-for-group-shortcodes/" class="bpsh_read_more" target="_blank"><?php esc_html_e( 'read more', 'shortcodes-for-buddypress' ); ?></a>
 		  </p>
 		</td>
 	  </tr>
