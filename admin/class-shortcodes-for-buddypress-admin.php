@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -115,8 +114,8 @@ class Shortcodes_For_Buddypress_Admin {
 					<h1 class="wp-heading-inline"><?php esc_html_e( 'Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress', 'shortcodes-for-buddypress' ); ?></h1>
 					<?php
 					if ( isset( $_GET['tab'] ) ) {
-						$this->buddypress_shortcode_admin_tabs( $_GET['tab'] );
-						$this->buddypress_shortcode_option_pages( $_GET['tab'] );
+						$this->buddypress_shortcode_admin_tabs( sanitize_text_field( wp_unslash( $_GET['tab'] ) ) );
+						$this->buddypress_shortcode_option_pages( sanitize_text_field( wp_unslash( $_GET['tab'] ) ) );
 					} else {
 						$this->buddypress_shortcode_admin_tabs( 'general' );
 						$this->buddypress_shortcode_option_pages( 'general' );
@@ -139,7 +138,7 @@ class Shortcodes_For_Buddypress_Admin {
 		echo '<h2 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab => $name ) {
 			$class = ( $tab == $current ) ? 'nav-tab-active' : '';
-			echo '<a class="nav-tab ' . $class . '" href="?page=bpsh-shortcodes&tab=' . $tab . '">' . $name . '</a>';
+			echo '<a class="nav-tab ' . esc_attr( $class ) . '" href="?page=bpsh-shortcodes&tab=' . esc_attr( $tab ) . '">' . esc_html( $name ) . '</a>';
 
 		}
 		echo '</h2>';

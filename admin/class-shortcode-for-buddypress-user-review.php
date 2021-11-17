@@ -268,7 +268,7 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 			<div class="notice updated bp-shortcode-notice">
 				<div class="bp-shortcode-notice-inner">
 					<div class="bp-shortcode-notice-icon">
-						<img src="<?php echo SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . '/admin/image/bp-shortcode-icon-256x256.png'; ?>" alt="<?php echo esc_attr__( 'Shortcodes For BP', 'shortcodes-for-buddypress' ); ?>" />
+						<img src="<?php echo esc_url( SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL ) . '/admin/image/bp-shortcode-icon-256x256.png'; ?>" alt="<?php echo esc_attr__( 'Shortcodes For BP', 'shortcodes-for-buddypress' ); ?>" />
 					</div>
 					<div class="bp-shortcode-notice-content">
 						<h3><?php echo esc_html__( 'Are you enjoying Shortcodes For BP?', 'shortcodes-for-buddypress' ); ?></h3>
@@ -293,7 +293,7 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 		public function set_no_bug() {
 
 			// Bail out if not on correct page.
-			if ( ! isset( $_GET['_wpnonce'] ) || ( ! wp_verify_nonce( $_GET['_wpnonce'], 'bp-shortcode-feedback-nounce' ) || ! is_admin() || ! isset( $_GET[ $this->nobug_option ] ) || ! current_user_can( 'manage_options' ) ) ) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'bp-shortcode-feedback-nounce' ) || ! is_admin() || ! isset( $_GET[ $this->nobug_option ] ) || ! current_user_can( 'manage_options' ) ) ) {
 				return;
 			}
 

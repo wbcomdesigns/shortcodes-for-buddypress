@@ -12,7 +12,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__('Members List', 'shortcodes-for-buddypress' );
+		return esc_html__( 'Members List', 'shortcodes-for-buddypress' );
 	}
 
 	public function get_icon() {
@@ -20,15 +20,15 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'buddypress-widgets' ];
+		return array( 'buddypress-widgets' );
 	}
 
 	public function get_user_roles() {
 		global $wp_roles;
 
 		$all_roles = $wp_roles->roles;
-		foreach( $all_roles as $key=>$value) {
-			$user_roles[$key] = $value['name'];
+		foreach ( $all_roles as $key => $value ) {
+			$user_roles[ $key ] = $value['name'];
 		}
 		return $user_roles;
 	}
@@ -44,131 +44,128 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	protected function _register_controls() {
 		$this->start_controls_section(
 			'section_content',
-			[
+			array(
 				'label' => esc_html__( 'Query', 'shortcodes-for-buddypress' ),
-			]
+			)
 		);
 
 		$this->add_control(
 			'sfb_title',
-			[
+			array(
 				'label'       => __( 'Title', 'shortcodes-for-buddypress' ),
 				'type'        => Controls_Manager::TEXT,
-				'description' => __( 'Add activity title', 'shortcodes-for-buddypress' )
-			]
+				'description' => __( 'Add activity title', 'shortcodes-for-buddypress' ),
+			)
 		);
-
 
 		$this->add_control(
 			'sfb_per_page',
-			[
+			array(
 				'label'       => __( 'Per Page', 'shortcodes-for-buddypress' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => 20,
-				'description' => __( 'How many members display on page.', 'shortcodes-for-buddypress' )
-			]
+				'description' => __( 'How many members display on page.', 'shortcodes-for-buddypress' ),
+			)
 		);
 
 		$this->add_control(
 			'go_sfb_pro_notice',
-			[
+			array(
 				'type' => Controls_Manager::RAW_HTML,
 				'raw'  => \Shortcodes_For_Buddypress_Public::sfb_go_pro_template(
-					[
+					array(
 						'title'    => __( 'Shortcodes for BuddyPress PRO', 'shortcodes-for-buddypress' ),
-						'messages' => [
+						'messages' => array(
 							__( 'Power up up your listing with custom queries and templates.', 'shortcodes-for-buddypress' ),
-						],
+						),
 						'link'     => 'https://wbcomdesigns.com/downloads/shortcodes-for-buddypress-pro',
-					]
+					)
 				),
-			]
+			)
 		);
 
 		$this->end_controls_section();
 
-
-
 		$this->start_controls_section(
 			'sfb_section_style',
-			[
+			array(
 				'label' => __( 'Listing', 'shortcodes-for-buddypress' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
-			]
+			)
 		);
 
 		$this->add_control(
 			'sfb_listing_no_border',
-			[
+			array(
 				'label'     => __( 'View', 'shortcodes-for-buddypress' ),
 				'type'      => Controls_Manager::HIDDEN,
 				'default'   => '1',
-				'selectors' => [
+				'selectors' => array(
 					'{{WRAPPER}} #members-list' => 'border: 0;',
-				],
-			]
+				),
+			)
 		);
 
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
-			[
+			array(
 				'name'     => 'sfb_list_item_background',
 				'label'    => __( 'Background', 'shortcodes-for-buddypress' ),
-				'types'    => [ 'classic', 'gradient' ],
+				'types'    => array( 'classic', 'gradient' ),
 				'selector' => '{{WRAPPER}} #members-list > li > .list-wrap',
-			]
+			)
 		);
 
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
-			[
+			array(
 				'name'     => 'sfb_listing_box_shadow',
 				'selector' => '{{WRAPPER}} #members-list > li > .list-wrap',
-			]
+			)
 		);
 
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
-			[
+			array(
 				'name'     => 'sfb_listing_border',
 				'selector' => '{{WRAPPER}} #members-list > li > .list-wrap',
-			]
+			)
 		);
 
 		$this->add_control(
 			'sfb_listing_border_radius',
-			[
+			array(
 				'label'      => esc_html__( 'Border Radius', 'shortcodes-for-buddypress' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em' ],
-				'selectors'  => [
+				'size_units' => array( 'px', '%', 'em' ),
+				'selectors'  => array(
 					'{{WRAPPER}} #members-list > li > .list-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
+				),
+			)
 		);
 
 		$this->add_responsive_control(
 			'sfb_listing_margin',
-			[
+			array(
 				'label'      => __( 'Margin', 'shortcodes-for-buddypress' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
 					'{{WRAPPER}} #members-list > li > .list-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
+				),
+			)
 		);
 
 		$this->add_responsive_control(
 			'sfb_listing_padding',
-			[
+			array(
 				'label'      => __( 'Padding', 'shortcodes-for-buddypress' ),
 				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
 					'{{WRAPPER}} #members-list > li > .list-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
+				),
+			)
 		);
 
 		$this->end_controls_section();
@@ -177,7 +174,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	protected function render() {
 		global $members_args;
 
-		$settings          = $this->get_settings_for_display();
+		$settings = $this->get_settings_for_display();
 
 		$current_component = static function () {
 			return 'members';
@@ -188,60 +185,65 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 		$current_component_members = static function () {
 			return true;
 		};
-		//add_filter( 'bp_is_current_component', $current_component_members );
-		//add_filter( 'groups_get_current_group', $current_component_members );
-		//add_filter( 'bp_is_active', $current_component_members );
+		// add_filter( 'bp_is_current_component', $current_component_members );
+		// add_filter( 'groups_get_current_group', $current_component_members );
+		// add_filter( 'bp_is_active', $current_component_members );
 
 		add_filter( 'bp_members_pagination_count', '__return_zero' );
 		add_filter( 'bp_get_members_pagination_links', '__return_zero' );
 
 		$loop_classes = static function () use ( $classes ) {
-			
-			$classes = [];
+
+			$classes   = array();
 			$classes[] = 'item-list';
 			$classes[] = 'members-list';
 			$classes[] = 'bp-list';
-			
+
 			$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-			$members_layout = ( isset($bp_nouveau_appearance['members_layout']) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '3';
-						
-			if ( function_exists( 'bp_nouveau_customizer_grid_choices' )) {
-				$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );			
+			$members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '3';
+
+			if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
+				$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
 				if ( isset( $grid_classes[ $members_layout ] ) ) {
-					$classes = array_merge( $classes, array(
-						'grid',
-						$grid_classes[ $members_layout ],
-					) );
+					$classes = array_merge(
+						$classes,
+						array(
+							'grid',
+							$grid_classes[ $members_layout ],
+						)
+					);
 				}
 			} else {
-				$classes = array_merge( $classes, array(
+				$classes = array_merge(
+					$classes,
+					array(
 						'grid',
 						'three',
-					) );
+					)
+				);
 			}
-			
+
 			return $classes;
 		};
 		add_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
 
-
-		$args = [
-					'title'  	=> $settings['sfb_title'],
-					'per_page' 	=> $settings['sfb_per_page'],
-					'object' 	=> 'members',
-				];
+		$args = array(
+			'title'    => $settings['sfb_title'],
+			'per_page' => $settings['sfb_per_page'],
+			'object'   => 'members',
+		);
 
 		$members_args = $args;
-		unset($members_args['title']);
+		unset( $members_args['title'] );
 
 		$members_ajax_querystring = static function ( $ajax_querystring, $object ) {
 			global $members_args;
 			$qs = array();
 
-			if( !empty($members_args) ) {
-				foreach( $members_args as $key=>$value) {
+			if ( ! empty( $members_args ) ) {
+				foreach ( $members_args as $key => $value ) {
 					if ( $value != '' ) {
-						$qs[] = $key . "=" . $value;
+						$qs[] = $key . '=' . $value;
 					}
 				}
 			}
@@ -259,7 +261,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 		<div class="buddypress-members-element">
 			<?php if ( $args['title'] ) : ?>
-				<h3 class="activity-shortcode-title"><?php echo $args['title']; ?></h3>
+				<h3 class="activity-shortcode-title"><?php echo esc_html( $args['title'] ); ?></h3>
 			<?php endif; ?>
 			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav members">
 				<?php bp_nouveau_before_members_directory_content(); ?>

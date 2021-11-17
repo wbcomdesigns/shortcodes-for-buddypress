@@ -1,6 +1,5 @@
 <?php
 global $activity_atts;
-
 add_filter(
 	'bp_ajax_querystring',
 	function( $qs ) {
@@ -47,7 +46,7 @@ if ( $activity_atts['use_compat'] ) {
 
 	<?php // endif; ?>
 	
-	<input type="hidden" id="activity_filters_objects" data-bp-filter="activity" value="<?php  echo $activity_atts['bpsh_query'] ?>" />
+	<input type="hidden" id="activity_filters_objects" data-bp-filter="activity" value="<?php echo esc_attr( $activity_atts['bpsh_query'] ); ?>" />
 	<div class="screen-content">
 
 		<?php bp_get_template_part( 'common/search-and-filters-bar' ); ?>

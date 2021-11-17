@@ -134,7 +134,7 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		if ( isset( $_REQUEST['object'] ) && $_REQUEST['object'] != '' ) {
-			$current_component = $_REQUEST['object'];
+			$current_component = sanitize_text_field( wp_unslash( $_REQUEST['object'] ) );
 		}
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'post_update' ) {
 			$current_component = 'activity';
@@ -383,7 +383,7 @@ class Shortcodes_For_Buddypress_Public {
 
 			if ( $title != '' ) {
 				?>
-				<h3 class="section-title"><span><?php echo $title; ?></span></h3>
+				<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
 				<?php
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
@@ -456,7 +456,7 @@ class Shortcodes_For_Buddypress_Public {
 
 			if ( $title != '' ) {
 				?>
-				<h3 class="section-title"><span><?php echo $title; ?></span></h3>
+				<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
 				<?php
 			}
 
@@ -501,7 +501,7 @@ class Shortcodes_For_Buddypress_Public {
 
 			if ( $title != '' ) {
 				?>
-				<h3 class="section-title"><span><?php echo $title; ?></span></h3>
+				<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
 				<?php
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
@@ -686,15 +686,15 @@ class Shortcodes_For_Buddypress_Public {
 
 		?>
 		<div class="elementor-nerd-box">
-			<div class="elementor-nerd-box-title"><?php echo $texts['title']; ?></div>
+			<div class="elementor-nerd-box-title"><?php echo esc_html( $texts['title'] ); ?></div>
 			<?php foreach ( $texts['messages'] as $message ) : ?>
-				<div class="elementor-nerd-box-message"><?php echo $message; ?></div>
+				<div class="elementor-nerd-box-message"><?php echo esc_html( $message ); ?></div>
 			<?php endforeach; ?>
 
 			<?php if ( $texts['link'] ) : ?>
-				<a class="elementor-button elementor-panel-scheme-title" href="<?php echo $texts['link']; ?>"
+				<a class="elementor-button elementor-panel-scheme-title" href="<?php echo esc_url( $texts['link'] ); ?>"
 				   target="_blank">
-					<?php echo __( 'Go PRO', 'stax-buddy-builder' ); ?>
+					<?php echo esc_html_e( 'Go PRO', 'stax-buddy-builder' ); ?>
 				</a>
 			<?php endif; ?>
 		</div>
@@ -702,27 +702,27 @@ class Shortcodes_For_Buddypress_Public {
 
 		return ob_get_clean();
 	}
-	
+
 	public function buddypress_shortcodes_bp_nouveau_register_scripts( $scripts_args ) {
-		
-		if ( function_exists('buddypress') && isset(buddypress()->buddyboss )) {			
+
+		if ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) {
 			return $scripts_args;
 		}
-		
-		if ( isset($scripts_args['bp-nouveau'])) {
-			$scripts_args['bp-nouveau']['file'] = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL. 'public/js/buddypress-nouveau%s.js';
-		}		
+
+		if ( isset( $scripts_args['bp-nouveau'] ) ) {
+			$scripts_args['bp-nouveau']['file'] = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/js/buddypress-nouveau%s.js';
+		}
 		return $scripts_args;
 	}
-	
+
 	public function buddypress_shortcodes_activity_heartbeat_strings( $strings = array() ) {
 		global $post;
-		
+
 		$flg = false;
-		if ( isset($post->ID) && $post->ID != '' && $post->ID != '0') {
-			$_elementor_controls_usage = get_post_meta($post->ID, '_elementor_controls_usage', true);
-			if (  !empty($_elementor_controls_usage)) {
-				foreach($_elementor_controls_usage as $key=>$value) {
+		if ( isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
+			$_elementor_controls_usage = get_post_meta( $post->ID, '_elementor_controls_usage', true );
+			if ( ! empty( $_elementor_controls_usage ) ) {
+				foreach ( $_elementor_controls_usage as $key => $value ) {
 					if ( $key == 'buddypress_shortcode_activity_widget' ) {
 						$flg = true;
 						break;
@@ -731,9 +731,9 @@ class Shortcodes_For_Buddypress_Public {
 			}
 		}
 		if ( $flg == true ) {
-			unset($strings['pulse']);			
+			unset( $strings['pulse'] );
 		}
-		
+
 		return $strings;
 	}
 
