@@ -35,7 +35,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		return $group_types;
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_content',
@@ -220,6 +220,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	protected function render() {
 		global $groups_args;
 		$settings                 = $this->get_settings_for_display();
+		$classes                  = array();
 		$current_component        = static function () {
 			return 'groups';
 		};
@@ -236,8 +237,6 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
 
 		$loop_classes = static function () use ( $classes ) {
-
-			$classes   = array();
 			$classes[] = 'item-list';
 			$classes[] = 'groups-list';
 			$classes[] = 'bp-list';

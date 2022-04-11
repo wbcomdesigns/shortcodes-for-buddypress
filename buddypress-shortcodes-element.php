@@ -35,7 +35,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 		}
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_content',
 			array(

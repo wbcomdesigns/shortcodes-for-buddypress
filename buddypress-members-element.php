@@ -41,7 +41,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 		return $member_types;
 	}
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_content',
 			array(
@@ -174,8 +174,8 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	protected function render() {
 		global $members_args;
 
-		$settings = $this->get_settings_for_display();
-
+		$settings          = $this->get_settings_for_display();
+		$classes           = array();
 		$current_component = static function () {
 			return 'members';
 		};
@@ -194,7 +194,6 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 		$loop_classes = static function () use ( $classes ) {
 
-			$classes   = array();
 			$classes[] = 'item-list';
 			$classes[] = 'members-list';
 			$classes[] = 'bp-list';

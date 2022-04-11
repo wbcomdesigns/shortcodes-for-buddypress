@@ -681,7 +681,7 @@ class Shortcodes_For_Buddypress_Public {
 	 *
 	 * @return false|string
 	 */
-	public function sfb_go_pro_template( $texts ) {
+	public static function sfb_go_pro_template( $texts ) {
 		ob_start();
 
 		?>
