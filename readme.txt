@@ -50,15 +50,15 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 
 == Changelog ==
 = 2.5.0 =
-Fix: (#145) Fixed php notices
-Fix: Fixed phpcs issue
-Fix: Update Url of Group Read More
+* Fix: (#145) Fixed php notices
+* Fix: Fixed phpcs issue
+* Fix: Update Url of Group Read More
 
 = 2.4.0 =
-Fix: updated widget logic to be used together
-Fix: Group views as per BP l\oop grid column count setting
-Fix: #119 - Comment is navigating to page not count
-Fix:  enqueue admin js and css on plugin page
+* Fix: updated widget logic to be used together
+* Fix: Group views as per BP l\oop grid column count setting
+* Fix: #119 - Comment is navigating to page not count
+* Fix:  enqueue admin js and css on plugin page
 
 = 2.3.0 =
 * New Feature: Added Widgets for Activity, Member Directory, and Group Directory with Elementor
