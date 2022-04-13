@@ -3,8 +3,8 @@ Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcode
 Requires at least: 5.0.0
-Tested up to: 5.7.3
-Stable tag: 2.4.0
+Tested up to: 5.9.3
+Stable tag: 2.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying groups listing based on given user id screenshot-4.png
 
 == Changelog ==
+= 2.5.0 =
+Fix: (#145) Fixed php notices
+Fix: Fixed phpcs issue
+Fix: Update Url of Group Read More
+
 = 2.4.0 =
 Fix: updated widget logic to be used together
 Fix: Group views as per BP l\oop grid column count setting
