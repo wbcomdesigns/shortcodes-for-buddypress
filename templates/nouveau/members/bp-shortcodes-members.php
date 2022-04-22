@@ -5,24 +5,74 @@
  * @version 3.0.0
  */
 global $members_atts;
+
+$current_members_component = static function () {
+	return 'members';
+};
+
+add_filter( 'bp_current_component', $current_members_component );
+
+$members_ajax_querystring = static function ( $ajax_querystring, $object ) {
+	global $members_atts;
+	return $qs .= $members_atts['bpsh_query'];
+};
+
+add_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
+
+$member_loop_classes = static function () use ( $classes ) {
+
+	$classes[] = 'item-list';
+	$classes[] = 'members-list';
+	$classes[] = 'bp-list';
+
+	$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
+	$members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '3';
+
+	if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
+		$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
+		if ( isset( $grid_classes[ $members_layout ] ) ) {
+			$classes = array_merge(
+				$classes,
+				array(
+					'grid',
+					$grid_classes[ $members_layout ],
+				)
+			);
+		}
+	} else {
+		$classes = array_merge(
+			$classes,
+			array(
+				'grid',
+				'three',
+			)
+		);
+	}
+
+	return $classes;
+};
+add_filter( 'bp_nouveau_get_loop_classes', $member_loop_classes );
+
+add_filter( 'bp_members_pagination_count', '__return_zero' );
+add_filter( 'bp_get_members_pagination_links', '__return_zero' );
 ?>
+
 <div id="buddypress" class="buddypress-wrap bp-dir-hori-nav <?php echo esc_attr( $members_atts['container_class'] ); ?>">
 	<?php bp_nouveau_before_members_directory_content(); ?>
 
-	<?php // if ( ! bp_nouveau_is_object_nav_in_sidebar() ) : ?>
-
-		<?php // bp_get_template_part( 'common/nav/directory-nav' ); ?>
-
-	<?php // endif; ?>
-
 	<div class="screen-content">
-		<input type="hidden" data-bp-filter="members" value="<?php echo esc_attr( $members_atts['bpsh_query'] ); ?>" />		
-		<?php // bp_get_template_part( 'common/search-and-filters-bar' ); ?>
-				
-		<div id="members-dir-list" class="members dir-list" data-bp-list="members">
-			<div id="bp-ajax-loader"><?php bp_nouveau_user_feedback( 'directory-members-loading' ); ?></div>
-		</div><!-- #members-dir-list -->
+		<div id="members-dir-list" class="members dir-list" data-bp-list="">
+			<?php bp_get_template_part( 'members/members-loop' ); ?>
+		</div>
 
 		<?php bp_nouveau_after_members_directory_content(); ?>
-	</div><!-- // .screen-content -->
+	</div>
 </div>
+<?php
+
+remove_filter( 'bp_current_component', $current_members_component );
+remove_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
+remove_filter( 'bp_nouveau_get_loop_classes', $member_loop_classes );
+
+remove_filter( 'bp_members_pagination_count', '__return_zero' );
+remove_filter( 'bp_get_members_pagination_links', '__return_zero' );

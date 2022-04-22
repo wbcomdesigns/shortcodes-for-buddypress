@@ -7,12 +7,12 @@ add_filter(
 		return $qs .= $activity_atts['bpsh_query'];
 	}
 );
-add_filter(
-	'bp_current_component',
-	function() {
-		return 'activity';
-	}
-);
+
+$current_activity_component = static function () {
+	return 'activity';
+};
+
+add_filter( 'bp_current_component', $current_activity_component );
 
 /**
  * Fires before the activity directory listing.
@@ -28,7 +28,7 @@ add_filter(
 do_action( 'bp_before_directory_activity' );
 
 if ( $activity_atts['use_compat'] ) {
-	echo '<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav ' . esc_attr( $activity_atts['container_class'] ) . '">';
+	echo '<div id="buddypress" class="bp-activity-shortcode buddypress-wrap bp-dir-hori-nav ' . esc_attr( $activity_atts['container_class'] ) . '">';
 }
 	bp_nouveau_before_activity_directory_content(); ?>
 
@@ -37,36 +37,27 @@ if ( $activity_atts['use_compat'] ) {
 		<?php bp_get_template_part( 'activity/post-form' ); ?>
 
 	<?php endif; ?>
-
-	<?php bp_nouveau_template_notices(); ?>
-
-	<?php // if ( ! bp_nouveau_is_object_nav_in_sidebar() ) : ?>
-
-		<?php // bp_get_template_part( 'common/nav/directory-nav' ); ?>
-
-	<?php // endif; ?>
 	
 	<input type="hidden" id="activity_filters_objects" data-bp-filter="activity" value="<?php echo esc_attr( $activity_atts['bpsh_query'] ); ?>" />
+	<?php bp_nouveau_before_activity_directory_content(); ?>
+
 	<div class="screen-content">
-
-		<?php bp_get_template_part( 'common/search-and-filters-bar' ); ?>
-
 		<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
-		
-		
-		
-		<div id="activity-stream" class="activity" data-bp-list="activity" >
 
-				<div id="bp-ajax-loader"><?php bp_nouveau_user_feedback( 'directory-activity-loading' ); ?></div>
-
-		</div><!-- .activity -->
+		<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
+			<?php bp_get_template_part( 'activity/activity-loop' ); ?>
+		</div>
 
 		<?php bp_nouveau_after_activity_directory_content(); ?>
 
-	</div><!-- // .screen-content -->
-
+	</div>
+	<style>
+		#buddypress.bp-activity-shortcode .load-more{ display:none}
+	</style>
 <?php
 
 if ( $activity_atts['use_compat'] ) {
 	echo '</div>';
 }
+
+remove_filter( 'bp_current_component', $current_activity_component );
