@@ -127,6 +127,8 @@ class Shortcodes_For_Buddypress {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-shortcodes-for-buddypress-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
+
 		$this->loader = new Shortcodes_For_Buddypress_Loader();
 
 	}
@@ -163,7 +165,8 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'plugin_action_links_' . $this->plugin_basename, $plugin_admin, 'buddypress_shortcodes_settings_link' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'buddypress_shortcodes_option_page' );
-
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'buddypress_shortcodes_add_submenu_page' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'buddypress_shortcodes_plugin_settings' );
 	}
 
 	/**
