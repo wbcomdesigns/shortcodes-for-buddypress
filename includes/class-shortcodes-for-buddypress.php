@@ -163,8 +163,6 @@ class Shortcodes_For_Buddypress {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'plugin_action_links_' . $this->plugin_basename, $plugin_admin, 'buddypress_shortcodes_settings_link' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'buddypress_shortcodes_option_page' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'buddypress_shortcodes_add_submenu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'buddypress_shortcodes_plugin_settings' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wbcom_hide_all_admin_notices_from_setting_page' );
