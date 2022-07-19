@@ -2,6 +2,23 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+.nav-tab-wrapper ul li a#buddypress-shortcode-general-tab:before {
+   content: "\f111";
+}
+.nav-tab-wrapper ul li a#buddypress-shortcode-activities-tab:before {
+   content: "\f108";
+}
+.nav-tab-wrapper ul li a#buddypress-shortcode-member-tab:before {
+   content: "\f110";
+}
+.nav-tab-wrapper ul li a#buddypress-shortcode-groups-tab:before {
+   content: "\f307";
+}
+.nav-tab-wrapper ul li a#buddypress-shortcode-user-notification-tab:before {
+   content: "\f16d";
+}
+
  .wb_shortcodes_description{
  	margin-bottom: 20px;
  }
@@ -13,7 +30,6 @@
 .wb_shortcodes_description p{
 	margin: 0 0 3px;
 }
-
 .bpsh-admin-content {
 	max-width: 70%;
 	margin: 0 auto;
