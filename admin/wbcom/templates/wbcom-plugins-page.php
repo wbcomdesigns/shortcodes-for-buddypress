@@ -9,8 +9,7 @@
 	<div class="wbcom-wrap wbcom-plugin-wrapper">    	
 		<div class="wbcom_admin_header-wrapper">
 			<div id="wb_admin_plugin_name">
-				<?php esc_html_e( 'BuddyPress Shortcode', 'shortcodes-for-buddypress' ); ?>
-				<span><?php printf( __( 'Version %s', 'shortcodes-for-buddypress' ), SHORTCODES_FOR_BUDDYPRESS_VERSION ); ?></span>
+				<?php esc_html_e( 'Themes & Extension', 'shortcodes-for-buddypress' ); ?>
 			</div>
 			<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 		</div>
