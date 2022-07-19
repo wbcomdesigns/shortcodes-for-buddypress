@@ -71,7 +71,7 @@ class Shortcodes_For_Buddypress_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( 'settings_page_bpsh-shortcodes' === $hook ) {
+		if ( 'wb-plugins_page_shortcodes-for-buddypress' === $hook ) {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-admin.css', array(), $this->version, 'all' );
 		}
 
