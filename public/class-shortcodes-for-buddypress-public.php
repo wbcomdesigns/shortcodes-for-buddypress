@@ -572,7 +572,7 @@ class Shortcodes_For_Buddypress_Public {
 					'user_domain'   => bp_loggedin_user_domain(),
 					'avatar_alt'    => sprintf(
 						   /* translators: %s: member name */
-						__( 'Profile photo of %s', 'buddypress' ),
+						__( 'Profile photo of %s', 'shortcodes-for-buddypress' ),
 						$user_displayname
 					),
 				)
@@ -620,7 +620,7 @@ class Shortcodes_For_Buddypress_Public {
 		if ( ! bp_is_single_item() && ! bp_is_user() ) {
 			$activity_objects = array(
 				'profile' => array(
-					'text'                     => __( 'Post in: Profile', 'buddypress' ),
+					'text'                     => __( 'Post in: Profile', 'shortcodes-for-buddypress' ),
 					'autocomplete_placeholder' => '',
 					'priority'                 => 5,
 				),
@@ -634,8 +634,8 @@ class Shortcodes_For_Buddypress_Public {
 				)
 			) ) {
 				$activity_objects['group'] = array(
-					'text'                     => __( 'Post in: Group', 'buddypress' ),
-					'autocomplete_placeholder' => __( 'Start typing the group name...', 'buddypress' ),
+					'text'                     => __( 'Post in: Group', 'shortcodes-for-buddypress' ),
+					'autocomplete_placeholder' => __( 'Start typing the group name...', 'shortcodes-for-buddypress' ),
 					'priority'                 => 10,
 				);
 			}
@@ -651,11 +651,11 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		$activity_strings = array(
-			'whatsnewPlaceholder' => sprintf( __( "What's new, %s?", 'buddypress' ), bp_get_user_firstname( $user_displayname ) ),
-			'whatsnewLabel'       => __( 'Post what\'s new', 'buddypress' ),
-			'whatsnewpostinLabel' => __( 'Post in', 'buddypress' ),
-			'postUpdateButton'    => __( 'Post Update', 'buddypress' ),
-			'cancelButton'        => __( 'Cancel', 'buddypress' ),
+			'whatsnewPlaceholder' => sprintf( __( "What's new, %s?", 'shortcodes-for-buddypress' ), bp_get_user_firstname( $user_displayname ) ),
+			'whatsnewLabel'       => __( 'Post what\'s new', 'shortcodes-for-buddypress' ),
+			'whatsnewpostinLabel' => __( 'Post in', 'shortcodes-for-buddypress' ),
+			'postUpdateButton'    => __( 'Post Update', 'shortcodes-for-buddypress' ),
+			'cancelButton'        => __( 'Cancel', 'shortcodes-for-buddypress' ),
 		);
 
 		if ( bp_is_group() ) {
@@ -694,7 +694,7 @@ class Shortcodes_For_Buddypress_Public {
 			<?php if ( $texts['link'] ) : ?>
 				<a class="elementor-button elementor-panel-scheme-title" href="<?php echo esc_url( $texts['link'] ); ?>"
 				   target="_blank">
-					<?php echo esc_html_e( 'Go PRO', 'stax-buddy-builder' ); ?>
+					<?php echo esc_html_e( 'Go PRO', 'shortcodes-for-buddypress' ); ?>
 				</a>
 			<?php endif; ?>
 		</div>

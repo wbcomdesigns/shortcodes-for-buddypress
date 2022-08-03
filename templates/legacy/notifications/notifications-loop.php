@@ -34,7 +34,7 @@ add_filter(
 		<h2 class="bp-screen-reader-text">
 		<?php
 			/* translators: accessibility text */
-			esc_html_e( 'Unread notifications', 'buddypress' );
+			esc_html_e( 'Unread notifications', 'shortcodes-for-buddypress' );
 		?>
 		</h2>
 

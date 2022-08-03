@@ -84,7 +84,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		$this->start_controls_section(
 			'section_style',
 			array(
-				'label' => __( 'Listing Groups', 'stax-buddy-builder' ),
+				'label' => __( 'Listing Groups', 'shortcodes-for-buddypress' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			)
 		);
@@ -93,7 +93,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			Group_Control_Background::get_type(),
 			array(
 				'name'     => 'sfb_list_item_background',
-				'label'    => __( 'Background', 'stax-buddy-builder' ),
+				'label'    => __( 'Background', 'shortcodes-for-buddypress' ),
 				'types'    => array( 'classic', 'gradient' ),
 				'selector' => '{{WRAPPER}} #groups-list > li > .list-wrap',
 			)
@@ -104,7 +104,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		$this->start_controls_tab(
 			'sfb_tab_listing_normal',
 			array(
-				'label' => __( 'Normal', 'stax-buddy-builder' ),
+				'label' => __( 'Normal', 'shortcodes-for-buddypress' ),
 			)
 		);
 
@@ -121,7 +121,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		$this->start_controls_tab(
 			'sfb_tab_listing_hover',
 			array(
-				'label' => __( 'Hover', 'stax-buddy-builder' ),
+				'label' => __( 'Hover', 'shortcodes-for-buddypress' ),
 			)
 		);
 
@@ -155,7 +155,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		$this->add_control(
 			'sfb_listing_border_radius',
 			array(
-				'label'      => esc_html__( 'Border Radius', 'stax-buddy-builder' ),
+				'label'      => esc_html__( 'Border Radius', 'shortcodes-for-buddypress' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%', 'em' ),
 				'selectors'  => array(
@@ -168,7 +168,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'sfb_listing_padding',
 			array(
-				'label'      => __( 'Padding', 'stax-buddy-builder' ),
+				'label'      => __( 'Padding', 'shortcodes-for-buddypress' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
@@ -190,7 +190,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		$this->add_control(
 			'sfb_listing_border_radius_one',
 			array(
-				'label'      => esc_html__( 'Border Radius', 'stax-buddy-builder' ),
+				'label'      => esc_html__( 'Border Radius', 'shortcodes-for-buddypress' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%', 'em' ),
 				'selectors'  => array(
@@ -203,7 +203,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'sfb_listing_padding_one',
 			array(
-				'label'      => __( 'Padding', 'stax-buddy-builder' ),
+				'label'      => __( 'Padding', 'shortcodes-for-buddypress' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
