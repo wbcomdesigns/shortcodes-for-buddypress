@@ -178,3 +178,56 @@ function shortcodes_for_buddypress_widgets_registered() {
 }
 
 add_action( 'elementor/widgets/widgets_registered', 'shortcodes_for_buddypress_widgets_registered', 15 );
+
+/**
+ * Iterate_comments
+ *
+ * @param  mixed $comments for create activity data.
+ * @return $childrens
+ */
+function iterate_comments( $comments ) {
+	$childrens = array();
+	foreach ( $comments as $comment ) {
+		$userdata                           = get_userdata( $comment['user_id'] );
+		$user_login                         = $userdata->data->user_login;
+		$primary_link                       = get_site_url() . '/member' . '/' . $user_login;
+		$user_email                         = $userdata->data->user_email;
+		$user_nicename                      = $userdata->data->user_nicename;
+		$user_login                         = $userdata->data->user_login;
+		$tmp['id']                          = $comment['id'];
+		$tmp['user_id']                     = $comment['user_id'];
+		$tmp['component']                   = $comment['component'];
+		$tmp['type']                        = $comment['type'];
+		$tmp['action']                      = $comment['title'];
+		$tmp['content']                     = $comment['content']['rendered'];
+		$tmp['primary_link']                = $primary_link;
+		$tmp['item_id']                     = $comment['primary_item_id'];
+		$tmp['secondary_item_id']           = $comment['secondary_item_id'];
+		$tmp['date_gmt']                    = $comment['date_gmt'];
+		$tmp['user_email']                  = $user_email;
+		$tmp['user_nicename']               = $user_nicename;
+		$tmp['user_login']                  = $user_login;
+		$tmp['display_name']                = $user_nicename;
+		$tmp['user_fullname']               = $user_nicename;
+		$obj_children                       = new stdClass();
+		$obj_children->id                   = $tmp['id'];
+		$obj_children->user_id              = $tmp['user_id'];
+		$obj_children->component            = $tmp['component'];
+		$obj_children->type                 = $tmp['type'];
+		$obj_children->action               = $tmp['action'];
+		$obj_children->content              = $tmp['content'];
+		$obj_children->primary_link         = $tmp['primary_link'];
+		$obj_children->item_id              = $tmp['item_id'];
+		$obj_children->secondary_item_id    = $tmp['secondary_item_id'];
+		$obj_children->date_recorded        = isset( $tmp['date_recorded'] ) ? $tmp['date_recorded'] : 0;
+		$obj_children->user_email           = $tmp['user_email'];
+		$obj_children->user_nicename        = $tmp['user_nicename'];
+		$obj_children->user_login           = $tmp['user_login'];
+		$obj_children->display_name         = $tmp['display_name'];
+		$obj_children->user_fullname        = $tmp['user_fullname'];
+		$obj_children->children             = isset( $comment['comments'] ) ? iterate_comments( $comment['comments'] ) : array();
+		$obj_children->depth                = 1;
+		$childrens[ $comment['id'] ]        = $obj_children;
+	}
+	return $childrens;
+}

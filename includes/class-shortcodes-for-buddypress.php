@@ -129,6 +129,12 @@ class Shortcodes_For_Buddypress {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/buddypress-shortcodes-global-var.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/buddypress-member-shortcodes-global-var.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/buddypress-group-shortcodes-global-var.php';
+
 		$this->loader = new Shortcodes_For_Buddypress_Loader();
 
 	}
@@ -193,10 +199,14 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_shortcode( 'groups-listing', $plugin_public, 'buddypress_shortcodes_group_listing' );
 		$this->loader->add_shortcode( 'notifications-listing', $plugin_public, 'buddypress_shortcodes_notifications' );
 
+		$this->loader->add_shortcode( 'activity-listing-rest-api', $plugin_public, 'buddypress_shortcodes_activity_rest_api' );
+		$this->loader->add_shortcode( 'member-listing-rest-api', $plugin_public, 'buddypress_shortcodes_member_rest_api' );
+		$this->loader->add_shortcode( 'group-listing-rest-api', $plugin_public, 'buddypress_shortcodes_group_listing_rest_api' );
+
 		$this->loader->add_filter( 'bp_core_get_js_strings', $plugin_public, 'buddypress_shortcodes_activity_localize_scripts', 10, 1 );
-		
+
 		$this->loader->add_filter( 'bp_nouveau_register_scripts', $plugin_public, 'buddypress_shortcodes_bp_nouveau_register_scripts', 20 );
-		
+
 		$this->loader->add_filter( 'bp_core_get_js_strings', $plugin_public, 'buddypress_shortcodes_activity_heartbeat_strings', 20, 1 );
 
 	}

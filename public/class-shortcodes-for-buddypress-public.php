@@ -293,6 +293,149 @@ class Shortcodes_For_Buddypress_Public {
 	}
 
 	/**
+	 * Buddypress_shortcodes_activity_rest_api
+	 *
+	 * @param  mixed  $atts for shortcode arguments.
+	 * @param  string $content for sho]rtocde content.
+	 */
+	public function buddypress_shortcodes_activity_rest_api( $atts, $content = null ) {
+		$activity_param_count = 0;
+		$activity_params = '';
+		if ( ! empty( $atts ) ) {
+			foreach ( $atts as $key_atts => $value_atts ) {
+				if ( 'title' === $key_atts ) {
+					continue;
+				}
+				if ( $activity_param_count > 0 ) {
+					$activity_params .= '&';
+				}
+				$activity_params .= $key_atts . '=' . $value_atts;
+				$activity_param_count++;
+			}
+		}
+
+		if ( isset( $atts['hide_on_activity'] ) && $atts['hide_on_activity'] && ( function_exists( 'bp_is_activity_component' ) && bp_is_activity_component() ||
+		function_exists( 'bp_is_group_home' ) && bp_is_group_home() ) ) {
+			return '';
+		}
+		// );
+
+		// $current_activity_component is for comment, delete, like button ui
+		$current_activity_component = static function () {
+			return 'activity';
+		};
+		add_filter( 'bp_current_component', $current_activity_component );
+
+		ob_start();
+		$per_page = 2;
+		if ( isset( $atts['title'] ) && $atts['title'] != '' ) {
+			?>
+			<h3 class="section-title"><span><?php echo esc_html( $atts['title'] ); ?></span></h3>
+			<?php
+		}
+		$response = wp_remote_get( get_rest_url() . 'buddypress/v1/activity?display_comments=threaded&' . $activity_params );
+		echo '<div id="buddypress" class="bp-activity-shortcode buddypress-wrap bp-dir-hori-nav activity">';
+		bp_nouveau_before_activity_directory_content();
+		?>
+			<input type="hidden" id="activity_filters_objects" data-bp-filter="activity" value="<?php // echo esc_attr( $activity_atts['bpsh_query'] ); ?>" />
+			<div class="screen-content">
+					<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
+						<ul class="activity-list item-list bp-list">
+					<?php
+					if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+						$response_data              = json_decode( wp_remote_retrieve_body( $response ), true );
+						wp_enqueue_script( 'bp-nouveau-activity' );
+						$i = 2;
+						global $activities_template;
+						foreach ( $response_data as $response_activity_data ) {     // this loop is for activity
+							// Ist step create data for activity.
+							$obj = new stdClass();
+							$obj->current_activity     = 20;
+							$obj->activity_count       = 21;
+							$obj->total_activity_count = 21;
+							// create object in activities key.
+							$obj_activities                     = new BP_Activity_Rest_Api_Template( $response_activity_data );
+							// create object in activity key.
+							$obj_activity = new BP_Activity_Rest_Api_Template( $response_activity_data );
+							$obj->activities = array(
+								$obj_activities,
+							);
+							$obj->activity = $obj_activity;
+							$obj->in_the_loop = 1;
+							$obj->pag_arg = 'acpage';
+							$obj->pag_page = 1;
+							$obj->pag_num = 10;
+							$obj->pag_links = '';
+							$obj->full_name = '';
+							$obj->disable_blogforum_replies = 1;
+							$favorite_activity = bp_activity_get_meta( $response_activity_data['id'], 'favorite_count', true );
+							$favs = array();
+							if ( 0 != $favorite_activity ) {
+								$favs[ $i ] = $response_activity_data['id'];
+							}
+							$obj->my_favs = $favs;
+							$obj->has_more_items = 1; // end data cretaion for a activity.
+							$activities_template = $obj;
+							?>
+								<?php bp_nouveau_activity_hook( 'before', 'entry' ); ?>
+										<!-- <li class="activity activity_update activity-item date-recorded-1654083744" id="activity-<?php echo esc_attr( $response_activity_data['id'] ); ?>" data-bp-activity-id="<?php echo esc_attr( $response_activity_data['id'] ); ?>"> -->
+										<li class="<?php bp_activity_css_class(); ?>" id="activity-<?php bp_activity_id(); ?>" <?php bp_nouveau_activity_data_attribute_id(); ?> data-bp-timestamp="<?php bp_nouveau_activity_timestamp(); ?>">
+										<div class="activity-card-head">
+											<h6 class="card-head-content-type">
+												<?php echo esc_html( $response_activity_data['component'] ); ?>
+											</h6>
+										</div>
+										<div class="activity-item-head">
+											<div class="activity-avatar item-avatar">
+												<a href="<?php bp_activity_user_link(); ?>">
+													<img loading="lazy" src="<?php echo esc_url( $response_activity_data['user_avatar']['full'] ); ?>" class="avatar user-1-avatar avatar-300 photo" width="300" height="300" alt="Profile picture of admin">
+												</a>
+											</div>
+											<div class="activity-header">
+												<?php bp_activity_action(); ?>
+											</div>
+										</div>
+										<div class="activity-content">											
+											<div class="activity-inner">
+												<?php echo wp_kses_post( $response_activity_data['content']['rendered'] ); ?>
+											</div>												
+									<?php
+									$buttons = array();
+									if ( ! isset( $GLOBALS['activities_template'] ) ) {
+										return $buttons;
+									}
+									bp_nouveau_activity_entry_buttons();
+									?>
+									</div>
+										<div class="activity-comments">
+											<?php bp_activity_comments(); ?>
+											<?php bp_nouveau_activity_comment_form(); ?>
+											<?php bp_nouveau_activity_recurse_comments( bp_activity_current_comment() ); ?>
+										</div>
+										</li>
+										<?php bp_nouveau_activity_hook( 'after', 'entry' ); ?>
+										<?php
+						}
+						$i++;
+					}
+					?>
+							<li class="load-more">
+								<a href="<?php bp_activity_load_more_link(); ?>"><?php echo esc_html_x( 'Load More', 'button', 'buddypress' ); ?></a>
+							</li>
+						<?php if ( empty( $_POST['page'] ) || 1 === (int) $_POST['page'] ) : ?>
+						</ul>
+						<?php endif; ?>
+
+					</div>
+			</div>
+					<?php
+					bp_nouveau_after_activity_directory_content();
+						echo '</div>';
+					remove_filter( 'bp_current_component', $current_activity_component );
+					return ob_get_clean();
+	}
+
+	/**
 	 * Call BuddyPress Members Listing shortcode
 	 *
 	 * @since    1.0.0
@@ -396,6 +539,124 @@ class Shortcodes_For_Buddypress_Public {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Buddypress_shortcodes_member_rest_api
+	 *
+	 * @param  object $atts for member data.
+	 * @param  string $content for member content.
+	 */
+	public function buddypress_shortcodes_member_rest_api( $atts, $content = null ) {
+		$param_count = 0;
+		$params = '';
+		if ( ! empty( $atts ) ) {
+			foreach ( $atts as $key_atts => $value_atts ) {
+				if ( 'title' === $key_atts ) {
+					continue;
+				}
+				if ( $param_count > 0 ) {
+					$params .= '&';
+				}
+				$params .= $key_atts . '=' . $value_atts;
+				$param_count++;
+			}
+		}
+		ob_start();
+		if ( isset( $atts['title'] ) && $atts['title'] != '' ) {
+			?>
+			<h3 class="section-title"><span><?php echo esc_html( $atts['title'] ); ?></span></h3>
+			<?php
+		}
+		$response = wp_remote_get( get_rest_url() . 'buddypress/v1/members?' . $params );
+		if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+			$response_data              = json_decode( wp_remote_retrieve_body( $response ), true );
+			bp_nouveau_before_loop();
+			?>
+			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav alignwide">
+			<?php bp_nouveau_before_members_directory_content(); ?>
+			<div class="screen-content">
+				<div id="members-dir-list" class="members dir-list" data-bp-list="">
+			<?php
+			if ( bp_get_current_member_type() ) :
+				?>
+			<p class="current-member-type"><?php bp_current_member_type_message(); ?></p>
+			<?php endif; ?>
+			<?php if ( bp_has_members( bp_ajax_querystring( 'members' ) ) ) : ?>
+				<?php bp_nouveau_pagination( 'top' ); ?>
+			<ul id="members-list" class="item-list members-list bp-list grid three">
+				<?php
+				foreach ( $response_data as $response_activity_data ) {
+					$member_friend_count = bp_get_user_meta( $response_activity_data['id'], 'total_friend_count', true );
+					$member_last_activity = bp_get_user_last_activity( $response_activity_data['id'] );
+					$userdata = get_userdata( $response_activity_data['id'] );
+					$mem = new stdClass();
+					$mem->current_member     = 1;
+					$mem->member_count       = 21;
+					$mem_members = new BP_Memebr_Rest_Api_Template( $response_activity_data );
+					$mem->members = array(
+						$mem_members,
+					);
+					$mem_member = new BP_Memebr_Rest_Api_Template( $response_activity_data );
+					unset( $mem_member->friendship_status );
+					unset( $mem_member->template_meta );
+					$mem->member = $mem_member;
+					global $members_template;
+					$members_template = $mem;
+					?>
+					<li <?php bp_member_class( array( 'item-entry' ) ); ?> data-bp-item-id="<?php bp_member_user_id(); ?>" data-bp-item-component="members">
+						<div class="list-wrap">
+							<div class="item-avatar">
+								<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar( bp_nouveau_avatar_args() ); ?></a>
+							</div>
+							<div class="item">
+								<div class="item-block">
+									<h2 class="list-title member-name">
+										<a href="<?php bp_member_permalink(); ?>"><?php bp_member_name(); ?></a>
+									</h2>
+									<?php if ( bp_nouveau_member_has_meta() ) : ?>
+										<p class="item-meta last-activity">
+											<?php bp_nouveau_member_meta(); ?>
+										</p><!-- .item-meta -->
+									<?php endif; ?>
+									<?php if ( bp_nouveau_member_has_extra_content() ) : ?>
+										<div class="item-extra-content">
+											<?php bp_nouveau_member_extra_content(); ?>
+										</div><!-- .item-extra-content -->
+									<?php endif; ?>
+									<?php
+									bp_nouveau_members_loop_buttons(
+										array(
+											'container'      => 'ul',
+											'button_element' => 'button',
+										)
+									);
+									?>
+								</div>
+									<?php if ( bp_get_member_latest_update() && ! bp_nouveau_loop_is_grid() ) : ?>
+									<div class="user-update">
+										<p class="update"> <?php bp_member_latest_update(); ?></p>
+									</div>
+								<?php endif; ?>
+							</div><!-- // .item -->
+						</div>
+					</li>
+				<?php } ?>
+			</ul>
+				<?php bp_nouveau_pagination( 'bottom' ); ?>
+				<?php
+				else :
+					bp_nouveau_user_feedback( 'members-loop-none' );
+				endif;
+				?>
+				</div>
+			</div>
+			</div>
+				<?php
+				bp_nouveau_after_loop();
+
+		}
+		return ob_get_clean();
+	}
+
 
 	/**
 	 * Call BuddyPress Group Listing shortcode
@@ -467,6 +728,158 @@ class Shortcodes_For_Buddypress_Public {
 			}
 		}
 		return ob_get_clean();
+	}
+
+	/**
+	 * Buddypress_shortcodes_group_listing_rest_api
+	 *
+	 * @param  object $atts for get group data.
+	 * @param  string $content for group content.
+	 */
+	public function buddypress_shortcodes_group_listing_rest_api( $atts, $content = null ) {
+		$group_param_count = 0;
+		$group_params = '';
+		if ( ! empty( $atts ) ) {
+			foreach ( $atts as $key_atts => $value_atts ) {
+				if ( 'title' === $key_atts ) {
+					continue;
+				}
+				if ( $group_param_count > 0 ) {
+					$group_params .= '&';
+				}
+				$group_params .= $key_atts . '=' . $value_atts;
+				$group_param_count++;
+			}
+		}
+		ob_start();
+		if ( isset( $atts['title'] ) && $atts['title'] != '' ) {
+			?>
+			<h3 class="section-title"><span><?php echo esc_html( $atts['title'] ); ?></span></h3>
+			<?php
+		}
+		$response = wp_remote_get( get_rest_url() . 'buddypress/v1/groups?' . $group_params );
+		if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+			$response_data              = json_decode( wp_remote_retrieve_body( $response ), true );
+			?>
+			<p class="current-group-type"></p>
+			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav alignwide">				
+			<div class="screen-content">
+			<div id="groups-dir-list" class="groups dir-list" data-bp-list="">
+				<?php if ( bp_get_current_group_directory_type() ) : ?>
+					<p class="current-group-type"><?php bp_current_group_directory_type_message(); ?></p>
+				<?php endif; ?>
+				<?php bp_nouveau_before_loop(); ?>
+				<?php if ( bp_get_current_group_directory_type() ) : ?>
+					<p class="current-group-type"><?php bp_current_group_directory_type_message(); ?></p>
+				<?php endif; ?>
+				<?php if ( bp_has_groups( bp_ajax_querystring( 'groups' ) ) ) : ?>
+				<ul id="groups-list" class="item-list groups-list bp-list grid three">
+					<?php
+					foreach ( $response_data as $response_group_data ) {
+						$group_obj  = new stdClass();
+						$group_obj->current_group = 0;
+						$group_obj->group_count = 20;
+						$gp_groups = new BP_Group_Rest_Api_Template( $response_group_data );
+						$group_obj->groups = array(
+							$gp_groups,
+						);
+						$gp_group = new BP_Group_Rest_Api_Template( $response_group_data );
+						$group_obj->group = $gp_group;
+						$groups_template = $group_obj;
+						$group_obj->in_the_loop = 1;
+						$group_obj->single_group = '';
+						global $groups_template;
+						$groups_template = $group_obj;
+						?>
+				<li class="item-entry public group-has-avatar" data-bp-item-id="<?php echo esc_attr( $response_group_data['id'] ); ?>" data-bp-item-component="groups">
+				<div class="list-wrap">
+						<?php if ( ! bp_disable_group_avatar_uploads() ) : ?>
+							<?php
+							$args = '';
+							$group_avatar_args = bp_parse_args(
+								$args,
+								array(
+									'type'    => 'full',
+									'width'   => false,
+									'height'  => false,
+									'class'   => 'avatar',
+									'no_grav' => false,
+									'html'    => true,
+									'id'      => false,
+									// translators: %1$s is the name of the group.
+									'alt'     => sprintf( __( 'Group logo of %1$s', 'buddypress' ), $response_group_data['name'] ),
+								),
+								'get_group_avatar'
+							);
+							$group_avatar = bp_core_fetch_avatar(
+								array(
+									'item_id'    => $response_group_data['id'],
+									'avatar_dir' => 'group-avatars',
+									'object'     => 'group',
+									'type'       => $group_avatar_args['type'],
+									'html'       => $group_avatar_args['html'],
+									'alt'        => $group_avatar_args['alt'],
+									'no_grav'    => $group_avatar_args['no_grav'],
+									'css_id'     => $group_avatar_args['id'],
+									'class'      => $group_avatar_args['class'],
+									'width'      => $group_avatar_args['width'],
+									'height'     => $group_avatar_args['height'],
+								)
+							);
+							?>
+						<div class="item-avatar">
+							<a href="<?php echo esc_attr( $response_group_data['link'] ); ?>"><?php echo wp_kses_post( $group_avatar ); ?></a>
+						</div>
+						<?php endif; ?>
+					<div class="item">
+						<div class="item-block">
+							<h2 class="list-title groups-title">
+							<a href="<?php echo esc_attr( $response_group_data['link'] ); ?>"><?php echo esc_html( $response_group_data['name'] ); ?></a>
+							</h2>
+								<p class="item-meta group-details">
+									<?php
+									$gp_count = BP_Groups_Group::get_total_member_count( $response_group_data['id'] );
+									echo esc_html( ucfirst( $response_group_data['status'] ) ) . ' Group / ' . esc_html( $gp_count ) . ' members';
+									?>
+									</p>
+							<p class="last-activity item-meta">
+								<?php
+									echo esc_html( $response_group_data['created_since'] );
+								?>
+							</p>
+
+						</div>
+
+						<div class="group-desc">
+							<p>
+								<?php
+								echo esc_html( substr( $response_group_data['description']['raw'], 0, 100 ) . '...' );
+								?>
+							</p>
+						</div>
+						<?php
+						bp_nouveau_groups_loop_item();
+						bp_nouveau_groups_loop_buttons();
+						?>
+					</div>
+				</div>
+			</li>
+
+						<?php
+					} // foreach loop
+					?>
+				</ul>
+				<?php else : ?>
+					<?php bp_nouveau_user_feedback( 'groups-loop-none' ); ?>
+				<?php endif; ?>
+				<?php bp_nouveau_after_loop(); ?> 
+				</div>
+			</div>
+			</div>
+					<?php
+		}
+		return ob_get_clean();
+
 	}
 
 	/**
