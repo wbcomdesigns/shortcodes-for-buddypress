@@ -133,6 +133,23 @@ function shortcodes_for_buddypress_requires_buddypress() {
 }
 
 add_action( 'admin_init', 'shortcodes_for_buddypress_requires_buddypress' );
+
+/**
+ * Redirect to plugin settings page after activated.
+ *
+ * @since  1.0.0
+ *
+ * @param string $plugin Path to the plugin file relative to the plugins directory.
+ */
+function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
+
+	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
+		wp_safe_redirect( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) );
+		exit;
+	}
+}
+add_action( 'activated_plugin', 'shortcodes_for_buddypress_activation_redirect_settings' );
+
 /**
  * Throw an Alert to tell the Admin why it didn't activate.
  *

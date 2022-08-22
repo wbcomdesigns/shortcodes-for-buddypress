@@ -6,6 +6,10 @@
 .nav-tab-wrapper ul li a#buddypress-shortcode-general-tab:before {
    content: "\f111";
 }
+.wbcom-wrap .notice.notice-error.is-dismissible.learndash-license-is-dismissible,
+.wbcom-wrap .notice.notice-error {
+    display: none !important;
+}
 .nav-tab-wrapper ul li a#buddypress-shortcode-activities-tab:before {
    content: "\f108";
 }
