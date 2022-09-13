@@ -14,11 +14,13 @@ add_filter( 'bp_current_component', $current_members_component );
 
 $members_ajax_querystring = static function ( $ajax_querystring, $object ) {
 	global $members_atts;
+	$qs = '';
 	return $qs .= $members_atts['bpsh_query'];
 };
 
 add_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
 
+$classes = array();
 $member_loop_classes = static function () use ( $classes ) {
 
 	$classes[] = 'item-list';

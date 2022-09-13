@@ -13,6 +13,7 @@ add_filter( 'bp_current_component', $current_group_component );
 
 $members_ajax_querystring = static function ( $ajax_querystring, $object ) {
 	global $groups_atts;
+	$qs = '';
 	return $qs .= $groups_atts['bpsh_query'];
 };
 
@@ -21,11 +22,11 @@ add_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
 add_filter( 'bp_get_groups_pagination_count', '__return_zero' );
 add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
 
+$classes = array();
 $group_loop_classes = static function () use ( $classes ) {
 	$classes[] = 'item-list';
 	$classes[] = 'groups-list';
 	$classes[] = 'bp-list';
-
 	$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
 	$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : '3';
 
@@ -49,7 +50,6 @@ $group_loop_classes = static function () use ( $classes ) {
 			)
 		);
 	}
-
 	return $classes;
 };
 add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
