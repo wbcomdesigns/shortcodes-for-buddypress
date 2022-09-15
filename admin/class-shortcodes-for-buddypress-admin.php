@@ -71,7 +71,8 @@ class Shortcodes_For_Buddypress_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( 'wb-plugins_page_shortcodes-for-buddypress' === $hook ) {
+		$shortcode_style = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
+		if ( 'wb-plugins_page_shortcodes-for-buddypress' === $hook || 'wbcomplugins' === $shortcode_style || 'wbcom-plugins-page' === $shortcode_style || 'wbcom-support-page' === $shortcode_style  ) {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-admin.css', array(), $this->version, 'all' );
 		}
 

@@ -127,3 +127,37 @@
 	.buddypress-shortcode-lists tbody td:nth-child(4):before { content: "Description"; }
 
 }
+
+.wb-plugins_page_wbcom-license-page .update-nag,
+.wb-plugins_page_wbcom-license-page .updated,
+.wb-plugins_page_wbcom-license-page .error,
+.wb-plugins_page_wbcom-license-page .notice-error,
+.wb-plugins_page_wbcom-license-page .is-dismissible {
+    display: none !important;
+}
+.wb-plugins_page_shortcodes-for-buddypress .update-nag,
+.wb-plugins_page_shortcodes-for-buddypress .updated,
+.wb-plugins_page_shortcodes-for-buddypress .error,
+.wb-plugins_page_shortcodes-for-buddypress .notice-error,
+.wb-plugins_page_shortcodes-for-buddypress .is-dismissible{
+	display: none !important;
+}
+.toplevel_page_wbcomplugins .update-nag,
+.toplevel_page_wbcomplugins .updated,
+.toplevel_page_wbcomplugins .error,
+.toplevel_page_wbcomplugins .notice-error,
+.toplevel_page_wbcomplugins .is-dismissible{
+    display: none !important;
+}
+.wb-plugins_page_wbcom-support-page .update-nag,
+.wb-plugins_page_wbcom-support-page .updated,
+.wb-plugins_page_wbcom-support-page .error,
+.wb-plugins_page_wbcom-support-page .notice-error,
+.wb-plugins_page_wbcom-support-page .is-dismissible,
+.wb-plugins_page_wbcom-plugins-page .update-nag,
+.wb-plugins_page_wbcom-plugins-page .updated,
+.wb-plugins_page_wbcom-plugins-page .error,
+.wb-plugins_page_wbcom-plugins-page .notice-error,
+.wb-plugins_page_wbcom-plugins-page .is-dismissible {
+    display: none !important;
+}
