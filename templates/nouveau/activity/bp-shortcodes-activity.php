@@ -51,9 +51,6 @@ if ( $activity_atts['use_compat'] ) {
 		<?php bp_nouveau_after_activity_directory_content(); ?>
 
 	</div>
-	<style>
-		#buddypress.bp-activity-shortcode .load-more{ display:none}
-	</style>
 <?php
 
 if ( $activity_atts['use_compat'] ) {
