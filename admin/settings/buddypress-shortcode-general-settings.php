@@ -28,7 +28,7 @@ global $bp_grp_types;
 						</label>
 						<span class="bp-shortcode-read-more">
 							<p class="description"><?php esc_html_e( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes. ', 'shortcodes-for-buddypress' ); ?></p>
-							<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-activity-shortcodes/" class="bpsh_read_more" target="_blank"><?php echo esc_html( ' read more' ); ?></a>
+							<a href="https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/activity-parameters/what-are-accepted-parameters-for-activity-shortcodes/" class="bpsh_read_more" target="_blank"><?php echo esc_html( ' read more' ); ?></a>
 						</span>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -46,7 +46,7 @@ global $bp_grp_types;
 						</label>
 						<span class="bp-shortcode-read-more">
 							<p class="description"><?php esc_html_e( 'BuddyPress Members Shortcode allows you to embed BuddyPress members in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?></p>
-							<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-members-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'read more' ); ?></a>
+							<a href="https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/member-parameters/what-are-accepted-parameters-for-members-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'read more' ); ?></a>
 						</span>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -64,7 +64,7 @@ global $bp_grp_types;
 						</label>
 						<span class="bp-shortcode-read-more">
 							<p class="description"><?php esc_html_e( 'BuddyPress Groups Shortcode allows you to embed BuddyPress groups in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?></p>
-							<a href="https://wbcomdesigns.com/docs/shortcodes-for-buddypress/what-are-accepted-parameters-for-group-shortcodes/" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'read more' ); ?></a>
+							<a href="https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/group-parameters/what-are-accepted-parameters-for-group-shortcodes/" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'read more' ); ?></a>
 						</span>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -82,7 +82,7 @@ global $bp_grp_types;
 						</label>
 						<span class="bp-shortcode-read-more">
 							<p class="description"><?php esc_html_e( 'BuddyPress Notification Shortcode allows you to embed BuddyPress notificaition list in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?></p>
-							<a href="https://wbcomdesigns.com/kb/what-are-accepted-parameters-for-users-notification-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'read more' ); ?></a>
+							<a href="https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/notification-parameters/what-are-accepted-parameters-for-users-notification-listing-shortcodes/" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'read more' ); ?></a>
 						</span>
 					</div>
 					<div class="wbcom-settings-section-options">
