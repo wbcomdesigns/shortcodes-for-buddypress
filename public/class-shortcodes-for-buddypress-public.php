@@ -238,12 +238,14 @@ class Shortcodes_For_Buddypress_Public {
 		}
 		$default_atts = array(
 			'title'            => '', // title of the section
+			'pagination'       => 1,// show or not.
+			'load_more'        => 0,
 			'display_comments' => 'threaded',
 			'include'          => false, // pass an activity_id or string of IDs comma-separated
 			'exclude'          => false, // pass an activity_id or string of IDs comma-separated
 			'in'               => false, // comma-separated list or array of activity IDs among which to search
 			'sort'             => 'DESC', // sort DESC or ASC
-			'page'             => false, // which page to load
+			'page'             => 1, // which page to load
 			'per_page'         => 10, // how many per page
 			'max'              => false, // max number to return
 			'count_total'      => true,

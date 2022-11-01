@@ -29,6 +29,7 @@ do_action( 'bp_before_directory_activity' );
 
 if ( $activity_atts['use_compat'] ) {
 	echo '<div id="buddypress" class="bp-activity-shortcode buddypress-wrap bp-dir-hori-nav ' . esc_attr( $activity_atts['container_class'] ) . '">';
+	if ( bp_has_activities( $activity_atts ) ) {
 }
 	bp_nouveau_before_activity_directory_content(); ?>
 
@@ -43,11 +44,20 @@ if ( $activity_atts['use_compat'] ) {
 
 	<div class="screen-content">
 		<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
-
 		<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
-			<?php bp_get_template_part( 'activity/activity-loop' ); ?>
-		</div>
-
+		<ul class="activity-list item-list bp-list">
+			<?php //bp_get_template_part( 'activity/activity-loop' ); ?>
+			<?php while ( bp_activities() ) : bp_the_activity(); ?>
+						<?php bp_get_template_part( 'activity/entry' ); ?>
+					<?php endwhile; ?>
+		</ul>
+	</div>
+		<?php if ( $activity_atts['pagination'] && ! $activity_atts['load_more'] ) : ?>
+                    <div class="pagination">
+                        <div class="pag-count"><?php bp_activity_pagination_count(); ?></div>
+                        <div class="pagination-links"><?php bp_activity_pagination_links(); ?></div>
+                    </div>
+				<?php endif; ?>
 		<?php bp_nouveau_after_activity_directory_content(); ?>
 
 	</div>
@@ -55,6 +65,7 @@ if ( $activity_atts['use_compat'] ) {
 
 if ( $activity_atts['use_compat'] ) {
 	echo '</div>';
+}
 }
 
 remove_filter( 'bp_current_component', $current_activity_component );
