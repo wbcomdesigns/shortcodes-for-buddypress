@@ -4,7 +4,7 @@ Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcode
 Requires at least: 5.0.0
 Tested up to: 6.0.1
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying groups listing based on given user id screenshot-4.png
 
 == Changelog ==
+= 2.6.1 =
+* Fix: (#147) Fixed members and group shortcode notice issue
+* Fix: (#150) Fixed pagination is not showing with perpage shortcode
+* Fix: (#64)  Fixed knowledge base url issue
+
 = 2.6.0 =
 * Fix: Updated Admin wrapper
 
