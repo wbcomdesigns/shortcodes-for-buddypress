@@ -161,3 +161,12 @@
 .wb-plugins_page_wbcom-plugins-page .is-dismissible {
     display: none !important;
 }
+
+.wbcom-wrap .update-nag,
+.wbcom-wrap .updated,
+.wbcom-wrap .error,
+.wbcom-wrap .notice-error,
+.wbcom-wrap .is-dismissible,
+.wbcom-wrap .notice {
+    display: none !important;
+}
