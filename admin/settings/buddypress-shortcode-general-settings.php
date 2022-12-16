@@ -33,7 +33,7 @@ global $bp_grp_types;
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( '[activity_listing]', 'shortcodes-for-buddypress' ); ?></p>
+						<p class="description"><?php esc_html_e( '[activity-listing]', 'shortcodes-for-buddypress' ); ?></p>
 						</label>
 					</div>
 				</div>
@@ -51,7 +51,7 @@ global $bp_grp_types;
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( '[members_listing]', 'shortcodes-for-buddypress' ); ?></p>
+						<p class="description"><?php esc_html_e( '[members-listing]', 'shortcodes-for-buddypress' ); ?></p>
 						</label>
 					</div>
 				</div>
@@ -69,7 +69,7 @@ global $bp_grp_types;
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( '[groups_listing]', 'shortcodes-for-buddypress' ); ?></p>
+						<p class="description"><?php esc_html_e( '[groups-listing]', 'shortcodes-for-buddypress' ); ?></p>
 						</label>
 					</div>
 				</div>
@@ -87,7 +87,7 @@ global $bp_grp_types;
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( '[notifications_listing]', 'shortcodes-for-buddypress' ); ?></p>
+						<p class="description"><?php esc_html_e( '[notifications-listing]', 'shortcodes-for-buddypress' ); ?></p>
 						</label>
 					</div>
 				</div>
