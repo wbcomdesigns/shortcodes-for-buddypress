@@ -16,7 +16,7 @@ global $bp_grp_types;
 	<div class="wbcom-wrapper-admin">
 		<div class="wbcom-admin-title-section">
 			<p class="wbcom-welcome-description">
-				<?php echo esc_html( 'The [groups-listing] shortcode allows you to display listing of groups in posts/pages.' ); ?>
+				<?php echo esc_html( 'The [groups_listing] shortcode allows you to display listing of groups in posts/pages.' ); ?>
 			</p>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">

@@ -18,7 +18,7 @@ global $bp_grp_types;
 			<p class="wbcom-welcome-description">
 				<?php echo esc_html( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.' ); ?>
 				<br>
-				<?php echo esc_html( 'The [activity-listing] is work as same as site-wide activity page work.' ); ?>
+				<?php echo esc_html( 'The [activity_listing] is work as same as site-wide activity page work.' ); ?>
 			</p>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
