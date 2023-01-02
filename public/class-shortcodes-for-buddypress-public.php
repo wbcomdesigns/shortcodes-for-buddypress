@@ -134,7 +134,7 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		if ( isset( $_REQUEST['object'] ) && $_REQUEST['object'] != '' ) {
-			$current_component = sanitize_text_field( wp_unslash( $_REQUEST['object'] ) );
+			return $current_component;
 		}
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'post_update' ) {
 			$current_component = 'activity';
