@@ -133,9 +133,10 @@ class Shortcodes_For_Buddypress_Public {
 			return $current_component;
 		}
 
-		if ( isset( $_REQUEST['object'] ) && $_REQUEST['object'] != '' ) {
+		if ( isset( $_REQUEST['object'] ) && $_REQUEST['object'] != '' && isset($_REQUEST['template']) && $_REQUEST['template'] == 'member_notifications' ) {			
 			return $current_component;
 		}
+		
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'post_update' ) {
 			$current_component = 'activity';
 		}
