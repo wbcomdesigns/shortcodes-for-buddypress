@@ -2,3 +2,15 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+table.notifications.bp-tables-user thead th.date {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
+/*BB Theme*/
+table.notifications.bp-tables-user tr:last-child th {
+    border-bottom:1px solid var(--bb-content-border-color);
+}
