@@ -14,3 +14,9 @@ table.notifications.bp-tables-user thead th.date {
 table.notifications.bp-tables-user tr:last-child th {
     border-bottom:1px solid var(--bb-content-border-color);
 }
+.theme-buddyboss-theme table.notifications.bp-tables-user {
+    overflow: unset;
+}
+.theme-buddyboss-theme table.notifications.bp-tables-user span.notifications-order-actions {
+    display: flex;
+}
