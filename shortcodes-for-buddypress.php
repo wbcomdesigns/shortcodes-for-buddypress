@@ -30,12 +30,30 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+	if ( ! function_exists( 'deactivate_plugins' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	}
+	add_action(
+		'admin_notices',
+		function() {
+			echo '<div class="error"><p>';
+			echo sprintf( __( '<strong>%1$s</strong> and <strong>%2$s</strong> will not activate togather. Please deactivate %1$s', 'shortcodes-for-buddypress' ), __( 'Wbcom Designs - Shortcode For BuddyPress Pro', 'shortcodes-for-buddypress' ), __( 'Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress', 'shortcodes-for-buddypress' ) );
+			echo '</p></div>';
+		}
+	);
+	deactivate_plugins( 'shortcodes-for-buddypress/shortcodes-for-buddypress.php' );
+	return false;
+}
+
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'SHORTCODES_FOR_BUDDYPRESS_VERSION', '2.6.1' );
+if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' ) ) {
+	define( 'SHORTCODES_FOR_BUDDYPRESS_VERSION', '2.6.1' );
+}
 
 if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR' ) ) {
 	define( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -86,9 +104,12 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress.
  * @since    1.0.0
  */
 function run_shortcodes_for_buddypress() {
-
-	$plugin = new Shortcodes_For_Buddypress();
-	$plugin->run();
+	if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+		deactivate_plugins( 'shortcodes-for-buddypress/shortcodes-for-buddypress.php' );
+	} else {
+		$plugin = new Shortcodes_For_Buddypress();
+		$plugin->run();
+	}
 
 }
 run_shortcodes_for_buddypress();
@@ -119,20 +140,22 @@ function shortcodes_for_buddypress_plugin_admin_notice() {
 	}
 }
 
-
 /**
  *  Check if buddypress activate.
  */
-function shortcodes_for_buddypress_requires_buddypress() {
-	if ( ! class_exists( 'Buddypress' ) ) {
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-		// deactivate_plugins('buddypress-polls/buddypress-polls.php');
-		add_action( 'admin_notices', 'shortcodes_for_buddypress_required_plugin_admin_notice' );
-		unset( $_GET['activate'] );
+if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
+	function shortcodes_for_buddypress_requires_buddypress() {
+		if ( ! class_exists( 'Buddypress' ) ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			// deactivate_plugins('buddypress-polls/buddypress-polls.php');
+			add_action( 'admin_notices', 'shortcodes_for_buddypress_required_plugin_admin_notice' );
+			unset( $_GET['activate'] );
+		}
 	}
+
+	add_action( 'admin_init', 'shortcodes_for_buddypress_requires_buddypress', 20 );
 }
 
-add_action( 'admin_init', 'shortcodes_for_buddypress_requires_buddypress' );
 
 /**
  * Redirect to plugin settings page after activated.
@@ -156,15 +179,17 @@ add_action( 'activated_plugin', 'shortcodes_for_buddypress_activation_redirect_s
  * @author wbcomdesigns
  * @since  2.2.0
  */
-function shortcodes_for_buddypress_required_plugin_admin_notice() {
+if ( ! function_exists( 'shortcodes_for_buddypress_required_plugin_admin_notice' ) ) {
+	function shortcodes_for_buddypress_required_plugin_admin_notice() {
 
-	$bpquotes_plugin = esc_html__( ' Shortcode For BuddyPress', 'shortcodes-for-buddypress' );
-	$bp_plugin       = esc_html__( 'BuddyPress', 'shortcodes-for-buddypress' );
-	echo '<div class="error"><p>';
-	echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bpquotes_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
-	echo '</p></div>';
-	if ( isset( $_GET['activate'] ) ) {
-		unset( $_GET['activate'] );
+		$bpquotes_plugin = esc_html__( ' Shortcode For BuddyPress', 'shortcodes-for-buddypress' );
+		$bp_plugin       = esc_html__( 'BuddyPress', 'shortcodes-for-buddypress' );
+		echo '<div class="error"><p>';
+		echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bpquotes_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
+		echo '</p></div>';
+		if ( isset( $_GET['activate'] ) ) {
+			unset( $_GET['activate'] );
+		}
 	}
 }
 
@@ -175,26 +200,32 @@ function shortcodes_for_buddypress_required_plugin_admin_notice() {
  *
  * @since 2.2.0
  */
-function buddypress_shortcodes_categories_registered( $elements_manager ) {
+if ( ! function_exists( 'buddypress_shortcodes_categories_registered' ) ) {
+	function buddypress_shortcodes_categories_registered( $elements_manager ) {
 
-	$elements_manager->add_category(
-		'buddypress-widgets',
-		array(
-			'title' => 'BuddyPress Widgets',
-			'icon'  => 'fa fa-plug',
-		)
-	);
+		$elements_manager->add_category(
+			'buddypress-widgets',
+			array(
+				'title' => 'BuddyPress Widgets',
+				'icon'  => 'fa fa-plug',
+			)
+		);
+	}
+
+	add_action( 'elementor/elements/categories_registered', 'buddypress_shortcodes_categories_registered' );
+
 }
 
-add_action( 'elementor/elements/categories_registered', 'buddypress_shortcodes_categories_registered' );
+if ( ! function_exists( 'shortcodes_for_buddypress_widgets_registered' ) ) {
+	function shortcodes_for_buddypress_widgets_registered() {
+		require plugin_dir_path( __FILE__ ) . 'buddypress-shortcodes-element.php';
+		require plugin_dir_path( __FILE__ ) . 'buddypress-members-element.php';
+		require plugin_dir_path( __FILE__ ) . 'buddypress-groups-element.php';
+	}
 
-function shortcodes_for_buddypress_widgets_registered() {
-	require plugin_dir_path( __FILE__ ) . 'buddypress-shortcodes-element.php';
-	require plugin_dir_path( __FILE__ ) . 'buddypress-members-element.php';
-	require plugin_dir_path( __FILE__ ) . 'buddypress-groups-element.php';
+	add_action( 'elementor/widgets/widgets_registered', 'shortcodes_for_buddypress_widgets_registered', 15 );
+
 }
-
-add_action( 'elementor/widgets/widgets_registered', 'shortcodes_for_buddypress_widgets_registered', 15 );
 
 /**
  * Iterate_comments
@@ -205,46 +236,46 @@ add_action( 'elementor/widgets/widgets_registered', 'shortcodes_for_buddypress_w
 function iterate_comments( $comments ) {
 	$childrens = array();
 	foreach ( $comments as $comment ) {
-		$userdata                           = get_userdata( $comment['user_id'] );
-		$user_login                         = $userdata->data->user_login;
-		$primary_link                       = get_site_url() . '/member' . '/' . $user_login;
-		$user_email                         = $userdata->data->user_email;
-		$user_nicename                      = $userdata->data->user_nicename;
-		$user_login                         = $userdata->data->user_login;
-		$tmp['id']                          = $comment['id'];
-		$tmp['user_id']                     = $comment['user_id'];
-		$tmp['component']                   = $comment['component'];
-		$tmp['type']                        = $comment['type'];
-		$tmp['action']                      = $comment['title'];
-		$tmp['content']                     = $comment['content']['rendered'];
-		$tmp['primary_link']                = $primary_link;
-		$tmp['item_id']                     = $comment['primary_item_id'];
-		$tmp['secondary_item_id']           = $comment['secondary_item_id'];
-		$tmp['date_gmt']                    = $comment['date_gmt'];
-		$tmp['user_email']                  = $user_email;
-		$tmp['user_nicename']               = $user_nicename;
-		$tmp['user_login']                  = $user_login;
-		$tmp['display_name']                = $user_nicename;
-		$tmp['user_fullname']               = $user_nicename;
-		$obj_children                       = new stdClass();
-		$obj_children->id                   = $tmp['id'];
-		$obj_children->user_id              = $tmp['user_id'];
-		$obj_children->component            = $tmp['component'];
-		$obj_children->type                 = $tmp['type'];
-		$obj_children->action               = $tmp['action'];
-		$obj_children->content              = $tmp['content'];
-		$obj_children->primary_link         = $tmp['primary_link'];
-		$obj_children->item_id              = $tmp['item_id'];
-		$obj_children->secondary_item_id    = $tmp['secondary_item_id'];
-		$obj_children->date_recorded        = isset( $tmp['date_recorded'] ) ? $tmp['date_recorded'] : 0;
-		$obj_children->user_email           = $tmp['user_email'];
-		$obj_children->user_nicename        = $tmp['user_nicename'];
-		$obj_children->user_login           = $tmp['user_login'];
-		$obj_children->display_name         = $tmp['display_name'];
-		$obj_children->user_fullname        = $tmp['user_fullname'];
-		$obj_children->children             = isset( $comment['comments'] ) ? iterate_comments( $comment['comments'] ) : array();
-		$obj_children->depth                = 1;
-		$childrens[ $comment['id'] ]        = $obj_children;
+		$userdata                        = get_userdata( $comment['user_id'] );
+		$user_login                      = $userdata->data->user_login;
+		$primary_link                    = get_site_url() . '/member' . '/' . $user_login;
+		$user_email                      = $userdata->data->user_email;
+		$user_nicename                   = $userdata->data->user_nicename;
+		$user_login                      = $userdata->data->user_login;
+		$tmp['id']                       = $comment['id'];
+		$tmp['user_id']                  = $comment['user_id'];
+		$tmp['component']                = $comment['component'];
+		$tmp['type']                     = $comment['type'];
+		$tmp['action']                   = $comment['title'];
+		$tmp['content']                  = $comment['content']['rendered'];
+		$tmp['primary_link']             = $primary_link;
+		$tmp['item_id']                  = $comment['primary_item_id'];
+		$tmp['secondary_item_id']        = $comment['secondary_item_id'];
+		$tmp['date_gmt']                 = $comment['date_gmt'];
+		$tmp['user_email']               = $user_email;
+		$tmp['user_nicename']            = $user_nicename;
+		$tmp['user_login']               = $user_login;
+		$tmp['display_name']             = $user_nicename;
+		$tmp['user_fullname']            = $user_nicename;
+		$obj_children                    = new stdClass();
+		$obj_children->id                = $tmp['id'];
+		$obj_children->user_id           = $tmp['user_id'];
+		$obj_children->component         = $tmp['component'];
+		$obj_children->type              = $tmp['type'];
+		$obj_children->action            = $tmp['action'];
+		$obj_children->content           = $tmp['content'];
+		$obj_children->primary_link      = $tmp['primary_link'];
+		$obj_children->item_id           = $tmp['item_id'];
+		$obj_children->secondary_item_id = $tmp['secondary_item_id'];
+		$obj_children->date_recorded     = isset( $tmp['date_recorded'] ) ? $tmp['date_recorded'] : 0;
+		$obj_children->user_email        = $tmp['user_email'];
+		$obj_children->user_nicename     = $tmp['user_nicename'];
+		$obj_children->user_login        = $tmp['user_login'];
+		$obj_children->display_name      = $tmp['display_name'];
+		$obj_children->user_fullname     = $tmp['user_fullname'];
+		$obj_children->children          = isset( $comment['comments'] ) ? iterate_comments( $comment['comments'] ) : array();
+		$obj_children->depth             = 1;
+		$childrens[ $comment['id'] ]     = $obj_children;
 	}
 	return $childrens;
 }
