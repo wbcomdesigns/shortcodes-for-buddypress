@@ -338,7 +338,9 @@ class Shortcodes_For_Buddypress_Public {
 		}
 		$response = wp_remote_get( get_rest_url() . 'buddypress/v1/activity?display_comments=threaded&' . $activity_params );
 		echo '<div id="buddypress" class="bp-activity-shortcode buddypress-wrap bp-dir-hori-nav activity">';
-		bp_nouveau_before_activity_directory_content();
+		if ( function_exists( 'bp_nouveau_before_activity_directory_content' ) ) {
+			bp_nouveau_before_activity_directory_content();
+		}
 		?>
 			<input type="hidden" id="activity_filters_objects" data-bp-filter="activity" value="<?php // echo esc_attr( $activity_atts['bpsh_query'] ); ?>" />
 			<div class="screen-content">

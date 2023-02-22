@@ -438,8 +438,9 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			<?php endif; ?>
 		
 			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav activity">
-		
-				<?php bp_nouveau_before_activity_directory_content(); ?>
+				<?php if ( function_exists( 'bp_nouveau_before_activity_directory_content' ) ) : ?>	
+					<?php bp_nouveau_before_activity_directory_content(); ?>
+				<?php endif; ?>
 
 				<div class="screen-content">
 					<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
