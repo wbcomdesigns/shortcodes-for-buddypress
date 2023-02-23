@@ -16,7 +16,7 @@ global $bp_grp_types;
 	<div class="wbcom-wrapper-admin">
 		<div class="wbcom-admin-title-section">
 			<p class="wbcom-welcome-description">
-				<?php echo esc_html( 'BuddyPress Shortcode plugin allows you to embed BuddyPress Activities, BuddyPress Members and Groups in posts/pages using shortcodes.' ); ?>				
+				<?php echo esc_html( 'Shortcodes & Elementor Widgets For BuddyPress plugin allows you to embed BuddyPress Activities, BuddyPress Members and Groups in posts/pages using shortcodes.' ); ?>
 			</p>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">

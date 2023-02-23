@@ -1,7 +1,7 @@
 === Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress ===
 Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
-Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcode
+Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcodes, BuddyPress Widgets
 Requires at least: 5.0.0
 Tested up to: 6.0.1
 Stable tag: 2.6.1
@@ -14,7 +14,7 @@ This plugin will generate Shortcode for Listing Activity Streams , Members and G
 
 This plugin will add an extended feature to BuddyPress. It will use Shortcode for Listing Activity Streams, Members directory, and Groups directory on any post/page within the website.
 
-With our current update, we have also added three widgets to display activity stream, member directory, and group directory using Elementor. 
+With our current update, we have also added three widgets to display activity stream, member directory, and group directory using Elementor.
 
 [vimeo https://vimeo.com/554193567 ]
 

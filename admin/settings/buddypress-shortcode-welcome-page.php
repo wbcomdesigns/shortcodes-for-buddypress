@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="wbcom-welcome-main-wrapper">
 		<div class="wbcom-welcome-head">
 				<p class="wbcom-welcome-description">
-				<?php esc_html_e( 'BuddyPress Shortcode plugin allows you to embed BuddyPress Activities, BuddyPress Members and Groups in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?>
+				<?php esc_html_e( 'Shortcodes & Elementor Widgets For BuddyPress plugin allows you to embed BuddyPress Activities, BuddyPress Members and Groups in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?>
 				</p>
 		</div><!-- .wbcom-welcome-head -->
 

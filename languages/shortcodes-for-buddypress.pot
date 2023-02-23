@@ -116,12 +116,12 @@ msgid "General"
 msgstr ""
 
 #: admin/class-shortcodes-for-buddypress-admin.php:124
-msgid "Buddypress Shortcode"
+msgid "Buddypress Shortcodes"
 msgstr ""
 
 #: admin/class-shortcodes-for-buddypress-admin.php:147
 #: admin/wbcom/templates/wbcom-license-page.php:12
-msgid "BuddyPress Shortcode"
+msgid "BuddyPress Shortcodes"
 msgstr ""
 
 #: admin/class-shortcodes-for-buddypress-admin.php:148
@@ -916,7 +916,7 @@ msgstr ""
 
 #: admin/settings/buddypress-shortcode-welcome-page.php:19
 msgid ""
-"BuddyPress Shortcode plugin allows you to embed BuddyPress Activities, "
+"Shortcodes & Elementor Widgets For BuddyPress plugin allows you to embed BuddyPress Activities, "
 "BuddyPress Members and Groups in posts/pages using shortcodes."
 msgstr ""
 
