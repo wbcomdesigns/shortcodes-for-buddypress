@@ -49,6 +49,13 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying groups listing based on given user id screenshot-4.png
 
 == Changelog ==
+= 2.6.2 =
+* Fix: (#153) Managed shortcode notifications order actions
+* Fix: (#151) Fixed error on adding shortcode
+* Fix: (#148) Fixed php error while activate free and pro plugins togather
+* Fix: (#153) fixed UI of [notifications-listing] shortcode border
+* Fix: (#152) Fixed buddyboss notification does not work
+
 = 2.6.1 =
 * Fix: (#147) Fixed members and group shortcode notice issue
 * Fix: (#150) Fixed pagination is not showing with perpage shortcode
