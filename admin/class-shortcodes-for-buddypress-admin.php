@@ -122,7 +122,7 @@ class Shortcodes_For_Buddypress_Admin {
 			add_menu_page( esc_html__( 'WB Plugins', 'shortcodes-for-buddypress' ), esc_html__( 'WB Plugins', 'shortcodes-for-buddypress' ), 'manage_options', 'wbcomplugins', array( $this, 'buddypress_shortcodes_admin_settings_page' ), 'dashicons-lightbulb', 59 );
 			add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'shortcodes-for-buddypress' ), esc_html__( 'General', 'shortcodes-for-buddypress' ), 'manage_options', 'wbcomplugins' );
 		}
-		add_submenu_page( 'wbcomplugins', esc_html__( 'Buddypress Shortcodes', 'shortcodes-for-buddypress' ), esc_html__( 'Buddypress Shortcode', 'shortcodes-for-buddypress' ), 'manage_options', $this->plugin_name, array( $this, 'buddypress_shortcodes_admin_settings_page' ) );
+		add_submenu_page( 'wbcomplugins', esc_html__( 'BP Shortcodes', 'shortcodes-for-buddypress' ), esc_html__( 'Buddypress Shortcode', 'shortcodes-for-buddypress' ), 'manage_options', $this->plugin_name, array( $this, 'buddypress_shortcodes_admin_settings_page' ) );
 	}
 
 	/**
