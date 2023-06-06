@@ -148,6 +148,21 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		if ( isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
+			if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
+				$current_component = 'activity';
+			}
+
+			if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'notification' ) ) ) {
+				$current_component = 'members';
+			}
+
+			if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
+				$current_component = 'groups';
+			}
+			
+			if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
+				$current_component = 'notifications';
+			}
 			$_elementor_controls_usage = get_post_meta( $post->ID, '_elementor_controls_usage', true );
 			if ( ! empty( $_elementor_controls_usage ) ) {
 				foreach ( $_elementor_controls_usage as $key => $value ) {
