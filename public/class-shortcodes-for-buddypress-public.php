@@ -140,6 +140,12 @@ class Shortcodes_For_Buddypress_Public {
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'post_update' ) {
 			$current_component = 'activity';
 		}
+		
+		if ( wp_get_referer() ) {
+			$url     	= wp_get_referer();
+			$post_id 	= url_to_postid( $url );
+			$post 		= get_post($post_id);
+		}
 
 		if ( isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
 			$_elementor_controls_usage = get_post_meta( $post->ID, '_elementor_controls_usage', true );
