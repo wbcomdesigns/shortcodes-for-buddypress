@@ -19,9 +19,6 @@ $members_ajax_querystring = static function ( $ajax_querystring, $object ) {
 
 add_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
 
-add_filter( 'bp_get_groups_pagination_count', '__return_zero' );
-add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
-
 $classes = array();
 $group_loop_classes = static function () use ( $classes ) {
 	$classes[] = 'item-list';
@@ -60,7 +57,8 @@ add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
 	<?php bp_nouveau_template_notices(); ?>
 
 	<div class="screen-content">
-		<div id="groups-dir-list" class="groups dir-list" data-bp-list="">
+		<input type="hidden" data-bp-filter="groups" value="<?php echo $groups_atts['bpsh_query']?>" />
+		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups">
 			<?php bp_get_template_part( 'groups/groups-loop' ); ?>
 		</div>
 
@@ -68,9 +66,3 @@ add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
 	</div>
 </div>
 <?php
-remove_filter( 'bp_current_component', $current_group_component );
-remove_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
-
-remove_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
-remove_filter( 'bp_get_groups_pagination_count', '__return_zero' );
-remove_filter( 'bp_get_groups_pagination_links', '__return_zero' );

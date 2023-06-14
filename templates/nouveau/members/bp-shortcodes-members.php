@@ -55,15 +55,14 @@ $member_loop_classes = static function () use ( $classes ) {
 };
 add_filter( 'bp_nouveau_get_loop_classes', $member_loop_classes );
 
-add_filter( 'bp_members_pagination_count', '__return_zero' );
-add_filter( 'bp_get_members_pagination_links', '__return_zero' );
 ?>
 
 <div id="buddypress" class="buddypress-wrap bp-dir-hori-nav <?php echo esc_attr( $members_atts['container_class'] ); ?>">
 	<?php bp_nouveau_before_members_directory_content(); ?>
 
 	<div class="screen-content">
-		<div id="members-dir-list" class="members dir-list" data-bp-list="">
+		<input type="hidden" data-bp-filter="members" value="<?php echo $members_atts['bpsh_query']?>" />
+		<div id="members-dir-list" class="members dir-list" data-bp-list="members">
 			<?php bp_get_template_part( 'members/members-loop' ); ?>
 		</div>
 
@@ -71,10 +70,3 @@ add_filter( 'bp_get_members_pagination_links', '__return_zero' );
 	</div>
 </div>
 <?php
-
-remove_filter( 'bp_current_component', $current_members_component );
-remove_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
-remove_filter( 'bp_nouveau_get_loop_classes', $member_loop_classes );
-
-remove_filter( 'bp_members_pagination_count', '__return_zero' );
-remove_filter( 'bp_get_members_pagination_links', '__return_zero' );
