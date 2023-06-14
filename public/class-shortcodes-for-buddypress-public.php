@@ -446,7 +446,7 @@ class Shortcodes_For_Buddypress_Public {
 					}
 					?>
 							<li class="load-more">
-								<a href="<?php bp_activity_load_more_link(); ?>"><?php echo esc_html_x( 'Load More', 'button', 'buddypress' ); ?></a>
+								<a href="<?php bp_activity_load_more_link(); ?>"><?php echo esc_html_x( 'Load More', 'button', 'shortcodes-for-buddypress' ); ?></a>
 							</li>
 						<?php if ( empty( $_POST['page'] ) || 1 === (int) $_POST['page'] ) : ?>
 						</ul>
@@ -833,7 +833,7 @@ class Shortcodes_For_Buddypress_Public {
 									'html'    => true,
 									'id'      => false,
 									// translators: %1$s is the name of the group.
-									'alt'     => sprintf( __( 'Group logo of %1$s', 'buddypress' ), $response_group_data['name'] ),
+									'alt'     => sprintf( __( 'Group logo of %1$s', 'shortcodes-for-buddypress' ), $response_group_data['name'] ),
 								),
 								'get_group_avatar'
 							);
