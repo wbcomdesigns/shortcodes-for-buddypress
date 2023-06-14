@@ -4,7 +4,7 @@ Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcodes, BuddyPress Widgets
 Requires at least: 5.0.0
 Tested up to: 6.0.1
-Stable tag: 2.6.1
+Stable tag: 2.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,9 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying groups listing based on given user id screenshot-4.png
 
 == Changelog ==
+= 2.6.3 =
+* Fix: (#161) Pagination missing
+
 = 2.6.2 =
 * Fix: (#153) Managed shortcode notifications order actions
 * Fix: (#151) Fixed error on adding shortcode
