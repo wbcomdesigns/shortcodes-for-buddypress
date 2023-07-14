@@ -126,7 +126,7 @@ class Shortcodes_For_Buddypress_Public {
 		global $post;
 
 		if ( $current_component == '' ) {
-			// $current_component = 'activity';
+			return;
 		}
 
 		if ( empty( $post ) && ! isset( $_REQUEST['object'] ) ) {
