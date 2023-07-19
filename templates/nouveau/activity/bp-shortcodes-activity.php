@@ -39,8 +39,7 @@ if ( $activity_atts['use_compat'] ) {
 
 	<?php endif; ?>
 	
-	<input type="hidden" id="activity_filters_objects" data-bp-filter="activity" value="<?php echo esc_attr( $activity_atts['bpsh_query'] ); ?>" />
-	<?php bp_nouveau_before_activity_directory_content(); ?>
+	<input type="hidden" id="activity_filters_objects" data-bp-filter="activity" value="<?php echo esc_attr( $activity_atts['bpsh_query'] ); ?>" />	
 
 	<div class="screen-content">
 		<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
