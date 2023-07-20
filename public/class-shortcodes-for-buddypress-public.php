@@ -141,10 +141,12 @@ class Shortcodes_For_Buddypress_Public {
 			$current_component = 'activity';
 		}
 		
-		if ( wp_get_referer() ) {
-			$url     	= wp_get_referer();
-			$post_id 	= url_to_postid( $url );
-			$post 		= get_post($post_id);
+		if ( $current_component == '' ) {
+			if ( wp_get_referer() ) {
+				$url     	= wp_get_referer();
+				$post_id 	= url_to_postid( $url );
+				$post 		= get_post($post_id);
+			}
 		}
 
 		if ( isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
