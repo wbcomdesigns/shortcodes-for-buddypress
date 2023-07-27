@@ -58,7 +58,7 @@ add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
 
 	<div class="screen-content">
 		<input type="hidden" data-bp-filter="groups" value="<?php echo $groups_atts['bpsh_query']?>" />
-		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups" data-ajax="false">
+		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups" data-ajax="true">
 			<?php bp_get_template_part( 'groups/groups-loop' ); ?>
 		</div>
 

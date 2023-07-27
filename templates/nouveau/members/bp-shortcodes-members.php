@@ -62,7 +62,7 @@ add_filter( 'bp_nouveau_get_loop_classes', $member_loop_classes );
 
 	<div class="screen-content">
 		<input type="hidden" data-bp-filter="members" value="<?php echo $members_atts['bpsh_query']?>" />
-		<div id="members-dir-list" class="members dir-list" data-bp-list="members" data-ajax="false">
+		<div id="members-dir-list" class="members dir-list" data-bp-list="members" data-ajax="true">
 			<?php bp_get_template_part( 'members/members-loop' ); ?>
 		</div>
 
