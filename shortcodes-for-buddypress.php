@@ -279,3 +279,27 @@ function iterate_comments( $comments ) {
 	}
 	return $childrens;
 }
+
+function shortcodes_for_buddypress_get_groups_loop_classes($classes, $component) {
+	
+	if ( $component == 'groups' ) {
+		$customizer_option = sprintf( '%s_layout', $component );
+		$layout_prefs      = bp_nouveau_get_temporary_setting(
+			$customizer_option,
+			bp_nouveau_get_appearance_settings( $customizer_option )
+		);
+
+		if ( $layout_prefs && (int) $layout_prefs > 1 ) {
+			$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
+
+			if ( isset( $grid_classes[ $layout_prefs ] ) ) {
+				$classes = array_merge( $classes, array(
+					'grid',
+					$grid_classes[ $layout_prefs ],
+				) );
+			}
+		}
+	}
+	return $classes;
+}
+add_filter( 'bp_nouveau_get_loop_classes', 'shortcodes_for_buddypress_get_groups_loop_classes', 10, 2 );
