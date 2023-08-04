@@ -289,7 +289,7 @@ function shortcodes_for_buddypress_get_groups_loop_classes($classes, $component)
 			bp_nouveau_get_appearance_settings( $customizer_option )
 		);
 
-		if ( $layout_prefs && (int) $layout_prefs > 1 ) {
+		if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists('bp_nouveau_customizer_grid_choices') ) {
 			$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
 
 			if ( isset( $grid_classes[ $layout_prefs ] ) ) {
