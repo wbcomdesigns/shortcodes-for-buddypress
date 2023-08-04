@@ -282,6 +282,8 @@ function iterate_comments( $comments ) {
 
 function shortcodes_for_buddypress_get_groups_loop_classes($classes, $component) {
 	
+	$bp_nouveau = bp_nouveau();
+	
 	if ( $component == 'groups' ) {
 		$customizer_option = sprintf( '%s_layout', $component );
 		$layout_prefs      = bp_nouveau_get_temporary_setting(
@@ -298,6 +300,12 @@ function shortcodes_for_buddypress_get_groups_loop_classes($classes, $component)
 					$grid_classes[ $layout_prefs ],
 				) );
 			}
+			
+			if ( ! isset( $bp_nouveau->{$component} ) ) {
+				$bp_nouveau->{$component} = new stdClass;
+			}
+			// Set the global for a later use.
+			$bp_nouveau->{$component}->loop_layout = $layout_prefs;
 		}
 	}
 	return $classes;

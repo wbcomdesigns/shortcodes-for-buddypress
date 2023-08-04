@@ -21,22 +21,36 @@ add_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
 
 $classes = array();
 $group_loop_classes = static function () use ( $classes ) {
+	$bp_nouveau = bp_nouveau();
 	$classes[] = 'item-list';
 	$classes[] = 'groups-list';
 	$classes[] = 'bp-list';
+	$component = sanitize_key( bp_current_component() );
 	$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
 	$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : '3';
 
 	if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-		$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
-		if ( isset( $grid_classes[ $groups_layout ] ) ) {
-			$classes = array_merge(
-				$classes,
-				array(
+		$customizer_option = sprintf( '%s_layout', $component );
+		$layout_prefs      = bp_nouveau_get_temporary_setting(
+			$customizer_option,
+			bp_nouveau_get_appearance_settings( $customizer_option )
+		);
+
+		if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists('bp_nouveau_customizer_grid_choices') ) {
+			$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
+
+			if ( isset( $grid_classes[ $layout_prefs ] ) ) {
+				$classes = array_merge( $classes, array(
 					'grid',
-					$grid_classes[ $groups_layout ],
-				)
-			);
+					$grid_classes[ $layout_prefs ],
+				) );
+			}
+			
+			if ( ! isset( $bp_nouveau->{$component} ) ) {
+				$bp_nouveau->{$component} = new stdClass;
+			}
+			// Set the global for a later use.
+			$bp_nouveau->{$component}->loop_layout = $layout_prefs;
 		}
 	} else {
 		$classes = array_merge(
@@ -46,7 +60,8 @@ $group_loop_classes = static function () use ( $classes ) {
 				'three',
 			)
 		);
-	}
+	}	
+
 	return $classes;
 };
 add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
