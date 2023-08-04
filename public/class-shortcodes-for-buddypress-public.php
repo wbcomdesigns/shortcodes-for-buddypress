@@ -124,7 +124,7 @@ class Shortcodes_For_Buddypress_Public {
 
 	public function buddypress_shortcodes_bp_current_component( $current_component ) {
 		global $post;
-		
+		$temp_post = $post;
 		if ( empty( $post ) && isset( $_REQUEST['object'] ) && isset( $_REQUEST['action'] ) ) {
 			return $_REQUEST['object'];
 		}
@@ -202,7 +202,7 @@ class Shortcodes_For_Buddypress_Public {
 				exit();
 			}
 		}
-		
+		$post = $temp_post;
 		return $current_component;
 	}
 
