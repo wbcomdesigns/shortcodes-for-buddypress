@@ -57,7 +57,7 @@ add_filter( 'bp_nouveau_get_loop_classes', $member_loop_classes );
 
 ?>
 
-<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav <?php echo esc_attr( $members_atts['container_class'] ); ?>">
+<div id="buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ). ' '. esc_attr( $members_atts['container_class'] ); ?>">
 	<?php bp_nouveau_before_members_directory_content(); ?>
 
 	<div class="screen-content">

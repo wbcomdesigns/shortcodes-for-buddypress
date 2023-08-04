@@ -52,7 +52,7 @@ $group_loop_classes = static function () use ( $classes ) {
 add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
 ?>
 
-<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav <?php echo esc_attr( $groups_atts['container_class'] ); ?>">
+<div id="buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ). ' '. esc_attr( $groups_atts['container_class'] ); ?>">
 	<?php bp_nouveau_before_groups_directory_content(); ?>
 	<?php bp_nouveau_template_notices(); ?>
 
