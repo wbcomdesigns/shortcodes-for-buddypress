@@ -56,6 +56,8 @@ class Shortcodes_For_Buddypress {
 	 * @var      string    $version    The current version of the plugin.
 	 */
 	protected $version;
+	
+	protected $plugin_basename;
 
 	/**
 	 * Define the core functionality of the plugin.
