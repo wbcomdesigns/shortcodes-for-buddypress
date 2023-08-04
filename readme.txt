@@ -3,8 +3,8 @@ Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcodes, BuddyPress Widgets
 Requires at least: 5.0.0
-Tested up to: 6.0.1
-Stable tag: 2.6.3
+Tested up to: 6.3.0
+Stable tag: 2.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,20 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying groups listing based on given user id screenshot-4.png
 
 == Changelog ==
+
+= 2.6.4 =
+* Fix: Group Shortcode group content length issue
+* Fix: (#172) Pagination issue in notification
+* Fix: (#168) Activity UI issue
+* Fix: (#172) Issue with php 8.2
+* Fix: (#170) Issue with BuddyBoss
+* Fix: (#169) Page title issue
+* Fix: (#167) Pagination is missing in the per_page parameter
+* Fix: (#161) Group Listing issue
+* Fix: (#162) Page title issue with Buddyx
+* Fix: (#106) Shortcode activity page has two stories options
+* Update: Buddypress class for the default theme
+
 = 2.6.3 =
 * Fix: (#161) Pagination missing
 
