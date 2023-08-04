@@ -11,8 +11,7 @@ $args    = array(
 	'user_id'    => $user_id,
 	'is_new'     => true,
 	'page'       => $notifications_atts['page'],
-	'per_page'   => $notifications_atts['per_page'],
-	'max'        => $notifications_atts['per_page'],
+	'per_page'   => $notifications_atts['per_page'],	
 	'sort_order' => $notifications_atts['order'],
 );
 add_filter(
@@ -21,10 +20,16 @@ add_filter(
 		return 'unread';
 	}
 );
+
+$current_component = static function () {
+	return 'notifications';
+};
+
+add_filter( 'bp_current_component', $current_component );
 ?>
-<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav <?php echo esc_attr( $notifications_atts['container_class'] ); ?>">
+<div id="buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ). ' '. esc_attr( $notifications_atts['container_class'] ); ?>">
 	<input type="hidden" data-bp-filter="notifications" value="<?php echo esc_attr( $notifications_atts['bpsh_query'] ); ?>" />		
-	<?php
+	<?php	
 	if ( bp_has_notifications( $args ) ) :
 
 		bp_nouveau_pagination( 'top' );

@@ -38,6 +38,9 @@ class Shortcodes_For_Buddypress_Admin {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
+	
+	
+	private $plugin_settings_tabs;
 
 	/**
 	 * Initialize the class and set its properties.

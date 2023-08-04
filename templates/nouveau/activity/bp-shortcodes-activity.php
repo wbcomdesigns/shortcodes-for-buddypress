@@ -28,7 +28,7 @@ add_filter( 'bp_current_component', $current_activity_component );
 do_action( 'bp_before_directory_activity' );
 
 if ( $activity_atts['use_compat'] ) {
-	echo '<div id="buddypress" class="bp-activity-shortcode buddypress-wrap bp-dir-hori-nav ' . esc_attr( $activity_atts['container_class'] ) . '">';
+	echo '<div id="buddypress" class="bp-dir-hori-nav ' . esc_attr( bp_nouveau_get_container_classes() ). ' '. esc_attr( $activity_atts['container_class'] ) . '">';
 	if ( bp_has_activities( $activity_atts ) ) {
 }
 	bp_nouveau_before_activity_directory_content(); ?>
