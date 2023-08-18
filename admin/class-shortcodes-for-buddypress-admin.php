@@ -149,7 +149,9 @@ class Shortcodes_For_Buddypress_Admin {
 				<div class="wbcom_admin_header-wrapper">
 					<div id="wb_admin_plugin_name">
 					<?php esc_html_e( 'BuddyPress Shortcodes', 'shortcodes-for-buddypress' ); ?>
-						<span><?php printf( __( 'Version %s', 'shortcodes-for-buddypress' ), SHORTCODES_FOR_BUDDYPRESS_VERSION ); ?></span>
+						<span><?php 
+						/* translators: %s: */
+						printf( esc_html__( 'Version %s', 'shortcodes-for-buddypress' ), esc_attr( SHORTCODES_FOR_BUDDYPRESS_VERSION ) ); ?></span>
 					</div>
 				<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 				</div>

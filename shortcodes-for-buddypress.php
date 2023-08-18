@@ -37,8 +37,11 @@ if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', app
 	add_action(
 		'admin_notices',
 		function() {
+			$bp_shortcode       = esc_html__( 'Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress', 'shortcodes-for-buddypress' );
+			$bp_shortcode_pro   = esc_html__( 'Wbcom Designs - Shortcode For BuddyPress Pro', 'shortcodes-for-buddypress' );
 			echo '<div class="error"><p>';
-			echo sprintf( __( '<strong>%1$s</strong> and <strong>%2$s</strong> will not activate togather. Please deactivate %1$s', 'shortcodes-for-buddypress' ), __( 'Wbcom Designs - Shortcode For BuddyPress Pro', 'shortcodes-for-buddypress' ), __( 'Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress', 'shortcodes-for-buddypress' ) );
+			/* translators: %s: */
+			echo sprintf( esc_html__( '%1$s and %2$s will not activate togather. Please deactivate %1$s', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bp_shortcode_pro ) . '</strong>', '<strong>' . esc_html( $bp_shortcode ) . '</strong>' );
 			echo '</p></div>';
 		}
 	);
@@ -136,7 +139,7 @@ function shortcodes_for_buddypress_plugin_admin_notice() {
 
 		echo '<div class="error"><p>'
 		. sprintf( esc_html( __( '%1$s is ineffective as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ) ), '<strong>' . esc_html( $bmpro_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' )
-		. '</p></div>';
+		. '</p></div>'; 
 	}
 }
 
@@ -149,7 +152,8 @@ if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 			// deactivate_plugins('buddypress-polls/buddypress-polls.php');
 			add_action( 'admin_notices', 'shortcodes_for_buddypress_required_plugin_admin_notice' );
-			unset( $_GET['activate'] );
+			$activate = filter_input( INPUT_GET, 'activate' );
+			unset( $activate );
 		}
 	}
 
@@ -185,10 +189,12 @@ if ( ! function_exists( 'shortcodes_for_buddypress_required_plugin_admin_notice'
 		$bpquotes_plugin = esc_html__( ' Shortcode For BuddyPress', 'shortcodes-for-buddypress' );
 		$bp_plugin       = esc_html__( 'BuddyPress', 'shortcodes-for-buddypress' );
 		echo '<div class="error"><p>';
+		/* translators: %s: */
 		echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bpquotes_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
 		echo '</p></div>';
-		if ( isset( $_GET['activate'] ) ) {
-			unset( $_GET['activate'] );
+		if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
+			$activate = filter_input( INPUT_GET, 'activate' );
+			unset( $activate );
 		}
 	}
 }
@@ -280,10 +286,10 @@ function iterate_comments( $comments ) {
 	return $childrens;
 }
 
-function shortcodes_for_buddypress_get_groups_loop_classes($classes, $component) {
-	
+function shortcodes_for_buddypress_get_groups_loop_class( $classes, $component ) {
+
 	$bp_nouveau = bp_nouveau();
-	
+
 	if ( $component == 'groups' ) {
 		$customizer_option = sprintf( '%s_layout', $component );
 		$layout_prefs      = bp_nouveau_get_temporary_setting(
@@ -291,18 +297,21 @@ function shortcodes_for_buddypress_get_groups_loop_classes($classes, $component)
 			bp_nouveau_get_appearance_settings( $customizer_option )
 		);
 
-		if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists('bp_nouveau_customizer_grid_choices') ) {
+		if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
 			$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
 
 			if ( isset( $grid_classes[ $layout_prefs ] ) ) {
-				$classes = array_merge( $classes, array(
-					'grid',
-					$grid_classes[ $layout_prefs ],
-				) );
+				$classes = array_merge(
+					$classes,
+					array(
+						'grid',
+						$grid_classes[ $layout_prefs ],
+					)
+				);
 			}
-			
+
 			if ( ! isset( $bp_nouveau->{$component} ) ) {
-				$bp_nouveau->{$component} = new stdClass;
+				$bp_nouveau->{$component} = new stdClass();
 			}
 			// Set the global for a later use.
 			$bp_nouveau->{$component}->loop_layout = $layout_prefs;
@@ -310,4 +319,4 @@ function shortcodes_for_buddypress_get_groups_loop_classes($classes, $component)
 	}
 	return $classes;
 }
-add_filter( 'bp_nouveau_get_loop_classes', 'shortcodes_for_buddypress_get_groups_loop_classes', 10, 2 );
+add_filter( 'bp_nouveau_get_loop_classes', 'shortcodes_for_buddypress_get_groups_loop_class', 10, 2 );
