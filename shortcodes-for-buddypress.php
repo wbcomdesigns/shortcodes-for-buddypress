@@ -314,7 +314,9 @@ function shortcodes_for_buddypress_get_groups_loop_class( $classes, $component )
 				$bp_nouveau->{$component} = new stdClass();
 			}
 			// Set the global for a later use.
-			$bp_nouveau->{$component}->loop_layout = $layout_prefs;
+			if ( property_exists( $bp_nouveau, 'loop_layout' ) ) {
+				$bp_nouveau->{$component}->loop_layout = $layout_prefs;
+			}
 		}
 	}
 	return $classes;
