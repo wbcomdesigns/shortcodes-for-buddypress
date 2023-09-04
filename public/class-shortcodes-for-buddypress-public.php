@@ -205,6 +205,7 @@ class Shortcodes_For_Buddypress_Public {
 			}
 		}
 		$post = $temp_post;
+		wp_reset_postdata();
 		return $current_component;
 	}
 
