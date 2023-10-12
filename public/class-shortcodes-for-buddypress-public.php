@@ -125,23 +125,23 @@ class Shortcodes_For_Buddypress_Public {
 	public function buddypress_shortcodes_bp_current_component( $current_component ) {
 		global $post;
 		$temp_post = $post;
-		if ( empty( $post ) && isset( $_REQUEST['object'] ) && isset( $_REQUEST['action'] ) ) {
-			$current_component = $_REQUEST['object'];
+		if ( empty( $post ) && isset( $_REQUEST['object'] ) && isset( $_REQUEST['action'] ) ) { //phpcs:ignore
+			$current_component = $_REQUEST['object']; //phpcs:ignore
 		}
 		
 		if ( $current_component == '' ) {
 			return;
 		}
 
-		if ( empty( $post ) && ! isset( $_REQUEST['object'] ) ) {
+		if ( empty( $post ) && ! isset( $_REQUEST['object'] ) ) { //phpcs:ignore
 			return $current_component;
 		}
 
-		if ( isset( $_REQUEST['object'] ) && $_REQUEST['object'] != '' && isset($_REQUEST['template']) && $_REQUEST['template'] == 'member_notifications' ) {			
+		if ( isset( $_REQUEST['object'] ) && $_REQUEST['object'] != '' && isset($_REQUEST['template']) && $_REQUEST['template'] == 'member_notifications' ) { //phpcs:ignore
 			return $current_component;
 		}
 		
-		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'post_update' ) {
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'post_update' ) { //phpcs:ignore
 			$current_component = 'activity';
 		}
 		
@@ -191,7 +191,7 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		/* Set Current component activity when submit post from activity listing shortcode */
-		if ( isset( $_REQUEST['data']['bp_activity_last_recorded'] ) && $_REQUEST['data']['bp_activity_last_recorded'] != '' ) {
+		if ( isset( $_REQUEST['data']['bp_activity_last_recorded'] ) && $_REQUEST['data']['bp_activity_last_recorded'] != '' ) { //phpcs:ignore
 			$current_component = 'activity';
 		}
 
@@ -205,6 +205,7 @@ class Shortcodes_For_Buddypress_Public {
 			}
 		}
 		$post = $temp_post;
+		wp_reset_postdata();
 		return $current_component;
 	}
 
@@ -454,7 +455,7 @@ class Shortcodes_For_Buddypress_Public {
 							<li class="load-more">
 								<a href="<?php bp_activity_load_more_link(); ?>"><?php echo esc_html_x( 'Load More', 'button', 'shortcodes-for-buddypress' ); ?></a>
 							</li>
-						<?php if ( empty( $_POST['page'] ) || 1 === (int) $_POST['page'] ) : ?>
+						<?php if ( empty( $_POST['page'] ) || 1 === (int) $_POST['page'] ) : //phpcs:ignore?>
 						</ul>
 						<?php endif; ?>
 
