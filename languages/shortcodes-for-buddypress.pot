@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-12 09:27:40+00:00\n"
+"POT-Creation-Date: 2023-10-12 09:29:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -111,7 +111,7 @@ msgid "WB Plugins"
 msgstr ""
 
 #: admin/class-shortcodes-for-buddypress-admin.php:126
-#: admin/class-shortcodes-for-buddypress-admin.php:195
+#: admin/class-shortcodes-for-buddypress-admin.php:197
 msgid "General"
 msgstr ""
 
@@ -123,31 +123,32 @@ msgstr ""
 msgid "BuddyPress Shortcodes"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:152
-#: admin/wbcom/templates/wbcom-license-page.php:13
+#: admin/class-shortcodes-for-buddypress-admin.php:154
+#: admin/wbcom/templates/wbcom-license-page.php:15
+#. translators: %s:
 msgid "Version %s"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:192
+#: admin/class-shortcodes-for-buddypress-admin.php:194
 msgid "Welcome"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:198
+#: admin/class-shortcodes-for-buddypress-admin.php:200
 #: admin/settings/buddypress-shortcode-general-settings.php:27
 msgid "Activities"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:201
+#: admin/class-shortcodes-for-buddypress-admin.php:203
 msgid "Members"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:204
+#: admin/class-shortcodes-for-buddypress-admin.php:206
 #: admin/settings/buddypress-shortcode-general-settings.php:63
 #: buddypress-groups-element.php:15
 msgid "Groups"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:207
+#: admin/class-shortcodes-for-buddypress-admin.php:209
 #: admin/settings/buddypress-shortcode-general-settings.php:81
 msgid "User Notification"
 msgstr ""
@@ -980,32 +981,32 @@ msgstr ""
 msgid "Shortcodes & Elementor Widgets For BuddyPress"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-license-page.php:18
+#: admin/wbcom/templates/wbcom-license-page.php:20
 msgid "Plugin License"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:24
-#: admin/wbcom/templates/wbcom-license-page.php:36
-msgid "Product"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:25
-#: admin/wbcom/templates/wbcom-license-page.php:37
-msgid "Version"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-license-page.php:26
 #: admin/wbcom/templates/wbcom-license-page.php:38
-msgid "Key"
+msgid "Product"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-license-page.php:27
 #: admin/wbcom/templates/wbcom-license-page.php:39
-msgid "Status"
+msgid "Version"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-license-page.php:28
 #: admin/wbcom/templates/wbcom-license-page.php:40
+msgid "Key"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:29
+#: admin/wbcom/templates/wbcom-license-page.php:41
+msgid "Status"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:30
+#: admin/wbcom/templates/wbcom-license-page.php:42
 msgid "Action"
 msgstr ""
 
@@ -1761,79 +1762,79 @@ msgstr ""
 msgid "Border Color"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:842
+#: public/class-shortcodes-for-buddypress-public.php:843
 #. translators: %1$s is the name of the group.
 msgid "Group logo of %1$s"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1020
+#: public/class-shortcodes-for-buddypress-public.php:1021
 #. translators: %s: member name
 msgid "Profile photo of %s"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1068
+#: public/class-shortcodes-for-buddypress-public.php:1069
 msgid "Post in: Profile"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1082
+#: public/class-shortcodes-for-buddypress-public.php:1083
 msgid "Post in: Group"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1083
+#: public/class-shortcodes-for-buddypress-public.php:1084
 msgid "Start typing the group name..."
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1099
+#: public/class-shortcodes-for-buddypress-public.php:1100
 msgid "What's new, %s?"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1100
+#: public/class-shortcodes-for-buddypress-public.php:1101
 msgid "Post what's new"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1101
+#: public/class-shortcodes-for-buddypress-public.php:1102
 msgid "Post in"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1102
+#: public/class-shortcodes-for-buddypress-public.php:1103
 msgid "Post Update"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1103
+#: public/class-shortcodes-for-buddypress-public.php:1104
 msgid "Cancel"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1142
+#: public/class-shortcodes-for-buddypress-public.php:1143
 msgid "Go PRO"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:41
-msgid ""
-"<strong>%1$s</strong> and <strong>%2$s</strong> will not activate togather. "
-"Please deactivate %1$s"
+#: shortcodes-for-buddypress.php:40
+msgid "Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress"
 msgstr ""
 
 #: shortcodes-for-buddypress.php:41
 msgid "Wbcom Designs - Shortcode For BuddyPress Pro"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:41
-msgid "Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress"
+#: shortcodes-for-buddypress.php:44
+#. translators: %s:
+msgid "%1$s and %2$s will not activate togather. Please deactivate %1$s"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:138
+#: shortcodes-for-buddypress.php:141
 msgid "%1$s is ineffective as it requires %2$s to be installed and active."
 msgstr ""
 
-#: shortcodes-for-buddypress.php:185
+#: shortcodes-for-buddypress.php:189
 msgid " Shortcode For BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:186
+#: shortcodes-for-buddypress.php:190
 msgid "BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:188
+#: shortcodes-for-buddypress.php:193
+#. translators: %s:
 msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
 msgstr ""
 
@@ -1872,7 +1873,7 @@ msgstr ""
 msgid "Select this notification"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:455
+#: public/class-shortcodes-for-buddypress-public.php:456
 msgctxt "button"
 msgid "Load More"
 msgstr ""
