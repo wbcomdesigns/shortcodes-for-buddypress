@@ -3,8 +3,8 @@ Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcodes, BuddyPress Widgets
 Requires at least: 5.0.0
-Tested up to: 6.3.0
-Stable tag: 2.6.4
+Tested up to: 6.3.1
+Stable tag: 2.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,10 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying groups listing based on given user id screenshot-4.png
 
 == Changelog ==
+= 2.6.5 =
+* Fix: (#175) Issue with WPBakery
+* Fix: Deprecated issue
+* Fix: PHPCS fixes
 
 = 2.6.4 =
 * Fix: Group Shortcode group content length issue
