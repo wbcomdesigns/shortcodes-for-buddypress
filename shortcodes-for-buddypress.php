@@ -37,8 +37,8 @@ if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', app
 	add_action(
 		'admin_notices',
 		function() {
-			$bp_shortcode       = esc_html__( 'Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress', 'shortcodes-for-buddypress' );
-			$bp_shortcode_pro   = esc_html__( 'Wbcom Designs - Shortcode For BuddyPress Pro', 'shortcodes-for-buddypress' );
+			$bp_shortcode     = esc_html__( 'Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress', 'shortcodes-for-buddypress' );
+			$bp_shortcode_pro = esc_html__( 'Wbcom Designs - Shortcode For BuddyPress Pro', 'shortcodes-for-buddypress' );
 			echo '<div class="error"><p>';
 			/* translators: %s: */
 			echo sprintf( esc_html__( '%1$s and %2$s will not activate togather. Please deactivate %1$s', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bp_shortcode_pro ) . '</strong>', '<strong>' . esc_html( $bp_shortcode ) . '</strong>' );
@@ -97,6 +97,9 @@ register_deactivation_hook( __FILE__, 'deactivate_shortcodes_for_buddypress' );
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress.php';
 
+require_once __DIR__ . '/vendor/autoload.php';
+HardG\BuddyPress120URLPolyfills\Loader::init();
+
 /**
  * Begins execution of the plugin.
  *
@@ -139,7 +142,7 @@ function shortcodes_for_buddypress_plugin_admin_notice() {
 
 		echo '<div class="error"><p>'
 		. sprintf( esc_html( __( '%1$s is ineffective as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ) ), '<strong>' . esc_html( $bmpro_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' )
-		. '</p></div>'; 
+		. '</p></div>';
 	}
 }
 
