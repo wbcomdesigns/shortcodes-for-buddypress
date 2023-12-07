@@ -122,8 +122,12 @@ class Shortcodes_For_Buddypress_Public {
 		return $current_component;
 	}
 
-	public function buddypress_shortcodes_bp_current_component( $current_component ) {
+	public function buddypress_shortcodes_bp_current_component( $current_component ) {		
 		global $post;
+		if ( ( function_exists( 'buddypress' ) && version_compare( buddypress()->version, '12.0', '>=' ) ) || isset ( $post ) || ( isset( $post->post_type ) && 'buddypress' == $post->post_type ) ){ 
+			return $current_component;
+		}
+
 		$temp_post = $post;
 		if ( empty( $post ) && isset( $_REQUEST['object'] ) && isset( $_REQUEST['action'] ) ) { //phpcs:ignore
 			$current_component = $_REQUEST['object']; //phpcs:ignore
