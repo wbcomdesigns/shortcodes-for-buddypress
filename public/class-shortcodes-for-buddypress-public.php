@@ -122,9 +122,9 @@ class Shortcodes_For_Buddypress_Public {
 		return $current_component;
 	}
 
-	public function buddypress_shortcodes_bp_current_component( $current_component ) {		
+	public function buddypress_shortcodes_bp_current_component( $current_component ) {
 		global $post;
-		if ( ( function_exists( 'buddypress' ) && version_compare( buddypress()->version, '12.0', '>=' ) ) || isset ( $post ) || ( isset( $post->post_type ) && 'buddypress' == $post->post_type ) ){ 
+		if ( ( function_exists( 'buddypress' ) && version_compare( buddypress()->version, '12.0', '>=' ) ) || isset( $post ) || ( isset( $post->post_type ) && 'buddypress' == $post->post_type ) ) {
 			return $current_component;
 		}
 
@@ -132,7 +132,7 @@ class Shortcodes_For_Buddypress_Public {
 		if ( empty( $post ) && isset( $_REQUEST['object'] ) && isset( $_REQUEST['action'] ) ) { //phpcs:ignore
 			$current_component = $_REQUEST['object']; //phpcs:ignore
 		}
-		
+
 		if ( $current_component == '' ) {
 			return;
 		}
@@ -144,25 +144,25 @@ class Shortcodes_For_Buddypress_Public {
 		if ( isset( $_REQUEST['object'] ) && $_REQUEST['object'] != '' && isset($_REQUEST['template']) && $_REQUEST['template'] == 'member_notifications' ) { //phpcs:ignore
 			return $current_component;
 		}
-		
+
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'post_update' ) { //phpcs:ignore
 			$current_component = 'activity';
 		}
 
 		if ( isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
-			if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
+			if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 				$current_component = 'activity';
 			}
 
-			if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'notification' ) ) ) {
+			if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'notification' ) ) ) {
 				$current_component = 'members';
 			}
 
-			if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
+			if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
 				$current_component = 'groups';
 			}
-			
-			if( isset($post->post_content) && ( has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
+
+			if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
 				$current_component = 'notifications';
 			}
 			$_elementor_controls_usage = get_post_meta( $post->ID, '_elementor_controls_usage', true );
@@ -226,29 +226,6 @@ class Shortcodes_For_Buddypress_Public {
 		return $object;
 	}
 
-	/**
-	 * Include EDD sell services template file.
-	 *
-	 * @since    1.0.0
-	 */
-	public function buddypress_shortcodes_template( $file_name ) {
-
-		$template_name = 'shortcodes-for-buddypress/' . $file_name;
-
-		if ( file_exists( STYLESHEETPATH . '/' . $template_name ) ) {
-
-			include STYLESHEETPATH . '/' . $template_name;
-
-		} elseif ( file_exists( TEMPLATEPATH . '/' . $template_name ) ) {
-
-			include TEMPLATEPATH . '/' . $template_name;
-
-		} else {
-
-			include SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR . 'templates/' . $file_name;
-		}
-	}
-
 
 	/**
 	 * Call BuddyPress Activity Listing shortcode
@@ -263,7 +240,7 @@ class Shortcodes_For_Buddypress_Public {
 		}
 		$default_atts = array(
 			'title'            => '', // title of the section
-			'pagination'       => 1,// show or not.
+			'pagination'       => 1, // show or not.
 			'load_more'        => 0,
 			'display_comments' => 'threaded',
 			'include'          => false, // pass an activity_id or string of IDs comma-separated
@@ -309,10 +286,10 @@ class Shortcodes_For_Buddypress_Public {
 				<?php
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
-				$this->buddypress_shortcodes_template( 'legacy/activity/bp-shortcodes-activity.php' );
+				buddypress_shortcodes_template( 'legacy/activity/bp-shortcodes-activity.php' );
 			} else {
 				wp_enqueue_script( 'bp-nouveau-activity' );
-				$this->buddypress_shortcodes_template( 'nouveau/activity/bp-shortcodes-activity.php' );
+				buddypress_shortcodes_template( 'nouveau/activity/bp-shortcodes-activity.php' );
 			}
 		}
 
@@ -559,9 +536,9 @@ class Shortcodes_For_Buddypress_Public {
 				<?php
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
-				$this->buddypress_shortcodes_template( 'legacy/members/bp-shortcodes-members.php' );
+				buddypress_shortcodes_template( 'legacy/members/bp-shortcodes-members.php' );
 			} else {
-				$this->buddypress_shortcodes_template( 'nouveau/members/bp-shortcodes-members.php' );
+				buddypress_shortcodes_template( 'nouveau/members/bp-shortcodes-members.php' );
 			}
 		}
 
@@ -751,9 +728,9 @@ class Shortcodes_For_Buddypress_Public {
 			}
 
 			if ( $_bp_theme_package == 'legacy' ) {
-				$this->buddypress_shortcodes_template( 'legacy/groups/bp-shortcodes-groups.php' );
+				buddypress_shortcodes_template( 'legacy/groups/bp-shortcodes-groups.php' );
 			} else {
-				$this->buddypress_shortcodes_template( 'nouveau/groups/bp-shortcodes-groups.php' );
+				buddypress_shortcodes_template( 'nouveau/groups/bp-shortcodes-groups.php' );
 			}
 		}
 		return ob_get_clean();
@@ -947,9 +924,9 @@ class Shortcodes_For_Buddypress_Public {
 				<?php
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
-				$this->buddypress_shortcodes_template( 'legacy/notifications/notifications-loop.php' );
+				buddypress_shortcodes_template( 'legacy/notifications/notifications-loop.php' );
 			} else {
-				$this->buddypress_shortcodes_template( 'nouveau/notifications/notifications-loop.php' );
+				buddypress_shortcodes_template( 'nouveau/notifications/notifications-loop.php' );
 			}
 		} else {
 

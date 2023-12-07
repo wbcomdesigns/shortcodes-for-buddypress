@@ -96,6 +96,7 @@ register_deactivation_hook( __FILE__, 'deactivate_shortcodes_for_buddypress' );
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress.php';
+require plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 
 require_once __DIR__ . '/vendor/autoload.php';
 HardG\BuddyPress120URLPolyfills\Loader::init();
@@ -325,3 +326,4 @@ function shortcodes_for_buddypress_get_groups_loop_class( $classes, $component )
 	return $classes;
 }
 add_filter( 'bp_nouveau_get_loop_classes', 'shortcodes_for_buddypress_get_groups_loop_class', 10, 2 );
+

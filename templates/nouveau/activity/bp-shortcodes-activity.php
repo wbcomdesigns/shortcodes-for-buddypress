@@ -28,9 +28,9 @@ add_filter( 'bp_current_component', $current_activity_component );
 do_action( 'bp_before_directory_activity' );
 
 if ( $activity_atts['use_compat'] ) {
-	echo '<div id="buddypress" class="bp-dir-hori-nav ' . esc_attr( bp_nouveau_get_container_classes() ). ' '. esc_attr( $activity_atts['container_class'] ) . '">';
+	echo '<div id="buddypress" class="bp-dir-hori-nav ' . esc_attr( bp_nouveau_get_container_classes() ) . ' ' . esc_attr( $activity_atts['container_class'] ) . '">';
 	if ( bp_has_activities( $activity_atts ) ) {
-}
+	}
 	bp_nouveau_before_activity_directory_content(); ?>
 
 	<?php if ( $activity_atts['allow_posting'] == 'true' && is_user_logged_in() ) : ?>
@@ -46,25 +46,20 @@ if ( $activity_atts['use_compat'] ) {
 		<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
 		<ul class="activity-list item-list bp-list">
 			<?php //bp_get_template_part( 'activity/activity-loop' ); ?>
-			<?php while ( bp_activities() ) : bp_the_activity(); ?>
-						<?php bp_get_template_part( 'activity/entry' ); ?>
-					<?php endwhile; ?>
+			<?php
+			while ( bp_activities() ) :
+				bp_the_activity();
+				?>
+				<?php buddypress_shortcodes_template('nouveau/activity/buddypress-shortcode-entry.php'); ?>
+			<?php endwhile; ?>
 		</ul>
 	</div>
-		<?php if ( $activity_atts['pagination'] && ! $activity_atts['load_more'] ) : ?>
-                    <div class="pagination">
-                        <div class="pag-count"><?php bp_activity_pagination_count(); ?></div>
-                        <div class="pagination-links"><?php bp_activity_pagination_links(); ?></div>
-                    </div>
-				<?php endif; ?>
-		<?php bp_nouveau_after_activity_directory_content(); ?>
-
 	</div>
-<?php
+	<?php
 
-if ( $activity_atts['use_compat'] ) {
-	echo '</div>';
-}
+	if ( $activity_atts['use_compat'] ) {
+		echo '</div>';
+	}
 }
 
 remove_filter( 'bp_current_component', $current_activity_component );
