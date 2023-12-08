@@ -267,7 +267,9 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 				<div class="screen-content">
 					<div id="members-dir-list" class="members dir-list" data-bp-list="">
-						<?php bp_get_template_part( 'members/members-loop' ); ?>
+						<?php 
+							buddypress_shortcodes_template('nouveau/members/buddypress-shortcode-members-loop.php');
+						?>
 					</div>
 
 					<?php bp_nouveau_after_members_directory_content(); ?>

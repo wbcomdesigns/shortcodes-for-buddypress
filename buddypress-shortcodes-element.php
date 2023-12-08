@@ -446,7 +446,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 					<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
 
 					<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
-						<?php bp_get_template_part( 'activity/activity-loop' ); ?>
+						<?php buddypress_shortcodes_template('nouveau/activity/buddypress-shortcode-activity-loop.php'); ?>
 					</div>
 
 					<?php bp_nouveau_after_activity_directory_content(); ?>

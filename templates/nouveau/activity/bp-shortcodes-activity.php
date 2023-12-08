@@ -32,12 +32,6 @@ if ( $activity_atts['use_compat'] ) {
 	if ( bp_has_activities( $activity_atts ) ) {
 	}
 	bp_nouveau_before_activity_directory_content(); ?>
-
-	<?php if ( $activity_atts['allow_posting'] == 'true' && is_user_logged_in() ) : ?>
-
-		<?php bp_get_template_part( 'activity/post-form' ); ?>
-
-	<?php endif; ?>
 	
 	<input type="hidden" id="activity_filters_objects" data-bp-filter="activity" value="<?php echo esc_attr( $activity_atts['bpsh_query'] ); ?>" />	
 

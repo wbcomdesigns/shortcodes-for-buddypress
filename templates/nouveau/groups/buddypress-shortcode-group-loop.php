@@ -18,7 +18,7 @@ bp_nouveau_before_loop(); ?>
 
 		<?php while ( bp_groups() ) : bp_the_group(); ?>
 
-			<li class="bps-item-entry">
+			<li class="bps-item-entry" id="groud_id_<?php bp_group_id(); ?>">
 				<div class="bps-list-wrap">
 
 					<?php if ( ! bp_disable_group_avatar_uploads() ) : ?>

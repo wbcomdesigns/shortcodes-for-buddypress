@@ -11,7 +11,7 @@
 
 bp_nouveau_activity_hook( 'before', 'entry' ); ?>
 
-<li class="bps-activity-item">
+<li class="bps-activity-item" id="activity-<?php bp_activity_id(); ?>">
 
 	<div class="bps-activity-meta">
 
@@ -40,8 +40,6 @@ bp_nouveau_activity_hook( 'before', 'entry' ); ?>
 			</div>
 
 		<?php endif; ?>
-
-		<?php bp_nouveau_activity_entry_buttons(); ?>
 
 	</div>
 

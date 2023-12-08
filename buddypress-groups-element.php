@@ -313,7 +313,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 
 				<div class="screen-content">
 					<div id="groups-dir-list" class="groups dir-list" data-bp-list="">
-						<?php bp_get_template_part( 'groups/groups-loop' ); ?>
+						<?php buddypress_shortcodes_template('nouveau/groups/buddypress-shortcode-group-loop.php'); ?>
 					</div>
 
 					<?php bp_nouveau_after_groups_directory_content(); ?>

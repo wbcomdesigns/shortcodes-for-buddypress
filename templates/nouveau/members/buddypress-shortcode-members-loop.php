@@ -18,7 +18,7 @@ bp_nouveau_before_loop(); ?>
 
 	<?php while ( bp_members() ) : bp_the_member(); ?>
 
-		<li>
+		<li class="bps-item-entry" id="user_id_<?php bp_member_user_id(); ?>">
 			<div class="bps-list-wrap">
 
 				<div class="bps-item-avatar">
