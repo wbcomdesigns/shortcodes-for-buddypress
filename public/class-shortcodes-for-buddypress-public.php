@@ -517,7 +517,7 @@ class Shortcodes_For_Buddypress_Public {
 			'meta_value'          => false, // Only return users where the usermeta value matches. Requires meta_key.
 			'populate_extras'     => true,      // Fetch usermeta? Friend count, last active etc.
 			'container_class'     => 'members', // default container,
-			'loop-layouts' => !empty( $atts['loop-layouts'] ) ? $atts['loop-layouts'] : '',
+			'loop-layout' => !empty( $atts['loop-layout'] ) ? $atts['loop-layout'] : '',
 			'bpsh_query'          => $bpsh_query,
 		);
 

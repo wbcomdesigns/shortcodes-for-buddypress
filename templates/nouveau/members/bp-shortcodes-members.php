@@ -54,7 +54,7 @@ $member_loop_classes = static function () use ( $classes ) {
 	return $classes;
 };
 add_filter( 'bp_nouveau_get_loop_classes', $member_loop_classes );
-$loop_layout = !empty( $members_atts['loop-layouts'] ) ? $members_atts['loop-layouts'] : '';
+$loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layout'] : '';
 
 ?>
 

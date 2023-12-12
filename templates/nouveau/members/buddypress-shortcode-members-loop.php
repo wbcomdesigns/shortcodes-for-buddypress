@@ -21,13 +21,13 @@ bp_nouveau_before_loop(); ?>
 		<li class="bps-item-entry" id="user_id_<?php bp_member_user_id(); ?>">
 			<div class="bps-list-wrap">
 				<?php
-			$active_theme = wp_get_theme(); 
+				$active_theme = wp_get_theme(); 
 				if( 'BuddyX' == $active_theme || 'BuddyxPro' == $active_theme ){
 					buddyx_render_member_cover_image();
 				}elseif( 'REIGN' == $active_theme ){
 					reign_render_member_cover_image();
 				}
-				?>
+				?>	
 				<div class="bps-item-avatar">
 					<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar( bp_nouveau_avatar_args() ); ?></a>
 				</div>
