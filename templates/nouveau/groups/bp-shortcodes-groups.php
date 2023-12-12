@@ -65,6 +65,7 @@ $group_loop_classes = static function () use ( $classes ) {
 	return $classes;
 };
 add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
+$loop_layout = !empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layout'] : '';
 ?>
 
 <div id="bps-buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ). ' '. esc_attr( $groups_atts['container_class'] ); ?>">
@@ -73,7 +74,7 @@ add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
 
 	<div class="screen-content">
 		<input type="hidden" data-bp-filter="groups" value="<?php echo esc_attr( $groups_atts['bpsh_query'] ); ?>" />
-		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups" data-ajax="true">
+		<div id="groups-dir-list" class="groups dir-list <?php echo $loop_layout; ?>" data-bp-list="groups" data-ajax="true">
 			<?php
 			buddypress_shortcodes_template('nouveau/groups/buddypress-shortcode-group-loop.php');
 			?>

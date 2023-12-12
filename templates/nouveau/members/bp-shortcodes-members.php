@@ -54,6 +54,7 @@ $member_loop_classes = static function () use ( $classes ) {
 	return $classes;
 };
 add_filter( 'bp_nouveau_get_loop_classes', $member_loop_classes );
+$loop_layout = !empty( $members_atts['loop-layouts'] ) ? $members_atts['loop-layouts'] : '';
 
 ?>
 
@@ -62,7 +63,7 @@ add_filter( 'bp_nouveau_get_loop_classes', $member_loop_classes );
 
 	<div class="screen-content">
 		<input type="hidden" data-bp-filter="members" value="<?php echo esc_attr( $members_atts['bpsh_query'] ); ?>" />
-		<div id="members-dir-list" class="members dir-list" data-bp-list="members" data-ajax="true">
+		<div id="members-dir-list" class="members dir-list <?php echo $loop_layout; ?>" data-bp-list="members" data-ajax="true">
 			<?php buddypress_shortcodes_template('nouveau/members/buddypress-shortcode-members-loop.php'); ?>
 		</div>
 
