@@ -9,14 +9,168 @@ table.notifications.bp-tables-user thead th.date {
     width: 100%;
 }
 
+/*Activity Shortcode*/
+.activity-list.bp-list .bps-activity-item {
+    position: relative;
+    margin: 2rem 0;
+    padding: 20px !important;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    list-style: none;
+    border-radius: 10px !important;
+}
+
+.bps-activity-item .bps-activity-item-head {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 0;
+    padding: 0px 0 20px;
+}
+
+.bps-activity-item .bps-activity-avatar.bps-item-avatar {
+    margin: 0 12px 0 0;
+    width: auto;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 40px;
+    flex: 0 0 40px;
+    line-height: 0;
+}
+
+.bps-activity-item .bps-activity-avatar.bps-item-avatar img.avatar {
+    max-width: 45px !important;
+    width: 45px !important;
+    min-width: 45px !important;
+    height: auto;
+}
+
+.bps-activity-item .bps-activity-content .bps-activity-inner p {
+    padding: 0;
+    margin: 0 0 5px !important;
+}
+
+.bps-activity-item .bps-activity-header .avatar {
+    display: inline-block;
+    margin: 0 5px;
+    vertical-align: text-top;
+    width: 20px;
+    height: 20px;
+}
+
+.bps-activity-item .bps-activity-header p{
+    margin: 0 !important;
+    line-height: 1.5;
+}
+
+.bps-activity-item .bps-activity-header a{
+    font-weight: bold;
+}
+
+.bps-activity-item .bps-activity-header a.view.activity-time-since.bp-tooltip {
+    display: block;
+    font-weight: normal;
+    font-size: 14px;
+    color: #767676;
+    text-decoration: none;
+}
+
+.bps-activity-item .bps-activity-content .bp-member-short-description,
+.bps-activity-item .bps-activity-content .bp-group-short-description {
+    text-align: center;
+    z-index: 99;
+    position: relative;
+}
+
+.bps-activity-item .bps-activity-content .bps-activity-inner p.bp-member-short-description-title,
+.bps-activity-content .bps-activity-inner p.bp-member-nickname {
+    margin: 0 !important;
+}
+
+.bps-activity-content .bps-activity-inner .bp-group-short-description-title a,
+.bps-activity-content .bps-activity-inner .bp-member-short-description-title a {
+    font-weight: 600;
+}
+
+.bps-activity-content .bps-activity-inner .bp-group-preview-cover,
+.bps-activity-content .bps-activity-inner .bp-member-preview-cover {
+    position: relative;
+    min-height: 180px;
+    background: #c5c5c5;
+}
+
+.bps-activity-content .bps-activity-inner .bp-group-preview-cover img,
+.bps-activity-content .bps-activity-inner .bp-member-preview-cover img {
+    background: #c5c5c5;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border: 0;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    z-index: 1;
+    height: 180px;
+}
+
+.bps-activity-content .bps-activity-inner .bp-group-avatar-content.has-cover-image,
+.bps-activity-content .bps-activity-inner .bp-member-avatar-content.has-cover-image {
+    width: 200px;
+    position: relative;
+    z-index: 2;
+    margin:-75px auto auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*BuddyX Theme*/
+.bps-activity-content .bp-group-activity-preview,
+.bps-activity-content .bp-member-activity-preview,
+.bps-activity-content .buddyx-user-preview {
+    margin: 0;
+}
+
+
+/*Reign Theme*/
+.activity-list.bp-list .bps-activity-item{
+    border-radius: var(--reign-global-border-radius)!important;
+}
+.bps-activity-content .reign-user-stat{
+    gap: 5px;
+}
+.bps-activity-content .reign-user-preview-footer .reign-user-stat p {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/*SocialV Theme*/
+.bps-activity-content .bp-group-activity-preview.socialv-group-activity {
+    border: 1px solid #e8e8e8;
+    padding-bottom: 20px;
+}
+.bps-activity-content .bp-group-short-description-title.socialv-profile-detail {
+    margin-top: 10px;
+}
 
 /*BB Theme*/
 table.notifications.bp-tables-user tr:last-child th {
     border-bottom:1px solid var(--bb-content-border-color);
 }
+
 .theme-buddyboss-theme table.notifications.bp-tables-user {
     overflow: unset;
 }
+
 .theme-buddyboss-theme table.notifications.bp-tables-user span.notifications-order-actions {
     display: flex;
 }
