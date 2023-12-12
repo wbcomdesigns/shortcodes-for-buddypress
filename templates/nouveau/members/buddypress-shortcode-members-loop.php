@@ -20,7 +20,7 @@ bp_nouveau_before_loop(); ?>
 
 		<li class="bps-item-entry" id="user_id_<?php bp_member_user_id(); ?>">
 			<div class="bps-list-wrap">
-
+				
 				<div class="bps-item-avatar">
 					<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar( bp_nouveau_avatar_args() ); ?></a>
 				</div>
@@ -47,12 +47,6 @@ bp_nouveau_before_loop(); ?>
 
 						
 					</div>
-
-					<?php if ( bp_get_member_latest_update() && ! bp_nouveau_loop_is_grid() ) : ?>
-						<div class="bps-user-update">
-							<p class="bps-update"> <?php bp_member_latest_update(); ?></p>
-						</div>
-					<?php endif; ?>
 
 				</div><!-- // .item -->
 			</div>

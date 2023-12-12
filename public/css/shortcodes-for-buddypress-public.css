@@ -3,6 +3,11 @@
  * included in this file.
  */
 
+:root {
+    --bps-border-color: #e3e3e3;
+    --bps-border-radius: 10px;
+}
+
 table.notifications.bp-tables-user thead th.date {
     display: flex;
     align-items: center;
@@ -15,11 +20,11 @@ table.notifications.bp-tables-user thead th.date {
     margin: 2rem 0;
     padding: 20px !important;
     background: #fff;
-    border: 1px solid #e8e8e8;
+    border: 1px solid var(--bps-border-color);
     -webkit-box-shadow: none;
     box-shadow: none;
     list-style: none;
-    border-radius: 10px !important;
+    border-radius: var(--bps-border-radius) !important;
 }
 
 .bps-activity-item .bps-activity-item-head {
@@ -122,16 +127,70 @@ table.notifications.bp-tables-user thead th.date {
     margin:-75px auto auto;
 }
 
+/*Members Shortcode*/
+#members-dir-list ul#bps-members-list {
+    padding-top: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin-bottom: 0;
+    width: auto;
+    margin: 0 -15px;
+}
 
+#members-dir-list ul#bps-members-list li.bps-item-entry {
+    border-bottom: none;
+    margin: 0 0 20px;
+    padding: 0 10px;
+    width: calc(100% / 3);    
+    list-style: none;
+}
 
+#members-dir-list ul#bps-members-list li.bps-item-entry .bps-list-wrap {
+    background: #fff;
+    height: 100%;
+    padding: 30px 20px;
+    border-radius: var(--bps-border-radius) !important;
+    border: 1px solid var(--bps-border-color);
+    transition: all 0.3s;
+}
 
+#members-dir-list ul#bps-members-list li.bps-item-entry .bps-list-wrap:hover{
+    box-shadow: 0 5px 25px 0 rgba(18,43,70,.05);
+}
 
+#members-dir-list ul#bps-members-list .bps-item-avatar {
+    margin: 0 auto 15px;
+    max-width: 100px;
+}
 
+#members-dir-list ul#bps-members-list .bps-item{
+    text-align: center;
+}
 
+#members-dir-list ul#bps-members-list .bps-item-avatar img.avatar {
+    border-radius: 15px;
+    min-width: 100%;
+    height: auto;
+}
 
+#members-dir-list ul#bps-members-list .bps-item h2.bps-list-title.bps-member-name {
+    margin: 0;
+    font-size: 22px;
+}
 
+#members-dir-list ul#bps-members-list p.bps-item-meta.bps-last-activity {
+    margin: 0;
+    font-size: 13px;
+    color: #999;
+}
 
-
+#members-dir-list ul#bps-members-list .bps-user-update p.bps-update {
+    font-size: 15px;
+    margin: 5px 0  0;
+}
 
 /*BuddyX Theme*/
 .bps-activity-content .bp-group-activity-preview,
@@ -155,7 +214,7 @@ table.notifications.bp-tables-user thead th.date {
 
 /*SocialV Theme*/
 .bps-activity-content .bp-group-activity-preview.socialv-group-activity {
-    border: 1px solid #e8e8e8;
+    border: 1px solid var(--bps-border-color);
     padding-bottom: 20px;
 }
 .bps-activity-content .bp-group-short-description-title.socialv-profile-detail {
@@ -173,4 +232,14 @@ table.notifications.bp-tables-user tr:last-child th {
 
 .theme-buddyboss-theme table.notifications.bp-tables-user span.notifications-order-actions {
     display: flex;
+}
+
+
+
+@media only screen and (max-width: 769px) {
+
+    
+    
+
+
 }
