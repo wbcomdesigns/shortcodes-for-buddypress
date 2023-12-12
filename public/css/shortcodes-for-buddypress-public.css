@@ -186,6 +186,11 @@ table.notifications.bp-tables-user thead th.date {
     height: auto;
 }
 
+.bpsh-buddypress.buddypress #members-dir-list ul#bps-members-list .bps-item-avatar img.avatar,
+.bpsh-buddypress.buddypress #groups-dir-list ul#bps-groups-list .bps-item-avatar img.avatar  {
+    border: 5px solid #fff;
+}
+
 #members-dir-list ul#bps-members-list .bps-item h2.bps-list-title.bps-member-name,
 #groups-dir-list ul#bps-groups-list .bps-item h2.bps-list-title.bps-groups-title  {
     margin: 0;
@@ -319,6 +324,22 @@ div#members-dir-list.members.four ul#bps-members-list li.bps-item-entry,
 div#groups-dir-list.groups.four ul#bps-groups-list li.bps-item-entry{
     width: calc(100% / 4) !important;
 }
+
+
+/*Notifications*/
+
+.bps-notifications-shortcode table.notifications.bp-tables-user .bulk-select-all,
+.bps-notifications-shortcode table.notifications.bp-tables-user tr td.bulk-select-check{
+    text-align: left;
+}
+
+.bps-notifications-shortcode table.notifications.bp-tables-user thead th input[type="checkbox"],
+.bps-notifications-shortcode table.notifications.bp-tables-user tbody td input[type="checkbox"] {
+    margin-right:8px;
+    cursor: pointer;
+}
+
+
 
 
 /*BuddyX Theme*/

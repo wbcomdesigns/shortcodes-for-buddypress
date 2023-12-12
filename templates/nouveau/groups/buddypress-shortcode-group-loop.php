@@ -67,10 +67,8 @@ bp_nouveau_before_loop(); ?>
 									);
 								?>
 							</p>
-						</div>
-						<?php if ( function_exists( 'buddypress' ) && ! isset( buddypress()->buddyboss ) ) { ?>
-						<div class="bps-group-desc"><p><?php bp_nouveau_group_description_excerpt(); ?></p></div>
-						<?php } ?>
+						</div>	
+						
 						<?php if ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) { ?>
 							<div class="bps-group-members-wrap">
 								<?php bb_groups_loop_members(); ?>
