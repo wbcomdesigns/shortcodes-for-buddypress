@@ -20,7 +20,14 @@ bp_nouveau_before_loop(); ?>
 
 		<li class="bps-item-entry" id="user_id_<?php bp_member_user_id(); ?>">
 			<div class="bps-list-wrap">
-				
+				<?php
+			$active_theme = wp_get_theme(); 
+				if( 'BuddyX' == $active_theme || 'BuddyxPro' == $active_theme ){
+					buddyx_render_member_cover_image();
+				}elseif( 'REIGN' == $active_theme ){
+					reign_render_member_cover_image();
+				}
+				?>
 				<div class="bps-item-avatar">
 					<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar( bp_nouveau_avatar_args() ); ?></a>
 				</div>
@@ -37,21 +44,12 @@ bp_nouveau_before_loop(); ?>
 							<p class="bps-item-meta bps-last-activity">
 								<?php bp_nouveau_member_meta(); ?>
 							</p><!-- .item-meta -->
-						<?php endif; ?>
-
-						<?php if ( bp_nouveau_member_has_extra_content() ) : ?>
-							<div class="bps-item-extra-content">
-								<?php bp_nouveau_member_extra_content() ; ?>
-							</div><!-- .item-extra-content -->
-						<?php endif ; ?>
-
-						
+						<?php endif; ?>						
 					</div>
-
 				</div><!-- // .item -->
 			</div>
 		</li>
-
+		
 	<?php endwhile; ?>
 
 	</ul>

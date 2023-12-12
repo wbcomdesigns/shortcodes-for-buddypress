@@ -7,7 +7,6 @@
  */
 
 bp_nouveau_before_loop(); ?>
-
 <?php if ( bp_get_current_group_directory_type() ) : ?>
 	<p class="bps-current-group-type"><?php bp_current_group_directory_type_message(); ?></p>
 <?php endif; ?>
@@ -20,7 +19,14 @@ bp_nouveau_before_loop(); ?>
 
 			<li class="bps-item-entry" id="groud_id_<?php bp_group_id(); ?>">
 				<div class="bps-list-wrap">
-
+				<?php
+				$active_theme = wp_get_theme(); 
+				if( 'BuddyX' == $active_theme || 'BuddyxPro' == $active_theme ){
+					buddyx_render_group_cover_image();
+				}elseif( 'REIGN' == $active_theme ){
+					reign_render_group_cover_image();
+				}
+				 ?>
 					<?php if ( ! bp_disable_group_avatar_uploads() ) : ?>
 						<div class="bps-item-avatar">
 							<a href="<?php bp_group_url(); ?>"><?php bp_group_avatar( bp_nouveau_avatar_args() ); ?></a>
@@ -35,7 +41,16 @@ bp_nouveau_before_loop(); ?>
 
 							<?php if ( bp_nouveau_group_has_meta() ) : ?>
 
-								<p class="bps-item-meta bps-group-details"><?php bp_nouveau_the_group_meta( array( 'keys' => array( 'status', 'count' ) ) ); ?></p>
+								<p class="bps-item-meta bps-group-details">
+									<?php 
+									if ( function_exists( 'buddypress' ) && ! isset( buddypress()->buddyboss ) ) {
+										bp_nouveau_the_group_meta( array( 'keys' => array( 'status', 'count' ) ) ); 
+									}else{
+										$meta = bp_nouveau_get_group_meta();
+										echo wp_kses_post( $meta['status'] );
+									}
+									?>
+									</p>
 
 							<?php endif; ?>
 
@@ -53,8 +68,13 @@ bp_nouveau_before_loop(); ?>
 								?>
 							</p>
 						</div>
-
+						<?php if ( function_exists( 'buddypress' ) && ! isset( buddypress()->buddyboss ) ) { ?>
 						<div class="bps-group-desc"><p><?php bp_nouveau_group_description_excerpt(); ?></p></div>
+						<?php } ?>
+
+						<div class="bps-group-members-wrap">
+							<?php bb_groups_loop_members(); ?>
+						</div>
 
 						<?php bp_nouveau_groups_loop_item(); ?>
 
