@@ -169,22 +169,6 @@ global $bp_grp_types;
 				<div class="wbcom-settings-section-wrap">
 					<div class="wbcom-settings-section-options-heading">
 						<label for="group_types_search">
-							<?php esc_html_e( 'display_comments', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'How to handle activity comments. Possible values: - "threaded" - comments appear in a threaded tree, under their parent items. - "stream" - the activity stream is presented in a flat manner, with comments sorted in chronological order alongside other activity items. - false - dont fetch activity comments at all.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - string|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - threaded', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
 							<?php esc_html_e( 'scope', 'shortcodes-for-buddypress' ); ?>
 						</label>
 						<p class="description"><?php esc_html_e( 'Use a BuddyPress pre-built filter. - "just-me" - retrieves items belonging only to a user; this is equivalent to passing a "user_id" argument. - "friends" - retrieves items belonging to the friends of a user. - "groups" - retrieves items belonging to groups to which a user belongs to. - "favorites" - retrieves a users favorited activity items. - "mentions" - retrieves items where a user has received an @-mention.', 'shortcodes-for-buddypress' ); ?></p>
