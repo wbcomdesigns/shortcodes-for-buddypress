@@ -58,7 +58,7 @@ bp_nouveau_before_loop(); ?>
 								<?php
 									printf(
 										/* translators: %s: last activity timestamp (e.g. "Active 1 hour ago") */
-										esc_html__( 'Active %s', 'buddypress' ),
+										esc_html__( 'Active %s', 'shortcodes-for-buddypress' ),
 										sprintf(
 											'<span data-livestamp="%1$s">%2$s</span>',
 											bp_core_get_iso8601_date( bp_get_group_last_active( 0, array( 'relative' => false ) ) ),
