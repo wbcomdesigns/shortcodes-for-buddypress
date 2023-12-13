@@ -38,8 +38,8 @@ class Shortcodes_For_Buddypress_Admin {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
-	
-	
+
+
 	private $plugin_settings_tabs;
 
 	/**
@@ -75,7 +75,7 @@ class Shortcodes_For_Buddypress_Admin {
 		 * class.
 		 */
 		$shortcode_style = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
-		if ( 'wb-plugins_page_shortcodes-for-buddypress' === $hook || 'wbcomplugins' === $shortcode_style || 'wbcom-plugins-page' === $shortcode_style || 'wbcom-support-page' === $shortcode_style  ) {
+		if ( 'wb-plugins_page_shortcodes-for-buddypress' === $hook || 'wbcomplugins' === $shortcode_style || 'wbcom-plugins-page' === $shortcode_style || 'wbcom-support-page' === $shortcode_style ) {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-admin.css', array(), $this->version, 'all' );
 		}
 
@@ -139,7 +139,7 @@ class Shortcodes_For_Buddypress_Admin {
 		<div class="wrap">
 			<div class="wbcom-bb-plugins-offer-wrapper">
 				<div id="wb_admin_logo">
-					<a href="https://wbcomdesigns.com/downloads/buddypress-community-bundle/" target="_blank">
+					<a href="https://wbcomdesigns.com/downloads/buddypress-community-bundle/?utm_source=pluginoffernotice&utm_medium=community_banner" target="_blank">
 						<img src="<?php echo esc_url( SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL ) . 'admin/wbcom/assets/imgs/wbcom-offer-notice.png'; ?>">
 					</a>
 				</div>
@@ -149,9 +149,12 @@ class Shortcodes_For_Buddypress_Admin {
 				<div class="wbcom_admin_header-wrapper">
 					<div id="wb_admin_plugin_name">
 					<?php esc_html_e( 'BuddyPress Shortcodes', 'shortcodes-for-buddypress' ); ?>
-						<span><?php 
+						<span>
+						<?php
 						/* translators: %s: */
-						printf( esc_html__( 'Version %s', 'shortcodes-for-buddypress' ), esc_attr( SHORTCODES_FOR_BUDDYPRESS_VERSION ) ); ?></span>
+						printf( esc_html__( 'Version %s', 'shortcodes-for-buddypress' ), esc_attr( SHORTCODES_FOR_BUDDYPRESS_VERSION ) );
+						?>
+						</span>
 					</div>
 				<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 				</div>
