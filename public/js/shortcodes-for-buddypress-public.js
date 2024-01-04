@@ -35,10 +35,34 @@
 			bp.Nouveau.setStorage( 'bp-activity','filter','');
 			setTimeout(function(){				
 				bp.Nouveau.setStorage( 'bp-activity','filter',$('#activity_filters_objects').val() );
-			}, 3000);
-				
-			
+			}, 3000);			
 		});
+
+		// load more for activity
+		$( '#buddypress [data-bp-list="activity"]' ).off( 'click', 'li.load-newest, li.load-more' );//Override buddypress load more click function
+		$(document).on('click', '#load-more-activity', function (e) {
+			e.preventDefault();
+			var self = $(this);
+			var page = self.data('page');
+			var limit = self.data('limit');
+			$.ajax({
+				type: "post",
+				url: buddypress_shortcode.ajax_url,
+				data: {
+					'action': 'bpsp_activities_load',
+					'page': page, // Increment the page for the request
+					'limit': limit,
+					'nonce': buddypress_shortcode.ajax_nonce,
+				},
+				success: function (res) {
+					$('ul.activity-list.item-list.bp-list').append(res.data);
+					var newPage = self.data('page') + 1;
+					self.data('page', newPage);
+				},
+			});
+		});
+		// load more for activity
+
 	});
 
 })( jQuery );

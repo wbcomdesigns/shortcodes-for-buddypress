@@ -442,6 +442,9 @@ table.notifications.bp-tables-user tr:last-child th {
     #groups-dir-list ul#bps-groups-list li.bps-item-entry {
         width: calc(100% / 1) !important;
     }
-    
-
+}
+/* load more button css on activity shortcode */
+.load-more{
+    list-style: none;
+    text-align: center;
 }

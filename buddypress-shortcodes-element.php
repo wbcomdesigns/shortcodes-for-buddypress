@@ -391,13 +391,6 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 		wp_enqueue_script( 'bp-nouveau-activity' );
 		$settings = $this->get_settings_for_display();
 
-		$current_component = static function () {
-			return 'activity';
-		};
-
-		add_filter( 'bp_current_component', $current_component );
-		// add_filter( 'bp_is_current_component', $current_component );
-
 		$args = array(
 			'title'            => $settings['sfb_title'],
 			'per_page'         => ( isset( $settings['sfb_number'] ) ) ? $settings['sfb_number'] : 20,
@@ -446,7 +439,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 					<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
 
 					<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
-						<?php buddypress_shortcodes_template('nouveau/activity/buddypress-shortcode-activity-loop.php'); ?>
+					<?php bp_get_template_part( 'activity/activity-loop' ); ?>
 					</div>
 
 					<?php bp_nouveau_after_activity_directory_content(); ?>
@@ -455,7 +448,6 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			</div>
 		</div>
 		<?php
-		remove_filter( 'bp_current_component', $current_component );
 		remove_filter( 'bp_ajax_querystring', $activity_ajax_querystring, 99, 2 );
 
 		?>

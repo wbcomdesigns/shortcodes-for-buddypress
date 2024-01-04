@@ -20,12 +20,6 @@ add_filter(
 		return 'unread';
 	}
 );
-
-$current_component = static function () {
-	return 'notifications';
-};
-
-add_filter( 'bp_current_component', $current_component );
 ?>
 <div id="buddypress" class="bps-notifications-shortcode bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ). ' '. esc_attr( $notifications_atts['container_class'] ); ?>">
 	<input type="hidden" data-bp-filter="notifications" value="<?php echo esc_attr( $notifications_atts['bpsh_query'] ); ?>" />		

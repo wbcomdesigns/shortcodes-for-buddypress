@@ -221,17 +221,6 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		global $groups_args;
 		$settings                 = $this->get_settings_for_display();
 		$classes                  = array();
-		$current_component        = static function () {
-			return 'groups';
-		};
-		$current_component_groups = static function () {
-			return true;
-		};
-
-		add_filter( 'bp_current_component', $current_component );
-		// add_filter( 'bp_is_current_component', $current_component );
-		// add_filter( 'groups_get_current_group', $current_component_groups );
-		// add_filter( 'bp_is_active', $current_component_groups );
 
 		add_filter( 'bp_get_groups_pagination_count', '__return_zero' );
 		add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
@@ -313,7 +302,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 
 				<div class="screen-content">
 					<div id="groups-dir-list" class="groups dir-list" data-bp-list="">
-						<?php buddypress_shortcodes_template('nouveau/groups/buddypress-shortcode-group-loop.php'); ?>
+					<?php bp_get_template_part( 'groups/groups-loop' ); ?>
 					</div>
 
 					<?php bp_nouveau_after_groups_directory_content(); ?>
@@ -322,9 +311,6 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		</div>
 		
 		<?php
-
-		remove_filter( 'bp_current_component', $current_component );
-		// remove_filter( 'bp_is_current_component', $current_component );
 		remove_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
 
 		remove_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );

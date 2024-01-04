@@ -176,18 +176,6 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 		$settings          = $this->get_settings_for_display();
 		$classes           = array();
-		$current_component = static function () {
-			return 'members';
-		};
-
-		add_filter( 'bp_current_component', $current_component );
-
-		$current_component_members = static function () {
-			return true;
-		};
-		// add_filter( 'bp_is_current_component', $current_component_members );
-		// add_filter( 'groups_get_current_group', $current_component_members );
-		// add_filter( 'bp_is_active', $current_component_members );
 
 		add_filter( 'bp_members_pagination_count', '__return_zero' );
 		add_filter( 'bp_get_members_pagination_links', '__return_zero' );
@@ -267,9 +255,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 				<div class="screen-content">
 					<div id="members-dir-list" class="members dir-list" data-bp-list="">
-						<?php 
-							buddypress_shortcodes_template('nouveau/members/buddypress-shortcode-members-loop.php');
-						?>
+					<?php bp_get_template_part( 'members/members-loop' ); ?>
 					</div>
 
 					<?php bp_nouveau_after_members_directory_content(); ?>
@@ -278,8 +264,6 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 		</div>
 
 		<?php
-		// remove_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
-		remove_filter( 'bp_current_component', $current_component );
 		remove_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
 		remove_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
 

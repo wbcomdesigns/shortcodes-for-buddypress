@@ -6,20 +6,6 @@
  */
 global $members_atts;
 
-$current_members_component = static function () {
-	return 'members';
-};
-
-add_filter( 'bp_current_component', $current_members_component );
-
-$members_ajax_querystring = static function ( $ajax_querystring, $object ) {
-	global $members_atts;
-	$qs = '';
-	return $qs .= $members_atts['bpsh_query'];
-};
-
-add_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
-
 $classes = array();
 $member_loop_classes = static function () use ( $classes ) {
 
@@ -61,13 +47,69 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 <div id="bps-buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ) . ' ' . esc_attr( $members_atts['container_class'] ); ?>">
 	<?php bp_nouveau_before_members_directory_content(); ?>
 
-	<div class="screen-content">
-		<input type="hidden" data-bp-filter="members" value="<?php echo esc_attr( $members_atts['bpsh_query'] ); ?>" />
-		<div id="members-dir-list" class="members dir-list <?php echo $loop_layout; ?>" data-bp-list="members" data-ajax="true">
-			<?php buddypress_shortcodes_template('nouveau/members/buddypress-shortcode-members-loop.php'); ?>
+	<?php if ( bp_has_members( $members_atts['bpsh_query'] ) ) : ?>
+	<div id="members-dir-list" class="members dir-list" data-bp-list="members" data-ajax="false">
+		<div class="bpsp-member-count">			
+			<?php echo bp_get_members_pagination_count(); ?>
 		</div>
+		<ul id="members-list" class="<?php bp_nouveau_loop_classes(); ?>">		
+			<?php
+			while ( bp_members() ) :
+				bp_the_member();
+				?>
+				<li <?php bp_member_class( array( 'item-entry' ) ); ?> data-bp-item-id="<?php bp_member_user_id(); ?>" data-bp-item-component="members">
+					<div class="list-wrap">
+						<?php
+							$active_theme = wp_get_theme();
+						if ( 'BuddyX' == $active_theme || 'BuddyxPro' == $active_theme ) {
+							if ( function_exists( 'buddyx_render_member_cover_image' ) ) {
+								buddyx_render_member_cover_image();
+							}
+						} elseif ( 'REIGN' == $active_theme ) {
+							if ( function_exists( 'reign_render_member_cover_image' ) ) {
+								reign_render_member_cover_image();
+							}
+						}
+						?>
+						<div class="item-avatar">
+							<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar( bp_nouveau_avatar_args() ); ?></a>
+						</div>
+						<div class="item">
+							<div class="item-block">
+								<h2 class="list-title member-name">
+									<a href="<?php bp_member_permalink(); ?>"><?php bp_member_name(); ?></a>
+								</h2>
+								<?php if ( bp_nouveau_member_has_meta() ) : ?>
+									<p class="item-meta last-activity">
+										<?php bp_nouveau_member_meta(); ?>
+									</p><!-- .item-meta -->
+									<?php endif; ?>
+									<?php if ( bp_nouveau_member_has_extra_content() ) : ?>
+										<div class="item-extra-content">
+											<?php bp_nouveau_member_extra_content(); ?>
+										</div><!-- .item-extra-content -->
+									<?php endif; ?>
+									<?php
+									bp_nouveau_members_loop_buttons(
+										array(
+											'container'      => 'ul',
+											'button_element' => 'button',
+										)
+									);
+									?>
+							</div>
+						</div><!-- // .item -->
+					</li>
+				<?php endwhile; ?>
+			</ul>
+			<?php if ( $members_atts['per_page'] ) { ?>
+			<div class="bpsp-member-pagination">			
+				<?php echo bp_get_members_pagination_links(); ?>
+			</div>
+			<?php } ?>
 
-		<?php bp_nouveau_after_members_directory_content(); ?>
-	</div>
+			
+		</div>
+	<?php endif; ?>
 </div>
 <?php

@@ -190,9 +190,6 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		// $this->loader->add_filter( 'bp_is_current_component', $plugin_public, 'buddypress_shortcodes_bp_is_current_component', 5, 1 );
-		$this->loader->add_filter( 'bp_current_component', $plugin_public, 'buddypress_shortcodes_bp_current_component', 5, 1 );
-
 		$this->loader->add_filter( 'bp_nouveau_get_search_primary_object', $plugin_public, 'buddypress_shortcodes_bp_nouveau_get_search_primary_object', 10, 1 );
 
 		$this->loader->add_filter( 'body_class', $plugin_public, 'buddypress_shortcodes_body_classes' );
@@ -210,6 +207,8 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_filter( 'bp_nouveau_register_scripts', $plugin_public, 'buddypress_shortcodes_bp_nouveau_register_scripts', 20 );
 
 		$this->loader->add_filter( 'bp_core_get_js_strings', $plugin_public, 'buddypress_shortcodes_activity_heartbeat_strings', 20, 1 );
+		$this->loader->add_action( 'wp_ajax_bpsp_activities_load', $plugin_public, 'buddypress_shortcodes_load_activities' );
+		$this->loader->add_action( 'wp_ajax_nopriv_bpsp_activities_load', $plugin_public, 'buddypress_shortcodes_load_activities' );
 
 	}
 
