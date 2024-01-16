@@ -21,7 +21,7 @@ endif;
 ?>
 <?php if ( bp_has_activities( $activity_atts['bpsh_query'] ) ) : ?>
 	<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
-		<ul class="activity-list item-list bp-list">
+		<ul class="activity-list item-list bp-list bp-shortcode-activity">
 			<?php
 			while ( bp_activities() ) :
 				bp_the_activity();

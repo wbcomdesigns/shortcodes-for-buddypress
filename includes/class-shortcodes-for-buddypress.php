@@ -209,6 +209,7 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_filter( 'bp_core_get_js_strings', $plugin_public, 'buddypress_shortcodes_activity_heartbeat_strings', 20, 1 );
 		$this->loader->add_action( 'wp_ajax_bpsp_activities_load', $plugin_public, 'buddypress_shortcodes_load_activities' );
 		$this->loader->add_action( 'wp_ajax_nopriv_bpsp_activities_load', $plugin_public, 'buddypress_shortcodes_load_activities' );
+		$this->loader->add_filter( 'bp_before_nouveau_wrapper_parse_args', $plugin_public, 'buddypress_shortcodes_filter_activity_action_wrapper', 10, 1 );
 
 	}
 

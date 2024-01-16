@@ -147,6 +147,7 @@ class Shortcodes_For_Buddypress_Public {
 		if ( ! empty( $bpsh_query ) ) {
 			$bpsh_query = '&' . $bpsh_query;
 		}
+		$output = '';
 		$default_atts = array(
 			'title'            => '', // title of the section
 			'pagination'       => 1, // show or not.
@@ -190,19 +191,21 @@ class Shortcodes_For_Buddypress_Public {
 
 		if ( function_exists( 'bp_is_active' ) ) {
 
-			if ( $title != '' ) { ?>
-		  <h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
-				<?php
+			if ( $title != '' ) {
+		  		$output .= '<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>';
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
 				buddypress_shortcodes_template( 'legacy/activity/bp-shortcodes-activity.php' );
+				$output .= ob_get_contents();
 			} else {
 				wp_enqueue_script( 'bp-nouveau-activity' );
 				buddypress_shortcodes_template( 'nouveau/activity/bp-shortcodes-activity.php' );
+				$output .= ob_get_contents();
 			}
 		}
 
-		return ob_get_clean();
+		ob_end_clean();
+		return $output;
 	}
 
 	/**
@@ -1088,6 +1091,18 @@ class Shortcodes_For_Buddypress_Public {
 			);
 		}
 
+	}
+
+	/**
+	 * Load activity meta class
+	 *
+	*/
+	public function buddypress_shortcodes_filter_activity_action_wrapper( $r ) {
+		global $post;
+		if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'activity-listing' ) ) {
+			$r['container_classes'] = array( 'activity-meta' );
+		}
+		return $r;
 	}
 
 }
