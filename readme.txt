@@ -3,23 +3,23 @@ Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcodes, BuddyPress Widgets
 Requires at least: 5.0.0
-Tested up to: 6.3.1
-Stable tag: 2.6.5
+Tested up to: 6.4.2
+Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin will generate Shortcode for Listing Activity Streams , Members and Groups on any post/page in website.
+This plugin will generate a Shortcode for Listing Activity Streams, Members, and Groups on any post/page on the website.
 
 == Description ==
 
 This plugin will add an extended feature to BuddyPress. It will use Shortcode for Listing Activity Streams, Members directory, and Groups directory on any post/page within the website.
 
-With our current update, we have also added three widgets to display activity stream, member directory, and group directory using Elementor.
+With our current update, we have added three widgets to display the activity stream, member directory, and group directory using Elementor.
 
 [vimeo https://vimeo.com/554193567 ]
 
 === THEME - WORDPRESS THEME WITH OUTSTANDING BUDDYPRESS SUPPORT ===
-* [FREE BuddyPress Theme: BuddyX](https://wordpress.org/themes/buddyx/) - Offers unique layouts with clean code and easy-to-customize options giving you a whole new way to visualize BuddyPress.
+* [FREE BuddyPress Theme: BuddyX](https://wordpress.org/themes/buddyx/) - Offers unique layouts with clean code and easy-to-customize options, giving you a whole new way to visualize BuddyPress.
 
 == Installation ==
 This section describes how to install the plugin and get it working.
@@ -27,28 +27,39 @@ This section describes how to install the plugin and get it working.
 1. Download the zip file and extract it.
 2. Upload this plugin to the `/wp-content/plugins/` directory
 3. Activate the plugin through the \'Plugins\' menu.
-4. Alternatively you can use WordPress Plugin installer from Dashboard->Plugins->Add New to add this plugin
+4. Alternatively, you can use the WordPress Plugin installer from Dashboard->Plugins->Add New to add this plugin
 5. Enjoy
-If you need additional help you can contact us for [Custom Development](https://wbcomdesigns.com/hire-us/).
+If you need more help, please contact us for [Custom Development](https://wbcomdesigns.com/hire-us/).
 
 == Frequently Asked Questions ==
 
-= Does This plugin requires BuddyPress =
+= Does This plugin require BuddyPress =
 
 Yes, It needs you to have BuddyPress installed and activated.
 
-= Where Do I Ask for support? =
+= Where Do I Ask for Support? =
 
-Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to plugin and Buddypress.
+Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to the plugin and Buddypress.
 
 == Screenshots ==
 
 1. It is displaying admin documentation page screenshot-1.png
-2. It is displaying members listing based on given user id screenshot-2.png
-3. It is displaying activity listing based on given user id and allow_posting=true screenshot-3.png
-4. It is displaying groups listing based on given user id screenshot-4.png
+2. It displays members' listing based on the given user ID screenshot-2.png
+3. It displays activity listing based on the given user ID and allow_posting=true screenshot-3.png
+4. It is displaying group listing based on the given user ID screenshot-4.png
 
 == Changelog ==
+= 2.7.0 =
+* Fix: Added activity-meta in activity shortcode
+* Fix: Update shortcode code flow
+* Fix: Updated top banner and Links 
+* Fix: Fixed text domain
+* Fix: Remove display_comments parameter from activity
+* Fix: Managed groups, member shortcode listing
+* Fix: Add loop-layout parameters for member and group
+* Fix: Member list shortcode UI managed
+* Fix: Managed UI activity shortcode
+
 = 2.6.5 =
 * Fix: (#175) Issue with WPBakery
 * Fix: Deprecated issue
