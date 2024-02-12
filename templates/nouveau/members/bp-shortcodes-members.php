@@ -44,7 +44,7 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 
 ?>
 
-<div id="bps-buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ) . ' ' . esc_attr( $members_atts['container_class'] ); ?>">
+<div id="buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ) . ' ' . esc_attr( $members_atts['container_class'] ); ?>">
 	<?php bp_nouveau_before_members_directory_content(); ?>
 
 	<?php if ( bp_has_members( $members_atts['bpsh_query'] ) ) : ?>
@@ -84,7 +84,7 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 										<?php bp_nouveau_member_meta(); ?>
 									</p><!-- .item-meta -->
 									<?php endif; ?>
-									<?php if ( bp_nouveau_member_has_extra_content() ) : ?>
+									<?php if ( function_exists( 'bp_nouveau_member_has_extra_content' ) && bp_nouveau_member_has_extra_content() ) : ?>
 										<div class="item-extra-content">
 											<?php bp_nouveau_member_extra_content(); ?>
 										</div><!-- .item-extra-content -->
