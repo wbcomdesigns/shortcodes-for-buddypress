@@ -175,8 +175,10 @@ if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
 function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
 
 	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) {
 		wp_safe_redirect( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) );
 		exit;
+		}
 	}
 }
 add_action( 'activated_plugin', 'shortcodes_for_buddypress_activation_redirect_settings' );
