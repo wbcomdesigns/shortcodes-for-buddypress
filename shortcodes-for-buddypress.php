@@ -175,13 +175,31 @@ if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
 function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
 
 	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
-		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) {
-		wp_safe_redirect( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) );
-		exit;
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore
+			wp_safe_redirect( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) );
+			exit;
+		}
+	}
+	if ( $plugin == $_REQUEST['plugin'] && class_exists( 'Buddypress' ) ) {
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate-plugin' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore		
+			set_transient( '_bp_shortcode_is_new_install', true, 30 );
 		}
 	}
 }
 add_action( 'activated_plugin', 'shortcodes_for_buddypress_activation_redirect_settings' );
+
+/**
+ * Shortcodes_for_buddypress_do_activation_redirect
+ *
+ * @return void
+ */
+function shortcodes_for_buddypress_do_activation_redirect() {
+	if ( get_transient( '_bp_shortcode_is_new_install' ) ) {
+		delete_transient( '_bp_shortcode_is_new_install' );
+		wp_safe_redirect( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) );
+	}
+}
+add_action( 'admin_init', 'shortcodes_for_buddypress_do_activation_redirect' );
 
 /**
  * Throw an Alert to tell the Admin why it didn't activate.
