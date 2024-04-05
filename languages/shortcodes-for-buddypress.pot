@@ -1,14 +1,14 @@
-# Copyright (C) 2023
+# Copyright (C) 2024
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-12 09:29:11+00:00\n"
+"POT-Creation-Date: 2024-04-05 05:31:19+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Varun Dubey\n"
 "Language-Team: Wbcom Designs\n"
 "Language: en\n"
@@ -111,7 +111,7 @@ msgid "WB Plugins"
 msgstr ""
 
 #: admin/class-shortcodes-for-buddypress-admin.php:126
-#: admin/class-shortcodes-for-buddypress-admin.php:197
+#: admin/class-shortcodes-for-buddypress-admin.php:200
 msgid "General"
 msgstr ""
 
@@ -123,32 +123,32 @@ msgstr ""
 msgid "BuddyPress Shortcodes"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:154
-#: admin/wbcom/templates/wbcom-license-page.php:15
+#: admin/class-shortcodes-for-buddypress-admin.php:155
+#: admin/wbcom/templates/wbcom-license-page.php:16
 #. translators: %s:
 msgid "Version %s"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:194
+#: admin/class-shortcodes-for-buddypress-admin.php:197
 msgid "Welcome"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:200
+#: admin/class-shortcodes-for-buddypress-admin.php:203
 #: admin/settings/buddypress-shortcode-general-settings.php:27
 msgid "Activities"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:203
+#: admin/class-shortcodes-for-buddypress-admin.php:206
 msgid "Members"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:206
+#: admin/class-shortcodes-for-buddypress-admin.php:209
 #: admin/settings/buddypress-shortcode-general-settings.php:63
 #: buddypress-groups-element.php:15
 msgid "Groups"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:209
+#: admin/class-shortcodes-for-buddypress-admin.php:212
 #: admin/settings/buddypress-shortcode-general-settings.php:81
 msgid "User Notification"
 msgstr ""
@@ -170,7 +170,7 @@ msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:35
 #: admin/settings/buddypress-shortcode-activity-listing.php:114
-#: admin/settings/buddypress-shortcode-activity-listing.php:194
+#: admin/settings/buddypress-shortcode-activity-listing.php:178
 #: admin/settings/buddypress-shortcode-groups-listing.php:33
 #: admin/settings/buddypress-shortcode-groups-listing.php:48
 #: admin/settings/buddypress-shortcode-groups-listing.php:112
@@ -279,13 +279,12 @@ msgid ""
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:98
-#: admin/settings/buddypress-shortcode-activity-listing.php:178
-#: admin/settings/buddypress-shortcode-activity-listing.php:322
+#: admin/settings/buddypress-shortcode-activity-listing.php:306
 msgid "Type - string|bool"
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:99
-#: admin/settings/buddypress-shortcode-activity-listing.php:339
+#: admin/settings/buddypress-shortcode-activity-listing.php:323
 #: admin/settings/buddypress-shortcode-groups-listing.php:161
 #: admin/settings/buddypress-shortcode-member-listing.php:161
 msgid "Default - true"
@@ -325,6 +324,7 @@ msgstr ""
 #: admin/settings/buddypress-shortcode-activity-listing.php:131
 #: admin/settings/buddypress-shortcode-activity-listing.php:147
 #: admin/settings/buddypress-shortcode-activity-listing.php:163
+#: admin/settings/buddypress-shortcode-activity-listing.php:179
 #: admin/settings/buddypress-shortcode-activity-listing.php:195
 #: admin/settings/buddypress-shortcode-activity-listing.php:211
 #: admin/settings/buddypress-shortcode-activity-listing.php:227
@@ -332,7 +332,6 @@ msgstr ""
 #: admin/settings/buddypress-shortcode-activity-listing.php:259
 #: admin/settings/buddypress-shortcode-activity-listing.php:275
 #: admin/settings/buddypress-shortcode-activity-listing.php:291
-#: admin/settings/buddypress-shortcode-activity-listing.php:307
 #: admin/settings/buddypress-shortcode-groups-listing.php:145
 #: admin/settings/buddypress-shortcode-groups-listing.php:177
 #: admin/settings/buddypress-shortcode-groups-listing.php:193
@@ -374,27 +373,10 @@ msgid ""
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:172
-msgid "display_comments"
-msgstr ""
-
-#: admin/settings/buddypress-shortcode-activity-listing.php:174
-msgid ""
-"How to handle activity comments. Possible values: - \"threaded\" - comments "
-"appear in a threaded tree, under their parent items. - \"stream\" - the "
-"activity stream is presented in a flat manner, with comments sorted in "
-"chronological order alongside other activity items. - false - dont fetch "
-"activity comments at all."
-msgstr ""
-
-#: admin/settings/buddypress-shortcode-activity-listing.php:179
-msgid "Default - threaded"
-msgstr ""
-
-#: admin/settings/buddypress-shortcode-activity-listing.php:188
 msgid "scope"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:190
+#: admin/settings/buddypress-shortcode-activity-listing.php:174
 msgid ""
 "Use a BuddyPress pre-built filter. - \"just-me\" - retrieves items "
 "belonging only to a user; this is equivalent to passing a \"user_id\" "
@@ -404,116 +386,116 @@ msgid ""
 "\"mentions\" - retrieves items where a user has received an @-mention."
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:204
+#: admin/settings/buddypress-shortcode-activity-listing.php:188
 msgid "object"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:206
+#: admin/settings/buddypress-shortcode-activity-listing.php:190
 msgid ""
 "Filters by the `component` column in the database, which is generally the "
 "component ID in the case of BuddyPress components, or the plugin slug in "
 "the case of plugins."
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:210
+#: admin/settings/buddypress-shortcode-activity-listing.php:194
 #: admin/settings/buddypress-shortcode-member-listing.php:240
 msgid "Type - string|array|bool"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:220
+#: admin/settings/buddypress-shortcode-activity-listing.php:204
 #: admin/settings/buddypress-shortcode-groups-listing.php:266
 #: admin/settings/buddypress-shortcode-member-listing.php:250
 msgid "user_id"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:222
+#: admin/settings/buddypress-shortcode-activity-listing.php:206
 msgid "The ID(s) of user(s) whose activity should be fetched."
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:226
+#: admin/settings/buddypress-shortcode-activity-listing.php:210
+#: admin/settings/buddypress-shortcode-activity-listing.php:258
 #: admin/settings/buddypress-shortcode-activity-listing.php:274
-#: admin/settings/buddypress-shortcode-activity-listing.php:290
 msgid "Type - int|array|bool"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:236
+#: admin/settings/buddypress-shortcode-activity-listing.php:220
 msgid "action"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:238
+#: admin/settings/buddypress-shortcode-activity-listing.php:222
 msgid "Filters by the `type` column in the database."
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:242
+#: admin/settings/buddypress-shortcode-activity-listing.php:226
 msgid "Type - string|array|bool\t"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:252
+#: admin/settings/buddypress-shortcode-activity-listing.php:236
 msgid "primary_id"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:254
+#: admin/settings/buddypress-shortcode-activity-listing.php:238
 msgid "Filters by the `item_id` column in the database."
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:258
+#: admin/settings/buddypress-shortcode-activity-listing.php:242
 msgid "Type - int|array|bool\t"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:268
+#: admin/settings/buddypress-shortcode-activity-listing.php:252
 msgid "secondary_id"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:270
+#: admin/settings/buddypress-shortcode-activity-listing.php:254
 msgid "Filters by the `secondary_item_id` column in the database."
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:284
+#: admin/settings/buddypress-shortcode-activity-listing.php:268
 msgid "offset"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:286
+#: admin/settings/buddypress-shortcode-activity-listing.php:270
 msgid "Return only activity items with an ID greater than or equal to this one."
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:300
+#: admin/settings/buddypress-shortcode-activity-listing.php:284
 #: admin/settings/buddypress-shortcode-groups-listing.php:327
 msgid "show_hidden"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:302
+#: admin/settings/buddypress-shortcode-activity-listing.php:286
 msgid "Whether to show items marked hide_sitewide."
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:306
-#: admin/settings/buddypress-shortcode-activity-listing.php:338
+#: admin/settings/buddypress-shortcode-activity-listing.php:290
+#: admin/settings/buddypress-shortcode-activity-listing.php:322
 #: admin/settings/buddypress-shortcode-groups-listing.php:160
 #: admin/settings/buddypress-shortcode-groups-listing.php:333
 #: admin/settings/buddypress-shortcode-member-listing.php:160
 msgid "Type - bool"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:316
+#: admin/settings/buddypress-shortcode-activity-listing.php:300
 msgid "spam"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:318
+#: admin/settings/buddypress-shortcode-activity-listing.php:302
 msgid ""
 "Spam status. \"ham_only\", \"spam_only\", or false to show all activity "
 "regardless of spam status."
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:323
+#: admin/settings/buddypress-shortcode-activity-listing.php:307
 #: admin/settings/buddypress-shortcode-member-listing.php:333
 msgid "Default - ham_only"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:332
+#: admin/settings/buddypress-shortcode-activity-listing.php:316
 #: admin/settings/buddypress-shortcode-member-listing.php:154
 msgid "populate_extras"
 msgstr ""
 
-#: admin/settings/buddypress-shortcode-activity-listing.php:334
+#: admin/settings/buddypress-shortcode-activity-listing.php:318
 msgid "Whether to pre-fetch the activity metadata for the queried items."
 msgstr ""
 
@@ -981,32 +963,32 @@ msgstr ""
 msgid "Shortcodes & Elementor Widgets For BuddyPress"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-license-page.php:20
+#: admin/wbcom/templates/wbcom-license-page.php:23
 msgid "Plugin License"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:26
-#: admin/wbcom/templates/wbcom-license-page.php:38
-msgid "Product"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:27
-#: admin/wbcom/templates/wbcom-license-page.php:39
-msgid "Version"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:28
-#: admin/wbcom/templates/wbcom-license-page.php:40
-msgid "Key"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-license-page.php:29
 #: admin/wbcom/templates/wbcom-license-page.php:41
-msgid "Status"
+msgid "Product"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-license-page.php:30
 #: admin/wbcom/templates/wbcom-license-page.php:42
+msgid "Version"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:31
+#: admin/wbcom/templates/wbcom-license-page.php:43
+msgid "Key"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:32
+#: admin/wbcom/templates/wbcom-license-page.php:44
+msgid "Status"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:33
+#: admin/wbcom/templates/wbcom-license-page.php:45
 msgid "Action"
 msgstr ""
 
@@ -1762,50 +1744,54 @@ msgstr ""
 msgid "Border Color"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:843
+#: public/class-shortcodes-for-buddypress-public.php:722
 #. translators: %1$s is the name of the group.
 msgid "Group logo of %1$s"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1021
+#: public/class-shortcodes-for-buddypress-public.php:900
 #. translators: %s: member name
 msgid "Profile photo of %s"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1069
+#: public/class-shortcodes-for-buddypress-public.php:948
 msgid "Post in: Profile"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1083
+#: public/class-shortcodes-for-buddypress-public.php:962
 msgid "Post in: Group"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1084
+#: public/class-shortcodes-for-buddypress-public.php:963
 msgid "Start typing the group name..."
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1100
+#: public/class-shortcodes-for-buddypress-public.php:979
 msgid "What's new, %s?"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1101
+#: public/class-shortcodes-for-buddypress-public.php:980
 msgid "Post what's new"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1102
+#: public/class-shortcodes-for-buddypress-public.php:981
 msgid "Post in"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1103
+#: public/class-shortcodes-for-buddypress-public.php:982
 msgid "Post Update"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1104
+#: public/class-shortcodes-for-buddypress-public.php:983
 msgid "Cancel"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1143
+#: public/class-shortcodes-for-buddypress-public.php:1022
 msgid "Go PRO"
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:1089
+msgid "Sorry, there was no activity found."
 msgstr ""
 
 #: shortcodes-for-buddypress.php:40
@@ -1821,19 +1807,19 @@ msgstr ""
 msgid "%1$s and %2$s will not activate togather. Please deactivate %1$s"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:141
+#: shortcodes-for-buddypress.php:145
 msgid "%1$s is ineffective as it requires %2$s to be installed and active."
 msgstr ""
 
-#: shortcodes-for-buddypress.php:189
+#: shortcodes-for-buddypress.php:213
 msgid " Shortcode For BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:190
+#: shortcodes-for-buddypress.php:214
 msgid "BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:193
+#: shortcodes-for-buddypress.php:217
 #. translators: %s:
 msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
 msgstr ""
@@ -1853,27 +1839,36 @@ msgstr ""
 msgid "Unread notifications"
 msgstr ""
 
-#: templates/nouveau/notifications/notifications-loop.php:43
+#: templates/nouveau/activity/bp-shortcodes-activity.php:36
+msgid "Load More"
+msgstr ""
+
+#: templates/nouveau/groups/bp-shortcodes-groups.php:106
+#. translators: %s: last activity timestamp (e.g. "Active 1 hour ago")
+msgid "Active %s"
+msgstr ""
+
+#: templates/nouveau/notifications/notifications-loop.php:37
 msgid "Select all"
 msgstr ""
 
-#: templates/nouveau/notifications/notifications-loop.php:44
+#: templates/nouveau/notifications/notifications-loop.php:38
 msgid "Notification"
 msgstr ""
 
-#: templates/nouveau/notifications/notifications-loop.php:46
+#: templates/nouveau/notifications/notifications-loop.php:40
 msgid "Date Received"
 msgstr ""
 
-#: templates/nouveau/notifications/notifications-loop.php:49
+#: templates/nouveau/notifications/notifications-loop.php:43
 msgid "Actions"
 msgstr ""
 
-#: templates/nouveau/notifications/notifications-loop.php:62
+#: templates/nouveau/notifications/notifications-loop.php:56
 msgid "Select this notification"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:456
+#: public/class-shortcodes-for-buddypress-public.php:334
 msgctxt "button"
 msgid "Load More"
 msgstr ""

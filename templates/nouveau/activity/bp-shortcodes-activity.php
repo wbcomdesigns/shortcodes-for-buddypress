@@ -30,10 +30,10 @@ endif;
 			<?php endwhile; ?>
 			</ul>
 
-			<?php if ( isset( $activity_atts['load_more'] ) && ! empty( $activity_atts['load_more'] )  && bp_activity_has_more_items() ) : ?>
+			<?php if ( isset( $activity_atts['load_more'] ) && ! empty( $activity_atts['load_more'] ) && bp_activity_has_more_items() ) : ?>
 				<ul>
 					<li class="load-more">
-						<a class="button" id="load-more-activity" href="<?php bp_activity_load_more_link(); ?>" data-limit='<?php echo esc_attr( $activity_atts['per_page'] ); ?>' data-page="2"><?php echo esc_html_x( 'Load More', 'buddypress' ); ?></a>
+						<a class="button" id="load-more-activity" href="<?php bp_activity_load_more_link(); ?>" data-limit='<?php echo esc_attr( $activity_atts['per_page'] ); ?>' data-page="2"><?php echo esc_html__( 'Load More', 'shortcodes-for-buddypress' ); ?></a>
 					</li>
 				</ul>
 			<?php endif; ?>

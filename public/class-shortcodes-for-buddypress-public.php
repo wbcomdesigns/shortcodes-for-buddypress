@@ -147,7 +147,7 @@ class Shortcodes_For_Buddypress_Public {
 		if ( ! empty( $bpsh_query ) ) {
 			$bpsh_query = '&' . $bpsh_query;
 		}
-		$output = '';
+		$output       = '';
 		$default_atts = array(
 			'title'            => '', // title of the section
 			'pagination'       => 1, // show or not.
@@ -192,7 +192,7 @@ class Shortcodes_For_Buddypress_Public {
 		if ( function_exists( 'bp_is_active' ) ) {
 
 			if ( $title != '' ) {
-		  		$output .= '<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>';
+				$output .= '<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>';
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
 				buddypress_shortcodes_template( 'legacy/activity/bp-shortcodes-activity.php' );
@@ -216,7 +216,7 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_activity_rest_api( $atts, $content = null ) {
 		$activity_param_count = 0;
-		$activity_params = '';
+		$activity_params      = '';
 		if ( ! empty( $atts ) ) {
 			foreach ( $atts as $key_atts => $value_atts ) {
 				if ( 'title' === $key_atts ) {
@@ -254,37 +254,37 @@ class Shortcodes_For_Buddypress_Public {
 						<ul class="activity-list item-list bp-list">
 					<?php
 					if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-						$response_data              = json_decode( wp_remote_retrieve_body( $response ), true );
+						$response_data = json_decode( wp_remote_retrieve_body( $response ), true );
 						wp_enqueue_script( 'bp-nouveau-activity' );
 						$i = 2;
 						global $activities_template;
 						foreach ( $response_data as $response_activity_data ) {     // this loop is for activity
 							// Ist step create data for activity.
-							$obj = new stdClass();
+							$obj                       = new stdClass();
 							$obj->current_activity     = 20;
 							$obj->activity_count       = 21;
 							$obj->total_activity_count = 21;
 							// create object in activities key.
-							$obj_activities                     = new BP_Activity_Rest_Api_Template( $response_activity_data );
+							$obj_activities = new BP_Activity_Rest_Api_Template( $response_activity_data );
 							// create object in activity key.
-							$obj_activity = new BP_Activity_Rest_Api_Template( $response_activity_data );
-							$obj->activities = array(
+							$obj_activity                   = new BP_Activity_Rest_Api_Template( $response_activity_data );
+							$obj->activities                = array(
 								$obj_activities,
 							);
-							$obj->activity = $obj_activity;
-							$obj->in_the_loop = 1;
-							$obj->pag_arg = 'acpage';
-							$obj->pag_page = 1;
-							$obj->pag_num = 10;
-							$obj->pag_links = '';
-							$obj->full_name = '';
+							$obj->activity                  = $obj_activity;
+							$obj->in_the_loop               = 1;
+							$obj->pag_arg                   = 'acpage';
+							$obj->pag_page                  = 1;
+							$obj->pag_num                   = 10;
+							$obj->pag_links                 = '';
+							$obj->full_name                 = '';
 							$obj->disable_blogforum_replies = 1;
-							$favorite_activity = bp_activity_get_meta( $response_activity_data['id'], 'favorite_count', true );
-							$favs = array();
+							$favorite_activity              = bp_activity_get_meta( $response_activity_data['id'], 'favorite_count', true );
+							$favs                           = array();
 							if ( 0 != $favorite_activity ) {
 								$favs[ $i ] = $response_activity_data['id'];
 							}
-							$obj->my_favs = $favs;
+							$obj->my_favs        = $favs;
 							$obj->has_more_items = 1; // end data cretaion for a activity.
 							$activities_template = $obj;
 							?>
@@ -421,7 +421,7 @@ class Shortcodes_For_Buddypress_Public {
 			'meta_value'          => false, // Only return users where the usermeta value matches. Requires meta_key.
 			'populate_extras'     => true,      // Fetch usermeta? Friend count, last active etc.
 			'container_class'     => 'members', // default container,
-			'loop-layout' => !empty( $atts['loop-layout'] ) ? $atts['loop-layout'] : '',
+			'loop-layout'         => ! empty( $atts['loop-layout'] ) ? $atts['loop-layout'] : '',
 			'bpsh_query'          => $bpsh_query,
 		);
 
@@ -458,7 +458,7 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_member_rest_api( $atts, $content = null ) {
 		$param_count = 0;
-		$params = '';
+		$params      = '';
 		if ( ! empty( $atts ) ) {
 			foreach ( $atts as $key_atts => $value_atts ) {
 				if ( 'title' === $key_atts ) {
@@ -479,7 +479,7 @@ class Shortcodes_For_Buddypress_Public {
 		}
 		$response = wp_remote_get( get_rest_url() . 'buddypress/v1/members?' . $params );
 		if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-			$response_data              = json_decode( wp_remote_retrieve_body( $response ), true );
+			$response_data = json_decode( wp_remote_retrieve_body( $response ), true );
 			bp_nouveau_before_loop();
 			?>
 			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav alignwide">
@@ -496,17 +496,17 @@ class Shortcodes_For_Buddypress_Public {
 			<ul id="members-list" class="item-list members-list bp-list grid three">
 				<?php
 				foreach ( $response_data as $response_activity_data ) {
-					$member_friend_count = bp_get_user_meta( $response_activity_data['id'], 'total_friend_count', true );
+					$member_friend_count  = bp_get_user_meta( $response_activity_data['id'], 'total_friend_count', true );
 					$member_last_activity = bp_get_user_last_activity( $response_activity_data['id'] );
-					$userdata = get_userdata( $response_activity_data['id'] );
-					$mem = new stdClass();
-					$mem->current_member     = 1;
-					$mem->member_count       = 21;
-					$mem_members = new BP_Memebr_Rest_Api_Template( $response_activity_data );
-					$mem->members = array(
+					$userdata             = get_userdata( $response_activity_data['id'] );
+					$mem                  = new stdClass();
+					$mem->current_member  = 1;
+					$mem->member_count    = 21;
+					$mem_members          = new BP_Memebr_Rest_Api_Template( $response_activity_data );
+					$mem->members         = array(
 						$mem_members,
 					);
-					$mem_member = new BP_Memebr_Rest_Api_Template( $response_activity_data );
+					$mem_member           = new BP_Memebr_Rest_Api_Template( $response_activity_data );
 					unset( $mem_member->friendship_status );
 					unset( $mem_member->template_meta );
 					$mem->member = $mem_member;
@@ -536,7 +536,7 @@ class Shortcodes_For_Buddypress_Public {
 									<?php
 									bp_nouveau_members_loop_buttons(
 										array(
-											'container'      => 'ul',
+											'container' => 'ul',
 											'button_element' => 'button',
 										)
 									);
@@ -616,7 +616,7 @@ class Shortcodes_For_Buddypress_Public {
 			'parent_id'          => null,
 			'update_meta_cache'  => true,
 			'container_class'    => 'group', // default container,
-			'loop-layout'			=> !empty( $atts['loop-layout'] ) ? $atts['loop-layout'] : '',
+			'loop-layout'        => ! empty( $atts['loop-layout'] ) ? $atts['loop-layout'] : '',
 			'bpsh_query'         => $bpsh_query,
 		);
 
@@ -650,7 +650,7 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_group_listing_rest_api( $atts, $content = null ) {
 		$group_param_count = 0;
-		$group_params = '';
+		$group_params      = '';
 		if ( ! empty( $atts ) ) {
 			foreach ( $atts as $key_atts => $value_atts ) {
 				if ( 'title' === $key_atts ) {
@@ -671,7 +671,7 @@ class Shortcodes_For_Buddypress_Public {
 		}
 		$response = wp_remote_get( get_rest_url() . 'buddypress/v1/groups?' . $group_params );
 		if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-			$response_data              = json_decode( wp_remote_retrieve_body( $response ), true );
+			$response_data = json_decode( wp_remote_retrieve_body( $response ), true );
 			?>
 			<p class="current-group-type"></p>
 			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav alignwide">				
@@ -688,18 +688,18 @@ class Shortcodes_For_Buddypress_Public {
 				<ul id="groups-list" class="item-list groups-list bp-list grid three">
 					<?php
 					foreach ( $response_data as $response_group_data ) {
-						$group_obj  = new stdClass();
+						$group_obj                = new stdClass();
 						$group_obj->current_group = 0;
-						$group_obj->group_count = 20;
-						$gp_groups = new BP_Group_Rest_Api_Template( $response_group_data );
-						$group_obj->groups = array(
+						$group_obj->group_count   = 20;
+						$gp_groups                = new BP_Group_Rest_Api_Template( $response_group_data );
+						$group_obj->groups        = array(
 							$gp_groups,
 						);
-						$gp_group = new BP_Group_Rest_Api_Template( $response_group_data );
-						$group_obj->group = $gp_group;
-						$groups_template = $group_obj;
-						$group_obj->in_the_loop = 1;
-						$group_obj->single_group = '';
+						$gp_group                 = new BP_Group_Rest_Api_Template( $response_group_data );
+						$group_obj->group         = $gp_group;
+						$groups_template          = $group_obj;
+						$group_obj->in_the_loop   = 1;
+						$group_obj->single_group  = '';
 						global $groups_template;
 						$groups_template = $group_obj;
 						?>
@@ -707,7 +707,7 @@ class Shortcodes_For_Buddypress_Public {
 				<div class="list-wrap">
 						<?php if ( ! bp_disable_group_avatar_uploads() ) : ?>
 							<?php
-							$args = '';
+							$args              = '';
 							$group_avatar_args = bp_parse_args(
 								$args,
 								array(
@@ -723,7 +723,7 @@ class Shortcodes_For_Buddypress_Public {
 								),
 								'get_group_avatar'
 							);
-							$group_avatar = bp_core_fetch_avatar(
+							$group_avatar      = bp_core_fetch_avatar(
 								array(
 									'item_id'    => $response_group_data['id'],
 									'avatar_dir' => 'group-avatars',
@@ -1068,12 +1068,12 @@ class Shortcodes_For_Buddypress_Public {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bpsp-nonce' ) ) {
 			return false;
 		}
-		$page = ! empty( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : '2';
+		$page  = ! empty( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : '2';
 		$limit = ! empty( $_POST['limit'] ) ? sanitize_text_field( wp_unslash( $_POST['limit'] ) ) : '10';
 		if ( bp_has_activities(
 			array(
 				'per_page' => $limit,
-				'page' => $page,
+				'page'     => $page,
 			)
 		) ) {
 			ob_start();
@@ -1086,7 +1086,7 @@ class Shortcodes_For_Buddypress_Public {
 		} else {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Sorry, there was no activity found.', 'bp-activity-shortcode' ),
+					'message' => __( 'Sorry, there was no activity found.', 'shortcodes-for-buddypress' ),
 				)
 			);
 		}
