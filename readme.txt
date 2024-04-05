@@ -3,8 +3,8 @@ Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcodes, BuddyPress Widgets
 Requires at least: 5.0.0
-Tested up to: 6.4.2
-Stable tag: 2.7.0
+Tested up to: 6.5.0
+Stable tag: 2.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying group listing based on the given user ID screenshot-4.png
 
 == Changelog ==
+= 2.7.1 =
+* Fix: (#179)Fixed fatal error call to undefined function bp_nouveau_get_container_classes()
+* Fix: Fixed Plugin redirect issue when multi plugin activate the same time
+* Fix: Compatibility check with WordPress 6.5.0
+
 = 2.7.0 =
 * Fix: Added activity-meta in activity shortcode
 * Fix: Update shortcode code flow
