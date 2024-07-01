@@ -95,7 +95,21 @@ class Shortcodes_For_Buddypress_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
+		
+		if (  defined( 'RTMEDIA_VERSION' ) ) {
+			wp_enqueue_script(
+				'rtmedia-backbone',
+				plugin_dir_url( __FILE__ ) . 'js/rtMedia.backbone.js',
+				array(
+					'plupload-all',
+					'backbone',
+					// Whole rtmedia-backbone file is dependent on rtmedia-main  file (eg. rtMediaHook).
+					'rtmedia-main',
+				),
+				RTMEDIA_VERSION,
+				true
+			);
+		}
 		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-public.js', array( 'jquery', 'bp-nouveau-activity' ), $this->version, true );
 		if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 			wp_enqueue_script( $this->plugin_name );
