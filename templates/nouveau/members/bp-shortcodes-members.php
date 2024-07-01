@@ -12,6 +12,11 @@ $member_loop_classes = static function () use ( $classes ) {
 	$classes[] = 'item-list';
 	$classes[] = 'members-list';
 	$classes[] = 'bp-list';
+	$classes[] = 'rg-member-list';
+	
+	global $wbtm_reign_settings;
+	$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] : 'wbtm-member-directory-type-2';
+	
 
 	$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
 	$members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '3';
