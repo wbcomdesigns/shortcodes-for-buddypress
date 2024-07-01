@@ -13,9 +13,15 @@ $group_loop_classes = static function () use ( $classes ) {
 	$classes[]             = 'item-list';
 	$classes[]             = 'groups-list';
 	$classes[]             = 'bp-list';
-	$component             = sanitize_key( bp_current_component() );
+	$classes[]             = 'rg-group-list';
+	$component             = sanitize_key( 'groups' );
 	$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
 	$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : '3';
+	
+	global $wbtm_reign_settings;
+	$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['group_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['group_directory_type'] : 'wbtm-group-directory-type-2';
+	
+	
 
 	if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
 		$customizer_option = sprintf( '%s_layout', $component );
