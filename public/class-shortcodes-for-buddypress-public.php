@@ -51,7 +51,6 @@ class Shortcodes_For_Buddypress_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 		add_filter( 'bp_enqueue_assets_in_bp_pages_only', array( $this, 'bp_shortcode_js_css' ) );
-
 	}
 
 	/**
@@ -74,7 +73,6 @@ class Shortcodes_For_Buddypress_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-public.css', array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -95,8 +93,8 @@ class Shortcodes_For_Buddypress_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		
-		if (  defined( 'RTMEDIA_VERSION' ) ) {
+
+		if ( defined( 'RTMEDIA_VERSION' ) ) {
 			wp_enqueue_script(
 				'rtmedia-backbone',
 				plugin_dir_url( __FILE__ ) . 'js/rtMedia.backbone.js',
@@ -213,6 +211,12 @@ class Shortcodes_For_Buddypress_Public {
 				$output .= ob_get_contents();
 			} else {
 				wp_enqueue_script( 'bp-nouveau-activity' );
+
+				if ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) {
+					wp_enqueue_script( 'bp-medium-editor' );
+					wp_enqueue_style( 'bp-medium-editor' );
+				}
+
 				buddypress_shortcodes_template( 'nouveau/activity/bp-shortcodes-activity.php' );
 				$output .= ob_get_contents();
 			}
@@ -240,7 +244,7 @@ class Shortcodes_For_Buddypress_Public {
 					$activity_params .= '&';
 				}
 				$activity_params .= $key_atts . '=' . $value_atts;
-				$activity_param_count++;
+				++$activity_param_count;
 			}
 		}
 
@@ -341,7 +345,7 @@ class Shortcodes_For_Buddypress_Public {
 										<?php bp_nouveau_activity_hook( 'after', 'entry' ); ?>
 										<?php
 						}
-						$i++;
+						++$i;
 					}
 					?>
 							<li class="load-more">
@@ -482,7 +486,7 @@ class Shortcodes_For_Buddypress_Public {
 					$params .= '&';
 				}
 				$params .= $key_atts . '=' . $value_atts;
-				$param_count++;
+				++$param_count;
 			}
 		}
 		ob_start();
@@ -674,7 +678,7 @@ class Shortcodes_For_Buddypress_Public {
 					$group_params .= '&';
 				}
 				$group_params .= $key_atts . '=' . $value_atts;
-				$group_param_count++;
+				++$group_param_count;
 			}
 		}
 		ob_start();
@@ -805,7 +809,6 @@ class Shortcodes_For_Buddypress_Public {
 					<?php
 		}
 		return ob_get_clean();
-
 	}
 
 	/**
@@ -910,7 +913,7 @@ class Shortcodes_For_Buddypress_Public {
 					'avatar_height' => $height,
 					'user_domain'   => bp_loggedin_user_domain(),
 					'avatar_alt'    => sprintf(
-						   /* translators: %s: member name */
+							/* translators: %s: member name */
 						__( 'Profile photo of %s', 'shortcodes-for-buddypress' ),
 						$user_displayname
 					),
@@ -1032,7 +1035,7 @@ class Shortcodes_For_Buddypress_Public {
 
 			<?php if ( $texts['link'] ) : ?>
 				<a class="elementor-button elementor-panel-scheme-title" href="<?php echo esc_url( $texts['link'] ); ?>"
-				   target="_blank">
+					target="_blank">
 					<?php echo esc_html_e( 'Go PRO', 'shortcodes-for-buddypress' ); ?>
 				</a>
 			<?php endif; ?>
@@ -1076,8 +1079,7 @@ class Shortcodes_For_Buddypress_Public {
 
 	/**
 	 * Loader for activity shortcode
-	 *
-	*/
+	 */
 	public function buddypress_shortcodes_load_activities() {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bpsp-nonce' ) ) {
 			return false;
@@ -1104,25 +1106,22 @@ class Shortcodes_For_Buddypress_Public {
 				)
 			);
 		}
-
 	}
 
 	/**
 	 * Load activity meta class
-	 *
-	*/
+	 */
 	public function buddypress_shortcodes_filter_activity_action_wrapper( $r ) {
 		global $post;
-		if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'activity-listing' ) ) {	
-			
-			if ( !empty( $r['container_classes'])) {
-				$r['container_classes'] = array_merge( $r['container_classes'], array( 'activity-meta' ) );	
+		if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'activity-listing' ) ) {
+
+			if ( ! empty( $r['container_classes'] ) ) {
+				$r['container_classes'] = array_merge( $r['container_classes'], array( 'activity-meta' ) );
 			} else {
-				$r['container_classes'] = array( 'activity-meta' ) ;
-				$r['classes'] = array( 'activity-meta' ) ;
+				$r['container_classes'] = array( 'activity-meta' );
+				$r['classes']           = array( 'activity-meta' );
 			}
 		}
 		return $r;
 	}
-
 }
