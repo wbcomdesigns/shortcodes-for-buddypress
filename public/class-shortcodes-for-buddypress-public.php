@@ -993,6 +993,7 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		$activity_strings = array(
+			/* translators: %s: display buddypress user firstname.*/
 			'whatsnewPlaceholder' => sprintf( __( "What's new, %s?", 'shortcodes-for-buddypress' ), bp_get_user_firstname( $user_displayname ) ),
 			'whatsnewLabel'       => __( 'Post what\'s new', 'shortcodes-for-buddypress' ),
 			'whatsnewpostinLabel' => __( 'Post in', 'shortcodes-for-buddypress' ),
