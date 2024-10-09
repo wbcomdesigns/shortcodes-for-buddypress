@@ -189,7 +189,7 @@ class BP_Activity_Rest_Api_Template {
 		$this->display_name         = $display_name;
 		$this->user_fullname        = $display_name;
 		$this->user_email           = $user_email;
-		$this->children             = isset( $response_activity_data['comments'] ) ? iterate_comments( $response_activity_data['comments'] ) : array();  // $children is a comment for activity
+		$this->children             = isset( $response_activity_data['comments'] ) ? shortcodes_for_buddypress_iterate_comments( $response_activity_data['comments'] ) : array();  // $children is a comment for activity
 	}
 
 }

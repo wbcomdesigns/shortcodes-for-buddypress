@@ -30,6 +30,10 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+/** Functionality to activate any one of Shortcode for BuddyPress and Shortcodes for BuddyPress Pro if both exists together.
+ * 
+ * @since 1.0.0
+ */
 if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	if ( ! function_exists( 'deactivate_plugins' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -72,8 +76,10 @@ if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME' ) ) {
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-shortcodes-for-buddypress-activator.php
+ * 
+ * @since 1.0.0
  */
-function activate_shortcodes_for_buddypress() {
+function shortcodes_for_buddypress_activate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-activator.php';
 	Shortcodes_For_Buddypress_Activator::activate();
 }
@@ -81,22 +87,24 @@ function activate_shortcodes_for_buddypress() {
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-shortcodes-for-buddypress-deactivator.php
+ * 
+ * @since 1.0.0
  */
 
-function deactivate_shortcodes_for_buddypress() {
+function shortcodes_for_buddypress_deactivate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-deactivator.php';
 	Shortcodes_For_Buddypress_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_shortcodes_for_buddypress' );
-register_deactivation_hook( __FILE__, 'deactivate_shortcodes_for_buddypress' );
+register_activation_hook( __FILE__, 'shortcodes_for_buddypress_activate' );
+register_deactivation_hook( __FILE__, 'shortcodes_for_buddypress_deactivate' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress.php';
-require plugin_dir_path( __FILE__ ) . 'includes/functions.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 
 require_once __DIR__ . '/vendor/autoload.php';
 HardG\BuddyPress120URLPolyfills\Loader::init();
@@ -110,7 +118,7 @@ HardG\BuddyPress120URLPolyfills\Loader::init();
  *
  * @since    1.0.0
  */
-function run_shortcodes_for_buddypress() {
+function shortcodes_for_buddypress_run() {
 	if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 		deactivate_plugins( 'shortcodes-for-buddypress/shortcodes-for-buddypress.php' );
 	} else {
@@ -119,12 +127,14 @@ function run_shortcodes_for_buddypress() {
 	}
 
 }
-run_shortcodes_for_buddypress();
+shortcodes_for_buddypress_run();
 
 add_action( 'admin_notices', 'shortcodes_for_buddypress_plugin_admin_notice' );
 
 /**
  * Function to through admin notice if BuddyPress is not active.
+ * 
+ * @since 1.0.0
  */
 function shortcodes_for_buddypress_plugin_admin_notice() {
 	
@@ -138,17 +148,17 @@ function shortcodes_for_buddypress_plugin_admin_notice() {
 	}
 
 	if ( $check_active ) {
-		$bmpro_plugin = 'Shortcode For BuddyPress';
+		$bmpro_plugin = 'Shortcodes For BuddyPress';
 		$bp_plugin    = 'BuddyPress';
 		echo '<div class="error"><p>'
 		/* translators: %1$s: shortcodes-for-buddypress plugin, %2$s: BuddyPress plugin.*/
-		. sprintf( esc_html( __( '%1$s is ineffective as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ) ), '<strong>' . esc_html( $bmpro_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' )
+		. sprintf( esc_html( __( '%1$s is ineffective as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ) ), '<strong>' . esc_html($bmpro_plugin) . '</strong>', '<strong>' . esc_html($bp_plugin) . '</strong>' )
 		. '</p></div>';
 	}
 }
 
 /**
- *  Check if buddypress activate.
+ *  Check if buddypress is active.
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
 	function shortcodes_for_buddypress_requires_buddypress() {
@@ -190,6 +200,7 @@ add_action( 'activated_plugin', 'shortcodes_for_buddypress_activation_redirect_s
 /**
  * Shortcodes_for_buddypress_do_activation_redirect
  *
+ * @since 1.0.0
  * @return void
  */
 function shortcodes_for_buddypress_do_activation_redirect() {
@@ -209,11 +220,12 @@ add_action( 'admin_init', 'shortcodes_for_buddypress_do_activation_redirect' );
 if ( ! function_exists( 'shortcodes_for_buddypress_required_plugin_admin_notice' ) ) {
 	function shortcodes_for_buddypress_required_plugin_admin_notice() {
 
-		$bpquotes_plugin = esc_html__( ' Shortcode For BuddyPress', 'shortcodes-for-buddypress' );
-		$bp_plugin       = esc_html__( 'BuddyPress', 'shortcodes-for-buddypress' );
+		$bpquotes_plugin = 'Shortcodes For BuddyPress';
+		$bp_plugin       = 'BuddyPress';
+		
 		echo '<div class="error"><p>';
-		/* translators: %s: */
-		echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bpquotes_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
+		/* translators: %1$s : Shortcodes-for-BuddyPress plugin, %2$s : Buddypress plugin.   */
+		echo sprintf( esc_html( __( '%1$s is ineffective as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ) ), '<strong>' . esc_html($bpquotes_plugin) . '</strong>', '<strong>' . esc_html($bp_plugin) . '</strong>' );
 		echo '</p></div>';
 		if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
 			$activate = filter_input( INPUT_GET, 'activate' );
@@ -223,14 +235,13 @@ if ( ! function_exists( 'shortcodes_for_buddypress_required_plugin_admin_notice'
 }
 
 
-
 /**
  * BuddyPress Activity Elements.
  *
  * @since 2.2.0
  */
-if ( ! function_exists( 'buddypress_shortcodes_categories_registered' ) ) {
-	function buddypress_shortcodes_categories_registered( $elements_manager ) {
+if ( ! function_exists( 'shortcodes_for_buddypress_categories_registered' ) ) {
+	function shortcodes_for_buddypress_categories_registered( $elements_manager ) {
 
 		$elements_manager->add_category(
 			'buddypress-widgets',
@@ -241,15 +252,20 @@ if ( ! function_exists( 'buddypress_shortcodes_categories_registered' ) ) {
 		);
 	}
 
-	add_action( 'elementor/elements/categories_registered', 'buddypress_shortcodes_categories_registered' );
+	add_action( 'elementor/elements/categories_registered', 'shortcodes_for_buddypress_categories_registered' );
 
 }
 
+/** Function to register shortcode widgets.
+ * 
+ * @since 1.0.0
+ * 
+ */
 if ( ! function_exists( 'shortcodes_for_buddypress_widgets_registered' ) ) {
 	function shortcodes_for_buddypress_widgets_registered() {
-		require plugin_dir_path( __FILE__ ) . 'buddypress-shortcodes-element.php';
-		require plugin_dir_path( __FILE__ ) . 'buddypress-members-element.php';
-		require plugin_dir_path( __FILE__ ) . 'buddypress-groups-element.php';
+		require_once plugin_dir_path( __FILE__ ) . 'buddypress-shortcodes-element.php';
+		require_once plugin_dir_path( __FILE__ ) . 'buddypress-members-element.php';
+		require_once plugin_dir_path( __FILE__ ) . 'buddypress-groups-element.php';
 	}
 
 	add_action( 'elementor/widgets/widgets_registered', 'shortcodes_for_buddypress_widgets_registered', 15 );
@@ -257,12 +273,13 @@ if ( ! function_exists( 'shortcodes_for_buddypress_widgets_registered' ) ) {
 }
 
 /**
- * Iterate_comments
+ * Function to iterate comments
  *
+ * @since 1.0.0
  * @param  mixed $comments for create activity data.
  * @return $childrens
  */
-function iterate_comments( $comments ) {
+function shortcodes_for_buddypress_iterate_comments( $comments ) {
 	$childrens = array();
 	foreach ( $comments as $comment ) {
 		$userdata                        = get_userdata( $comment['user_id'] );
@@ -302,12 +319,14 @@ function iterate_comments( $comments ) {
 		$obj_children->user_login        = $tmp['user_login'];
 		$obj_children->display_name      = $tmp['display_name'];
 		$obj_children->user_fullname     = $tmp['user_fullname'];
-		$obj_children->children          = isset( $comment['comments'] ) ? iterate_comments( $comment['comments'] ) : array();
+		$obj_children->children          = isset( $comment['comments'] ) ? shortcodes_for_buddypress_iterate_comments( $comment['comments'] ) : array();
 		$obj_children->depth             = 1;
 		$childrens[ $comment['id'] ]     = $obj_children;
 	}
 	return $childrens;
 }
+
+
 
 function shortcodes_for_buddypress_get_groups_loop_class( $classes, $component ) {
 
