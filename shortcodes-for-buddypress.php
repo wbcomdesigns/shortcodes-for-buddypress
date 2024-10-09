@@ -24,8 +24,8 @@
  * Text Domain:       shortcodes-for-buddypress
  * Domain Path:       /languages
  */
-
 // If this file is called directly, abort.
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
@@ -69,7 +69,6 @@ if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME' ) ) {
 	define( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 }
 
-
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-shortcodes-for-buddypress-activator.php
@@ -83,6 +82,7 @@ function activate_shortcodes_for_buddypress() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-shortcodes-for-buddypress-deactivator.php
  */
+
 function deactivate_shortcodes_for_buddypress() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-deactivator.php';
 	Shortcodes_For_Buddypress_Deactivator::deactivate();
@@ -121,13 +121,13 @@ function run_shortcodes_for_buddypress() {
 }
 run_shortcodes_for_buddypress();
 
-
 add_action( 'admin_notices', 'shortcodes_for_buddypress_plugin_admin_notice' );
+
 /**
  * Function to through admin notice if BuddyPress is not active.
  */
 function shortcodes_for_buddypress_plugin_admin_notice() {
-
+	
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 		require_once ABSPATH . '/wp-admin/includes/plugin.php';
 	}
@@ -140,8 +140,8 @@ function shortcodes_for_buddypress_plugin_admin_notice() {
 	if ( $check_active ) {
 		$bmpro_plugin = 'Shortcode For BuddyPress';
 		$bp_plugin    = 'BuddyPress';
-
 		echo '<div class="error"><p>'
+		/* translators: %1$s: shortcodes-for-buddypress plugin, %2$s: BuddyPress plugin.*/
 		. sprintf( esc_html( __( '%1$s is ineffective as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ) ), '<strong>' . esc_html( $bmpro_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' )
 		. '</p></div>';
 	}
@@ -164,7 +164,6 @@ if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
 	add_action( 'admin_init', 'shortcodes_for_buddypress_requires_buddypress', 20 );
 }
 
-
 /**
  * Redirect to plugin settings page after activated.
  *
@@ -173,7 +172,7 @@ if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
  * @param string $plugin Path to the plugin file relative to the plugins directory.
  */
 function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
-
+	
 	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore
 			wp_safe_redirect( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) );
