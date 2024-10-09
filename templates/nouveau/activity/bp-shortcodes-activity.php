@@ -19,6 +19,8 @@ if ( $activity_atts['allow_posting'] == 'true' && is_user_logged_in() ) :
 	bp_get_template_part( 'activity/post-form' );
 endif;
 ?>
+<?php do_action( 'before_activity_listing_output', $atts, $activity_atts ); ?>
+
 <?php if ( bp_has_activities( $activity_atts['bpsh_query'] ) ) : ?>
 	<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
 		<ul class="activity-list item-list bp-list bp-shortcode-activity">
@@ -46,6 +48,7 @@ endif;
 
 <?php bp_nouveau_after_loop(); ?>
 
+<?php do_action( 'after_activity_listing_output', $atts, $activity_atts ); ?>
 
 <?php
 
