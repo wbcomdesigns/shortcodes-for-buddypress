@@ -232,17 +232,33 @@ function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
 add_action( 'activated_plugin', 'shortcodes_for_buddypress_activation_redirect_settings' );
 
 /**
- * Shortcodes_for_buddypress_do_activation_redirect
+ * 
+ * This function is triggered after the plugin is activated and ensures that the user 
+ * is redirected to the Shortcodes for BuddyPress settings page if the plugin was newly 
+ * installed. The redirection only occurs in the admin area and uses `wp_safe_redirect()` 
+ * for security.
  *
  * @since 1.0.0
  * @return void
  */
 function shortcodes_for_buddypress_do_activation_redirect() {
+
+	// Validating if function is called from admin area.
+	if(! is_admin()){
+		return;
+	}
+
+	// Check if the transient for new installation is set.
 	if ( get_transient( '_bp_shortcode_is_new_install' ) ) {
+		// Deleting the already set transient to avoid repeated redirections.
 		delete_transient( '_bp_shortcode_is_new_install' );
-		wp_safe_redirect( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) );
+		
+		// Redirecting to the setting page of the plugin.
+		wp_safe_redirect( esc_url(admin_url( 'admin.php?page=shortcodes-for-buddypress' )) );
+		exit;
 	}
 }
+// Hook to admin_init.
 add_action( 'admin_init', 'shortcodes_for_buddypress_do_activation_redirect' );
 
 /**
