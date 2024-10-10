@@ -110,24 +110,28 @@ require_once __DIR__ . '/vendor/autoload.php';
 HardG\BuddyPress120URLPolyfills\Loader::init();
 
 /**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    1.0.0
+ * This function will deactivate the Shortcodes_for_Buddypress core plugin if Shortcodes_for_Buddypress Pro plugin is activated.
+ * This was done to avoid conflicts between the functionalities of both the plugins.
+ * 
+ * If Shortcodes_for_Buddypress Pro plugin was not found it will continue the execution of the core plugin.
+ *  
+ * @since  1.0.0
+ * @return void
  */
 function shortcodes_for_buddypress_run() {
+	//Checks if the pro plugin is installed and activated.
 	if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+		//Deactivates the core plugin if pro plugin is activated.
 		deactivate_plugins( 'shortcodes-for-buddypress/shortcodes-for-buddypress.php' );
 	} else {
+		//Begins execution of the current plugin.
 		$plugin = new Shortcodes_For_Buddypress();
 		$plugin->run();
 	}
 
 }
 shortcodes_for_buddypress_run();
+
 
 add_action( 'admin_notices', 'shortcodes_for_buddypress_plugin_admin_notice' );
 
