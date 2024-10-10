@@ -228,6 +228,7 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		ob_end_clean();
+		$output = apply_filters( 'modify_activity_listing_output', $output, $atts, $activity_atts );
 		return $output;
 	}
 
