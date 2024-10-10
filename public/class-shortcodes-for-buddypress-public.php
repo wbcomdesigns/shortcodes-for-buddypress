@@ -464,9 +464,13 @@ class Shortcodes_For_Buddypress_Public {
 				<?php
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
+				do_action( 'before_render_member_shortcode', $atts );
 				buddypress_shortcodes_template( 'legacy/members/bp-shortcodes-members.php' );
+				do_action( 'after_render_member_shortcode', $atts );
 			} else {
+				do_action( 'before_render_member_shortcode', $atts );
 				buddypress_shortcodes_template( 'nouveau/members/bp-shortcodes-members.php' );
+				do_action( 'after_render_member_shortcode', $atts );
 			}
 		}
 
