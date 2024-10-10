@@ -480,7 +480,7 @@ class Shortcodes_For_Buddypress_Public {
 
 		$output = ob_get_clean(); 
 
-		$output = apply_filters( 'modify_notifications_output', $output, $atts, $notifications_atts );
+		$output = apply_filters( 'modify_member_output', $output, $atts, $members_atts );
 
 		return $output; 
 	}
@@ -871,8 +871,10 @@ class Shortcodes_For_Buddypress_Public {
 		} else {
 
 		}
+		$output = ob_get_clean();
 
-		return ob_get_clean();
+		// Apply filter on the output before returning it
+		$output = apply_filters( 'modify_notifications_output', $output, $atts, $notifications_atts );
 	}
 
 	/*
