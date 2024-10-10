@@ -12,6 +12,9 @@ do_action( 'bp_before_directory_activity' );
 if ( $activity_atts['use_compat'] ) {
 	echo '<div id="buddypress" class="bp-dir-hori-nav ' . esc_attr( bp_nouveau_get_container_classes() ) . ' ' . esc_attr( $activity_atts['container_class'] ) . '">';
 }
+if( empty( $atts ) ){
+	$atts = array();
+}
 
 bp_nouveau_before_loop(); ?>
 <?php
