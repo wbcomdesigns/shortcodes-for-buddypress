@@ -116,11 +116,15 @@ class Shortcodes_For_Buddypress_Public {
 			wp_localize_script(
 				$this->plugin_name,
 				'buddypress_shortcode',
-				array(
+				apply_filters( 'bp_activity_localized_params' , array(
 					'ajax_url'   => admin_url( 'admin-ajax.php' ),
 					'ajax_nonce' => wp_create_nonce( 'bpsp-nonce' ),
 				)
-			);
+			)
+		);
+
+			
+
 		}
 	}
 
@@ -226,7 +230,6 @@ class Shortcodes_For_Buddypress_Public {
 				$output .= ob_get_contents();
 			}
 		}
-
 		ob_end_clean();
 		$output = apply_filters( 'modify_activity_listing_output', $output, $atts, $activity_atts );
 		return $output;
