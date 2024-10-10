@@ -108,6 +108,7 @@ class Shortcodes_For_Buddypress_Public {
 				true
 			);
 		}
+		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
 		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-public.js', array( 'jquery', 'bp-nouveau-activity' ), $this->version, true );
 		if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 			wp_enqueue_script( $this->plugin_name );
