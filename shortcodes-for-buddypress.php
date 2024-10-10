@@ -270,25 +270,34 @@ if ( ! function_exists( 'shortcodes_for_buddypress_required_plugin_admin_notice'
 
 
 /**
- * BuddyPress Activity Elements.
+ * Registers the 'BuddyPress Widgets' category in Elementor.
+ *
+ * This function adds a custom category to the Elementor page builder, specifically for 
+ * widgets related to BuddyPress. It ensures that the 'BuddyPress Widgets' category is available 
+ * for organizing widgets that are related to BuddyPress features.
+ * 
+ * It is optimized to execute only when Elementor is active, minimizing unnecessary 
+ * processing on large sites.
  *
  * @since 2.2.0
+ * @param object $elements_manager is the instance of the Elementor elements manager class.
  * @return void
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_categories_registered' ) ) {
 	function shortcodes_for_buddypress_categories_registered( $elements_manager ) {
 
-		$elements_manager->add_category(
-			'buddypress-widgets',
-			array(
-				'title' => 'BuddyPress Widgets',
-				'icon'  => 'fa fa-plug',
-			)
-		);
+		if(class_exists('Elements_Manager')){
+			$elements_manager->add_category(
+				'buddypress-widgets',
+				array(
+					'title' => esc_html__('BuddyPress Widgets', 'shortcodes-for-buddypress'),
+					'icon'  => 'fa fa-plug',
+				)
+			);
+		}
 	}
-
+	// Action hook to register custom category into the Elementor.
 	add_action( 'elementor/elements/categories_registered', 'shortcodes_for_buddypress_categories_registered' );
-
 }
 
 /** 
