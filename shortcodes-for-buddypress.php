@@ -83,20 +83,35 @@ function shortcodes_for_buddypress_activate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-activator.php';
 	Shortcodes_For_Buddypress_Activator::activate();
 }
+register_activation_hook( __FILE__, 'shortcodes_for_buddypress_activate' );
 
 /**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-shortcodes-for-buddypress-deactivator.php
+ * This function will get triggered when plugin gets deactivated.
+ * In this function we are including the plugin deactivator file.
+ * Plugin deactivator file will contain all the functionalities that were needed at the time of plugin deactivation.
+ * Including clearing unnecessary data reagrding postmeta, termmeta and usermeta.
  * 
  * @since 1.0.0
+ * @return void 
  */
-
 function shortcodes_for_buddypress_deactivate() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-deactivator.php';
-	Shortcodes_For_Buddypress_Deactivator::deactivate();
-}
+	
+	// Complete path to the plugin deactivator file.
+	$deactivator_file_path  =  plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-deactivator.php';
+	
+	// Checks if deactivator file exists.
+	if(file_exists($deactivator_file_path)){
+		// Including file if file exists.
+		require_once $deactivator_file_path;
+		// Checking if deactivator class exists.
+		if(class_exists('Shortcodes_For_Buddypress_Deactivator')){
 
-register_activation_hook( __FILE__, 'shortcodes_for_buddypress_activate' );
+			// Call to the deactivate function that contains all the functionality while plugin deactivation.
+			Shortcodes_For_Buddypress_Deactivator::deactivate();
+		}
+	}
+}
+//Registering deactivation hook for the plugin.
 register_deactivation_hook( __FILE__, 'shortcodes_for_buddypress_deactivate' );
 
 /**
