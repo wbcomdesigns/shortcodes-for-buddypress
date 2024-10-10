@@ -5,7 +5,7 @@
  * @version 3.0.0
  */
 global $members_atts;
-
+global $atts;
 $classes = array();
 $member_loop_classes = static function () use ( $classes ) {
 

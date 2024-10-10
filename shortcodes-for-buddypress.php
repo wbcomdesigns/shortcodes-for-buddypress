@@ -159,6 +159,7 @@ function shortcodes_for_buddypress_plugin_admin_notice() {
 
 /**
  *  Check if buddypress is active.
+ * @since 1.0.0
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
 	function shortcodes_for_buddypress_requires_buddypress() {
@@ -178,7 +179,6 @@ if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
  * Redirect to plugin settings page after activated.
  *
  * @since  1.0.0
- *
  * @param string $plugin Path to the plugin file relative to the plugins directory.
  */
 function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
@@ -239,6 +239,7 @@ if ( ! function_exists( 'shortcodes_for_buddypress_required_plugin_admin_notice'
  * BuddyPress Activity Elements.
  *
  * @since 2.2.0
+ * @return void
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_categories_registered' ) ) {
 	function shortcodes_for_buddypress_categories_registered( $elements_manager ) {
@@ -259,7 +260,7 @@ if ( ! function_exists( 'shortcodes_for_buddypress_categories_registered' ) ) {
 /** Function to register shortcode widgets.
  * 
  * @since 1.0.0
- * 
+ * @return void
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_widgets_registered' ) ) {
 	function shortcodes_for_buddypress_widgets_registered() {
@@ -327,9 +328,20 @@ function shortcodes_for_buddypress_iterate_comments( $comments ) {
 }
 
 
+/**
+ * This function adds the custom classes to the BuddyPress groups loop based on user preferences
+ * and customizer settings. It retrieves the layout preferences for the groups loop and applies 
+ * appropriate grid classes to adjust the display of groups. This helps provide a customized 
+ * layout experience for BuddyPress groups within themes that support BuddyPress.
+ *
+ * @since 2.2.0
+ * @param array  $classes Array of existing classes for the groups loop.
+ * @param string $component The current BuddyPress component, in this case 'groups'.
+ * @return array Modified array of classes for the groups loop.
+ */
 
 function shortcodes_for_buddypress_get_groups_loop_class( $classes, $component ) {
-
+	
 	$bp_nouveau = bp_nouveau();
 
 	if ( $component == 'groups' ) {
@@ -347,7 +359,7 @@ function shortcodes_for_buddypress_get_groups_loop_class( $classes, $component )
 					$classes,
 					array(
 						'grid',
-						$grid_classes[ $layout_prefs ],
+						esc_html($grid_classes[ $layout_prefs ]),
 					)
 				);
 			}
@@ -363,5 +375,6 @@ function shortcodes_for_buddypress_get_groups_loop_class( $classes, $component )
 	}
 	return $classes;
 }
+
 add_filter( 'bp_nouveau_get_loop_classes', 'shortcodes_for_buddypress_get_groups_loop_class', 10, 2 );
 
