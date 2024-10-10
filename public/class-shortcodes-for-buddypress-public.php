@@ -449,7 +449,7 @@ class Shortcodes_For_Buddypress_Public {
 			'bpsh_query'          => $bpsh_query,
 		);
 
-		$members_atts = shortcode_atts( $default_atts, $atts );
+		$members_atts = apply_filters( 'modify_members_listing_output', shortcode_atts( $default_atts, $atts ) );
 
 		update_option( 'bpsh_membe_queryargs', $bpsh_query );
 		extract( $members_atts );
