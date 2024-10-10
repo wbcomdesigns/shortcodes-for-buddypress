@@ -475,7 +475,11 @@ class Shortcodes_For_Buddypress_Public {
 			}
 		}
 
-		return ob_get_clean();
+		$output = ob_get_clean(); 
+
+		$output = apply_filters( 'modify_notifications_output', $output, $atts, $notifications_atts );
+
+		return $output; 
 	}
 
 	/**
