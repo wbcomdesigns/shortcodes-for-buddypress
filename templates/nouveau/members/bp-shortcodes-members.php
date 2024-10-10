@@ -51,7 +51,7 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 
 <div id="buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ) . ' ' . esc_attr( $members_atts['container_class'] ); ?>">
 	<?php bp_nouveau_before_members_directory_content(); ?>
-
+	<?php do_action( 'before_members_listing_output', $atts, $members_atts ); ?>
 	<?php if ( bp_has_members( $members_atts['bpsh_query'] ) ) : ?>
 	<div id="members-dir-list" class="members dir-list" data-bp-list="members" data-ajax="false">
 		<div class="bpsp-member-count">			
