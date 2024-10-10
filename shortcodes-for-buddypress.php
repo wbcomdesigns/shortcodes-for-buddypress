@@ -74,15 +74,30 @@ if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME' ) ) {
 }
 
 /**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-shortcodes-for-buddypress-activator.php
- * 
+ * This function will get triggered when plugin gets activated.
+ * In this function we are including the plugin activator file.
+ * Plugin activator file will contain all the functionalities that were needed at the time of plugin activation.
+ *  
  * @since 1.0.0
+ * @return void 
  */
 function shortcodes_for_buddypress_activate() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-activator.php';
-	Shortcodes_For_Buddypress_Activator::activate();
+	
+	// Complete path to the plugin activator file.
+	$activator_file_path  = plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-activator.php';
+	
+	// Checking if the activator file exists.
+	if(file_exists($activator_file_path)){
+		// Including activator file if it exists.
+		require_once $activator_file_path;
+		// Checking if activator class exits.
+		if(class_exists('Shortcodes_For_Buddypress_Activator')){
+			// Call to activate function if the activator file exists.
+			Shortcodes_For_Buddypress_Activator::activate();
+		}
+	}	
 }
+// Registering activation hook for the plugin.
 register_activation_hook( __FILE__, 'shortcodes_for_buddypress_activate' );
 
 /**
