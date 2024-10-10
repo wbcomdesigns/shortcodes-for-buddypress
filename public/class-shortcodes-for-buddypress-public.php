@@ -655,7 +655,7 @@ class Shortcodes_For_Buddypress_Public {
 			'bpsh_query'         => $bpsh_query,
 		);
 
-		$groups_atts = shortcode_atts( $default_atts, $atts );
+		$groups_atts = apply_filters( 'bpsh_groups_query_args', shortcode_atts( $default_atts, $atts ) );
 		extract( $groups_atts );
 
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
