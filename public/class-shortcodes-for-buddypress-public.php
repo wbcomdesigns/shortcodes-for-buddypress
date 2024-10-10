@@ -195,7 +195,7 @@ class Shortcodes_For_Buddypress_Public {
 			'bpsh_query'       => $bpsh_query,
 		);
 
-		$activity_atts = shortcode_atts( $default_atts, $atts );
+		$activity_atts = apply_filters( 'bp_activity_shortcode_query_args', shortcode_atts( $default_atts, $atts ) );
 		extract( $activity_atts );
 
 		if ( isset( $atts['hide_on_activity'] ) && $atts['hide_on_activity'] && ( function_exists( 'bp_is_activity_component' ) && bp_is_activity_component() ||
