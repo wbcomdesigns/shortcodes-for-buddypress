@@ -72,6 +72,7 @@ class Shortcodes_For_Buddypress_Public {
 		 * class.
 		 */
 
+		 do_action( 'before_enqueue_buddypress_shortcode_styles' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-public.css', array(), $this->version, 'all' );
 	}
 
