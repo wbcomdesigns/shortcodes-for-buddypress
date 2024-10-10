@@ -209,7 +209,9 @@ class Shortcodes_For_Buddypress_Public {
 				$output .= '<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>';
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
+				do_action( 'before_render_activity_shortcode', $atts );
 				buddypress_shortcodes_template( 'legacy/activity/bp-shortcodes-activity.php' );
+				do_action( 'after_render_activity_shortcode', $atts );
 				$output .= ob_get_contents();
 			} else {
 				wp_enqueue_script( 'bp-nouveau-activity' );
@@ -218,8 +220,9 @@ class Shortcodes_For_Buddypress_Public {
 					wp_enqueue_script( 'bp-medium-editor' );
 					wp_enqueue_style( 'bp-medium-editor' );
 				}
-
+				do_action( 'before_render_activity_shortcode', $atts );
 				buddypress_shortcodes_template( 'nouveau/activity/bp-shortcodes-activity.php' );
+				do_action( 'after_render_activity_shortcode', $atts );
 				$output .= ob_get_contents();
 			}
 		}
