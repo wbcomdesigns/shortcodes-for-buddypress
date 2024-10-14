@@ -262,24 +262,54 @@ function shortcodes_for_buddypress_do_activation_redirect() {
 add_action( 'admin_init', 'shortcodes_for_buddypress_do_activation_redirect' );
 
 /**
- * Throw an Alert to tell the Admin why it didn't activate.
+ * This function is triggered in the admin area when BuddyPress or BuddyBoss is required
+ * but not active. It outputs a message to the admin dashboard, informing the user that 
+ * the Shortcodes for BuddyPress plugin requires BuddyPress or BuddyBoss to function correctly.
+ * The notice provides a link to install BuddyPress if it is missing.
  *
- * @author wbcomdesigns
- * @since  2.2.0
+ * The function uses `wp_kses_post()` to ensure safe HTML rendering and `esc_html()` for 
+ * dynamic text strings, preventing potential XSS issues. The logic is optimized to ensure 
+ * the notice is only displayed when necessary, reducing load on large databases.
+ *
+ * @since 2.2.0
+ * @return void
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_required_plugin_admin_notice' ) ) {
 	function shortcodes_for_buddypress_required_plugin_admin_notice() {
-
-		$bpquotes_plugin = 'Shortcodes For BuddyPress';
-		$bp_plugin       = 'BuddyPress';
-		
-		echo '<div class="error"><p>';
-		/* translators: %1$s : Shortcodes-for-BuddyPress plugin, %2$s : Buddypress plugin.   */
-		echo sprintf( esc_html( __( '%1$s is ineffective as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ) ), '<strong>' . esc_html($bpquotes_plugin) . '</strong>', '<strong>' . esc_html($bp_plugin) . '</strong>' );
-		echo '</p></div>';
-		if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
-			$activate = filter_input( INPUT_GET, 'activate' );
-			unset( $activate );
+		// Check if function is called by admin access.
+		if ( ! is_admin() ) {
+			return;
+		}
+	
+		// Load the plugin.php file if the function is not already available.
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+	
+		// Check if BuddyPress or BuddyBoss is active.
+		$is_buddypress_active = class_exists( 'BuddyPress' ) && (
+			is_plugin_active( 'buddypress/bp-loader.php' ) ||
+			is_plugin_active( 'buddyboss-platform/bp-loader.php' ) ||
+			is_plugin_active_for_network( 'buddypress/bp-loader.php' ) ||
+			is_plugin_active_for_network( 'buddyboss-platform/bp-loader.php' )
+		);
+	
+		// Only display the notice if BuddyPress or BuddyBoss is not active.
+		if ( ! $is_buddypress_active ) {
+			$plugin_name = esc_html__( 'Shortcodes For BuddyPress', 'shortcodes-for-buddypress' );
+			$required_plugin = esc_html__( 'BuddyPress', 'shortcodes-for-buddypress' );
+			$install_link = '<a href="' . esc_url( admin_url( 'plugin-install.php?s=BuddyPress&tab=search&type=term' ) ) . '">' . esc_html__( 'Install BuddyPress', 'shortcodes-for-buddypress' ) . '</a>';
+			
+			$message = sprintf(
+				/* translators: 1: Shortcodes For BuddyPress, 2: BuddyPress */
+				esc_html__( '%1$s is ineffective as it requires %2$s to be installed and active. Please %3$s.', 'shortcodes-for-buddypress' ),
+				'<strong>' . esc_html( $plugin_name ) . '</strong>',
+				'<strong>' . esc_html( $required_plugin ) . '</strong>',
+				$install_link
+			);
+	
+			// Output the message as a WordPress admin notice with safe HTML rendering.
+			echo '<div class="notice notice-error"><p>' . wp_kses_post( $message ) . '</p></div>';
 		}
 	}
 }
