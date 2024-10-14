@@ -184,14 +184,14 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		}
 
 		/**
-		 * Enqueue js & css related to wbcom plugin.
+		 * Function to enqueue all the admin related scripts and styles using wp_enqueue_script() and wp_enqueue_style().
 		 *
 		 * @since 2.0.0
 		 * @access public
 		 */
 		public function wbcom_enqueue_admin_scripts() {
 			if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
-				wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
+				wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', array(), time());
 			}
 			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) ) {
 
@@ -217,7 +217,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			}
 
 			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
-				wp_enqueue_style( 'wbcom-admin-setting-css', SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'admin/wbcom/assets/css/wbcom-admin-setting.css' );
+				wp_enqueue_style( 'wbcom-admin-setting-css', SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'admin/wbcom/assets/css/wbcom-admin-setting.css', array(), time() );
 			}
 		}
 

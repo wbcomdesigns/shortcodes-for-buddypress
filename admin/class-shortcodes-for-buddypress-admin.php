@@ -115,11 +115,11 @@ class Shortcodes_For_Buddypress_Admin {
 		}
 	}
 
-		/**
-		 * Register a submenu to handle group types
-		 *
-		 * @since    1.0.0
-		 */
+	/**
+	 * Register a submenu to handle group types
+	 *
+	 * @since    1.0.0
+	 */
 	public function buddypress_shortcodes_add_submenu_page() {
 		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
 			add_menu_page( esc_html__( 'WB Plugins', 'shortcodes-for-buddypress' ), esc_html__( 'WB Plugins', 'shortcodes-for-buddypress' ), 'manage_options', 'wbcomplugins', array( $this, 'buddypress_shortcodes_admin_settings_page' ), 'dashicons-lightbulb', 59 );
