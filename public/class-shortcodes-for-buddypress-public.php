@@ -877,10 +877,13 @@ class Shortcodes_For_Buddypress_Public {
 		$output = apply_filters( 'modify_notifications_output', $output, $atts, $notifications_atts );
 	}
 
-	/*
-	 * Set Activity Params when activity elementor widget load on page
+	/**
+	 * Set Activity Params when activity elementor widget load on page.
+	 * 
+	 * @since 1.0.0
+	 * @return array $params used for internationalization before AJAX usage.
 	 */
-	public function buddypress_shortcodes_activity_localize_scripts( $params = array() ) {
+	public function shortcodes_for_buddypress_activity_localize_scripts( $params = array() ) {
 		global $post;
 		$current_component = '';
 		if ( isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
@@ -895,14 +898,14 @@ class Shortcodes_For_Buddypress_Public {
 				}
 			}
 		}
-
+		
 		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 			$current_component = 'activity';
 		}
-
 		if ( $current_component == '' ) {
 			return $params;
 		}
+				
 		$activity_params = array(
 			'user_id'    => bp_loggedin_user_id(),
 			'object'     => 'user',
@@ -932,7 +935,7 @@ class Shortcodes_For_Buddypress_Public {
 					'avatar_height' => $height,
 					'user_domain'   => bp_loggedin_user_domain(),
 					'avatar_alt'    => sprintf(
-							/* translators: %s: member name */
+						/* translators: %s: member name */
 						__( 'Profile photo of %s', 'shortcodes-for-buddypress' ),
 						$user_displayname
 					),
@@ -943,7 +946,7 @@ class Shortcodes_For_Buddypress_Public {
 		/**
 		 * Filters the included, specific, Action buttons.
 		 *
-		 * @since 3.0.0
+		 * @since 1.0.0
 		 *
 		 * @param array $value The array containing the button params. Must look like:
 		 * array( 'buttonid' => array(
@@ -1004,7 +1007,7 @@ class Shortcodes_For_Buddypress_Public {
 			/**
 			 * Filters the activity objects to apply for localized javascript data.
 			 *
-			 * @since 3.0.0
+			 * @since 1.0.0
 			 *
 			 * @param array $activity_objects Array of activity objects.
 			 */

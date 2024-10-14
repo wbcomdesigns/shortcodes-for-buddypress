@@ -202,7 +202,7 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_shortcode( 'member-listing-rest-api', $plugin_public, 'buddypress_shortcodes_member_rest_api' );
 		$this->loader->add_shortcode( 'group-listing-rest-api', $plugin_public, 'buddypress_shortcodes_group_listing_rest_api' );
 
-		$this->loader->add_filter( 'bp_core_get_js_strings', $plugin_public, 'buddypress_shortcodes_activity_localize_scripts', 10, 1 );
+		$this->loader->add_filter( 'bp_core_get_js_strings', $plugin_public, 'shortcodes_for_buddypress_activity_localize_scripts', 10, 1 );
 
 		$this->loader->add_filter( 'bp_nouveau_register_scripts', $plugin_public, 'buddypress_shortcodes_bp_nouveau_register_scripts', 20 );
 
