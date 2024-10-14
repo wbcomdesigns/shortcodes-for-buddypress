@@ -1,23 +1,28 @@
 <?php
-/**
-	 * Include EDD sell services template file.
-	 *
-	 * @since    1.0.0
-	 */
-	function buddypress_shortcodes_template( $file_name ) {
 
-		$template_name = 'shortcodes-for-buddypress/' . $file_name;
+/** Includes EDD sell services template file.
+ *
+ * @since 1.0.0
+ * @param string $file_name file name to include the specific template. 
+ * @return void.
+ */
 
-		if ( file_exists( STYLESHEETPATH . '/' . $template_name ) ) {
+function shortcodes_for_buddypress_template( $file_name ) {
 
-			include STYLESHEETPATH . '/' . $template_name;
+	$template_name = 'shortcodes-for-buddypress/' . $file_name;
 
-		} elseif ( file_exists( TEMPLATEPATH . '/' . $template_name ) ) {
+	if ( file_exists( get_stylesheet_directory() . '/' . $template_name ) ) {
 
-			include TEMPLATEPATH . '/' . $template_name;
+		// check and include file from the stylesheet directory.
+		include get_stylesheet_directory() . '/' . $template_name;
 
-		} else {
+	} elseif ( file_exists( get_template_directory() . '/' . $template_name ) ) {
 
-			include SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR . 'templates/' . $file_name;
-		}
+		// check and include file from the template directory.
+		include get_template_directory() . '/' . $template_name;
+
+	} else {
+		// if file not exists in both stylesheet and template directories then include it from the templates in the plugin directory.
+		include SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR . 'templates/' . $file_name;
 	}
+}

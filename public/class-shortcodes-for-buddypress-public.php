@@ -214,7 +214,7 @@ class Shortcodes_For_Buddypress_Public {
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
 				do_action( 'before_render_activity_shortcode', $atts );
-				buddypress_shortcodes_template( 'legacy/activity/bp-shortcodes-activity.php' );
+				shortcodes_for_buddypress_template( 'legacy/activity/bp-shortcodes-activity.php' );
 				do_action( 'after_render_activity_shortcode', $atts );
 				$output .= ob_get_contents();
 			} else {
@@ -225,7 +225,7 @@ class Shortcodes_For_Buddypress_Public {
 					wp_enqueue_style( 'bp-medium-editor' );
 				}
 				do_action( 'before_render_activity_shortcode', $atts );
-				buddypress_shortcodes_template( 'nouveau/activity/bp-shortcodes-activity.php' );
+				shortcodes_for_buddypress_template( 'nouveau/activity/bp-shortcodes-activity.php' );
 				do_action( 'after_render_activity_shortcode', $atts );
 				$output .= ob_get_contents();
 			}
@@ -469,11 +469,11 @@ class Shortcodes_For_Buddypress_Public {
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
 				do_action( 'before_render_member_shortcode', $atts );
-				buddypress_shortcodes_template( 'legacy/members/bp-shortcodes-members.php' );
+				shortcodes_for_buddypress_template( 'legacy/members/bp-shortcodes-members.php' );
 				do_action( 'after_render_member_shortcode', $atts );
 			} else {
 				do_action( 'before_render_member_shortcode', $atts );
-				buddypress_shortcodes_template( 'nouveau/members/bp-shortcodes-members.php' );
+				shortcodes_for_buddypress_template( 'nouveau/members/bp-shortcodes-members.php' );
 				do_action( 'after_render_member_shortcode', $atts );
 			}
 		}
@@ -669,9 +669,9 @@ class Shortcodes_For_Buddypress_Public {
 			}
 
 			if ( $_bp_theme_package == 'legacy' ) {
-				buddypress_shortcodes_template( 'legacy/groups/bp-shortcodes-groups.php' );
+				shortcodes_for_buddypress_template( 'legacy/groups/bp-shortcodes-groups.php' );
 			} else {
-				buddypress_shortcodes_template( 'nouveau/groups/bp-shortcodes-groups.php' );
+				shortcodes_for_buddypress_template( 'nouveau/groups/bp-shortcodes-groups.php' );
 			}
 		}
 		return ob_get_clean();
@@ -864,9 +864,9 @@ class Shortcodes_For_Buddypress_Public {
 				<?php
 			}
 			if ( $_bp_theme_package == 'legacy' ) {
-				buddypress_shortcodes_template( 'legacy/notifications/notifications-loop.php' );
+				shortcodes_for_buddypress_template( 'legacy/notifications/notifications-loop.php' );
 			} else {
-				buddypress_shortcodes_template( 'nouveau/notifications/notifications-loop.php' );
+				shortcodes_for_buddypress_template( 'nouveau/notifications/notifications-loop.php' );
 			}
 		} else {
 

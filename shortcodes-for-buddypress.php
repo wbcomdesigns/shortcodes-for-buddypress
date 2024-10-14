@@ -474,16 +474,21 @@ if ( ! function_exists( 'shortcodes_for_buddypress_widgets_registered' ) ) {
  * memory exhaustion and to handle large data sets gracefully.
  *
  * @since 2.2.0
- * @param array $comments     Array of comments to process, each containing comment metadata.
- * @param int   $max_depth    Maximum depth to iterate through nested comments (default is 5).
+ * @param array $comments      Array of comments to process, each containing comment metadata.
+ * @param int   $max_depth     Maximum depth to iterate through nested comments (default is 5).
  * @param int   $current_depth The current recursion depth (default is 1).
+ * @return array $comments     Array of sub comments/replies on the main comment of the activity.
+ * 
  */
 function shortcodes_for_buddypress_iterate_comments( $comments, $max_depth = 5, $current_depth = 1 ) {
 	$children = array();
-
+	echo get_stylesheet_directory();
+	echo '<pre>';
+	echo get_template_directory();
+	
+	die;	
 	if(is_array($comments) && !empty($comments)){
 		foreach ( $comments as $comment ) {
-
 			$user_id                         = intval( $comment['user_id'] );
 			$userdata                        = get_userdata( $user_id );
 			
@@ -533,6 +538,7 @@ function shortcodes_for_buddypress_iterate_comments( $comments, $max_depth = 5, 
 			// Add the processed comment to the children array.
 			$children[ $comment_id ] = $obj_comment;
 		}
+		
 		return $children;
 	}
 
