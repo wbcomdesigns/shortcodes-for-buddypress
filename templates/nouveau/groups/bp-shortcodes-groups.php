@@ -62,6 +62,7 @@ $group_loop_classes = static function () use ( $classes ) {
 };
 add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
 $loop_layout = ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layout'] : '';
+
 ?>
 
 <div id="buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ) . ' ' . esc_attr( $groups_atts['container_class'] ); ?>">
@@ -70,12 +71,12 @@ $loop_layout = ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layou
 		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups" data-ajax="false">
 			<?php if ( bp_has_groups( $groups_atts['bpsh_query'] ) ) : ?>
 				<div class="bpsp-group-count">	
-					<?php echo bp_get_groups_pagination_count(); ?>
+					<?php echo esc_html(bp_get_groups_pagination_count()); ?>
 				</div>
 				<ul id="groups-list" class="grid 
 				<?php
 				bp_nouveau_loop_classes();
-				echo ' ' . $loop_layout;
+				echo esc_attr(' ' . $loop_layout);
 				?>
 				">
 					<?php
@@ -109,13 +110,9 @@ $loop_layout = ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layou
 										<?php endif; ?>
 										<p class="last-activity item-meta">
 											<?php
-												printf(
-													/* translators: %s: last activity timestamp (e.g. "Active 1 hour ago") */
-													esc_html__( 'Active %s', 'shortcodes-for-buddypress' ),
-													sprintf(
-														'<span data-livestamp="%1$s">%2$s</span>',
-														bp_core_get_iso8601_date( bp_get_group_last_active( 0, array( 'relative' => false ) ) ),
-														esc_html( bp_get_group_last_active() )
+
+												/* translators: %s: last activity timestamp (e.g. "Active 1 hour ago") */
+												printf(	esc_html__( 'Active %s', 'shortcodes-for-buddypress' ), sprintf('<span data-livestamp="%1$s">%2$s</span>',esc_html(bp_core_get_iso8601_date( bp_get_group_last_active( 0, array( 'relative' => false ) ) ) ),	esc_html( bp_get_group_last_active() )
 													)
 												);
 											?>
@@ -133,7 +130,7 @@ $loop_layout = ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layou
 				</ul>
 				<?php if ( $groups_atts['per_page'] ) { ?>
 				<div class="bpsp-group-pagination">	
-					<?php echo bp_get_groups_pagination_links(); ?>
+					<?php echo wp_kses_post(bp_get_groups_pagination_links()); ?>
 				</div>
 				<?php } ?>				
 			<?php endif; ?>
