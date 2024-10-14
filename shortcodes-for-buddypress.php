@@ -465,57 +465,77 @@ if ( ! function_exists( 'shortcodes_for_buddypress_widgets_registered' ) ) {
 }
 
 /**
- * Function to iterate comments
+ * Processes and formats BuddyPress comments for activity streams.
  *
- * @since 1.0.0
- * @param  mixed $comments for create activity data.
- * @return $childrens
+ * This function iterates over a list of comment data and processes each comment, 
+ * preparing it for use in a BuddyPress activity stream. It extracts and sanitizes 
+ * user information, comment metadata, and recursively handles nested comments.
+ * The function is optimized for large sites by limiting recursion depth to avoid
+ * memory exhaustion and to handle large data sets gracefully.
+ *
+ * @since 2.2.0
+ * @param array $comments     Array of comments to process, each containing comment metadata.
+ * @param int   $max_depth    Maximum depth to iterate through nested comments (default is 5).
+ * @param int   $current_depth The current recursion depth (default is 1).
  */
-function shortcodes_for_buddypress_iterate_comments( $comments ) {
-	$childrens = array();
-	foreach ( $comments as $comment ) {
-		$userdata                        = get_userdata( $comment['user_id'] );
-		$user_login                      = $userdata->data->user_login;
-		$primary_link                    = get_site_url() . '/member' . '/' . $user_login;
-		$user_email                      = $userdata->data->user_email;
-		$user_nicename                   = $userdata->data->user_nicename;
-		$user_login                      = $userdata->data->user_login;
-		$tmp['id']                       = $comment['id'];
-		$tmp['user_id']                  = $comment['user_id'];
-		$tmp['component']                = $comment['component'];
-		$tmp['type']                     = $comment['type'];
-		$tmp['action']                   = $comment['title'];
-		$tmp['content']                  = $comment['content']['rendered'];
-		$tmp['primary_link']             = $primary_link;
-		$tmp['item_id']                  = $comment['primary_item_id'];
-		$tmp['secondary_item_id']        = $comment['secondary_item_id'];
-		$tmp['date_gmt']                 = $comment['date_gmt'];
-		$tmp['user_email']               = $user_email;
-		$tmp['user_nicename']            = $user_nicename;
-		$tmp['user_login']               = $user_login;
-		$tmp['display_name']             = $user_nicename;
-		$tmp['user_fullname']            = $user_nicename;
-		$obj_children                    = new stdClass();
-		$obj_children->id                = $tmp['id'];
-		$obj_children->user_id           = $tmp['user_id'];
-		$obj_children->component         = $tmp['component'];
-		$obj_children->type              = $tmp['type'];
-		$obj_children->action            = $tmp['action'];
-		$obj_children->content           = $tmp['content'];
-		$obj_children->primary_link      = $tmp['primary_link'];
-		$obj_children->item_id           = $tmp['item_id'];
-		$obj_children->secondary_item_id = $tmp['secondary_item_id'];
-		$obj_children->date_recorded     = isset( $tmp['date_recorded'] ) ? $tmp['date_recorded'] : 0;
-		$obj_children->user_email        = $tmp['user_email'];
-		$obj_children->user_nicename     = $tmp['user_nicename'];
-		$obj_children->user_login        = $tmp['user_login'];
-		$obj_children->display_name      = $tmp['display_name'];
-		$obj_children->user_fullname     = $tmp['user_fullname'];
-		$obj_children->children          = isset( $comment['comments'] ) ? shortcodes_for_buddypress_iterate_comments( $comment['comments'] ) : array();
-		$obj_children->depth             = 1;
-		$childrens[ $comment['id'] ]     = $obj_children;
+function shortcodes_for_buddypress_iterate_comments( $comments, $max_depth = 5, $current_depth = 1 ) {
+	$children = array();
+
+	if(is_array($comments) && !empty($comments)){
+		foreach ( $comments as $comment ) {
+
+			$user_id                         = intval( $comment['user_id'] );
+			$userdata                        = get_userdata( $user_id );
+			
+			// Continue next loop execution if userdata is empty.
+			if(! $userdata ){
+				continue;
+			}
+	
+			$user_login                      = sanitize_text_field($userdata->data->user_login);
+			$user_email                      = sanitize_email($userdata->data->user_email);
+			$user_nicename                   = sanitize_text_field($userdata->data->user_nicename);
+				
+			$primary_link                    = esc_url(get_site_url() . '/member/'. $user_login);
+			$comment_id                      = intval($comment['id']);
+			$component                       = sanitize_text_field($comment['component']);
+			$comment_type                    = sanitize_text_field($comment['type']);
+			$action                          = sanitize_text_field($comment['title']);
+			$content                         = wp_kses_post($comment['content']['rendered']);
+			$item_id                         = intval($comment['primary_item_id']);
+			$secondary_item_id               = intval($comment['secondary_item_id']);
+			$date_gmt                        = sanitize_text_field($comment['date_gmt']);
+			
+			$obj_comment                     = new stdClass();
+
+			$obj_comment->id                 = $comment_id;
+			$obj_comment->user_id            = $user_id;
+			$obj_comment->component          = $component;
+			$obj_comment->type               = $comment_type;
+			$obj_comment->action             = $action;
+			$obj_comment->content            = $content;
+			$obj_comment->primary_link       = $primary_link;
+			$obj_comment->item_id            = $item_id;
+			$obj_comment->secondary_item_id  = $secondary_item_id;
+			$obj_comment->date_recorded      = strtotime($date_gmt);
+			$obj_comment->user_email         = $user_email;
+			$obj_comment->user_nicename      = $user_nicename;
+			$obj_comment->user_login         = $user_login;
+			$obj_comment->display_name       = $user_nicename;
+			$obj_comment->user_fullname      = $user_nicename;
+			$obj_comment->children           = array();
+			$obj_comment->depth              = $current_depth;
+
+			// Process nested comments if the current depth is less than the max depth.
+			if ( isset( $comment['comments'] ) && is_array( $comment['comments'] ) && $current_depth < $max_depth ) {
+				$obj_comment->children = shortcodes_for_buddypress_iterate_comments( $comment['comments'], $max_depth, $current_depth + 1 );
+			}
+			// Add the processed comment to the children array.
+			$children[ $comment_id ] = $obj_comment;
+		}
+		return $children;
 	}
-	return $childrens;
+
 }
 
 
