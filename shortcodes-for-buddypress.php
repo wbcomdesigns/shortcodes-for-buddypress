@@ -166,43 +166,99 @@ shortcodes_for_buddypress_run();
 add_action( 'admin_notices', 'shortcodes_for_buddypress_plugin_admin_notice' );
 
 /**
- * Function to through admin notice if BuddyPress is not active.
- * 
+ * This function checks whether the BuddyPress plugin is active. If it is not active,
+ * an admin notice is displayed in the WordPress dashboard, informing the user that
+ * the Shortcodes for BuddyPress plugin requires BuddyPress to function correctly.
+ * The notice includes a message with a link to install BuddyPress.
+ *
+ * This function uses `wp_kses_post()` for safe HTML rendering and `esc_html()` for 
+ * text strings to prevent potential XSS issues. The active status check is optimized 
+ * to reduce performance impact on large sites by checking plugin status directly.
+ *
  * @since 1.0.0
+ * @return void
  */
 function shortcodes_for_buddypress_plugin_admin_notice() {
 	
-	if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-		require_once ABSPATH . '/wp-admin/includes/plugin.php';
-	}
-	$check_active = false;
-
-	if ( ! is_plugin_active_for_network( 'buddypress/bp-loader.php' ) && ! in_array( 'buddypress/bp-loader.php', get_option( 'active_plugins' ) ) ) {
-		$check_active = true;
+	// Check if function is called by admin area.
+	if ( ! is_admin() ) {
+		return;
 	}
 
-	if ( $check_active ) {
-		$bmpro_plugin = 'Shortcodes For BuddyPress';
-		$bp_plugin    = 'BuddyPress';
-		echo '<div class="error"><p>'
-		/* translators: %1$s: shortcodes-for-buddypress plugin, %2$s: BuddyPress plugin.*/
-		. sprintf( esc_html( __( '%1$s is ineffective as it requires %2$s to be installed and active.', 'shortcodes-for-buddypress' ) ), '<strong>' . esc_html($bmpro_plugin) . '</strong>', '<strong>' . esc_html($bp_plugin) . '</strong>' )
-		. '</p></div>';
-	}
+	// Load the plugin.php file if the function is not already available.
+	 if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+        require_once ABSPATH . '/wp-admin/includes/plugin.php';
+    }
+
+    // Check if BuddyPress is active on the network or for the current site.
+    $is_buddypress_active = is_plugin_active( 'buddypress/bp-loader.php' ) || is_plugin_active_for_network( 'buddypress/bp-loader.php' );
+
+    // If BuddyPress is not active, display an admin notice.
+    if ( ! $is_buddypress_active ) {
+        $plugin_name = esc_html__( 'Shortcodes For BuddyPress', 'shortcodes-for-buddypress' );
+        $buddypress_name = esc_html__( 'BuddyPress', 'shortcodes-for-buddypress' );
+        $install_link = '<a href="' . esc_url( admin_url( 'plugin-install.php?s=BuddyPress&tab=search&type=term' ) ) . '">' . esc_html__( 'install BuddyPress', 'shortcodes-for-buddypress' ) . '</a>';
+        
+        $message = sprintf(
+            /* translators: 1: Shortcodes For BuddyPress, 2: BuddyPress */
+            esc_html__( '%1$s is ineffective as it requires %2$s to be installed and active. Please %3$s.', 'shortcodes-for-buddypress' ),
+            '<strong>' . esc_html( $plugin_name ) . '</strong>',
+            '<strong>' . esc_html( $buddypress_name ) . '</strong>',
+            $install_link
+        );
+
+        // Output the message within an error notice, ensuring safe HTML rendering.
+        echo '<div class="notice notice-error"><p>' . wp_kses_post( $message ) . '</p></div>';
+    }
 }
 
 /**
- *  Check if buddypress is active.
+ * 
+ * This function verifies whether BuddyPress or BuddyBoss is active on the site. If neither is active,
+ * it deactivates the Shortcodes for BuddyPress plugin and displays an admin notice informing the user
+ * that BuddyPress or BuddyBoss is required. The function only runs in the admin area to avoid unnecessary
+ * checks on the frontend.
+ *
+ * The function uses `deactivate_plugins()` conditionally, ensuring deactivation only when neither BuddyPress
+ * nor BuddyBoss is present. It optimizes the plugin status checks by using `is_plugin_active()` and 
+ * `is_plugin_active_for_network()` for better performance, particularly on sites with large databases.
+ * 
  * @since 1.0.0
+ * @return void 
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
 	function shortcodes_for_buddypress_requires_buddypress() {
-		if ( ! class_exists( 'Buddypress' ) ) {
+		
+		// Checks if the function is called from the admin area.
+		if ( ! is_admin() ) {
+			return;
+		}
+	
+		// Load the plugin.php file if the necessary functions are not already available.
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+	
+		// Check if BuddyPress or BuddyBoss is active either on the network or the current site.
+		$is_buddypress_active = class_exists( 'BuddyPress' ) && (
+			is_plugin_active( 'buddypress/bp-loader.php' ) || 
+			is_plugin_active( 'buddyboss-platform/bp-loader.php' ) || 
+			is_plugin_active_for_network( 'buddypress/bp-loader.php' ) || 
+			is_plugin_active_for_network( 'buddyboss-platform/bp-loader.php' )
+		);
+	
+		// If neither BuddyPress nor BuddyBoss is active, deactivate the plugin and display an admin notice.
+		if ( ! $is_buddypress_active ) {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
-			// deactivate_plugins('buddypress-polls/buddypress-polls.php');
+	
+			// Add an admin notice to inform the user about the missing dependency.
 			add_action( 'admin_notices', 'shortcodes_for_buddypress_required_plugin_admin_notice' );
+	
+			// Clear the activation flag if it was set during activation.
 			$activate = filter_input( INPUT_GET, 'activate' );
-			unset( $activate );
+			if ( null !== $activate ) {
+				unset( $activate );
+			}
 		}
 	}
 
@@ -210,24 +266,47 @@ if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
 }
 
 /**
- * Redirect to plugin settings page after activated.
+ * Handles the redirection to the plugin settings page after activation.
  *
- * @since  1.0.0
+ * This function is triggered when the plugin is activated. It checks if BuddyPress
+ * (or BuddyBoss) is active and then redirects the user to the plugin's settings page.
+ * The redirection only occurs in the admin area and is performed using `wp_safe_redirect()`
+ * for added security. All input parameters are sanitized to ensure safe processing.
+ *
+ * @since 1.0.0
  * @param string $plugin Path to the plugin file relative to the plugins directory.
+ * @return void
  */
 function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
 	
-	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
-		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore
-			wp_safe_redirect( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) );
-			exit;
-		}
-	}
-	if ( $plugin == $_REQUEST['plugin'] && class_exists( 'Buddypress' ) ) {
-		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate-plugin' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore		
-			set_transient( '_bp_shortcode_is_new_install', true, 30 );
-		}
-	}
+	// Ensures that the function only runs in the admin area.
+	 if ( ! is_admin() ) {
+        return;
+    }
+
+    // Sanitize the plugin parameter.
+    $plugin = sanitize_text_field( $plugin );
+
+    // Verify if the activated plugin matches the current plugin and BuddyPress is active.
+    if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
+        // Sanitize the $_REQUEST parameters to prevent any potential security issues.
+        $action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
+        $requested_plugin = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : '';
+
+        // Check if the plugin was activated via the WordPress Plugins page.
+        if ( 'activate' === $action && $requested_plugin === $plugin ) {
+            // Safely redirect to the plugin settings page.
+            wp_safe_redirect( esc_url( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) ) );
+            exit;
+        }
+    }
+
+    // Set a transient if the plugin was newly activated for a potential redirection.
+    if ( $plugin === $requested_plugin && class_exists( 'BuddyPress' ) ) {
+        if ( 'activate-plugin' === $action ) {
+            set_transient( '_bp_shortcode_is_new_install', true, 30 );
+        }
+    }
 }
 add_action( 'activated_plugin', 'shortcodes_for_buddypress_activation_redirect_settings' );
 
@@ -276,7 +355,7 @@ add_action( 'admin_init', 'shortcodes_for_buddypress_do_activation_redirect' );
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_required_plugin_admin_notice' ) ) {
 	function shortcodes_for_buddypress_required_plugin_admin_notice() {
-		// Check if function is called by admin access.
+		// Check if function is called by admin area.
 		if ( ! is_admin() ) {
 			return;
 		}
