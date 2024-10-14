@@ -16,7 +16,6 @@ $member_loop_classes = static function () use ( $classes ) {
 	
 	global $wbtm_reign_settings;
 	$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] : 'wbtm-member-directory-type-2';
-	
 
 	$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
 	$members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '3';
@@ -55,7 +54,7 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 	<?php if ( bp_has_members( $members_atts['bpsh_query'] ) ) : ?>
 	<div id="members-dir-list" class="members dir-list" data-bp-list="members" data-ajax="false">
 		<div class="bpsp-member-count">			
-			<?php echo bp_get_members_pagination_count(); ?>
+			<?php echo esc_html(bp_get_members_pagination_count()); ?>
 		</div>
 		<ul id="members-list" class="<?php bp_nouveau_loop_classes(); ?>">		
 			<?php
@@ -109,7 +108,7 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 			</ul>
 			<?php if ( $members_atts['per_page'] ) { ?>
 			<div class="bpsp-member-pagination">			
-				<?php echo bp_get_members_pagination_links(); ?>
+				<?php echo wp_kses_post(bp_get_members_pagination_links()); ?>
 			</div>
 			<?php } ?>
 
