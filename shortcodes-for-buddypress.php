@@ -163,8 +163,6 @@ function shortcodes_for_buddypress_run() {
 shortcodes_for_buddypress_run();
 
 
-add_action( 'admin_notices', 'shortcodes_for_buddypress_plugin_admin_notice' );
-
 /**
  * This function checks whether the BuddyPress plugin is active. If it is not active,
  * an admin notice is displayed in the WordPress dashboard, informing the user that
@@ -211,6 +209,7 @@ function shortcodes_for_buddypress_plugin_admin_notice() {
         echo '<div class="notice notice-error"><p>' . wp_kses_post( $message ) . '</p></div>';
     }
 }
+// add_action( 'admin_notices', 'shortcodes_for_buddypress_plugin_admin_notice' );
 
 /**
  * 
