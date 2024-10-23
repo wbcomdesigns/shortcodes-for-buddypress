@@ -835,6 +835,7 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_notifications( $atts, $content = null ) {
 		global $notifications_atts;
+
 		$bpsh_query = build_query( $atts );
 		if ( ! empty( $bpsh_query ) ) {
 			$bpsh_query = '&' . $bpsh_query;
@@ -849,15 +850,16 @@ class Shortcodes_For_Buddypress_Public {
 			'container_class' => 'notification', // default container,
 			'bpsh_query'      => $bpsh_query,
 		);
-
+		
+		
 		$notifications_atts = shortcode_atts( $default_atts, $atts );
 		extract( $notifications_atts );
-
+		
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 
 		ob_start();
 		if ( function_exists( 'bp_is_active' ) && is_user_logged_in() ) {
-
+			
 			if ( $title != '' ) {
 				?>
 				<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
@@ -866,15 +868,17 @@ class Shortcodes_For_Buddypress_Public {
 			if ( $_bp_theme_package == 'legacy' ) {
 				shortcodes_for_buddypress_template( 'legacy/notifications/notifications-loop.php' );
 			} else {
+				
 				shortcodes_for_buddypress_template( 'nouveau/notifications/notifications-loop.php' );
 			}
 		} else {
-
+			return;
 		}
 		$output = ob_get_clean();
 
 		// Apply filter on the output before returning it
 		$output = apply_filters( 'modify_notifications_output', $output, $atts, $notifications_atts );
+		return $output;
 	}
 
 	/**
