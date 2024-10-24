@@ -872,7 +872,7 @@ class Shortcodes_For_Buddypress_Public {
 				shortcodes_for_buddypress_template( 'nouveau/notifications/notifications-loop.php' );
 			}
 		} else {
-			return 'Please Log In to view notifications';
+			echo __('Please Log in to view notifications', 'shortcodes-for-buddypress');
 		}
 
 		$output = ob_get_clean();
