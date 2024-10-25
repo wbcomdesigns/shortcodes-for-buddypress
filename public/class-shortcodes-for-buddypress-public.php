@@ -1153,4 +1153,77 @@ class Shortcodes_For_Buddypress_Public {
 
 		return apply_filters( 'bp_activity_action_wrapper_classes', $r );
 	}
+
+
+	public function buddypress_shortcode_activity_entry_bubble_buttons( $buttons, $activity_id ) {
+
+		global $activities_template;
+
+		// Pin post action only for allowed posts based on user role.
+		if (
+		'activity_update' === $activities_template->activity->type &&
+		! in_array( $activities_template->activity->privacy, array( 'media', 'document', 'video' ), true ) &&
+		(
+			(
+
+					bp_current_user_can( 'administrator' ) ||
+					(
+						bb_is_active_activity_pinned_posts() &&
+						(
+							groups_is_user_admin( bp_loggedin_user_id(), bp_get_activity_item_id() ) ||
+							groups_is_user_mod( bp_loggedin_user_id(), bp_get_activity_item_id() )
+						)
+					)
+
+			) ||
+			(
+				bp_current_user_can( 'administrator' ) ||
+				(
+					'groups' === bp_get_activity_object_name() &&
+					bb_is_active_activity_pinned_posts() &&
+					(
+						groups_is_user_admin( bp_loggedin_user_id(), bp_get_activity_item_id() ) ||
+						groups_is_user_mod( bp_loggedin_user_id(), bp_get_activity_item_id() )
+					)
+				)
+			)
+		)
+		) {
+
+			// Remove for activities related to group for main activity screen.
+			$pinned_action_label = bp_is_group_activity() ? esc_html__( 'Pin to Group', 'shortcodes-for-buddypress' ) : ( 'groups' === bp_get_activity_object_name() ? esc_html__( 'Pin to Group', 'shortcodes-for-buddypress' ) : esc_html__( 'Pin to Feed', 'shortcodes-for-buddypress' ) );
+			$pinned_action_class = 'pin-activity';
+			$pinned_id           = ! empty( $GLOBALS['activities_template']->pinned_id ) ? $GLOBALS['activities_template']->pinned_id : bp_get_option( 'bb_pinned_post', 0 );
+
+			if ( 'groups' === bp_get_activity_object_name() && bp_is_active( 'groups' ) ) {
+				$group_id  = bp_get_activity_item_id();
+				$pinned_id = groups_get_groupmeta( $group_id, 'bb_pinned_post' );
+			}
+
+			if ( ! empty( $pinned_id ) && (int) $activity_id === (int) $pinned_id ) {
+				$pinned_action_label = bp_is_group_activity() ? esc_html__( 'Unpin from Group', 'shortcodes-for-buddypress' ) : ( 'groups' === bp_get_activity_object_name() ? esc_html__( 'Unpin from Group', 'shortcodes-for-buddypress' ) : esc_html__( 'Unpin from Feed', 'shortcodes-for-buddypress' ) );
+				$pinned_action_class = 'unpin-activity';
+			}
+
+			$buttons['activity_pin'] = array(
+				'id'                => 'activity_pin',
+				'component'         => 'activity',
+				'must_be_logged_in' => true,
+				'button_element'    => 'a',
+				'button_attr'       => array(
+					'id'            => '',
+					'href'          => '',
+					'class'         => 'button item-button bp-secondary-action ' . $pinned_action_class,
+					'data-bp-nonce' => '',
+				),
+				'link_text'         => sprintf(
+					'<span class="bp-screen-reader-text">%s</span><span class="delete-label">%s</span>',
+					$pinned_action_label,
+					$pinned_action_label
+				),
+			);
+		}
+
+		return $buttons;
+	}
 }
