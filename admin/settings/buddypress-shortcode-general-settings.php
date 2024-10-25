@@ -42,7 +42,7 @@ global $bp_grp_types;
 				<div class="wbcom-settings-section-wrap">
 					<div class="wbcom-settings-section-options-heading">
 						<label for="group_types_search">
-							<?php esc_html_e( 'Mambers', 'shortcodes-for-buddypress' ); ?>
+							<?php esc_html_e( 'Members', 'shortcodes-for-buddypress' ); ?>
 						</label>
 						<span class="bp-shortcode-read-more">
 							<p class="description"><?php esc_html_e( 'BuddyPress Members Shortcode allows you to embed BuddyPress members in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?></p>

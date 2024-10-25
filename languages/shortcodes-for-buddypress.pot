@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-24 05:58:57+00:00\n"
+"POT-Creation-Date: 2024-10-25 07:04:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -139,6 +139,7 @@ msgid "Activities"
 msgstr ""
 
 #: admin/class-shortcodes-for-buddypress-admin.php:206
+#: admin/settings/buddypress-shortcode-general-settings.php:45
 msgid "Members"
 msgstr ""
 
@@ -507,10 +508,6 @@ msgstr ""
 
 #: admin/settings/buddypress-shortcode-general-settings.php:36
 msgid "[activity-listing]"
-msgstr ""
-
-#: admin/settings/buddypress-shortcode-general-settings.php:45
-msgid "Mambers"
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-general-settings.php:48
@@ -1744,58 +1741,66 @@ msgstr ""
 msgid "Border Color"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:757
+#: public/class-shortcodes-for-buddypress-public.php:233
+msgid "Please check if Activity Stream is active in BuddyPress Components page."
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:761
 #. translators: %1$s is the name of the group.
 msgid "Group logo of %1$s"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:874
+#: public/class-shortcodes-for-buddypress-public.php:879
+msgid "Please check if Notifications is active in BuddyPress Components page."
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:883
 msgid "Please Log in to view notifications"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:942
+#: public/class-shortcodes-for-buddypress-public.php:952
 #. translators: %s: member name
 msgid "Profile photo of %s"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:990
+#: public/class-shortcodes-for-buddypress-public.php:1000
 msgid "Post in: Profile"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1004
+#: public/class-shortcodes-for-buddypress-public.php:1014
 msgid "Post in: Group"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1005
+#: public/class-shortcodes-for-buddypress-public.php:1015
 msgid "Start typing the group name..."
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1022
+#: public/class-shortcodes-for-buddypress-public.php:1032
 #. translators: %s: display buddypress user firstname.
 msgid "What's new, %s?"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1023
+#: public/class-shortcodes-for-buddypress-public.php:1033
 msgid "Post what's new"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1024
+#: public/class-shortcodes-for-buddypress-public.php:1034
 msgid "Post in"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1025
+#: public/class-shortcodes-for-buddypress-public.php:1035
 msgid "Post Update"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1026
+#: public/class-shortcodes-for-buddypress-public.php:1036
 msgid "Cancel"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1065
+#: public/class-shortcodes-for-buddypress-public.php:1075
 msgid "Go PRO"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1131
+#: public/class-shortcodes-for-buddypress-public.php:1141
 msgid "Sorry, there was no activity found."
 msgstr ""
 
@@ -1883,7 +1888,7 @@ msgstr ""
 msgid "Select this notification"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:361
+#: public/class-shortcodes-for-buddypress-public.php:365
 msgctxt "button"
 msgid "Load More"
 msgstr ""
