@@ -53,9 +53,6 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 	<?php do_action( 'before_members_listing_output', $atts, $members_atts ); ?>
 	<?php if ( bp_has_members( $members_atts['bpsh_query'] ) ) : ?>
 	<div id="members-dir-list" class="members dir-list" data-bp-list="members" data-ajax="false">
-		<div class="bpsp-member-count">			
-			<?php echo esc_html(bp_get_members_pagination_count()); ?>
-		</div>
 		<ul id="members-list" class="<?php bp_nouveau_loop_classes(); ?>">		
 			<?php
 			while ( bp_members() ) :
@@ -106,11 +103,6 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 					</li>
 				<?php endwhile; ?>
 			</ul>
-			<?php if ( $members_atts['per_page'] ) { ?>
-			<div class="bpsp-member-pagination">			
-				<?php echo wp_kses_post(bp_get_members_pagination_links()); ?>
-			</div>
-			<?php } ?>
 
 			
 		</div>
