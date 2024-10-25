@@ -207,7 +207,7 @@ class Shortcodes_For_Buddypress_Public {
 
 		ob_start();
 
-		if ( function_exists( 'bp_is_active' ) ) {
+		if ( function_exists( 'bp_is_active' ) && (bp_is_active('activity'))) {
 
 			if ( $title != '' ) {
 				$output .= '<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>';
@@ -229,6 +229,9 @@ class Shortcodes_For_Buddypress_Public {
 				do_action( 'after_render_activity_shortcode', $atts );
 				$output .= ob_get_contents();
 			}
+		}else{
+			echo __('Please check if activity component is enabled in BuddyPress Components.', 'shortcodes-for-buddypress');
+			$output .= ob_get_contents();
 		}
 		ob_end_clean();
 		$output = apply_filters( 'modify_activity_listing_output', $output, $atts, $activity_atts );
@@ -858,22 +861,27 @@ class Shortcodes_For_Buddypress_Public {
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 
 		ob_start();
-		if ( function_exists( 'bp_is_active' ) && is_user_logged_in() ) {
+		if(is_user_logged_in() ){
+			if ( function_exists( 'bp_is_active' ) && bp_is_active('notifications') ) {
 			
-			if ( $title != '' ) {
-				?>
-				<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
-				<?php
-			}
-			if ( $_bp_theme_package == 'legacy' ) {
-				shortcodes_for_buddypress_template( 'legacy/notifications/notifications-loop.php' );
+				if ( $title != '' ) {
+					?>
+					<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
+					<?php
+				}
+				if ( $_bp_theme_package == 'legacy' ) {
+					shortcodes_for_buddypress_template( 'legacy/notifications/notifications-loop.php' );
+				} else {
+					
+					shortcodes_for_buddypress_template( 'nouveau/notifications/notifications-loop.php' );
+				}
 			} else {
-				
-				shortcodes_for_buddypress_template( 'nouveau/notifications/notifications-loop.php' );
+				echo __('Please check if notifications is enabled in BuddyPress Components.', 'shortcodes-for-buddypress');
 			}
-		} else {
+		}else{
 			echo __('Please Log in to view notifications', 'shortcodes-for-buddypress');
 		}
+		
 
 		$output = ob_get_clean();
 
