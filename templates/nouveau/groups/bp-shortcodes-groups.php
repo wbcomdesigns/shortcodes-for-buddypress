@@ -70,9 +70,6 @@ $loop_layout = ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layou
 		<input type="hidden" data-bp-filter="groups" value="<?php echo esc_attr( $groups_atts['bpsh_query'] ); ?>" />
 		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups" data-ajax="false">
 			<?php if ( bp_has_groups( $groups_atts['bpsh_query'] ) ) : ?>
-				<div class="bpsp-group-count">	
-					<?php echo esc_html(bp_get_groups_pagination_count()); ?>
-				</div>
 				<ul id="groups-list" class="grid 
 				<?php
 				bp_nouveau_loop_classes();
@@ -127,12 +124,7 @@ $loop_layout = ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layou
 							</div>
 						</li>
 					<?php endwhile; ?>
-				</ul>
-				<?php if ( $groups_atts['per_page'] ) { ?>
-				<div class="bpsp-group-pagination">	
-					<?php echo wp_kses_post(bp_get_groups_pagination_links()); ?>
-				</div>
-				<?php } ?>				
+				</ul>	
 			<?php endif; ?>
 		</div>
 	</div>
