@@ -448,3 +448,34 @@ table.notifications.bp-tables-user tr:last-child th {
     list-style: none;
     text-align: center;
 }
+
+
+/* notifications and activity listing shortcodes css. */
+
+.shortcode-feedback.info {
+	background: #fff;
+	border-left: 13px solid #d33;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+	margin: 5px 5px 2px;
+	padding: 1px 12px;
+    
+}
+
+.shortcode-feedback.info p {
+	margin: 0.5em 0;
+	padding: 5px;
+}
+
+.shortcode-feedback span.shortcode-icon {
+	color: #fff;
+	display: block;
+	font-family: dashicons;
+	right: 0;
+	margin-left: 10px;
+	position: relative;
+	padding: 0  0.5em;
+}
+
+
+
+

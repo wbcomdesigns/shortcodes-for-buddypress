@@ -119,13 +119,13 @@ class Shortcodes_For_Buddypress_Public {
 				apply_filters( 'bp_activity_localized_params' , array(
 					'ajax_url'   => admin_url( 'admin-ajax.php' ),
 					'ajax_nonce' => wp_create_nonce( 'bpsp-nonce' ),
+					)
 				)
-			)
-		);
+			);
 
-			
-
-		}
+	
+		
+	}
 	}
 
 	public function bp_shortcode_js_css() {
@@ -206,9 +206,9 @@ class Shortcodes_For_Buddypress_Public {
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 
 		ob_start();
-
+		
 		if ( function_exists( 'bp_is_active' ) && (bp_is_active('activity'))) {
-
+			
 			if ( $title != '' ) {
 				$output .= '<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>';
 			}
@@ -230,7 +230,12 @@ class Shortcodes_For_Buddypress_Public {
 				$output .= ob_get_contents();
 			}
 		}else{
-			echo __('Please check if activity component is enabled in BuddyPress Components.', 'shortcodes-for-buddypress');
+			?>
+			<div class="shortcode-feedback info">
+				<span class="shortcode-icon"></span>
+				<p><?php echo __('Please enable the BuddyPress Activity Component.', 'shortcodes-for-buddypress'); ?></p>
+			</div>
+			<?php
 			$output .= ob_get_contents();
 		}
 		ob_end_clean();
@@ -876,10 +881,21 @@ class Shortcodes_For_Buddypress_Public {
 					shortcodes_for_buddypress_template( 'nouveau/notifications/notifications-loop.php' );
 				}
 			} else {
-				echo __('Please check if notifications is enabled in BuddyPress Components.', 'shortcodes-for-buddypress');
+				
+				?>
+				<div class="shortcode-feedback info">
+					<span class="shortcode-icon"></span>
+					<p><?php echo __('Please enable the BuddyPress Notifications Component.', 'shortcodes-for-buddypress'); ?></p>
+				</div>
+				<?php
 			}
 		}else{
-			echo __('Please Log in to view notifications', 'shortcodes-for-buddypress');
+			?>
+			<div class="shortcode-feedback info">
+				<span class="shortcode-icon" aria-hidden="true"></span>
+				<p><?php echo __('Please Log in to view notifications.', 'shortcodes-for-buddypress'); ?></p>
+			</div>
+			<?php
 		}
 		
 
