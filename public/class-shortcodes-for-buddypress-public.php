@@ -110,22 +110,22 @@ class Shortcodes_For_Buddypress_Public {
 			);
 		}
 		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
-		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-public.js', array( 'jquery', 'bp-nouveau-activity' ), $this->version, true );
-		if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
-			wp_enqueue_script( $this->plugin_name );
-			wp_localize_script(
-				$this->plugin_name,
-				'buddypress_shortcode',
-				apply_filters( 'bp_activity_localized_params' , array(
-					'ajax_url'   => admin_url( 'admin-ajax.php' ),
-					'ajax_nonce' => wp_create_nonce( 'bpsp-nonce' ),
+		if(function_exists('bp_is_active') &&  bp_is_active('activity')){
+			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-public.js', array( 'jquery', 'bp-nouveau-activity' ), $this->version, true );
+			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
+				wp_enqueue_script( $this->plugin_name );
+				wp_localize_script(
+					$this->plugin_name,
+					'buddypress_shortcode',
+					apply_filters( 'bp_activity_localized_params' , array(
+						'ajax_url'   => admin_url( 'admin-ajax.php' ),
+						'ajax_nonce' => wp_create_nonce( 'bpsp-nonce' ),
+						)
 					)
-				)
-			);
-
-	
+				);
+			}
+		}
 		
-	}
 	}
 
 	public function bp_shortcode_js_css() {
