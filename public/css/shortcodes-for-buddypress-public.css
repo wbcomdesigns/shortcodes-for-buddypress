@@ -419,6 +419,10 @@ table.notifications.bp-tables-user tr:last-child th {
     display: flex;
 }
 
+.elementor-widget-buddypress_shortcode_members_widget ul#members-list.bp-list.grid.three {
+    margin: 0 -18px;
+}
+
 
 
 @media only screen and (max-width: 767px) {
