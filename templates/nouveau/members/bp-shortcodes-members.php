@@ -91,12 +91,29 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 										</div><!-- .item-extra-content -->
 									<?php endif; ?>
 									<?php
-									bp_nouveau_members_loop_buttons(
-										array(
-											'container'      => 'ul',
-											'button_element' => 'button',
-										)
-									);
+									if(function_exists( 'bb_member_directories_get_profile_actions' )){
+										$profile_actions = bb_member_directories_get_profile_actions( bp_get_member_user_id() );
+										if ( ! empty( $profile_actions['primary'] ) ) {
+											?>
+											<div class="flex only-list-view align-items-center primary-action justify-center">
+												<?php echo wp_kses_post( $profile_actions['primary'] ); ?>
+											</div>
+										<?php }
+										if ( ! empty( $profile_actions['secondary'] ) ) { ?>
+											<div class="flex only-grid-view button-wrap member-button-wrap footer-button-wrap">
+												<?php echo wp_kses_post( $profile_actions['secondary'] ); ?>
+											</div>
+											<?php
+										}
+									}else{
+										bp_nouveau_members_loop_buttons(
+											array(
+												'type'   		 => 'loop',
+												'container'      => 'ul',
+												'button_element' => 'button',
+											)
+										);
+									}
 									?>
 							</div>
 						</div><!-- // .item -->
