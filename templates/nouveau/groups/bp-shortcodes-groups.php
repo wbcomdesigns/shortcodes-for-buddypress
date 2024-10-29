@@ -16,7 +16,7 @@ $group_loop_classes = static function () use ( $classes ) {
 	$classes[]             = 'rg-group-list';
 	$component             = sanitize_key( 'groups' );
 	$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-	$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : '';
+	$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : 'three';
 	
 	global $wbtm_reign_settings;
 	$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['group_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['group_directory_type'] : 'wbtm-group-directory-type-2';
@@ -32,13 +32,11 @@ $group_loop_classes = static function () use ( $classes ) {
 
 		if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
 			$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
-
 			if ( isset( $grid_classes[ $layout_prefs ] ) ) {
-				$layout_classes = !empty( $groups_layout  ) ? $groups_layout :	$grid_classes[ $layout_prefs ];
 				$classes = array_merge(
 					$classes, array(
 						'grid',
-						$layout_classes,
+						$grid_classes[ $layout_prefs ],
 					)
 				);
 			}
@@ -54,7 +52,7 @@ $group_loop_classes = static function () use ( $classes ) {
 			$classes,
 			array(
 				'grid',
-				'three',
+				$groups_layout,
 			)
 		);
 	}
@@ -73,8 +71,8 @@ $loop_layout = ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layou
 			<?php if ( bp_has_groups( $groups_atts['bpsh_query'] ) ) : ?>
 				<ul id="groups-list" class="grid 
 				<?php
-				bp_nouveau_loop_classes();
 				echo esc_attr(' ' . $loop_layout);
+				bp_nouveau_loop_classes();
 				?>
 				">
 					<?php
