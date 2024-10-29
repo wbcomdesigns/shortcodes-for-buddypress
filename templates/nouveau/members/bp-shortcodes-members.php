@@ -18,17 +18,16 @@ $member_loop_classes = static function () use ( $classes ) {
 	$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] : 'wbtm-member-directory-type-2';
 
 	$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-	$members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '';
+	$members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '3';
 
 	if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
 		$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
 		if ( isset( $grid_classes[ $members_layout ] ) ) {
-			$layout_classes = !empty( $members_layout  ) ? $members_layout : $grid_classes[ $members_layout ];
 			$classes = array_merge(
 				$classes,
 				array(
 					'grid',
-					$layout_classes,
+					$grid_classes[ $members_layout ],
 				)
 			);
 		}
@@ -54,7 +53,7 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 	<?php do_action( 'before_members_listing_output', $atts, $members_atts ); ?>
 	<?php if ( bp_has_members( $members_atts['bpsh_query'] ) ) : ?>
 	<div id="members-dir-list" class="members dir-list" data-bp-list="members" data-ajax="false">
-		<ul id="members-list" class="<?php bp_nouveau_loop_classes(); ?> <?php echo esc_attr( $loop_layout ); ?>">		
+		<ul id="members-list" class="<?php bp_nouveau_loop_classes(); ?> <?php echo esc_attr( $loop_layout );?>">		
 			<?php
 			while ( bp_members() ) :
 				bp_the_member();
