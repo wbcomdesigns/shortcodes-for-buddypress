@@ -21,12 +21,21 @@ add_filter(
 	}
 );
 ?>
-<div id="buddypress" class="bps-notifications-shortcode bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ). ' '. esc_attr( $notifications_atts['container_class'] ); ?>">
-	<input type="hidden" data-bp-filter="notifications" value="<?php echo esc_attr( $notifications_atts['bpsh_query'] ); ?>" />		
+<div id="buddypress" class="bps-notifications-shortcode bp-dir-hori-nav <?php
+if( function_exists( 'bp_nouveau_get_container_classes' ) ){
+	echo esc_attr( bp_nouveau_get_container_classes() ). ' '. esc_attr( $notifications_atts['container_class'] );
+}else{
+	echo esc_attr( $notifications_atts['container_class'] );
+}
+?>">
+
+<input type="hidden" data-bp-filter="notifications" value="<?php echo esc_attr( $notifications_atts['bpsh_query'] ); ?>" />		
 	<?php	
 	if ( bp_has_notifications( $args ) ) :
-
-		bp_nouveau_pagination( 'top' );
+		if( function_exists( 'bp_nouveau_pagination' ) ){
+			bp_nouveau_pagination( 'top' );
+		}
+		
 		?>
 
 		<form action="" method="post" id="notifications-bulk-management" class="standard-form">
@@ -38,7 +47,11 @@ add_filter(
 						<th class="title"><?php esc_html_e( 'Notification', 'shortcodes-for-buddypress' ); ?></th>
 						<th class="date">
 							<?php esc_html_e( 'Date Received', 'shortcodes-for-buddypress' ); ?>
-							<?php bp_nouveau_notifications_sort_order_links(); ?>
+							<?php 
+								if( function_exists( 'bp_nouveau_notifications_sort_order_links' ) ){
+									bp_nouveau_notifications_sort_order_links();
+								}
+							?>
 						</th>
 						<th class="actions"><?php esc_html_e( 'Actions', 'shortcodes-for-buddypress' ); ?></th>
 					</tr>
@@ -67,11 +80,21 @@ add_filter(
 			<?php wp_nonce_field( 'notifications_bulk_nonce', 'notifications_bulk_nonce' ); ?>
 		</form>
 
-		<?php bp_nouveau_pagination( 'bottom' ); ?>
+		<?php 
+		if( function_exists( 'bp_nouveau_pagination' ) ){
+			bp_nouveau_pagination( 'bottom' );
+		}
+		?>
 
 	<?php else : ?>
 
-		<?php bp_nouveau_user_feedback( 'member-notifications-none' ); ?>
+		<?php 
+			if( function_exists( 'bp_nouveau_user_feedback' ) ){
+				bp_nouveau_user_feedback( 'member-notifications-none' );
+			}else{
+				echo __( 'This member has no unread notifications.' , 'shortcodes-for-buddypress' );
+			}
+		?>
 
 	<?php endif; ?>
 </div>
