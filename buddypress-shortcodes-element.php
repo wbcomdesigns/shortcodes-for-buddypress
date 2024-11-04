@@ -12,7 +12,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Acivity List', 'shortcodes-for-buddypress' );
+		return esc_html__( 'Activity List', 'shortcodes-for-buddypress' );
 	}
 
 	public function get_icon() {
