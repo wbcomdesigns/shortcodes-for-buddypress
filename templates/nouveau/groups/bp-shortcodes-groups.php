@@ -60,8 +60,9 @@ $group_loop_classes = static function () use ( $classes ) {
 	return $classes;
 };
 add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
-$loop_layout = ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layout'] : '';
-
+$loop_layout 		= ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layout'] : '';
+$cover_class        = ! bb_platform_group_element_enable( 'cover-images' ) ? 'bb-cover-disabled' : 'bb-cover-enabled';
+$group_cover_height = function_exists( 'bb_get_group_cover_image_height' ) ? bb_get_group_cover_image_height() : 'small';
 ?>
 
 <div id="buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ) . ' ' . esc_attr( $groups_atts['container_class'] ); ?>">
@@ -69,13 +70,39 @@ $loop_layout = ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layou
 		<input type="hidden" data-bp-filter="groups" value="<?php echo esc_attr( $groups_atts['bpsh_query'] ); ?>" />
 		<div id="groups-dir-list" class="groups dir-list <?php echo esc_attr( $loop_layout );?>" data-bp-list="groups" data-ajax="false">
 			<?php if ( bp_has_groups( $groups_atts['bpsh_query'] ) ) : ?>
-				<ul id="groups-list" class="grid <?php bp_nouveau_loop_classes();?>">
+				<ul id="groups-list" class="grid <?php bp_nouveau_loop_classes();?><?php echo esc_attr( ' ' . $cover_class . ' ' ); ?>">
 					<?php
 					while ( bp_groups() ) :
 						bp_the_group();
+						$bp_group_id = bp_get_group_id();
 						?>
 						<li <?php bp_group_class( array( 'item-entry' ) ); ?> data-bp-item-id="<?php bp_group_id(); ?>" data-bp-item-component="groups">
 							<div class="list-wrap">
+								<?php
+								$active_theme = wp_get_theme();
+								if ( 'BuddyBoss Theme' == $active_theme ) {
+								if ( ! bp_disable_group_cover_image_uploads() && bb_platform_group_element_enable( 'cover-images' ) ) {
+									$group_cover_image_url = bp_attachments_get_attachment(
+										'url',
+										array(
+											'object_dir' => 'groups',
+											'item_id'    => $bp_group_id,
+										)
+									);
+									$has_default_cover     = function_exists( 'bb_attachment_get_cover_image_class' ) ? bb_attachment_get_cover_image_class( $bp_group_id, 'group' ) : '';
+									?>
+										<div class="bs-group-cover bb-shortcode-group-only only-grid-view <?php echo esc_attr( $has_default_cover . ' cover-' . $group_cover_height ); ?>">
+											<a href="<?php bp_group_permalink(); ?>">
+											<?php if ( ! empty( $group_cover_image_url ) ) { ?>
+													<img src="<?php echo esc_url( $group_cover_image_url ); ?>">
+												<?php } ?>
+											</a>
+										</div>
+										<?php
+									}
+								}
+								?>
+
 								<?php
 								$active_theme = wp_get_theme();
 								if ( 'BuddyX' == $active_theme || 'BuddyxPro' == $active_theme ) {

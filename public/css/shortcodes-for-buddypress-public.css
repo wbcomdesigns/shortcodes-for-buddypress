@@ -128,29 +128,37 @@ table.notifications.bp-tables-user thead th.date {
 }
 
 /*Members and Groups Shortcode*/
-.members.dir-list.one ul.grid>li,
-.groups.dir-list.one ul.grid>li {
+.members.dir-list.one ul.rg-group-list.grid>li,
+.groups.dir-list.one ul.rg-group-list.grid>li {
     padding-top: 0;
     width: 100%;
     width: 100% !important;
+    flex: 0 0 100%;
+    max-width: 100%;
 }
-.members.dir-list.two ul.grid>li,
-.groups.dir-list.two ul.grid>li {
+.members.dir-list.two ul.rg-group-list.grid>li,
+.groups.dir-list.two ul.rg-group-list.grid>li {
     padding-top: 0;
     width: 50%;
     width: calc(100% / 2) !important;
+    flex: 0 0 50%;
+    max-width: 50%;
 }
-.members.dir-list.three ul.grid>li,
-.groups.dir-list.three ul.grid>li {
+.members.dir-list.three ul.rg-group-list.grid>li,
+.groups.dir-list.three ul.rg-group-list.grid>li {
     padding-top: 0;
     width: 33.333333%;
     width: calc(100% / 3) !important;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
 }
-.members.dir-list.four ul.grid>li,
-.groups.dir-list.four ul.grid>li {
+.members.dir-list.four ul.rg-group-list.grid>li,
+.groups.dir-list.four ul.rg-group-list.grid>li {
     padding-top: 0;
     width: 25%;
     width: calc(100% / 4) !important;
+    flex: 0 0 25%;
+    max-width: 25%;
 }
 
 #members-dir-list ul#bps-members-list,
@@ -366,16 +374,12 @@ div#groups-dir-list.groups.four ul#bps-groups-list li.bps-item-entry{
     cursor: pointer;
 }
 
-
-
-
 /*BuddyX Theme*/
 .bps-activity-content .bp-group-activity-preview,
 .bps-activity-content .bp-member-activity-preview,
 .bps-activity-content .buddyx-user-preview {
     margin: 0;
 }
-
 
 /*Reign Theme*/
 .activity-list.bp-list .bps-activity-item{
@@ -437,14 +441,50 @@ div#groups-dir-list.groups.four ul#bps-groups-list li.bps-item-entry{
 table.notifications.bp-tables-user tr:last-child th {
     border-bottom:1px solid var(--bb-content-border-color);
 }
-
-.theme-buddyboss-theme table.notifications.bp-tables-user {
-    overflow: unset;
+.buddyboss-theme .buddypress-wrap ul.bp-list.groups-list.rg-group-list .bs-group-cover a {
+    position: relative;
+    display: block;
+    height: 100%;
+    padding-top: 95px;
+    overflow: hidden;
+}
+.buddyboss-theme .buddypress-wrap ul.bp-list.groups-list.rg-group-list .bs-group-cover a img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+.buddyboss-theme #members-list.item-list.grid.rg-group-list .list-wrap,
+.buddyboss-theme .item-list.groups-list.grid.rg-group-list .list-wrap {
+   overflow: hidden;
+}
+.buddyboss-theme .buddypress-wrap .grid.rg-group-list.bp-list>li .item-meta,
+.buddyboss-theme .buddypress-wrap .grid.rg-group-list.bp-list>li .list-title,
+.buddyboss-theme .buddypress-wrap .grid.rg-group-list.groups-list.bp-list>li .item-avatar {
+    text-align: left;
+    padding-left: 15px;
+}
+.buddyboss-theme .item-list.groups-list.rg-group-list .item-avatar img{
+    max-width:150px;
+    margin-top: -30px !important;
+}
+.buddyboss-theme .buddypress-wrap .grid .group-desc {
+    display: none;
+}
+.buddyboss-theme .buddypress-wrap .grid.bp-list.groups-list li .item-block{
+    margin:10px 0 !important;
+}
+.buddyboss-theme .buddypress-wrap .grid.bp-list .bp-generic-meta.-meta.action{
+    padding: 0 15px;
+}
+.buddyboss-theme .buddypress-wrap .bp-list.grid .list-wrap .item{
+    padding: 0 !important;
 }
 
-.theme-buddyboss-theme table.notifications.bp-tables-user span.notifications-order-actions {
-    display: flex;
-}
 
 .elementor-widget-buddypress_shortcode_members_widget ul#members-list.bp-list.grid.three,
 .elementor-widget-buddypress_shortcode_groups_widget ul#groups-list.bp-list.grid.three {
@@ -473,25 +513,23 @@ table.notifications.bp-tables-user tr:last-child th {
     #members-dir-list ul#bps-members-list li.bps-item-entry,
     #groups-dir-list ul#bps-groups-list li.bps-item-entry {
         width: calc(100% / 1) !important;
-    }
-    .members.dir-list.one ul.grid>li,
-    .groups.dir-list.one ul.grid>li,
-    .members.dir-list.two ul.grid>li,
-    .groups.dir-list.two ul.grid>li,
-    .members.dir-list.three ul.grid>li,
-    .groups.dir-list.three ul.grid>li,
-    .members.dir-list.four ul.grid>li,
-    .groups.dir-list.four ul.grid>li {
+    }    
+    .members.dir-list.two ul.rg-group-list.grid>li,
+    .groups.dir-list.two ul.rg-group-list.grid>li,
+    .members.dir-list.three ul.rg-group-list.grid>li,
+    .groups.dir-list.three ul.rg-group-list.grid>li,
+    .members.dir-list.four ul.rg-group-list.grid>li,
+    .groups.dir-list.four ul.rg-group-list.grid>li {
         width: 100%;
         width: 100% !important;
     }
 }
 
 @media only screen and (min-width: 480px) and (max-width: 598px) {
-    .members.dir-list.three ul.grid>li,
-    .groups.dir-list.three ul.grid>li,
-    .members.dir-list.four ul.grid>li,
-    .groups.dir-list.four ul.grid>li {
+    .members.dir-list.three ul.rg-group-list.grid>li,
+    .groups.dir-list.three ul.rg-group-list.grid>li,
+    .members.dir-list.four ul.rg-group-list.grid>li,
+    .groups.dir-list.four ul.rg-group-list.grid>li {
         width: 50%;
         width: 50% !important;
     }
