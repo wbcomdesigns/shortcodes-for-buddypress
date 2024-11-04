@@ -67,14 +67,9 @@ $loop_layout = ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layou
 <div id="buddypress" class="bp-dir-hori-nav <?php echo esc_attr( bp_nouveau_get_container_classes() ) . ' ' . esc_attr( $groups_atts['container_class'] ); ?>">
 	<div class="screen-content">
 		<input type="hidden" data-bp-filter="groups" value="<?php echo esc_attr( $groups_atts['bpsh_query'] ); ?>" />
-		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups" data-ajax="false">
+		<div id="groups-dir-list" class="groups dir-list <?php echo esc_attr( $loop_layout );?>" data-bp-list="groups" data-ajax="false">
 			<?php if ( bp_has_groups( $groups_atts['bpsh_query'] ) ) : ?>
-				<ul id="groups-list" class="grid 
-				<?php
-				echo esc_attr(' ' . $loop_layout);
-				bp_nouveau_loop_classes();
-				?>
-				">
+				<ul id="groups-list" class="grid <?php bp_nouveau_loop_classes();?>">
 					<?php
 					while ( bp_groups() ) :
 						bp_the_group();

@@ -52,8 +52,8 @@ $loop_layout = !empty( $members_atts['loop-layout'] ) ? $members_atts['loop-layo
 	<?php bp_nouveau_before_members_directory_content(); ?>
 	<?php do_action( 'before_members_listing_output', $atts, $members_atts ); ?>
 	<?php if ( bp_has_members( $members_atts['bpsh_query'] ) ) : ?>
-	<div id="members-dir-list" class="members dir-list" data-bp-list="members" data-ajax="false">
-		<ul id="members-list" class="<?php bp_nouveau_loop_classes(); ?> <?php echo esc_attr( $loop_layout );?>">		
+	<div id="members-dir-list" class="members dir-list <?php echo esc_attr( $loop_layout );?>" data-bp-list="members" data-ajax="false">
+		<ul id="members-list" class="<?php bp_nouveau_loop_classes(); ?>">		
 			<?php
 			while ( bp_members() ) :
 				bp_the_member();

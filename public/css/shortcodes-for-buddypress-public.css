@@ -128,6 +128,31 @@ table.notifications.bp-tables-user thead th.date {
 }
 
 /*Members and Groups Shortcode*/
+.members.dir-list.one ul.grid>li,
+.groups.dir-list.one ul.grid>li {
+    padding-top: 0;
+    width: 100%;
+    width: 100% !important;
+}
+.members.dir-list.two ul.grid>li,
+.groups.dir-list.two ul.grid>li {
+    padding-top: 0;
+    width: 50%;
+    width: calc(100% / 2) !important;
+}
+.members.dir-list.three ul.grid>li,
+.groups.dir-list.three ul.grid>li {
+    padding-top: 0;
+    width: 33.333333%;
+    width: calc(100% / 3) !important;
+}
+.members.dir-list.four ul.grid>li,
+.groups.dir-list.four ul.grid>li {
+    padding-top: 0;
+    width: 25%;
+    width: calc(100% / 4) !important;
+}
+
 #members-dir-list ul#bps-members-list,
 #groups-dir-list ul#bps-groups-list {
     padding-top: 0;
@@ -307,7 +332,9 @@ table.notifications.bp-tables-user thead th.date {
     -ms-flex-pack: center;
     justify-content: center;
 }
-
+p.item-meta.last-activity{
+    margin-bottom: 15px !important;
+}
 
 /*Loop Layouts Member, Groups*/
 div#members-dir-list.members.one ul#bps-members-list li.bps-item-entry,
@@ -447,7 +474,29 @@ table.notifications.bp-tables-user tr:last-child th {
     #groups-dir-list ul#bps-groups-list li.bps-item-entry {
         width: calc(100% / 1) !important;
     }
+    .members.dir-list.one ul.grid>li,
+    .groups.dir-list.one ul.grid>li,
+    .members.dir-list.two ul.grid>li,
+    .groups.dir-list.two ul.grid>li,
+    .members.dir-list.three ul.grid>li,
+    .groups.dir-list.three ul.grid>li,
+    .members.dir-list.four ul.grid>li,
+    .groups.dir-list.four ul.grid>li {
+        width: 100%;
+        width: 100% !important;
+    }
 }
+
+@media only screen and (min-width: 480px) and (max-width: 598px) {
+    .members.dir-list.three ul.grid>li,
+    .groups.dir-list.three ul.grid>li,
+    .members.dir-list.four ul.grid>li,
+    .groups.dir-list.four ul.grid>li {
+        width: 50%;
+        width: 50% !important;
+    }
+}
+
 /* load more button css on activity shortcode */
 .load-more{
     list-style: none;
