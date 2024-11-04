@@ -1165,7 +1165,7 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_filter_activity_action_wrapper( $r ) {
 		global $post;
-		if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'activity-listing' ) ) {
+		if ( is_a( $post, 'WP_Post' ) ) {
 
 			if ( ! empty( $r['container_classes'] ) ) {
 				$r['container_classes'] = array_merge( $r['container_classes'], array( 'activity-meta' ) );

@@ -128,7 +128,7 @@ table.notifications.bp-tables-user thead th.date {
 }
 
 /*Members and Groups Shortcode*/
-.members.dir-list.one ul.rg-group-list.grid>li,
+.members.dir-list.one ul.rg-member-list.grid>li,
 .groups.dir-list.one ul.rg-group-list.grid>li {
     padding-top: 0;
     width: 100%;
@@ -136,7 +136,7 @@ table.notifications.bp-tables-user thead th.date {
     flex: 0 0 100%;
     max-width: 100%;
 }
-.members.dir-list.two ul.rg-group-list.grid>li,
+.members.dir-list.two ul.rg-member-list.grid>li,
 .groups.dir-list.two ul.rg-group-list.grid>li {
     padding-top: 0;
     width: 50%;
@@ -144,7 +144,7 @@ table.notifications.bp-tables-user thead th.date {
     flex: 0 0 50%;
     max-width: 50%;
 }
-.members.dir-list.three ul.rg-group-list.grid>li,
+.members.dir-list.three ul.rg-member-list.grid>li,
 .groups.dir-list.three ul.rg-group-list.grid>li {
     padding-top: 0;
     width: 33.333333%;
@@ -152,7 +152,7 @@ table.notifications.bp-tables-user thead th.date {
     flex: 0 0 33.333333%;
     max-width: 33.333333%;
 }
-.members.dir-list.four ul.rg-group-list.grid>li,
+.members.dir-list.four ul.rg-member-list.grid>li,
 .groups.dir-list.four ul.rg-group-list.grid>li {
     padding-top: 0;
     width: 25%;
@@ -472,19 +472,21 @@ table.notifications.bp-tables-user tr:last-child th {
     max-width:150px;
     margin-top: -30px !important;
 }
-.buddyboss-theme .buddypress-wrap .grid .group-desc {
+.buddyboss-theme .buddypress-wrap .grid.rg-group-list .group-desc {
     display: none;
 }
-.buddyboss-theme .buddypress-wrap .grid.bp-list.groups-list li .item-block{
+.buddyboss-theme .buddypress-wrap .grid.bp-list.rg-group-list.groups-list li .item-block{
     margin:10px 0 !important;
 }
-.buddyboss-theme .buddypress-wrap .grid.bp-list .bp-generic-meta.-meta.action{
+.buddyboss-theme .buddypress-wrap .grid.bp-list.rg-group-list .bp-generic-meta.-meta.action{
     padding: 0 15px;
 }
-.buddyboss-theme .buddypress-wrap .bp-list.grid .list-wrap .item{
+.buddyboss-theme .buddypress-wrap .bp-list.grid.rg-group-list .list-wrap .item{
     padding: 0 !important;
 }
-
+.buddyboss-theme .buddypress-wrap .grid.rg-member-list.bp-list>li .item .item-block .member-name {
+    margin-bottom: 30px;
+}
 
 .elementor-widget-buddypress_shortcode_members_widget ul#members-list.bp-list.grid.three,
 .elementor-widget-buddypress_shortcode_groups_widget ul#groups-list.bp-list.grid.three {
@@ -514,11 +516,11 @@ table.notifications.bp-tables-user tr:last-child th {
     #groups-dir-list ul#bps-groups-list li.bps-item-entry {
         width: calc(100% / 1) !important;
     }    
-    .members.dir-list.two ul.rg-group-list.grid>li,
+    .members.dir-list.two ul.rg-member-list.grid>li,
     .groups.dir-list.two ul.rg-group-list.grid>li,
-    .members.dir-list.three ul.rg-group-list.grid>li,
+    .members.dir-list.three ul.rg-member-list.grid>li,
     .groups.dir-list.three ul.rg-group-list.grid>li,
-    .members.dir-list.four ul.rg-group-list.grid>li,
+    .members.dir-list.four ul.rg-member-list.grid>li,
     .groups.dir-list.four ul.rg-group-list.grid>li {
         width: 100%;
         width: 100% !important;
@@ -526,9 +528,9 @@ table.notifications.bp-tables-user tr:last-child th {
 }
 
 @media only screen and (min-width: 480px) and (max-width: 598px) {
-    .members.dir-list.three ul.rg-group-list.grid>li,
+    .members.dir-list.three ul.rg-member-list.grid>li,
     .groups.dir-list.three ul.rg-group-list.grid>li,
-    .members.dir-list.four ul.rg-group-list.grid>li,
+    .members.dir-list.four ul.rg-member-list.grid>li,
     .groups.dir-list.four ul.rg-group-list.grid>li {
         width: 50%;
         width: 50% !important;
