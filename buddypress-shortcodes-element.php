@@ -386,75 +386,86 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 	}
 
 	protected function render() {
-		global $activity_args;
-
-		wp_enqueue_script( 'bp-nouveau-activity' );
-		$settings = $this->get_settings_for_display();
-
-		$args = array(
-			'title'            => $settings['sfb_title'],
-			'per_page'         => ( isset( $settings['sfb_number'] ) ) ? $settings['sfb_number'] : 20,
-			'display_comments' => 'threaded',
-			'container_class'  => 'activity',
-		);
-
-		$activity_args = $args;
-		unset( $activity_args['title'] );
-
-		$activity_ajax_querystring = static function ( $ajax_querystring, $object ) {
+		if ( function_exists( 'bp_is_active' ) && ( bp_is_active( 'activity' ) ) ) {
+			
 			global $activity_args;
-			$qs = array();
 
-			if ( ! empty( $activity_args ) ) {
-				foreach ( $activity_args as $key => $value ) {
-					if ( $value != '' ) {
-						$qs[] = $key . '=' . $value;
+			wp_enqueue_script( 'bp-nouveau-activity' );
+			$settings = $this->get_settings_for_display();
+
+			$args = array(
+				'title'            => $settings['sfb_title'],
+				'per_page'         => ( isset( $settings['sfb_number'] ) ) ? $settings['sfb_number'] : 20,
+				'display_comments' => 'threaded',
+				'container_class'  => 'activity',
+			);
+
+			$activity_args = $args;
+			unset( $activity_args['title'] );
+
+			$activity_ajax_querystring = static function ( $ajax_querystring, $object ) {
+				global $activity_args;
+				$qs = array();
+
+				if ( ! empty( $activity_args ) ) {
+					foreach ( $activity_args as $key => $value ) {
+						if ( $value != '' ) {
+							$qs[] = $key . '=' . $value;
+						}
 					}
 				}
-			}
 
-			$query_string = empty( $qs ) ? '' : join( '&', (array) $qs );
-			if ( $query_string != '' ) {
-				$ajax_querystring .= '&' . $query_string;
-			}
+				$query_string = empty( $qs ) ? '' : join( '&', (array) $qs );
+				if ( $query_string != '' ) {
+					$ajax_querystring .= '&' . $query_string;
+				}
 
-			return $ajax_querystring;
-		};
+				return $ajax_querystring;
+			};
 
-		add_filter( 'bp_ajax_querystring', $activity_ajax_querystring, 99, 2 );
+			add_filter( 'bp_ajax_querystring', $activity_ajax_querystring, 99, 2 );
 
-		?>
-		
-		<div class="buddypress-activity-element">
-			<?php if ( $args['title'] ) : ?>
-				<h3 class="activity-shortcode-title"><?php echo esc_html( $args['title'] ); ?></h3>
-			<?php endif; ?>
-		
-			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav activity">
-				<?php if ( function_exists( 'bp_nouveau_before_activity_directory_content' ) ) : ?>	
-					<?php bp_nouveau_before_activity_directory_content(); ?>
+			?>
+			
+			<div class="buddypress-activity-element">
+				<?php if ( $args['title'] ) : ?>
+					<h3 class="activity-shortcode-title"><?php echo esc_html( $args['title'] ); ?></h3>
 				<?php endif; ?>
+			
+				<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav activity">
+					<?php if ( function_exists( 'bp_nouveau_before_activity_directory_content' ) ) : ?>	
+						<?php bp_nouveau_before_activity_directory_content(); ?>
+					<?php endif; ?>
 
-				<div class="screen-content">
-					<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
+					<div class="screen-content">
+						<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
 
-					<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
-						<?php bp_get_template_part( 'activity/activity-loop' ); ?>
+						<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
+							<?php bp_get_template_part( 'activity/activity-loop' ); ?>
+						</div>
+
+						<?php bp_nouveau_after_activity_directory_content(); ?>
+
 					</div>
-
-					<?php bp_nouveau_after_activity_directory_content(); ?>
-
 				</div>
 			</div>
-		</div>
-		<?php
-		remove_filter( 'bp_ajax_querystring', $activity_ajax_querystring, 99, 2 );
+			<?php
+			remove_filter( 'bp_ajax_querystring', $activity_ajax_querystring, 99, 2 );
 
-		?>
-		<style>
-		.elementor-element-<?php echo esc_html( $this->get_id() ); ?> #buddypress .load-more{ display:none}
-		</style>
-		<?php
+			?>
+			<style>
+			.elementor-element-<?php echo esc_html( $this->get_id() ); ?> #buddypress .load-more{ display:none}
+			</style>
+			<?php
+		} else {
+			?>
+			<div class="bpsp-feedback bpsp-info">
+				<span class="bpsp-icon"></span>
+				<p><?php echo __( 'Please enable the BuddyPress Activity Component.' , 'shortcodes-for-buddypress' ); ?></p>
+			</div>
+			<?php
+		}
+		
 
 	}
 

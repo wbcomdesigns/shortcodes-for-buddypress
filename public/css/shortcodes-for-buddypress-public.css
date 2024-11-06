@@ -546,7 +546,7 @@ table.notifications.bp-tables-user tr:last-child th {
 
 /* notifications and activity listing shortcodes css. */
 
-.shortcode-feedback.info {
+.bpsp-feedback.bpsp-info {
 	background: #fff;
 	border-left: 13px solid #d33;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
@@ -555,12 +555,12 @@ table.notifications.bp-tables-user tr:last-child th {
     
 }
 
-.shortcode-feedback.info p {
+.bpsp-feedback.bpsp-info p {
 	margin: 0.5em 0;
 	padding: 5px;
 }
 
-.shortcode-feedback span.shortcode-icon {
+.bpsp-feedback span.bpsp-icon {
 	color: #fff;
 	display: block;
 	font-family: dashicons;

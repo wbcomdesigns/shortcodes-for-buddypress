@@ -229,10 +229,10 @@ class Shortcodes_For_Buddypress_Public {
 				do_action( 'after_render_activity_shortcode', $atts );
 				$output .= ob_get_contents();
 			}
-		}else{
+		}else{		
 			?>
-			<div class="shortcode-feedback info">
-				<span class="shortcode-icon"></span>
+			<div class="bpsp-feedback bpsp-info">
+				<span class="bpsp-icon"></span>
 				<p><?php echo __('Please enable the BuddyPress Activity Component.', 'shortcodes-for-buddypress'); ?></p>
 			</div>
 			<?php
@@ -883,16 +883,16 @@ class Shortcodes_For_Buddypress_Public {
 			} else {
 				
 				?>
-				<div class="shortcode-feedback info">
-					<span class="shortcode-icon"></span>
+				<div class="bpsp-feedback bpsp-info">
+					<span class="bpsp-icon"></span>
 					<p><?php echo __('Please enable the BuddyPress Notifications Component.', 'shortcodes-for-buddypress'); ?></p>
 				</div>
 				<?php
 			}
 		}else{
 			?>
-			<div class="shortcode-feedback info">
-				<span class="shortcode-icon" aria-hidden="true"></span>
+			<div class="bpsp-feedback bpsp-info">
+				<span class="bpsp-icon" aria-hidden="true"></span>
 				<p><?php echo __('Please Log in to view notifications.', 'shortcodes-for-buddypress'); ?></p>
 			</div>
 			<?php

@@ -218,104 +218,116 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	}
 
 	protected function render() {
-		global $groups_args;
-		$settings                 = $this->get_settings_for_display();
-		$classes                  = array();
+		
+		if ( function_exists( 'bp_is_active' ) && ( bp_is_active( 'groups' ) ) ) {
+			
+			global $groups_args;			
+			$settings                 = $this->get_settings_for_display();
+			$classes                  = array();
 
-		add_filter( 'bp_get_groups_pagination_count', '__return_zero' );
-		add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
+			add_filter( 'bp_get_groups_pagination_count', '__return_zero' );
+			add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
 
-		$loop_classes = static function () use ( $classes ) {
-			$classes[] = 'item-list';
-			$classes[] = 'groups-list';
-			$classes[] = 'bp-list';
+			$loop_classes = static function () use ( $classes ) {
+				$classes[] = 'item-list';
+				$classes[] = 'groups-list';
+				$classes[] = 'bp-list';
 
-			$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-			$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : '3';
+				$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
+				$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : '3';
 
-			if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-				$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
-				if ( isset( $grid_classes[ $groups_layout ] ) ) {
+				if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
+					$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
+					if ( isset( $grid_classes[ $groups_layout ] ) ) {
+						$classes = array_merge(
+							$classes,
+							array(
+								'grid',
+								$grid_classes[ $groups_layout ],
+							)
+						);
+					}
+				} else {
 					$classes = array_merge(
 						$classes,
 						array(
 							'grid',
-							$grid_classes[ $groups_layout ],
+							'three',
 						)
 					);
 				}
-			} else {
-				$classes = array_merge(
-					$classes,
-					array(
-						'grid',
-						'three',
-					)
-				);
-			}
 
-			return $classes;
-		};
-		add_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
+				return $classes;
+			};
+			add_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
 
-		$args = array(
-			'title'    => $settings['sfb_title'],
-			'per_page' => $settings['sfb_per_page'],
-			'object'   => 'groups',
-		);
+			$args = array(
+				'title'    => $settings['sfb_title'],
+				'per_page' => $settings['sfb_per_page'],
+				'object'   => 'groups',
+			);
 
-		$groups_args = $args;
-		unset( $groups_args['title'] );
+			$groups_args = $args;
+			unset( $groups_args['title'] );
 
-		$groups_ajax_querystring = static function ( $ajax_querystring, $object ) {
-			global $groups_args;
-			$qs = array();
+			$groups_ajax_querystring = static function ( $ajax_querystring, $object ) {
+				global $groups_args;
+				$qs = array();
 
-			if ( ! empty( $groups_args ) ) {
-				foreach ( $groups_args as $key => $value ) {
-					if ( $value != '' ) {
-						$qs[] = $key . '=' . $value;
+				if ( ! empty( $groups_args ) ) {
+					foreach ( $groups_args as $key => $value ) {
+						if ( $value != '' ) {
+							$qs[] = $key . '=' . $value;
+						}
 					}
 				}
-			}
 
-			$query_string = empty( $qs ) ? '' : join( '&', (array) $qs );
-			if ( $query_string != '' ) {
-				$ajax_querystring .= '&' . $query_string;
-			}
+				$query_string = empty( $qs ) ? '' : join( '&', (array) $qs );
+				if ( $query_string != '' ) {
+					$ajax_querystring .= '&' . $query_string;
+				}
 
-			return $ajax_querystring;
-		};
+				return $ajax_querystring;
+			};
 
-		add_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );
+			add_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );
 
-		?>
-		<div class="buddypress-groups-element">
-		
-			<?php if ( $args['title'] ) : ?>
-				<h3 class="activity-shortcode-title"><?php echo esc_html( $args['title'] ); ?></h3>
-			<?php endif; ?>
+			?>
+			<div class="buddypress-groups-element">
 			
-			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav groups">
-				<?php bp_nouveau_before_groups_directory_content(); ?>
-				<?php bp_nouveau_template_notices(); ?>
+				<?php if ( $args['title'] ) : ?>
+					<h3 class="activity-shortcode-title"><?php echo esc_html( $args['title'] ); ?></h3>
+				<?php endif; ?>
+				
+				<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav groups">
+					<?php bp_nouveau_before_groups_directory_content(); ?>
+					<?php bp_nouveau_template_notices(); ?>
 
-				<div class="screen-content">
-					<div id="groups-dir-list" class="groups dir-list" data-bp-list="">
-					<?php bp_get_template_part( 'groups/groups-loop' ); ?>
+					<div class="screen-content">
+						<div id="groups-dir-list" class="groups dir-list" data-bp-list="">
+						<?php bp_get_template_part( 'groups/groups-loop' ); ?>
+						</div>
+
+						<?php bp_nouveau_after_groups_directory_content(); ?>
 					</div>
-
-					<?php bp_nouveau_after_groups_directory_content(); ?>
 				</div>
 			</div>
-		</div>
-		
-		<?php
-		remove_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
+			
+			<?php
+			remove_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
 
-		remove_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );
-		remove_filter( 'bp_get_groups_pagination_count', '__return_zero' );
-		remove_filter( 'bp_get_groups_pagination_links', '__return_zero' );
+			remove_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );
+			remove_filter( 'bp_get_groups_pagination_count', '__return_zero' );
+			remove_filter( 'bp_get_groups_pagination_links', '__return_zero' );
+		} else {
+			?>
+			<div class="bpsp-feedback bpsp-info">
+				<span class="bpsp-icon"></span>
+				<p><?php echo __( 'Please enable the BuddyPress Groups Component.' , 'shortcodes-for-buddypress' ); ?></p>
+			</div>
+			<?php
+		}
+		
 
 	}
 
