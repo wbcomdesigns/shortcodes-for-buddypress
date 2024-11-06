@@ -80,9 +80,9 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 		 * @param string $seconds Seconds in time.
 		 */
 		public function seconds_to_words( $seconds ) {
-
+			
 			// Get the years.
-			$years = ( intval( $seconds ) / YEAR_IN_SECONDS ) % 100;
+			$years = (int) ( intval( $seconds ) / YEAR_IN_SECONDS ) % 100 ;			
 			if ( $years > 1 ) {
 				/* translators: Number of years */
 				return sprintf( __( '%s years', 'shortcodes-for-buddypress' ), $years );
@@ -91,7 +91,7 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 			}
 
 			// Get the weeks.
-			$weeks = ( intval( $seconds ) / WEEK_IN_SECONDS ) % 52;
+			$weeks = (int) ( intval( $seconds ) / WEEK_IN_SECONDS ) % 52;
 			if ( $weeks > 1 ) {
 				/* translators: Number of weeks */
 				return sprintf( __( '%s weeks', 'shortcodes-for-buddypress' ), $weeks );
@@ -100,7 +100,7 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 			}
 
 			// Get the days.
-			$days = ( intval( $seconds ) / DAY_IN_SECONDS ) % 7;
+			$days = (int) ( intval( $seconds ) / DAY_IN_SECONDS ) % 7;
 			if ( $days > 1 ) {
 				/* translators: Number of days */
 				return sprintf( __( '%s days', 'shortcodes-for-buddypress' ), $days );
@@ -109,7 +109,7 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 			}
 
 			// Get the hours.
-			$hours = ( intval( $seconds ) / HOUR_IN_SECONDS ) % 24;
+			$hours = (int) ( intval( $seconds ) / HOUR_IN_SECONDS ) % 24;
 			if ( $hours > 1 ) {
 				/* translators: Number of hours */
 				return sprintf( __( '%s hours', 'shortcodes-for-buddypress' ), $hours );
@@ -118,7 +118,7 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 			}
 
 			// Get the minutes.
-			$minutes = ( intval( $seconds ) / MINUTE_IN_SECONDS ) % 60;
+			$minutes = (int) ( intval( $seconds ) / MINUTE_IN_SECONDS ) % 60;
 			if ( $minutes > 1 ) {
 				/* translators: Number of minutes */
 				return sprintf( __( '%s minutes', 'shortcodes-for-buddypress' ), $minutes );
@@ -127,7 +127,7 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 			}
 
 			// Get the seconds.
-			$seconds = intval( $seconds ) % 60;
+			$seconds = (int) (intval( $seconds ) % 60 );
 			if ( $seconds > 1 ) {
 				/* translators: Number of seconds */
 				return sprintf( __( '%s seconds', 'shortcodes-for-buddypress' ), $seconds );
