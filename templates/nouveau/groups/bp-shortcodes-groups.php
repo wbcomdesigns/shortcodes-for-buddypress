@@ -61,7 +61,7 @@ $group_loop_classes = static function () use ( $classes ) {
 };
 add_filter( 'bp_nouveau_get_loop_classes', $group_loop_classes );
 $loop_layout 		= ! empty( $groups_atts['loop-layout'] ) ? $groups_atts['loop-layout'] : '';
-$cover_class        = ! bb_platform_group_element_enable( 'cover-images' ) ? 'bb-cover-disabled' : 'bb-cover-enabled';
+$cover_class        = ( function_exists( 'bb_platform_group_element_enable' ) && ( ! bb_platform_group_element_enable( 'cover-images' ) ) ) ? 'bb-cover-disabled' : 'bb-cover-enabled';
 $group_cover_height = function_exists( 'bb_get_group_cover_image_height' ) ? bb_get_group_cover_image_height() : 'small';
 ?>
 
