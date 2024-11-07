@@ -74,6 +74,10 @@ class Shortcodes_For_Buddypress_Public {
 
 		 do_action( 'before_enqueue_buddypress_shortcode_styles' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-public.css', array(), $this->version, 'all' );
+
+		if ( class_exists( 'Youzify' ) ) { 
+			wp_enqueue_style('youzify-directories-css', SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/css/youzify-directories.min.css', array() , $this->version, false);
+		}
 	}
 
 	/**
@@ -475,7 +479,11 @@ class Shortcodes_For_Buddypress_Public {
 				<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
 				<?php
 			}
-			if ( $_bp_theme_package == 'legacy' ) {
+
+			if ( class_exists( 'Youzify' ) ) {
+				shortcodes_for_buddypress_template( 'youzify/members/bp-shortcodes-members-youzify.php' );
+
+			} elseif ( $_bp_theme_package == 'legacy' ) {
 				do_action( 'before_render_member_shortcode', $atts );
 				shortcodes_for_buddypress_template( 'legacy/members/bp-shortcodes-members.php' );
 				do_action( 'after_render_member_shortcode', $atts );
