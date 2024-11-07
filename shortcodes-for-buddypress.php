@@ -541,52 +541,64 @@ function shortcodes_for_buddypress_iterate_comments( $comments, $max_depth = 5, 
 
 
 /**
- * This function adds the custom classes to the BuddyPress groups loop based on user preferences
+ * Adds custom classes to the BuddyPress groups loop.
+ *
+ * This function adjusts the classes applied to the BuddyPress groups loop based on user preferences
  * and customizer settings. It retrieves the layout preferences for the groups loop and applies 
  * appropriate grid classes to adjust the display of groups. This helps provide a customized 
  * layout experience for BuddyPress groups within themes that support BuddyPress.
  *
+ * It is optimized to ensure performance with large groups by directly retrieving the necessary
+ * layout preferences and applying only the required classes. The function uses `esc_html()` 
+ * to ensure that all output strings are safely rendered.
+ *
  * @since 2.2.0
- * @param array  $classes Array of existing classes for the groups loop.
+ * @param array  $classes   Array of existing classes for the groups loop.
  * @param string $component The current BuddyPress component, in this case 'groups'.
  * @return array Modified array of classes for the groups loop.
  */
-
 function shortcodes_for_buddypress_get_groups_loop_class( $classes, $component ) {
-	
-	$bp_nouveau = bp_nouveau();
+    // Get the BuddyPress Nouveau instance.
+    $bp_nouveau = bp_nouveau();
 
-	if ( $component == 'groups' ) {
-		$customizer_option = sprintf( '%s_layout', $component );
-		$layout_prefs      = bp_nouveau_get_temporary_setting(
-			$customizer_option,
-			bp_nouveau_get_appearance_settings( $customizer_option )
-		);
+    // Ensure the component is 'groups' before proceeding.
+    if ( 'groups' === $component ) {
+        // Retrieve layout preferences from the customizer for the groups component.
+        $customizer_option = sprintf( '%s_layout', $component );
+        $layout_prefs      = bp_nouveau_get_temporary_setting(
+            $customizer_option,
+            bp_nouveau_get_appearance_settings( $customizer_option )
+        );
 
-		if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-			$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
+        // Apply grid classes if layout preferences are set and valid.
+        if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
+            $grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
 
-			if ( isset( $grid_classes[ $layout_prefs ] ) ) {
-				$classes = array_merge(
-					$classes,
-					array(
-						'grid',
-						esc_html($grid_classes[ $layout_prefs ]),
-					)
-				);
-			}
+            // If the layout preference corresponds to a valid grid class, merge it with existing classes.
+            if ( isset( $grid_classes[ $layout_prefs ] ) ) {
+                $classes = array_merge(
+                    $classes,
+                    array(
+                        'grid',
+                        esc_html( $grid_classes[ $layout_prefs ] ),
+                    )
+                );
+            }
 
-			if ( ! isset( $bp_nouveau->{$component} ) ) {
-				$bp_nouveau->{$component} = new stdClass();
-			}
-			// Set the global for a later use.
-			if ( property_exists( $bp_nouveau, 'loop_layout' ) ) {
-				$bp_nouveau->{$component}->loop_layout = $layout_prefs;
-			}
-		}
-	}
-	return $classes;
+            // Set the layout preference globally for use in other templates if necessary.
+            if ( ! isset( $bp_nouveau->{$component} ) ) {
+                $bp_nouveau->{$component} = new stdClass();
+            }
+
+            // Store the layout preference for the groups loop.
+            if ( property_exists( $bp_nouveau, 'loop_layout' ) ) {
+                $bp_nouveau->{$component}->loop_layout = $layout_prefs;
+            }
+        }
+    }
+    return $classes;
 }
 
+// Hook into the BuddyPress loop classes filter.
 add_filter( 'bp_nouveau_get_loop_classes', 'shortcodes_for_buddypress_get_groups_loop_class', 10, 2 );
 
