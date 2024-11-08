@@ -59,7 +59,8 @@ class Shortcodes_For_Buddypress_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
+		global $post;
+		
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -72,10 +73,10 @@ class Shortcodes_For_Buddypress_Public {
 		 * class.
 		 */
 
-		 do_action( 'before_enqueue_buddypress_shortcode_styles' );
+		do_action( 'before_enqueue_buddypress_shortcode_styles' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-public.css', array(), $this->version, 'all' );
 
-		if ( class_exists( 'Youzify' ) ) { 
+		if ( class_exists( 'Youzify' ) && isset( $post->post_content ) && ( has_shortcode( $post->post_content ,  'members-listing' ) || has_shortcode( $post->post_content ,  'groups-listing' )  || has_shortcode( $post->post_content ,  'activity-listing' ) ) ) { 
 			wp_enqueue_style('youzify-directories-css', SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/css/youzify-directories.min.css', array() , $this->version, false);
 		}
 	}
@@ -684,7 +685,9 @@ class Shortcodes_For_Buddypress_Public {
 				<?php
 			}
 
-			if ( $_bp_theme_package == 'legacy' ) {
+			if ( class_exists( 'Youzify' ) ) {
+				shortcodes_for_buddypress_template( 'youzify/groups/bp-shortcodes-groups-youzify.php' );
+			} elseif ( $_bp_theme_package == 'legacy' ) {
 				shortcodes_for_buddypress_template( 'legacy/groups/bp-shortcodes-groups.php' );
 			} else {
 				shortcodes_for_buddypress_template( 'nouveau/groups/bp-shortcodes-groups.php' );
