@@ -77,7 +77,7 @@ class Shortcodes_For_Buddypress_Public {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-public.css', array(), $this->version, 'all' );
 
 		if ( class_exists( 'Youzify' ) && isset( $post->post_content ) && ( has_shortcode( $post->post_content ,  'members-listing' ) || has_shortcode( $post->post_content ,  'groups-listing' )  || has_shortcode( $post->post_content ,  'activity-listing' ) ) ) { 
-			wp_enqueue_style('youzify-directories-css', SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/css/youzify-directories.min.css', array() , $this->version, false);
+			wp_enqueue_style('youzify-directories-css', SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/css/youzify.css', array() , $this->version, false);
 		}
 	}
 
