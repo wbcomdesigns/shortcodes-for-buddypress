@@ -164,54 +164,6 @@ shortcodes_for_buddypress_run();
 
 
 /**
- * This function checks whether the BuddyPress plugin is active. If it is not active,
- * an admin notice is displayed in the WordPress dashboard, informing the user that
- * the Shortcodes for BuddyPress plugin requires BuddyPress to function correctly.
- * The notice includes a message with a link to install BuddyPress.
- *
- * This function uses `wp_kses_post()` for safe HTML rendering and `esc_html()` for 
- * text strings to prevent potential XSS issues. The active status check is optimized 
- * to reduce performance impact on large sites by checking plugin status directly.
- *
- * @since 1.0.0
- * @return void
- */
-function shortcodes_for_buddypress_plugin_admin_notice() {
-	
-	// Check if function is called by admin area.
-	if ( ! is_admin() ) {
-		return;
-	}
-
-	// Load the plugin.php file if the function is not already available.
-	 if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-        require_once ABSPATH . '/wp-admin/includes/plugin.php';
-    }
-
-    // Check if BuddyPress is active on the network or for the current site.
-    $is_buddypress_active = is_plugin_active( 'buddypress/bp-loader.php' ) || is_plugin_active_for_network( 'buddypress/bp-loader.php' );
-
-    // If BuddyPress is not active, display an admin notice.
-    if ( ! $is_buddypress_active ) {
-        $plugin_name = esc_html__( 'Shortcodes For BuddyPress', 'shortcodes-for-buddypress' );
-        $buddypress_name = esc_html__( 'BuddyPress', 'shortcodes-for-buddypress' );
-        $install_link = '<a href="' . esc_url( admin_url( 'plugin-install.php?s=BuddyPress&tab=search&type=term' ) ) . '">' . esc_html__( 'install BuddyPress', 'shortcodes-for-buddypress' ) . '</a>';
-        
-        $message = sprintf(
-            /* translators: 1: Shortcodes For BuddyPress, 2: BuddyPress */
-            esc_html__( '%1$s is ineffective as it requires %2$s to be installed and active. Please %3$s.', 'shortcodes-for-buddypress' ),
-            '<strong>' . esc_html( $plugin_name ) . '</strong>',
-            '<strong>' . esc_html( $buddypress_name ) . '</strong>',
-            $install_link
-        );
-
-        // Output the message within an error notice, ensuring safe HTML rendering.
-        echo '<div class="notice notice-error"><p>' . wp_kses_post( $message ) . '</p></div>';
-    }
-}
-// add_action( 'admin_notices', 'shortcodes_for_buddypress_plugin_admin_notice' );
-
-/**
  * 
  * This function verifies whether BuddyPress or BuddyBoss is active on the site. If neither is active,
  * it deactivates the Shortcodes for BuddyPress plugin and displays an admin notice informing the user
@@ -307,6 +259,7 @@ function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
         }
     }
 }
+// Hook into 'activated_plugin' to handle redirection after plugin activation.
 add_action( 'activated_plugin', 'shortcodes_for_buddypress_activation_redirect_settings' );
 
 /**
