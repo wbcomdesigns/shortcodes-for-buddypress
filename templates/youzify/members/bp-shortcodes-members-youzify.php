@@ -46,9 +46,13 @@ global $members_atts;
 								<?php if ( bp_current_action( 'my-friends' ) ) { ?>
 									<span class="activity" data-livestamp="<?php bp_core_iso8601_date( bp_get_member_last_active( array( 'relative' => false ) ) ); ?>"><?php bp_member_last_active(); ?></span>
 
-								<?php } else { ?>
-									<?php echo youzify_get_md_user_meta( bp_get_member_user_id() ); ?>
-								<?php } ?>
+								<?php } else { 
+									
+									if ( function_exists( 'youzify_get_md_user_meta' ) ) {
+										echo youzify_get_md_user_meta( bp_get_member_user_id() );
+									}
+									
+								} ?>
 
 								<?php
 									/**
@@ -71,7 +75,11 @@ global $members_atts;
 						</div>
 
 						<?php
-							youzify_get_member_statistics_data( bp_get_member_user_id() );
+
+							if ( function_exists( 'youzify_get_member_statistics_data' ) ) {
+								youzify_get_member_statistics_data( bp_get_member_user_id() );
+							}
+							
 							
 						?>
 						<?php if ( 'on' == youzify_option( 'youzify_enable_md_cards_actions_buttons', 'on' ) && is_user_logged_in() ) : ?>
