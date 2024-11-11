@@ -116,8 +116,10 @@ class Shortcodes_For_Buddypress_Public {
 		}
 		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
 		if(function_exists('bp_is_active') &&  bp_is_active('activity')){
+			$_bp_theme_package = get_option( '_bp_theme_package_id' );
+			
 			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-public.js', array( 'jquery', 'bp-nouveau-activity' ), $this->version, true );
-			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) ) ) {
+			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) )  && ('nouveau' === $_bp_theme_package)) {
 				wp_enqueue_script( $this->plugin_name );
 				wp_localize_script(
 					$this->plugin_name,
@@ -215,16 +217,13 @@ class Shortcodes_For_Buddypress_Public {
 		if ( function_exists( 'bp_is_active' ) && (bp_is_active('activity')) ) {
 			
 			if ( $title != '' ) {
-				$output .= '<h3 class="section-title"><span>'.esc_html( $title ).'</span></h3>';
+				echo '<h3 class="section-title"><span>'.esc_html( $title ).'</span></h3>';
 			}
+			do_action( 'before_render_activity_shortcode', $atts );
 			if ( class_exists( 'Youzify' ) ) {
-				shortcodes_for_buddypress_template( 'youzify/activity/bp-shortcodes-activity-youzify.php' );
-				$output .= ob_get_contents();
+				$no_template = ( false === shortcodes_for_buddypress_template( 'youzify/activity/bp-shortcodes-activity-youzify.php' ) ) ? true : false;
 			} elseif ( $_bp_theme_package == 'legacy' ) {
-				do_action( 'before_render_activity_shortcode', $atts );
-				shortcodes_for_buddypress_template( 'legacy/activity/bp-shortcodes-activity.php' );
-				do_action( 'after_render_activity_shortcode', $atts );
-				$output .= ob_get_contents();
+				$no_template = ( false === shortcodes_for_buddypress_template( 'legacy/activity/bp-shortcodes-activity.php' ) ) ? true : false;
 			} else {
 				wp_enqueue_script( 'bp-nouveau-activity' );
 
@@ -232,21 +231,31 @@ class Shortcodes_For_Buddypress_Public {
 					wp_enqueue_script( 'bp-medium-editor' );
 					wp_enqueue_style( 'bp-medium-editor' );
 				}
-				do_action( 'before_render_activity_shortcode', $atts );
-				shortcodes_for_buddypress_template( 'nouveau/activity/bp-shortcodes-activity.php' );
-				do_action( 'after_render_activity_shortcode', $atts );
-				$output .= ob_get_contents();
+				$no_template = ( false === shortcodes_for_buddypress_template( 'nouveau/activity/bp-shortcodes-activity.php' ) ) ? true : false;
 			}
-		}else{		
+			do_action( 'after_render_activity_shortcode', $atts );
+
+			/** 
+			* If none of the above template exists, then display user notice.
+			* @since 2.7.2 
+			*/
+			if ( $no_template ) {
+				?>
+				<div class="bpsp-feedback bpsp-info">
+					<span class="bpsp-icon"></span>
+					<p><?php echo esc_html__('No Template Found.', 'shortcodes-for-buddypress'); ?></p>
+				</div>
+				<?php
+			}
+		}else{	
 			?>
 			<div class="bpsp-feedback bpsp-info">
 				<span class="bpsp-icon"></span>
-				<p><?php echo esc_html__('Please enable the BuddyPress Activity Component.', 'shortcodes-for-buddypress'); ?></p>
+				<p><?php echo esc_html__('Please enable the Activity Component.', 'shortcodes-for-buddypress'); ?></p>
 			</div>
 			<?php
-			$output .= ob_get_contents();
 		}
-		ob_end_clean();
+		$output = ob_get_clean();
 		$output = apply_filters( 'modify_activity_listing_output', $output, $atts, $activity_atts );
 		return $output;
 	}
@@ -484,17 +493,28 @@ class Shortcodes_For_Buddypress_Public {
 				<?php
 			}
 
+			do_action( 'before_render_member_shortcode', $atts );
 			if ( class_exists( 'Youzify' ) ) {
-				shortcodes_for_buddypress_template( 'youzify/members/bp-shortcodes-members-youzify.php' );
-
+				$no_template = ( false === shortcodes_for_buddypress_template( 'youzify/members/bp-shortcodes-members-youzify.php' ) ) ? true : false;
 			} elseif ( $_bp_theme_package == 'legacy' ) {
-				do_action( 'before_render_member_shortcode', $atts );
-				shortcodes_for_buddypress_template( 'legacy/members/bp-shortcodes-members.php' );
-				do_action( 'after_render_member_shortcode', $atts );
+				$no_template = ( false === shortcodes_for_buddypress_template( 'legacy/members/bp-shortcodes-members.php' ) ) ? true : false ;
 			} else {
-				do_action( 'before_render_member_shortcode', $atts );
-				shortcodes_for_buddypress_template( 'nouveau/members/bp-shortcodes-members.php' );
-				do_action( 'after_render_member_shortcode', $atts );
+				$no_template = ( false === shortcodes_for_buddypress_template( 'nouveau/members/bp-shortcodes-members.php' ) ) ? true : false ;
+			}
+			do_action( 'after_render_member_shortcode', $atts );
+
+			/**
+			* If none of the above template exists, then display user notice.
+			* @since 2.7.2 
+			*/
+
+			if ( $no_template ) {
+				?>
+				<div class="bpsp-feedback bpsp-info">
+					<span class="bpsp-icon"></span>
+					<p><?php echo esc_html__('No Template Found.', 'shortcodes-for-buddypress'); ?></p>
+				</div>
+				<?php
 			}
 		}
 
@@ -680,6 +700,7 @@ class Shortcodes_For_Buddypress_Public {
 
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 		ob_start();
+
 		if ( function_exists( 'bp_is_active' ) ) {
 
 			if ( $title != '' ) {
@@ -688,12 +709,28 @@ class Shortcodes_For_Buddypress_Public {
 				<?php
 			}
 
+			do_action( 'before_render_group_shortcode', $atts );
 			if ( class_exists( 'Youzify' ) ) {
-				shortcodes_for_buddypress_template( 'youzify/groups/bp-shortcodes-groups-youzify.php' );
+				$no_template = ( false === shortcodes_for_buddypress_template( 'youzify/groups/bp-shortcodes-groups-youzify.php' ) ) ? true : false;
 			} elseif ( $_bp_theme_package == 'legacy' ) {
-				shortcodes_for_buddypress_template( 'legacy/groups/bp-shortcodes-groups.php' );
+				$no_template = ( false === shortcodes_for_buddypress_template( 'legacy/groups/bp-shortcodes-groups.php' ) ) ? true : false;
 			} else {
-				shortcodes_for_buddypress_template( 'nouveau/groups/bp-shortcodes-groups.php' );
+				$no_template = ( false === shortcodes_for_buddypress_template( 'nouveau/groups/bp-shortcodes-groups.php' ) ) ? true : false;
+			}
+			do_action( 'after_render_group_shortcode', $atts );
+
+			/**
+			* If none of the above template exists, then display user notice.
+			* @since 2.7.2 
+			*/
+
+			if ( $no_template ) {
+				?>
+				<div class="bpsp-feedback bpsp-info">
+					<span class="bpsp-icon"></span>
+					<p><?php echo esc_html__('No Template Found.', 'shortcodes-for-buddypress'); ?></p>
+				</div>
+				<?php
 			}
 		}
 		return ob_get_clean();
@@ -782,10 +819,9 @@ class Shortcodes_For_Buddypress_Public {
 							);
 							$group_avatar      = bp_core_fetch_avatar(
 								array(
-									'item_id'    => $response_group_data['id'],
+																		'item_id'    => $response_group_data['id'],
 									'avatar_dir' => 'group-avatars',
 									'object'     => 'group',
-									'type'       => $group_avatar_args['type'],
 									'html'       => $group_avatar_args['html'],
 									'alt'        => $group_avatar_args['alt'],
 									'no_grav'    => $group_avatar_args['no_grav'],
@@ -888,18 +924,32 @@ class Shortcodes_For_Buddypress_Public {
 					<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
 					<?php
 				}
+				do_action( 'before_render_notifications_shortcode', $atts );
 				if ( $_bp_theme_package == 'legacy' ) {
-					shortcodes_for_buddypress_template( 'legacy/notifications/notifications-loop.php' );
+					$no_template = ( false === shortcodes_for_buddypress_template( 'legacy/notifications/notifications-loop.php' ) ) ? true : false;
 				} else {
-					
-					shortcodes_for_buddypress_template( 'nouveau/notifications/notifications-loop.php' );
+					$no_template = ( false === shortcodes_for_buddypress_template( 'nouveau/notifications/notifications-loop.php' ) ) ? true : false;
+				}
+				do_action( 'after_render_notifications_shortcode', $atts );
+
+				/**
+				 * If none of the template exists, then display user notice.
+				 * @since 2.7.2
+				 */
+				if ( $no_template ) {
+					?>
+					<div class="bpsp-feedback bpsp-info">
+						<span class="bpsp-icon"></span>
+						<p><?php echo esc_html__('No Template Found.', 'shortcodes-for-buddypress'); ?></p>
+					</div>
+					<?php
 				}
 			} else {
 				
 				?>
 				<div class="bpsp-feedback bpsp-info">
 					<span class="bpsp-icon"></span>
-					<p><?php echo esc_html__('Please enable the BuddyPress Notifications Component.', 'shortcodes-for-buddypress'); ?></p>
+					<p><?php echo esc_html__('Please enable the Notifications Component.', 'shortcodes-for-buddypress'); ?></p>
 				</div>
 				<?php
 			}
