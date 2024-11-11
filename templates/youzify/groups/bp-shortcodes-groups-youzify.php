@@ -69,6 +69,16 @@ global $groups_atts;
                                     }
                                 ?>
 
+                                <?php if ( 'on' == youzify_option( 'youzify_enable_gd_cards_actions_buttons', 'on' ) && is_user_logged_in() ) : ?>
+                                    <div class="action">
+                                        <?php  if ( groups_is_user_admin( get_current_user_id(), bp_get_group_id() ) ) { ?>
+                                            <a href="<?php echo bp_get_group_manage_url(); ?>" class="youzify-manage-group"><i class="fas fa-cogs"></i><?php _e( 'Manage Group', 'shortcodes-for-buddypress' ); ?></a>
+                                        <?php } else{  do_action( 'bp_directory_groups_actions' ); 
+                                        }?>
+                                    </div>
+
+                                <?php endif; ?>
+
                                 <?php do_action( 'youzify_after_bp_directory_groups_actions' ); ?>
                             </div>
                         </li>
@@ -98,7 +108,11 @@ global $groups_atts;
                     <?php endif; ?>
 
                 </div>
-		    <?php endif; ?>
+		    <?php else : ?>
+                <div id="message" class="info">
+                    <p><?php _e( 'There were no groups found.', 'shortcodes-for-buddypress' ); ?></p>
+                </div>
+            <?php  endif; ?>
 		</div>
 	</div>
 </div>
