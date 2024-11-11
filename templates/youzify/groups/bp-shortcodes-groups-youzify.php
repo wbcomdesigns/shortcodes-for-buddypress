@@ -1,10 +1,12 @@
 <?php
 /**
- * BP Nouveau - Groups Directory
- *
- * @since 3.0.0
- * @version 3.0.0
+ * BP Youzify - Groups Directory
+ * 
+ * Template file to render for Groups Listing Shortcode when Youzify plugin is active along with BuddyPress. 
+ * @since 2.7.2
+ * 
  */
+
 global $groups_atts;
 
 ?>
@@ -43,12 +45,12 @@ global $groups_atts;
                                     <div class="item-meta">
                                         <div class="group-status">
                                             <?php if ( function_exists( 'youzify_get_group_status' ) ) {
-                                                echo youzify_get_group_status( bp_get_group_status() );
+                                                echo esc_html( youzify_get_group_status( bp_get_group_status() ) );
                                             }?>
 
                                         </div>
 
-                                        <span class="activity" data-livestamp="<?php bp_core_iso8601_date( bp_get_group_last_active( 0, array( 'relative' => false ) ) ); ?>"><?php printf( __( 'Active %s', 'youzify' ), bp_get_group_last_active() ); ?></span>
+                                        <span class="activity" data-livestamp="<?php bp_core_iso8601_date( esc_attr( bp_get_group_last_active( 0, array( 'relative' => false ) ) ) ); ?>"><?php printf( esc_html__( 'Active %s', 'shortcodes-for-buddypress' ), esc_html( bp_get_group_last_active() ) ); ?></span>
                                         
                                     </div>
 
@@ -57,7 +59,7 @@ global $groups_atts;
                                     /**
                                      * Fires inside the listing of an individual group listing item.
                                      *
-                                     * @since 1.1.0
+                                     * @since 2.7.2
                                      */
                                     do_action( 'bp_directory_groups_item' ); ?>
 
@@ -71,9 +73,16 @@ global $groups_atts;
 
                                 <?php if ( 'on' == youzify_option( 'youzify_enable_gd_cards_actions_buttons', 'on' ) && is_user_logged_in() ) : ?>
                                     <div class="action">
-                                        <?php  if ( groups_is_user_admin( get_current_user_id(), bp_get_group_id() ) ) { ?>
-                                            <a href="<?php echo bp_get_group_manage_url(); ?>" class="youzify-manage-group"><i class="fas fa-cogs"></i><?php _e( 'Manage Group', 'shortcodes-for-buddypress' ); ?></a>
-                                        <?php } else{  do_action( 'bp_directory_groups_actions' ); 
+                                        <?php
+
+                                        /** If user is group admin then render Manage Group button else for other members that are not the part of group render Request Membership button.
+                                        *  
+                                        * @since 2.7.2 
+                                        */
+
+                                        if ( groups_is_user_admin( get_current_user_id(), bp_get_group_id() ) ) { ?>
+                                            <a href="<?php echo esc_url( bp_get_group_manage_url() ); ?>" class="youzify-manage-group"><i class="fas fa-cogs"></i><?php echo esc_html__( 'Manage Group', 'shortcodes-for-buddypress' ); ?></a>
+                                        <?php } else {  do_action( 'bp_directory_groups_actions' ); 
                                         }?>
                                     </div>
 
@@ -90,11 +99,10 @@ global $groups_atts;
 
                 /**
                  * Fires after the listing of the groups list.
-                 *
-                 * @since 1.1.0
+                 * @since 2.7.2
                  */
                 do_action( 'bp_after_directory_groups_list' ); ?>
-
+                
                 <div id="pag-bottom" class="pagination">
 
                     <div class="pag-count" id="group-dir-count-bottom">
@@ -110,7 +118,7 @@ global $groups_atts;
                 </div>
 		    <?php else : ?>
                 <div id="message" class="info">
-                    <p><?php _e( 'There were no groups found.', 'shortcodes-for-buddypress' ); ?></p>
+                    <p><?php echo esc_html__( 'There were no groups found.', 'shortcodes-for-buddypress' ); ?></p>
                 </div>
             <?php  endif; ?>
 		</div>
