@@ -117,7 +117,7 @@ class Shortcodes_For_Buddypress_Public {
 		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
 		if(function_exists('bp_is_active') &&  bp_is_active('activity')){
 			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-public.js', array( 'jquery', 'bp-nouveau-activity' ), $this->version, true );
-			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
+			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) ) ) {
 				wp_enqueue_script( $this->plugin_name );
 				wp_localize_script(
 					$this->plugin_name,
@@ -209,15 +209,18 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
-
+		
 		ob_start();
 		
-		if ( function_exists( 'bp_is_active' ) && (bp_is_active('activity'))) {
+		if ( function_exists( 'bp_is_active' ) && (bp_is_active('activity')) ) {
 			
 			if ( $title != '' ) {
-				$output .= '<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>';
+				$output .= '<h3 class="section-title"><span>'.esc_html( $title ).'</span></h3>';
 			}
-			if ( $_bp_theme_package == 'legacy' ) {
+			if ( class_exists( 'Youzify' ) ) {
+				shortcodes_for_buddypress_template( 'youzify/activity/bp-shortcodes-activity-youzify.php' );
+				$output .= ob_get_contents();
+			} elseif ( $_bp_theme_package == 'legacy' ) {
 				do_action( 'before_render_activity_shortcode', $atts );
 				shortcodes_for_buddypress_template( 'legacy/activity/bp-shortcodes-activity.php' );
 				do_action( 'after_render_activity_shortcode', $atts );
@@ -238,7 +241,7 @@ class Shortcodes_For_Buddypress_Public {
 			?>
 			<div class="bpsp-feedback bpsp-info">
 				<span class="bpsp-icon"></span>
-				<p><?php echo __('Please enable the BuddyPress Activity Component.', 'shortcodes-for-buddypress'); ?></p>
+				<p><?php echo esc_html__('Please enable the BuddyPress Activity Component.', 'shortcodes-for-buddypress'); ?></p>
 			</div>
 			<?php
 			$output .= ob_get_contents();
@@ -896,7 +899,7 @@ class Shortcodes_For_Buddypress_Public {
 				?>
 				<div class="bpsp-feedback bpsp-info">
 					<span class="bpsp-icon"></span>
-					<p><?php echo __('Please enable the BuddyPress Notifications Component.', 'shortcodes-for-buddypress'); ?></p>
+					<p><?php echo esc_html__('Please enable the BuddyPress Notifications Component.', 'shortcodes-for-buddypress'); ?></p>
 				</div>
 				<?php
 			}
@@ -904,7 +907,7 @@ class Shortcodes_For_Buddypress_Public {
 			?>
 			<div class="bpsp-feedback bpsp-info">
 				<span class="bpsp-icon" aria-hidden="true"></span>
-				<p><?php echo __('Please Log in to view notifications.', 'shortcodes-for-buddypress'); ?></p>
+				<p><?php echo esc_html__('Please Log in to view notifications.', 'shortcodes-for-buddypress'); ?></p>
 			</div>
 			<?php
 		}
