@@ -1,11 +1,20 @@
 <?php
+
+/**
+ * BP Youzify - Activity Shortcode 
+ * 
+ * Template to be used while listing activity shortcode when Youzify is active with BuddyPress.
+ * Reference  from youzify activity loop template. (includes/public/templates/activity/activity-loop.php)
+ * 
+ * @since 2.7.2
+ * 
+ */
 global $activity_atts;
 
-// echo '<pre>';print_r($activity_atts);echo '</pre>';
 /**
  * Fires before the activity directory listing.
  *
- * @since 1.5.0
+ * @since 2.7.2
  */
 
 do_action( 'bp_before_directory_activity' );
@@ -17,13 +26,11 @@ if( empty( $atts ) ){
 	$atts = array();
 }
 
- ?>
-<?php
 if ( $activity_atts['allow_posting'] == 'true' && is_user_logged_in() ) :
 	bp_get_template_part( 'activity/post-form' );
 endif;
-?>
-<?php do_action( 'before_activity_listing_output', $atts, $activity_atts ); ?>
+
+do_action( 'before_activity_listing_output', $atts, $activity_atts ); ?>
 
 <?php if ( bp_has_activities( $activity_atts['bpsh_query'] ) ) : ?>
 	<div id="activity" class="activity" aria-atomic="true" aria-relevant="all" aria-live="polite">
