@@ -651,13 +651,6 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_group_listing( $atts, $content = null ) {
 		global $groups_atts;
-
-		/* Check Groups Components not activated then return shortcode */
-		$bp_components = get_option( 'bp-active-components' );
-		if ( ! isset( $bp_components['groups'] ) ) {
-			return $content;
-		}
-
 		/* Check Scope is personal then pass current user id */
 		if ( isset( $atts['scope'] ) && $atts['scope'] == 'personal' ) {
 			$user_id         = ( bp_displayed_user_id() ) ? bp_displayed_user_id() : bp_loggedin_user_id();
@@ -698,10 +691,10 @@ class Shortcodes_For_Buddypress_Public {
 		$groups_atts = apply_filters( 'bpsh_groups_query_args', shortcode_atts( $default_atts, $atts ) );
 		extract( $groups_atts );
 
-		$_bp_theme_package = get_option( '_bp_theme_package_id' );
+		$_bp_theme_package = get_option( '_bp_theme_package_id' );		
 		ob_start();
-
-		if ( function_exists( 'bp_is_active' ) ) {
+		
+		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'groups' ) ) {
 
 			if ( $title != '' ) {
 				?>
@@ -732,6 +725,14 @@ class Shortcodes_For_Buddypress_Public {
 				</div>
 				<?php
 			}
+		} else {
+			
+			?>
+			<div class="bpsp-feedback bpsp-info">
+				<span class="bpsp-icon"></span>
+				<p><?php echo esc_html__('Please enable the Groups Component.', 'shortcodes-for-buddypress'); ?></p>
+			</div>
+			<?php
 		}
 		return ob_get_clean();
 	}
