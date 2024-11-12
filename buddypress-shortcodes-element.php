@@ -458,15 +458,14 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			</style>
 			<?php
 		} else {
+			/** This user notice will render when user uses activity shortcode with Elementor and the activity component is disabled . */
 			?>
-			<div class="bpsp-feedback bpsp-info">
-				<span class="bpsp-icon"></span>
-				<p><?php echo __( 'Please enable the BuddyPress Activity Component.' , 'shortcodes-for-buddypress' ); ?></p>
+			<div class="bpsp-flex-container">
+				<div><i class="fa fa-exclamation-circle bpsp-fa-icon"></i></div>
+				<p><?php echo esc_html__( 'Please enable the Activity Component.', 'shortcodes-for-buddypress' ); ?></p>
 			</div>
 			<?php
 		}
-		
-
 	}
 
 }
