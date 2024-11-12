@@ -89,10 +89,17 @@ if( function_exists( 'bp_nouveau_get_container_classes' ) ){
 	<?php else : ?>
 
 		<?php 
-			if( function_exists( 'bp_nouveau_user_feedback' ) ){
+			if ( function_exists( 'bp_nouveau_user_feedback' ) ) {
 				bp_nouveau_user_feedback( 'member-notifications-none' );
-			}else{
-				echo __( 'This member has no unread notifications.' , 'shortcodes-for-buddypress' );
+			} else {
+				
+				/** This user notice will render when youzify is active along with BuddyPress and no new notifications are there. */
+				?>
+				<div class="bpsp-flex-container">
+					<div><i class="fa fa-exclamation-circle bpsp-fa-icon"></i></div>
+					<p><?php echo esc_html__( 'This member has no unread notifications.', 'shortcodes-for-buddypress' ); ?></p>
+				</div>
+				<?php
 			}
 		?>
 
