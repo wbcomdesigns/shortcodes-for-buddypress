@@ -477,11 +477,9 @@ class Shortcodes_For_Buddypress_Public {
 			'bpsh_query'          => $bpsh_query,
 		);
 
-		$members_atts = apply_filters( 'modify_members_listing_output', shortcode_atts( $default_atts, $atts ) );
-
-		update_option( 'bpsh_membe_queryargs', $bpsh_query );
+		$members_atts = apply_filters( 'bpsh_members_query_args', shortcode_atts( $default_atts, $atts ) );
 		extract( $members_atts );
-
+		
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 		ob_start();
 
@@ -911,7 +909,7 @@ class Shortcodes_For_Buddypress_Public {
 		);
 		
 		
-		$notifications_atts = shortcode_atts( $default_atts, $atts );
+		$notifications_atts = apply_filters( 'bpsh_notification_query_args' , shortcode_atts( $default_atts, $atts ) );
 		extract( $notifications_atts );
 		
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
