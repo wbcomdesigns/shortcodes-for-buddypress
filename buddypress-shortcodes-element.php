@@ -158,11 +158,10 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section(
-			'load_more_section',
+			'load_more_button_section',
 			array(
-				'label'      => __( 'Load More Button', 'shortcodes-for-buddypress' ),
-				'tab'        => Controls_Manager::TAB_STYLE,
-				'conditions' => array(),
+				'label' => __( 'Load More Button', 'shortcodes-for-buddypress' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
 			)
 		);
 
