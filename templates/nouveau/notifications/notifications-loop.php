@@ -31,60 +31,47 @@ if( function_exists( 'bp_nouveau_get_container_classes' ) ){
 
 <input type="hidden" data-bp-filter="notifications" value="<?php echo esc_attr( $notifications_atts['bpsh_query'] ); ?>" />		
 	<?php	
-	if ( bp_has_notifications( $args ) ) :
-		if( function_exists( 'bp_nouveau_pagination' ) ){
-			bp_nouveau_pagination( 'top' );
-		}
-		
-		?>
+	if ( bp_has_notifications( $args ) ) :	?>
 
-		<form action="" method="post" id="notifications-bulk-management" class="standard-form">
-			<table class="notifications bp-tables-user">
-				<thead>
+		<table class="notifications bp-tables-user">
+			<thead>
+				<tr>
+					<th class="icon"></th>
+					<th><?php esc_html_e( 'Notification', 'shortcodes-for-buddypress' ); ?></th>
+					<th><?php esc_html_e( 'Date Received', 'shortcodes-for-buddypress' ); ?></th>
+					<th><?php esc_html_e( 'Actions', 'shortcodes-for-buddypress' ); ?></th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<?php
+				while ( bp_the_notifications() ) :
+					bp_the_notification();
+					?>
+
 					<tr>
-						<th class="icon"></th>
-						<th class="bulk-select-all"><input id="select-all-notifications" type="checkbox"><label class="bp-screen-reader-text" for="select-all-notifications"><?php esc_html_e( 'Select all', 'shortcodes-for-buddypress' ); ?></label></th>
-						<th class="title"><?php esc_html_e( 'Notification', 'shortcodes-for-buddypress' ); ?></th>
-						<th class="date">
-							<?php esc_html_e( 'Date Received', 'shortcodes-for-buddypress' ); ?>
-							<?php 
-								if( function_exists( 'bp_nouveau_notifications_sort_order_links' ) ){
-									bp_nouveau_notifications_sort_order_links();
-								}
-							?>
-						</th>
-						<th class="actions"><?php esc_html_e( 'Actions', 'shortcodes-for-buddypress' ); ?></th>
+						<td></td>
+						<td class="notification-description"><?php bp_the_notification_description(); ?></td>
+						<td class="notification-since"><?php bp_the_notification_time_since(); ?></td>
+						<td class="notification-actions"><?php bp_the_notification_action_links(); ?></td>
 					</tr>
-				</thead>
 
-				<tbody>
+				<?php endwhile; ?>
 
-					<?php
-					while ( bp_the_notifications() ) :
-						bp_the_notification();
-						?>
+			</tbody>
+		</table>
 
-						<tr>
-							<td></td>
-							<td class="bulk-select-check"><label for="<?php bp_the_notification_id(); ?>"><input id="<?php bp_the_notification_id(); ?>" type="checkbox" name="notifications[]" value="<?php bp_the_notification_id(); ?>" class="notification-check"><span class="bp-screen-reader-text"><?php esc_html_e( 'Select this notification', 'shortcodes-for-buddypress' ); ?></span></label></td>
-							<td class="notification-description"><?php bp_the_notification_description(); ?></td>
-							<td class="notification-since"><?php bp_the_notification_time_since(); ?></td>
-							<td class="notification-actions"><?php bp_the_notification_action_links(); ?></td>
-						</tr>
+		<!-- Notifications pagination links. -->
+		<div id="pag-bottom" class="pagination no-ajax">
+			<div class="pag-count" id="notifications-count-bottom">
+				<?php bp_notifications_pagination_count(); ?>
+			</div>
 
-					<?php endwhile; ?>
-
-				</tbody>
-			</table>
-
-			<?php wp_nonce_field( 'notifications_bulk_nonce', 'notifications_bulk_nonce' ); ?>
-		</form>
-
-		<?php 
-		if( function_exists( 'bp_nouveau_pagination' ) ){
-			bp_nouveau_pagination( 'bottom' );
-		}
-		?>
+			<div class="pagination-links" id="notifications-pag-bottom">
+				<?php bp_notifications_pagination_links(); ?>
+			</div>
+		</div>
 
 	<?php else : ?>
 
