@@ -62,17 +62,6 @@ if( function_exists( 'bp_nouveau_get_container_classes' ) ){
 			</tbody>
 		</table>
 
-		<!-- Notifications pagination links. -->
-		<div id="pag-bottom" class="pagination no-ajax">
-			<div class="pag-count" id="notifications-count-bottom">
-				<?php bp_notifications_pagination_count(); ?>
-			</div>
-
-			<div class="pagination-links" id="notifications-pag-bottom">
-				<?php bp_notifications_pagination_links(); ?>
-			</div>
-		</div>
-
 	<?php else : ?>
 
 		<?php 
