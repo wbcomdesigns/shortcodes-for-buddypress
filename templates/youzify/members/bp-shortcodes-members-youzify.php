@@ -49,7 +49,7 @@ global $members_atts;
 								<?php } else { 
 									
 									if ( function_exists( 'youzify_get_md_user_meta' ) ) {
-										echo youzify_get_md_user_meta( bp_get_member_user_id() );
+										echo wp_kses_post( youzify_get_md_user_meta( bp_get_member_user_id() ) );
 									}
 									
 								} ?>

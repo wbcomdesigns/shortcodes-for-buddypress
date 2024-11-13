@@ -45,7 +45,7 @@ global $groups_atts;
                                     <div class="item-meta">
                                         <div class="group-status">
                                             <?php if ( function_exists( 'youzify_get_group_status' ) ) {
-                                                echo esc_html( youzify_get_group_status( bp_get_group_status() ) );
+                                                echo wp_kses_post( youzify_get_group_status( bp_get_group_status() ) );
                                             }?>
 
                                         </div>
