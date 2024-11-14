@@ -300,22 +300,39 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 				<?php endif; ?>
 				
 				<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav groups">
-					<?php bp_nouveau_before_groups_directory_content(); ?>
-					<?php bp_nouveau_template_notices(); ?>
+					<?php if ( function_exists( 'bp_nouveau_before_groups_directory_content' ) ) {
+						bp_nouveau_before_groups_directory_content();
+					}
+					?>
+					<?php if ( function_exists( 'bp_nouveau_template_notices' ) ) {
+						bp_nouveau_template_notices(); 
+					}
+					?>
 
 					<div class="screen-content">
 						<div id="groups-dir-list" class="groups dir-list" data-bp-list="">
-						<?php bp_get_template_part( 'groups/groups-loop' ); ?>
+						<?php 
+							/** Code to be executed when Youzify is active along with Elementor and BuddyPress for editing groups listing shortcode.
+							 * 
+							 * @since 2.7.2 
+							 */						
+							if ( class_exists( 'Youzify' ) ) {
+								shortcodes_for_buddypress_template( 'youzify/groups/bp-shortcodes-groups-youzify.php' );
+							} else {
+								bp_get_template_part( 'groups/groups-loop' );							
+							}
+						?>
 						</div>
 
-						<?php bp_nouveau_after_groups_directory_content(); ?>
+						<?php if ( function_exists( 'bp_nouveau_after_groups_directory_content' ) ) {
+							bp_nouveau_after_groups_directory_content();
+						}?>
 					</div>
 				</div>
 			</div>
 			
 			<?php
 			remove_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
-
 			remove_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );
 			remove_filter( 'bp_get_groups_pagination_count', '__return_zero' );
 			remove_filter( 'bp_get_groups_pagination_links', '__return_zero' );

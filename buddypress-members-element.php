@@ -267,12 +267,11 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 						if( class_exists( 'Youzify' ) ) {	
 
 							if ( defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' ) ) {
-								$this->version = SHORTCODES_FOR_BUDDYPRESS_VERSION;
+								$version = SHORTCODES_FOR_BUDDYPRESS_VERSION;
 							} else {
-								$this->version = '1.0.0';
+								$version = '1.0.0';
 							}
-
-							wp_enqueue_style('youzify-directories-css', SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/css/youzify.css', array() , $this->version, false);
+							wp_enqueue_style('youzify-directories-css', SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/css/youzify.css', array() , $version, false);
 
 							shortcodes_for_buddypress_template( 'youzify/members/bp-shortcodes-members-youzify.php' );
 							

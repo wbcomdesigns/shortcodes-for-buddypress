@@ -11,11 +11,18 @@ global $groups_atts;
 
 ?>
 
-<div id="buddypress" class="bp-dir-hori-nav <?php echo esc_attr( $groups_atts['container_class'] ); ?>">
+<div id="buddypress" class="bp-dir-hori-nav <?php if ( !empty( $groups_atts['container_class'] ) ) { echo esc_attr( $groups_atts['container_class'] ); } ?>">
 	<div class="screen-content">
-		<input type="hidden" data-bp-filter="groups" value="<?php echo esc_attr( $groups_atts['bpsh_query'] ); ?>" />
+		<input type="hidden" data-bp-filter="groups" value="<?php if ( !empty( $groups_atts['bpsh_query'] ) ) { echo esc_attr( $groups_atts['bpsh_query'] ); } ?>" />
 		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups" data-ajax="false">
-			<?php if ( bp_has_groups( $groups_atts['bpsh_query'] ) ) :
+			<?php 
+                if ( !empty( $groups_atts ) ) {
+                    $bp_groups  = bp_has_groups( $groups_atts['bpsh_query'] );
+                } else {
+                    $bp_groups  = bp_has_groups( bp_ajax_querystring( 'groups' ) );
+                }
+
+            if ( $bp_groups ) :
                 do_action( 'bp_before_directory_groups_list' ); ?>
                 <ul id="youzify-groups-list" class="item-list youzify-card-show-avatar-border youzify-card-avatar-border-circle youzify-card-action-buttons-block youzify-page-btns-border-oval" aria-live="assertive" aria-atomic="true" aria-relevant="all">
 
@@ -101,21 +108,24 @@ global $groups_atts;
                  * Fires after the listing of the groups list.
                  * @since 2.7.2
                  */
-                do_action( 'bp_after_directory_groups_list' ); ?>
+                do_action( 'bp_after_directory_groups_list' ); 
+                if ( !empty( $groups_atts ) ) { ?>
                 
-                <div id="pag-bottom" class="pagination">
+                    <div id="pag-bottom" class="pagination">
 
-                    <div class="pag-count" id="group-dir-count-bottom">
-                        <?php bp_groups_pagination_count(); ?>
+                        <div class="pag-count" id="group-dir-count-bottom">
+                            <?php bp_groups_pagination_count(); ?>
+                        </div>
+
+                        <?php if ( bp_get_groups_pagination_links() ) : ?>
+                        <div class="pagination-links" id="group-dir-pag-bottom">
+                            <?php bp_groups_pagination_links(); ?>
+                        </div>
+                        <?php endif; ?>
+
                     </div>
 
-                    <?php if ( bp_get_groups_pagination_links() ) : ?>
-                    <div class="pagination-links" id="group-dir-pag-bottom">
-                        <?php bp_groups_pagination_links(); ?>
-                    </div>
-                    <?php endif; ?>
-
-                </div>
+                <?php } ?>
 		    <?php else : ?>
                 <div id="message" class="info">
                     <p><?php echo esc_html__( 'There were no groups found.', 'shortcodes-for-buddypress' ); ?></p>
