@@ -8,10 +8,16 @@
 global $members_atts;
 
 ?>
-<div id="buddypress" class="bp-dir-hori-nav <?php echo esc_attr( $members_atts['container_class'] ); ?>">
+<div id="buddypress" class="bp-dir-hori-nav <?php if( !empty( $members_atts['container_class'] ) ) { echo esc_attr( $members_atts['container_class'] ); } ?>">
 	<?php do_action( 'bp_before_members_loop' ); ?>
 	
-	<?php if ( bp_has_members( $members_atts['bpsh_query'] ) ) : ?>
+	<?php 
+	if ( !empty( $members_atts ) ) {
+		$bp_members = bp_has_members( $members_atts['bpsh_query'] );
+	} else {
+		$bp_members = bp_has_members( bp_ajax_querystring( 'members' ) );
+	}
+	if ( $bp_members ) : ?>
 		<div id="members-dir-list" class="members dir-list" data-bp-list="members" data-ajax="false">
 	
 		<?php do_action( 'bp_before_directory_members_list' ); ?>
@@ -116,7 +122,12 @@ global $members_atts;
 		 * @since 1.1.0
 		 */
 		do_action( 'bp_after_directory_members_list' ); 
-		bp_member_hidden_fields(); ?>
+		bp_member_hidden_fields(); 
+		
+		if( !empty ( $members_atts ) ){
+
+		?>
+
 		<div id="pag-bottom" class="pagination">
 
 			<div class="pag-count" id="member-dir-count-bottom">
@@ -131,7 +142,7 @@ global $members_atts;
 
 		</div>
 		
-	<?php endif; ?>
+	<?php  } endif; ?>
 	
 </div>
 		

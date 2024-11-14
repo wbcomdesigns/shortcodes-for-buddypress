@@ -251,14 +251,40 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 				<h3 class="activity-shortcode-title"><?php echo esc_html( $args['title'] ); ?></h3>
 			<?php endif; ?>
 			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav members">
-				<?php bp_nouveau_before_members_directory_content(); ?>
+				<?php if ( function_exists( 'bp_nouveau_before_members_directory_content' ) ) {
+					bp_nouveau_before_members_directory_content(); 
+				}?>
 
 				<div class="screen-content">
 					<div id="members-dir-list" class="members dir-list" data-bp-list="">
-					<?php bp_get_template_part( 'members/members-loop' ); ?>
+					<?php 
+
+						/** Code to be executed when Youzify is active along with Elementor and BuddyPress.
+						 * 
+						 * @since 2.7.2
+						 */
+						
+						if( class_exists( 'Youzify' ) ) {	
+
+							if ( defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' ) ) {
+								$this->version = SHORTCODES_FOR_BUDDYPRESS_VERSION;
+							} else {
+								$this->version = '1.0.0';
+							}
+
+							wp_enqueue_style('youzify-directories-css', SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/css/youzify.css', array() , $this->version, false);
+
+							shortcodes_for_buddypress_template( 'youzify/members/bp-shortcodes-members-youzify.php' );
+							
+						} else {
+							bp_get_template_part( 'members/members-loop' ); 
+						} 
+					?>
 					</div>
 
-					<?php bp_nouveau_after_members_directory_content(); ?>
+					<?php if ( function_exists( 'bp_nouveau_after_members_directory_content' ) ) {
+						bp_nouveau_after_members_directory_content(); 
+					}?>
 				</div>
 			</div>
 		</div>
