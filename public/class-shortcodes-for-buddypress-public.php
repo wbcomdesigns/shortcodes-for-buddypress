@@ -202,6 +202,7 @@ class Shortcodes_For_Buddypress_Public {
 			'bpsh_query'       => $bpsh_query,
 		);
 
+		// Apply filter to modiy the activity attributes.
 		$activity_atts = apply_filters( 'bp_activity_shortcode_query_args', shortcode_atts( $default_atts, $atts ) );
 		extract( $activity_atts );
 
@@ -477,6 +478,8 @@ class Shortcodes_For_Buddypress_Public {
 			'bpsh_query'          => $bpsh_query,
 		);
 
+		// Apply filter to modify the member attributes.
+
 		$members_atts = apply_filters( 'bpsh_members_query_args', shortcode_atts( $default_atts, $atts ) );
 		extract( $members_atts );
 		
@@ -685,6 +688,8 @@ class Shortcodes_For_Buddypress_Public {
 			'loop-layout'        => ! empty( $atts['loop-layout'] ) ? $atts['loop-layout'] : '',
 			'bpsh_query'         => $bpsh_query,
 		);
+
+		// Apply filter to modify the groups attributes.
 
 		$groups_atts = apply_filters( 'bpsh_groups_query_args', shortcode_atts( $default_atts, $atts ) );
 		extract( $groups_atts );
@@ -908,7 +913,7 @@ class Shortcodes_For_Buddypress_Public {
 			'bpsh_query'      => $bpsh_query,
 		);
 		
-		
+		// Apply filter to modify the notifications attributes.
 		$notifications_atts = apply_filters( 'bpsh_notification_query_args' , shortcode_atts( $default_atts, $atts ) );
 		extract( $notifications_atts );
 		

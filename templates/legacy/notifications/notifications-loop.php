@@ -37,32 +37,35 @@ add_filter(
 			esc_html_e( 'Unread notifications', 'shortcodes-for-buddypress' );
 		?>
 		</h2>
+		<table class="notifications">
+			<thead>
+				<tr>
+					<th class="icon"></th>
+					<th class="title"><?php esc_html_e( 'Notification', 'buddypress' ); ?></th>
+					<th class="date"><?php esc_html_e( 'Date Received', 'buddypress' ); ?></th>
+					<th class="actions"><?php esc_html_e( 'Actions', 'buddypress' ); ?></th>
+				</tr>
+			</thead>
 
-		<div id="pag-top" class="pagination no-ajax">
-			<div class="pag-count" id="notifications-count-top">
-				<?php bp_notifications_pagination_count(); ?>
-			</div>
+			<tbody>
 
-			<div class="pagination-links" id="notifications-pag-top">
-				<?php bp_notifications_pagination_links(); ?>
-			</div>
-		</div>
+				<?php while ( bp_the_notifications() ) : bp_the_notification(); ?>
 
-		<?php bp_get_template_part( 'members/single/notifications/notifications-loop' ); ?>
+					<tr>
+						<td></td>
+						<td class="notification-description"><?php bp_the_notification_description(); ?></td>
+						<td class="notification-since"><?php bp_the_notification_time_since(); ?></td>
+						<td class="notification-actions"><?php bp_the_notification_action_links(); ?></td>
+					</tr>
 
-		<div id="pag-bottom" class="pagination no-ajax">
-			<div class="pag-count" id="notifications-count-bottom">
-				<?php bp_notifications_pagination_count(); ?>
-			</div>
+				<?php endwhile; ?>
 
-			<div class="pagination-links" id="notifications-pag-bottom">
-				<?php bp_notifications_pagination_links(); ?>
-			</div>
-		</div>
+			</tbody>
+		</table>
 
-	<?php else : ?>
+		<?php else : ?>
 
-		<?php bp_get_template_part( 'members/single/notifications/feedback-no-notifications' ); ?>
+			<?php bp_get_template_part( 'members/single/notifications/feedback-no-notifications' ); ?>
 
-	<?php endif; ?>
+		<?php endif; ?>
 </div>
