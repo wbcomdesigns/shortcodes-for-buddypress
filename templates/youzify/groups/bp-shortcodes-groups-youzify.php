@@ -108,24 +108,8 @@ global $groups_atts;
                  * Fires after the listing of the groups list.
                  * @since 2.7.2
                  */
-                do_action( 'bp_after_directory_groups_list' ); 
-                if ( !empty( $groups_atts ) ) { ?>
-                
-                    <div id="pag-bottom" class="pagination">
-
-                        <div class="pag-count" id="group-dir-count-bottom">
-                            <?php bp_groups_pagination_count(); ?>
-                        </div>
-
-                        <?php if ( bp_get_groups_pagination_links() ) : ?>
-                        <div class="pagination-links" id="group-dir-pag-bottom">
-                            <?php bp_groups_pagination_links(); ?>
-                        </div>
-                        <?php endif; ?>
-
-                    </div>
-
-                <?php } ?>
+                do_action( 'bp_after_directory_groups_list' ); ?>
+                                
 		    <?php else : ?>
                 <div id="message" class="info">
                     <p><?php echo esc_html__( 'There were no groups found.', 'shortcodes-for-buddypress' ); ?></p>
