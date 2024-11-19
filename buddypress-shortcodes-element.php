@@ -437,13 +437,23 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 					<?php endif; ?>
 
 					<div class="screen-content">
-						<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
+						<?php if( function_exists( 'bp_nouveau_activity_hook' ) ) {
+							bp_nouveau_activity_hook( 'before_directory', 'list' ); 
+						}?>
 
 						<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
-							<?php bp_get_template_part( 'activity/activity-loop' ); ?>
+							<?php if ( class_exists( 'Youzify' ) ) { 
+								shortcodes_for_buddypress_template( 'youzify/activity/bp-shortcodes-activity-youzify.php' );
+							} else {
+								bp_get_template_part( 'activity/activity-loop' ); 
+							}
+							?>
 						</div>
 
-						<?php bp_nouveau_after_activity_directory_content(); ?>
+						<?php if( function_exists( 'bp_nouveau_after_activity_directory_content' ) ) {
+							bp_nouveau_after_activity_directory_content(); 
+						}
+						?>
 
 					</div>
 				</div>
