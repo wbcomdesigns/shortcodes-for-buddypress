@@ -113,36 +113,15 @@ global $members_atts;
 			<div class="clear"></div>
 		</ul>
 
-		
-		
 		<?php
 		/**
 		 * Fires after the display of the members list.
 		 *
 		 * @since 1.1.0
 		 */
-		do_action( 'bp_after_directory_members_list' ); 
-		bp_member_hidden_fields(); 
+		do_action( 'bp_after_directory_members_list' ); ?>
 		
-		if( !empty ( $members_atts ) ){
-
-		?>
-
-		<div id="pag-bottom" class="pagination">
-
-			<div class="pag-count" id="member-dir-count-bottom">
-				<?php bp_members_pagination_count(); ?>
-			</div>
-
-			<?php if ( bp_get_members_pagination_links() ) : ?>
-				<div class="pagination-links" id="member-dir-pag-bottom">
-					<?php bp_members_pagination_links(); ?>
-				</div>
-			<?php endif; ?>
-
-		</div>
-		
-	<?php  } endif; ?>
+	<?php endif; ?>
 	
 </div>
 		
