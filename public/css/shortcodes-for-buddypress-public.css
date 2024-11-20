@@ -386,6 +386,7 @@ div#groups-dir-list.groups.four ul#bps-groups-list li.bps-item-entry{
     display: none;
 }
 
+/* Youzify Plugin */
 .youzify-light-lighting-mode .bps-notifications-shortcode table.notifications.bp-tables-user{
     background-color: var(--yzfy-card-bg-color);
 }
@@ -395,6 +396,15 @@ div#groups-dir-list.groups.four ul#bps-groups-list li.bps-item-entry{
     color: var(--yzfy-scheme-text-color) !important;
     padding: 10px 5px;
 }
+
+.youzify-wall-embed .youzify-embed-action .group-button a{
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    padding: 0 30px !important;
+}
+
+
+
 /*BuddyX Theme*/
 .bps-activity-content .bp-group-activity-preview,
 .bps-activity-content .bp-member-activity-preview,
