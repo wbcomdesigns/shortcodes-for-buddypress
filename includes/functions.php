@@ -84,3 +84,30 @@ function bp_shortcode_is_shortcode_page( $shortcode = '' ) {
 
 	return apply_filters( 'bp_shortcode_is_shortcode_page', $has_shortcode );
 }
+
+function bp_shortcode_is_elementor_widget( $elementor_data, $widget_type = '' ) {
+	if ( ! is_array( $elementor_data ) ) {
+		return false; // If $elementor_data is not an array, return false
+	}
+
+	foreach ( $elementor_data as $element ) {
+		if ( isset( $element['widgetType'] ) ) {
+			// Check if $widget_type is specified and match widgetType
+			if ( ! empty( $widget_type ) && $element['widgetType'] === $widget_type ) {
+				return true;
+			}
+
+			// Check predefined widget types if $widget_type is empty
+			if ( empty( $widget_type ) && in_array( $element['widgetType'], array( 'bpsp_activity', 'bpsp_member', 'bpsp_group' ) ) ) {
+				return true;
+			}
+		}
+
+		// Recursively check nested elements if they exist
+		if ( isset( $element['elements'] ) && bp_shortcode_is_elementor_widget( $element['elements'], $widget_type ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}

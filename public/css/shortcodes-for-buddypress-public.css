@@ -413,6 +413,7 @@ div#groups-dir-list.groups.four ul#bps-groups-list li.bps-item-entry{
 #bp-shortcode-members.youzify .youzify-card-action-buttons-block div.generic-button a,
 #bp-shortcode-members.youzify .youzify-card-action-buttons-block .youzify-user-actions a {
     margin: 5px 0 !important;
+    border-radius: 100px;
     width: 100% !important;
 }
 #bp-shortcode-members.youzify .youzify-user-statistics span.dashicons {
