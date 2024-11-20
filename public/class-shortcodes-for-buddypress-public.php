@@ -1246,7 +1246,6 @@ class Shortcodes_For_Buddypress_Public {
 				$r['classes']           = array( 'activity-meta' );
 			}
 		}
-
 		return apply_filters( 'bp_activity_action_wrapper_classes', $r );
 	}
 
