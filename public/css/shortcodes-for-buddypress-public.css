@@ -374,6 +374,27 @@ div#groups-dir-list.groups.four ul#bps-groups-list li.bps-item-entry{
     cursor: pointer;
 }
 
+.bps-notifications-shortcode table.notifications.bp-tables-user {
+    border: 1px solid #e3e3e3;
+    text-align: center;
+}
+
+.bps-notifications-shortcode table.notification-settings td:first-child,
+.bps-notifications-shortcode table.notification-settings th.icon,
+.bps-notifications-shortcode table.notifications td:first-child,
+.bps-notifications-shortcode table.notifications th.icon {
+    display: none;
+}
+
+.youzify-light-lighting-mode .bps-notifications-shortcode table.notifications.bp-tables-user{
+    background-color: var(--yzfy-card-bg-color);
+}
+
+.youzify-light-lighting-mode .bps-notifications-shortcode table.notifications.bp-tables-user thead th{
+    background-color: var(--yzfy-scheme-color) !important;
+    color: var(--yzfy-scheme-text-color) !important;
+    padding: 10px 5px;
+}
 /*BuddyX Theme*/
 .bps-activity-content .bp-group-activity-preview,
 .bps-activity-content .bp-member-activity-preview,
