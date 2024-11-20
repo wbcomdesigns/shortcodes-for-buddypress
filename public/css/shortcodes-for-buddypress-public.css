@@ -127,6 +127,7 @@ table.notifications.bp-tables-user thead th.date {
     margin:-75px auto auto;
 }
 
+
 /*Members and Groups Shortcode*/
 .members.dir-list.one ul.rg-member-list.grid>li,
 .groups.dir-list.one ul.rg-group-list.grid>li {
@@ -386,6 +387,7 @@ div#groups-dir-list.groups.four ul#bps-groups-list li.bps-item-entry{
     display: none;
 }
 
+
 /* Youzify Plugin */
 .youzify-light-lighting-mode .bps-notifications-shortcode table.notifications.bp-tables-user{
     background-color: var(--yzfy-card-bg-color);
@@ -423,7 +425,9 @@ div#bp-shortcode-members ul#youzify-members-list,
 div#bp-shortcode-groups ul#youzify-groups-list {
     margin: 0 -17px;
 }
-
+div#youzify.bp-shortcode-activity {
+    margin-top: 0 !important;
+}
 
 /*BuddyX Theme*/
 .bps-activity-content .bp-group-activity-preview,
@@ -544,7 +548,13 @@ table.notifications.bp-tables-user tr:last-child th {
     margin: 0 -18px;
 }
 
-
+.buddypress-wrap ul.bp-list.groups-dir-list>li {
+    min-width: auto;
+}
+#buddypress .friends-mutual-list>li,
+#buddypress .members-list>li {
+    min-width: auto;
+}
 
 @media only screen and (max-width: 767px) {
 

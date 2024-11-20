@@ -20,7 +20,7 @@ global $activity_atts;
 do_action( 'bp_before_directory_activity' );
 
 if ( ( !empty( $activity_atts ) ) && ( $activity_atts['use_compat'] ) ) {
-	echo '<div id="youzify" class="youzify youzify-page noLightbox youzify-horizontal-layout youzify-page-btns-border-oval youzify-tabs-list-gradient youzify-global-wall youzify-blue-scheme">';
+	echo '<div id="youzify" class="bp-shortcode-activity youzify youzify-page noLightbox youzify-horizontal-layout youzify-page-btns-border-oval youzify-tabs-list-gradient youzify-global-wall youzify-blue-scheme">';
 }
 if( empty( $atts ) ){
 	$atts = array();
