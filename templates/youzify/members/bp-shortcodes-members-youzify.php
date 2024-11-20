@@ -6,11 +6,9 @@
  */
 
 global $members_atts;
-
 ?>
-<div id="buddypress" class="bp-dir-hori-nav <?php if( !empty( $members_atts['container_class'] ) ) { echo esc_attr( $members_atts['container_class'] ); } ?>">
-	<?php do_action( 'bp_before_members_loop' ); ?>
-	
+<div id="bp-shortcode-members" class="bp-dir-hori-nav <?php if ( !empty( $groups_atts['container_class'] ) ) { echo esc_attr( $groups_atts['container_class'] ); } ?> youzify">
+	<?php do_action( 'bp_before_members_loop' ); ?>	
 	<?php 
 	if ( !empty( $members_atts ) ) {
 		$bp_members = bp_has_members( $members_atts['bpsh_query'] );

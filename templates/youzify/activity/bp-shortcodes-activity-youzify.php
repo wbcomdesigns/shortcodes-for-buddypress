@@ -20,7 +20,7 @@ global $activity_atts;
 do_action( 'bp_before_directory_activity' );
 
 if ( ( !empty( $activity_atts ) ) && ( $activity_atts['use_compat'] ) ) {
-	echo '<div id="youzify" class="bp-dir-hori-nav ' . esc_attr( $activity_atts['container_class'] ) . '">';
+	echo '<div id="youzify" class="youzify youzify-page noLightbox youzify-horizontal-layout youzify-page-btns-border-oval youzify-tabs-list-gradient youzify-global-wall youzify-blue-scheme">';
 }
 if( empty( $atts ) ){
 	$atts = array();
@@ -40,7 +40,7 @@ if ( !empty( $activity_atts['bpsh_query'] ) ) {
 }
 
 if ( bp_has_activities( $bp_activities ) ) : ?>
-	<div id="activity" class="activity youzify">
+	<div id="activity" class="activity">
 		<ul id="activity-stream" class="activity-list item-list">
 
         <?php do_action( 'youzify_before_activity_loop_posts' ); ?>

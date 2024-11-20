@@ -11,8 +11,8 @@ global $groups_atts;
 
 ?>
 
-<div id="buddypress" class="bp-dir-hori-nav <?php if ( !empty( $groups_atts['container_class'] ) ) { echo esc_attr( $groups_atts['container_class'] ); } ?>">
-	<div class="screen-content">
+<div id="bp-shortcode-groups" class="bp-dir-hori-nav <?php if ( !empty( $groups_atts['container_class'] ) ) { echo esc_attr( $groups_atts['container_class'] ); } ?>">
+	<div class="screen-content youzify youzify-directory youzify-groups-directory-page youzify-blue-scheme youzify-tabs-list-gradient">
 		<input type="hidden" data-bp-filter="groups" value="<?php if ( !empty( $groups_atts['bpsh_query'] ) ) { echo esc_attr( $groups_atts['bpsh_query'] ); } ?>" />
 		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups" data-ajax="false">
 			<?php 
@@ -30,7 +30,7 @@ global $groups_atts;
 
                         <li <?php bp_group_class(); ?>>
 
-                            <div class="youzify-group-data">
+                            <div class="youzify-show-cover youzify-group-data">
 
                                 <?php
                                     if ( function_exists( 'youzify_get_group_tools' ) ) {
@@ -42,9 +42,9 @@ global $groups_atts;
                         
                                 ?>
 
-                                <div class="item-avatar">
-                                    <a href="<?php bp_group_url(); ?>"><?php bp_group_avatar( 'type=full&width=100&height=100' ); ?></a>
-                                </div>
+                                <a href="<?php bp_group_url(); ?>" class="item-avatar">
+                                    <div class="youzify-group-avatar"><?php echo bp_core_fetch_avatar( array( 'object' => 'group', 'avatar_dir' => 'group-avatars', 'item_id' => bp_get_group_id(), 'width' => '100', 'height' => '100', 'type' => 'full') ); ?></div>
+                                </a>
 
                                 <div class="item">
                                     <div class="item-title"><?php bp_group_link(); ?></div>
@@ -56,9 +56,6 @@ global $groups_atts;
                                             }?>
 
                                         </div>
-
-                                        <span class="activity" data-livestamp="<?php bp_core_iso8601_date( esc_attr( bp_get_group_last_active( 0, array( 'relative' => false ) ) ) ); ?>"><?php printf( esc_html__( 'Active %s', 'shortcodes-for-buddypress' ), esc_html( bp_get_group_last_active() ) ); ?></span>
-                                        
                                     </div>
 
                                     <?php

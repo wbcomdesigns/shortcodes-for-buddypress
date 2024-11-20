@@ -403,6 +403,26 @@ div#groups-dir-list.groups.four ul#bps-groups-list li.bps-item-entry{
     padding: 0 30px !important;
 }
 
+.buddypress-activity-element .youzify-wall-embed .youzify-embed-action .group-button a {
+    padding: 10px 30px !important;
+}
+
+#bp-shortcode-members.youzify .youzify-card-action-buttons-block div.generic-button a,
+#bp-shortcode-members.youzify .youzify-card-action-buttons-block div.generic-button a,
+#bp-shortcode-members.youzify .youzify-card-action-buttons-block .youzify-user-actions a {
+    margin: 5px 0 !important;
+    width: 100% !important;
+}
+#bp-shortcode-members.youzify .youzify-user-statistics span.dashicons {
+    margin: 3px;
+}
+#bp-shortcode-groups .youzify .youzify-show-cover.youzify-group-data{
+    padding: 0;
+}
+div#bp-shortcode-members ul#youzify-members-list,
+div#bp-shortcode-groups ul#youzify-groups-list {
+    margin: 0 -17px;
+}
 
 
 /*BuddyX Theme*/
@@ -537,6 +557,10 @@ table.notifications.bp-tables-user tr:last-child th {
     #groups-dir-list ul#bps-groups-list .bps-item-avatar {
         max-width: 80px;
         margin-top: 10px;
+    }
+    div#bp-shortcode-members ul#youzify-members-list,
+    div#bp-shortcode-groups ul#youzify-groups-list {
+        margin: 0 -10px;
     }
 
 }

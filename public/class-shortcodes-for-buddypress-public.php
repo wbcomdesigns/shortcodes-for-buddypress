@@ -76,9 +76,13 @@ class Shortcodes_For_Buddypress_Public {
 		do_action( 'before_enqueue_buddypress_shortcode_styles' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-public.css', array(), $this->version, 'all' );
 
-		if ( class_exists( 'Youzify' ) && isset( $post->post_content ) && ( ( has_shortcode( $post->post_content ,  'members-listing' ) || has_shortcode( $post->post_content ,  'groups-listing' )  || has_shortcode( $post->post_content ,  'activity-listing' ) ) ) || is_plugin_active( 'elementor/elementor.php') )  { 
-			wp_enqueue_style('youzify-directories-css', SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/css/youzify.css', array() , $this->version, false);
-		}
+		if ( class_exists( 'Youzify' ) && ( (bp_shortcode_is_shortcode_page('members-listing') || bp_shortcode_is_shortcode_page('groups-listing')  || bp_shortcode_is_shortcode_page('activity-listing') ) ) )  { 
+			wp_enqueue_script( 'masonry' );
+	        wp_enqueue_style( 'youzify-directories', YOUZIFY_ASSETS . 'css/youzify-directories.min.css', array(), YOUZIFY_VERSION );
+	        wp_enqueue_style( 'youzify', YOUZIFY_ASSETS . 'css/youzify.min.css', array(), YOUZIFY_VERSION );
+	        wp_enqueue_script( 'youzify-directories', YOUZIFY_ASSETS .'js/youzify-directories.min.js', YOUZIFY_VERSION, true );
+	    }
+
 	}
 
 	/**
