@@ -49,7 +49,7 @@ if ( bp_has_activities( $bp_activities ) ) : ?>
 
             <?php while ( bp_activities() ) : bp_the_activity(); ?>
             <?php 
-                if( bp_get_activity_type() == "friendship_created" ){
+                if( is_admin() && isset( \Elementor\Plugin::$instance->editor ) && \Elementor\Plugin::$instance->editor->is_edit_mode() && bp_get_activity_type() == "friendship_created" ){
                     continue;
                 }
                 ?>
