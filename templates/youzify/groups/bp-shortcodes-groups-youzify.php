@@ -43,7 +43,7 @@ global $groups_atts;
                                 ?>
 
                                 <a href="<?php bp_group_url(); ?>" class="item-avatar">
-                                    <div class="youzify-group-avatar"><?php echo bp_core_fetch_avatar( array( 'object' => 'group', 'avatar_dir' => 'group-avatars', 'item_id' => bp_get_group_id(), 'width' => '100', 'height' => '100', 'type' => 'full') ); ?></div>
+                                    <div class="youzify-group-avatar"><?php echo wp_kses_post( bp_core_fetch_avatar( array( 'object' => 'group', 'avatar_dir' => 'group-avatars', 'item_id' => bp_get_group_id(), 'width' => '100', 'height' => '100', 'type' => 'full') ) ); ?></div>
                                 </a>
 
                                 <div class="item">
