@@ -171,6 +171,9 @@ class Shortcodes_For_Buddypress_Public {
 	 * @since    1.0.0
 	 */
 	public function buddypress_shortcodes_activity_listing( $atts, $content = null ) {
+		if(is_admin()){
+			return '';
+		}
 		global $activity_atts;
 		$bpsh_query = build_query( $atts );
 		if ( ! empty( $bpsh_query ) ) {

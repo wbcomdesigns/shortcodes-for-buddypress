@@ -608,7 +608,23 @@ table.notifications.bp-tables-user tr:last-child th {
     list-style: none;
     text-align: center;
 }
-
+ul.activity-list.item-list.bp-list.bp-shortcode-activity .bp-generic-meta.-meta.action {
+    display: flex;
+    justify-content: space-around;
+}
+.bp-list.bp-shortcode-activity.activity-list.bp-list .activity-item .bp-generic-meta.-meta.action .button,
+.bp-list.bp-shortcode-activity.activity-list.bp-list .activity-item .bp-generic-meta.-meta.action .generic-button {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex: auto;
+}
+.bp-list.bp-shortcode-activity .bp-generic-meta.-meta.action .acomment-reply.bp-primary-action:before{
+    content: "\ee33";
+    font-family: bb-icons;
+    font-size: 24px;
+    vertical-align: middle;
+}
 
 /* notifications and activity listing shortcodes css. */
 

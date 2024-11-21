@@ -20,7 +20,7 @@ global $activity_atts;
 do_action( 'bp_before_directory_activity' );
 
 if ( ( !empty( $activity_atts ) ) && ( $activity_atts['use_compat'] ) ) {
-	echo '<div id="youzify" class="bp-shortcode-activity youzify youzify-page noLightbox youzify-horizontal-layout youzify-page-btns-border-oval youzify-tabs-list-gradient youzify-global-wall youzify-blue-scheme">';
+
 }
 if( empty( $atts ) ){
 	$atts = array();
@@ -40,6 +40,8 @@ if ( !empty( $activity_atts['bpsh_query'] ) ) {
 }
 
 if ( bp_has_activities( $bp_activities ) ) : ?>
+
+<div id="youzify" class="bp-shortcode-activity youzify youzify-page noLightbox youzify-horizontal-layout youzify-page-btns-border-oval youzify-tabs-list-gradient youzify-global-wall youzify-blue-scheme">
 	<div id="activity" class="activity">
 		<ul id="activity-stream" class="activity-list item-list">
 
@@ -122,7 +124,6 @@ if ( bp_has_activities( $bp_activities ) ) : ?>
                         ?></div>
 
                     </div>
-
                     <?php
 
                     /**
