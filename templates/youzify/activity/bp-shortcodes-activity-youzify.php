@@ -48,7 +48,11 @@ if ( bp_has_activities( $bp_activities ) ) : ?>
         <?php do_action( 'youzify_before_activity_loop_posts' ); ?>
 
             <?php while ( bp_activities() ) : bp_the_activity(); ?>
-
+            <?php 
+                if( bp_get_activity_type() == "friendship_created" ){
+                    continue;
+                }
+                ?>
                 <?php do_action( 'bp_before_activity_entry' );  ?>
 
                 <li class="activity activity_update activity-item youzify_effect fadeInDown full-visible" data-effect="fadeInDown" id="activity-<?php bp_activity_id(); ?>">

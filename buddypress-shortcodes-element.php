@@ -443,7 +443,12 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 
 						<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
 							<?php if ( class_exists( 'Youzify' ) ) { 
-								shortcodes_for_buddypress_template( 'youzify/activity/bp-shortcodes-activity-youzify.php' );
+								try {
+									shortcodes_for_buddypress_template( 'youzify/activity/bp-shortcodes-activity-youzify.php' );
+								} catch (\Throwable $th) {
+									// throw $th;
+									// error_log($th);
+								}
 							} else {
 								bp_get_template_part( 'activity/activity-loop' ); 
 							}
