@@ -482,7 +482,26 @@ div#youzify.bp-shortcode-activity {
     min-width: 100%;
     object-fit: cover;
 }
-
+.elementor-widget-buddypress_shortcode_activity_widget #youzify .activity-meta a,
+.elementor-widget-buddypress_shortcode_activity_widget #youzify .activity-meta a {
+    display: table-cell !important;
+    background-color: transparent !important;
+    font-weight: bold;
+    font-size: var(--yzfy-medium-font-size) !important;
+    border: none !important;
+}
+.elementor-widget-buddypress_shortcode_activity_widget #youzify .youzify-embed-action div.generic-button a {
+    border: none !important;
+    border-radius: 100px !important;
+}
+.elementor-widget-buddypress_shortcode_activity_widget #youzify .youzify-embed-action  div.message-button.generic-button a.youzify-send-message {
+    color: var(--yzfy-primary-color) !important;
+    border: 1px solid var(--yzfy-card-secondary-bg-color) !important;
+    background-color: transparent !important;
+}
+.bp-shortcode-activity .friendship-button.is_friend.generic-button a.friendship-button.is_friend {
+    padding: 0 25px;
+}
 
 /*SocialV Theme*/
 .bps-activity-content .bp-group-activity-preview.socialv-group-activity {
@@ -608,10 +627,13 @@ table.notifications.bp-tables-user tr:last-child th {
     list-style: none;
     text-align: center;
 }
-ul.activity-list.item-list.bp-list.bp-shortcode-activity .bp-generic-meta.-meta.action {
+ul.activity-list.item-list.bp-list.bp-shortcode-activity .bp-generic-meta.-meta.action,
+.elementor-widget-buddypress_shortcode_activity_widget ul.activity-list.item-list .bp-generic-meta.-meta.action {
     display: flex;
     justify-content: space-around;
 }
+
+.elementor-widget-buddypress_shortcode_activity_widget ul.activity-list.item-list .bp-generic-meta.-meta.action .generic-button,
 .bp-list.bp-shortcode-activity.activity-list.bp-list .activity-item .bp-generic-meta.-meta.action .button,
 .bp-list.bp-shortcode-activity.activity-list.bp-list .activity-item .bp-generic-meta.-meta.action .generic-button {
     margin: 0;
@@ -619,6 +641,8 @@ ul.activity-list.item-list.bp-list.bp-shortcode-activity .bp-generic-meta.-meta.
     justify-content: center;
     flex: auto;
 }
+
+.elementor-widget-buddypress_shortcode_activity_widget .bp-generic-meta.-meta.action .acomment-reply.bp-primary-action:before,
 .bp-list.bp-shortcode-activity .bp-generic-meta.-meta.action .acomment-reply.bp-primary-action:before{
     content: "\ee33";
     font-family: bb-icons;
