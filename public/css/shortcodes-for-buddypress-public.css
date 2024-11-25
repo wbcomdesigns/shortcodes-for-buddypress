@@ -429,6 +429,13 @@ div#bp-shortcode-groups ul#youzify-groups-list {
 div#youzify.bp-shortcode-activity {
     margin-top: 0 !important;
 }
+.elementor-widget-buddypress_shortcode_members_widget .youzify-cover img {
+    height: 150px !important;
+    object-fit: cover;
+}
+.bp-shortcode-activity .youzify-embed-action div.friendship-button.generic-button a.friendship-button {
+    padding: 0 20px;
+}
 
 /*BuddyX Theme*/
 .bps-activity-content .bp-group-activity-preview,
