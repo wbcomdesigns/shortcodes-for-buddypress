@@ -49,6 +49,32 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying group listing based on the given user ID screenshot-4.png
 
 == Changelog ==
+= 2.8.0 =
+* Fix: Resolved double popup issue with Youzify after scheduling an activity.
+* Fix: Addressed issues with scheduling activities in Youzify.
+* Fix: Corrected image-related problems in the Youzify plugin.
+* Fix: Resolved UI issues with Youzify, including activity and shortcode errors.
+* Fix: Ensured scheduled time displays properly with Youzify.
+* Fix: Fixed fatal errors related to activity and group listings with Youzify.
+* Fix: Resolved PHP deprecation warnings across components.
+* Fix: Fixed notification icon and button issues for BuddyPress and BuddyBoss themes.
+* Fix: Removed pagination issues in group and member listings with Youzify.
+* Fix: Resolved errors when editing activity shortcodes with Elementor.
+* Fix: Fixed compatibility issues with rtMedia and Youzify activity listing shortcodes.
+* Fix: Corrected spelling and translation errors in multiple components.
+* Enhancement: Added Member Elementor widget compatibility with Youzify.
+* Enhancement: Integrated display count functionality for rtMedia + Youzify.
+* Enhancement: Added filters to modify activity and member listing outputs.
+* Enhancement: Improved compatibility for group actions (Manage Groups, Request Membership) in Youzify.
+* Enhancement: Enhanced CSS and UI for group and member shortcodes with Elementor.
+* Enhancement: Added filters for modifying notifications and group query arguments.
+* Enhancement: Added action hooks before and after rendering activity and member shortcodes.
+* Enhancement: Added admin notices for missing templates or disabled BuddyPress components.
+* General: Improved UI consistency for BuddyBoss and Reign themes.
+* General: Enhanced error handling and compatibility for BuddyPress shortcodes.
+* General: Added detailed comments for better code readability.
+* General: Ensured PHPCS compliance for all plugin files.
+
 = 2.7.1 =
 * Fix: (#179)Fixed fatal error call to undefined function bp_nouveau_get_container_classes()
 * Fix: Fixed Plugin redirect issue when multi plugin activate the same time
