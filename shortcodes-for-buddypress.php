@@ -133,8 +133,8 @@ register_deactivation_hook( __FILE__, 'shortcodes_for_buddypress_deactivate' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/functions.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress.php';
 
 require_once __DIR__ . '/vendor/autoload.php';
 HardG\BuddyPress120URLPolyfills\Loader::init();

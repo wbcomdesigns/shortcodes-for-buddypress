@@ -29,10 +29,60 @@ function shortcodes_for_buddypress_template( $file_name ) {
 	 * If template path exist then include the template and list the functionality of shortcode.
 	 * @since 2.7.2
 	 */
+
 	if ( $template_path ) {
 		$template_path  = apply_filters( 'shortcodes_for_buddypress_custom_template_path' , $template_path );
 		include $template_path;
 	}
+}
+
+/**
+ * Gets and includes template files.
+ *
+ * @since 1.7.0
+ * @param mixed  $template_name
+ * @param array  $args (default: array()).
+ * @param string $template_path (default: '').
+ * @param string $default_path (default: '').
+ */
+function bp_shortcode_get_template( $template_name, $args = array(), $template_path = 'nouveau', $default_path = '' ) {
+	if ( $args && is_array( $args ) ) {
+		// phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- Please, forgive us.
+		extract( $args );
+	}
+	include bp_shortcode_locate_template( $template_name, $template_path, $default_path );
+}
+
+/**
+ * Locate template.
+ *
+ * Locate the called template.
+ * Search Order:
+ *
+ * @since 1.7.0
+ *
+ * @param   string $template_name          Template to load.
+ * @param   string $string $template_path  Path to templates.
+ * @param   string $default_path           Default path to template files.
+ * @return  string                          Path to the template file.
+ */
+function bp_shortcode_locate_template( $template_name, $template_path, $default_path = '' ) {
+	// Look within passed path within the theme - this is priority.
+	$template = locate_template(
+		array(
+			trailingslashit( $template_path ) . $template_name,
+			$template_name,
+		)
+	);
+
+	// Get default template.
+	if ( ! $template && false !== $default_path ) {
+		$default_path = $default_path ? $default_path : SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR . 'templates/';
+		if ( file_exists( trailingslashit( $default_path . $template_path ) . $template_name ) ) {
+			$template = trailingslashit( $default_path . $template_path ) . $template_name;
+		}
+	}
+	return apply_filters( 'bp_shortcode_locate_template', $template, $template_name, $template_path, $default_path );
 }
 
 function bp_shortcode_is_shortcode_page( $shortcode = '' ) {

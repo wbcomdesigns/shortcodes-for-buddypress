@@ -1,60 +1,81 @@
 <?php
-global $activity_atts;
 
-// echo '<pre>';print_r($activity_atts);echo '</pre>';
 /**
  * Fires before the activity directory listing.
  *
  * @since 1.5.0
  */
-do_action( 'bp_before_directory_activity' );
-
-if ( $activity_atts['use_compat'] ) {
-	echo '<div id="buddypress" class="bp-dir-hori-nav ' . esc_attr( bp_nouveau_get_container_classes() ) . ' ' . esc_attr( $activity_atts['container_class'] ) . '">';
-}
-if( empty( $atts ) ){
-	$atts = array();
-}
-
-bp_nouveau_before_loop(); ?>
-<?php
-if ( $activity_atts['allow_posting'] == 'true' && is_user_logged_in() ) :
-	bp_get_template_part( 'activity/post-form' );
-endif;
+$allow_posting = false;
+$load_more = false;	
 ?>
-<?php do_action( 'before_activity_listing_output', $atts, $activity_atts ); ?>
+<div id="buddypress" class="<?php echo esc_attr( bp_nouveau_get_container_classes() ); ?>">
 
-<?php if ( bp_has_activities( $activity_atts['bpsh_query'] ) ) : ?>
-	<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
-		<ul class="activity-list item-list bp-list bp-shortcode-activity">
-			<?php
-			while ( bp_activities() ) :
-				bp_the_activity();
+		<?php if ( $allow_posting ) : ?>
+			<?php if ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) : ?>
+				<?php
+				wp_enqueue_script( 'bp-nouveau-activity-post-form' );
+				if ( wp_script_is( 'bp-nouveau-activity-reacted', 'registered' ) ) {
+					wp_enqueue_script( 'bp-nouveau-activity-reacted' );
+				}
+
+				// If reaction is enabled for activity post or comment then load the template.
+				if ( function_exists( 'bb_load_reaction_popup_modal_js_template' ) ) {
+					bb_load_reaction_popup_modal_js_template();
+				}
 				?>
-				<?php bp_get_template_part( 'activity/entry' ); ?>
-			<?php endwhile; ?>
-			</ul>
+			<?php endif; ?>	
+			<?php bp_get_template_part( 'activity/post-form' ); ?>
+		<?php endif; ?>
 
-			<?php if ( isset( $activity_atts['load_more'] ) && ! empty( $activity_atts['load_more'] ) && bp_activity_has_more_items() ) : ?>
-				<ul>
-					<li class="load-more">
-						<a class="button" id="load-more-activity" href="<?php bp_activity_load_more_link(); ?>" data-limit='<?php echo esc_attr( $activity_atts['per_page'] ); ?>' data-page="2"><?php echo esc_html__( 'Load More', 'shortcodes-for-buddypress' ); ?></a>
-					</li>
-				</ul>
-			<?php endif; ?>
-	</div>
-<?php else : ?>
+		<div class="screen-content">
 
-	<?php bp_nouveau_user_feedback( 'activity-loop-none' ); ?>
+			<?php // bp_get_template_part( 'common/search-and-filters-bar' ); ?>
 
-<?php endif; ?>
+			<?php bp_nouveau_activity_hook( 'before_directory', 'list' ); ?>
 
-<?php bp_nouveau_after_loop(); ?>
+			<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false" data-query="<?php echo esc_attr($query);?>">
 
-<?php do_action( 'after_activity_listing_output', $atts, $activity_atts ); ?>
+				<?php	bp_nouveau_before_loop(); ?>
 
-<?php
+				<?php if ( bp_has_activities( $query ) ) : ?>
+					
+					<ul class="activity-list item-list bp-list">
 
-if ( $activity_atts['use_compat'] ) {
-	echo '</div>';
-}
+					<?php
+					while ( bp_activities() ) :
+						bp_the_activity();
+						?>
+
+						<?php bp_get_template_part( 'activity/entry' ); ?>
+
+					<?php endwhile; ?>
+					
+						<?php if ( $load_more || ( isset($activity_atts['max']) && $activity_atts['per_page'] ) && $activity_atts['max'] > $activity_atts['per_page'] ) : ?>
+						
+							<li class="load-more" data-query="<?php echo esc_attr($query);?>">
+								<a class="button" id="load-more-activity" href="<?php bp_activity_load_more_link(); ?>" data-limit='<?php echo esc_attr( $activity_atts['per_page'] ); ?>' data-page="2" data-query="<?php echo esc_attr($query);?>"><?php echo esc_html__( 'Load More', 'shortcodes-for-buddypress' ); ?></a>
+							</li>
+						<?php endif; ?>
+
+					</ul>
+						
+						
+
+				<?php else : ?>
+
+						<?php bp_nouveau_user_feedback( 'activity-loop-none' ); ?>
+
+				<?php endif; ?>
+
+				<?php bp_nouveau_after_loop(); ?>
+
+			</div><!-- .activity -->
+
+			<?php bp_nouveau_after_activity_directory_content(); ?>
+
+		</div><!-- // .screen-content -->
+	
+	<?php if ( function_exists( 'buddypress' ) && ! isset( buddypress()->buddyboss ) ) : ?>
+		<?php bp_nouveau_after_directory_page(); ?>
+	<?php endif; ?>
+</div>
