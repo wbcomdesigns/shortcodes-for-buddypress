@@ -161,3 +161,23 @@ function bp_shortcode_is_elementor_widget( $elementor_data, $widget_type = '' ) 
 
 	return false;
 }
+
+/**
+ * Render the member cover for Reign and Buddyx theme
+ *
+ */
+function bp_shortcode_member_cover() {
+	$active_theme = wp_get_theme();
+	$cover        = '';
+	if ( 'BuddyX' == $active_theme || 'BuddyxPro' == $active_theme ) {
+		if ( function_exists( 'buddyx_render_member_cover_image' ) ) {
+			$cover = buddyx_render_member_cover_image();
+		}
+	} elseif ( 'REIGN' == $active_theme ) {
+		if ( function_exists( 'reign_render_member_cover_image' ) ) {
+			$cover = reign_render_member_cover_image();
+		}
+	}
+
+	return apply_filters( 'bp_shortcode_member_cover', $cover, $active_theme );
+}
