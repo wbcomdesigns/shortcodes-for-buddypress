@@ -131,8 +131,6 @@ class Shortcodes_For_Buddypress {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/buddypress-group-shortcodes-global-var.php';
-
 
 
 		/**
@@ -148,6 +146,13 @@ class Shortcodes_For_Buddypress {
 		 *
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-shortcode-for-activity-listing.php';
+
+		/**
+		 * The class responsible for rendering of group directory shortcode that occur in the public-facing
+		 * side of the site.
+		 *
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-group-schortcode.php';
 
 		/**
 		 * The class responsible for rendering of members shortcode that occur in the public-facing
@@ -212,11 +217,8 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_filter( 'bp_nouveau_get_search_primary_object', $plugin_public, 'buddypress_shortcodes_bp_nouveau_get_search_primary_object', 10, 1 );
 
 		$this->loader->add_filter( 'body_class', $plugin_public, 'buddypress_shortcodes_body_classes' );
-		$this->loader->add_shortcode( 'groups-listing', $plugin_public, 'buddypress_shortcodes_group_listing' );
-		$this->loader->add_shortcode( 'notifications-listing', $plugin_public, 'buddypress_shortcodes_notifications' );
 
-		$this->loader->add_shortcode( 'member-listing-rest-api', $plugin_public, 'buddypress_shortcodes_member_rest_api' );
-		$this->loader->add_shortcode( 'group-listing-rest-api', $plugin_public, 'buddypress_shortcodes_group_listing_rest_api' );
+		$this->loader->add_shortcode( 'notifications-listing', $plugin_public, 'buddypress_shortcodes_notifications' );
 
 		$this->loader->add_filter( 'bp_core_get_js_strings', $plugin_public, 'shortcodes_for_buddypress_activity_localize_scripts', 10, 1 );
 
