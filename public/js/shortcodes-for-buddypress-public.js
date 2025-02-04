@@ -40,11 +40,13 @@
 
 		// load more for activity
 		$( '#buddypress [data-bp-list="activity"]' ).off( 'click', 'li.load-newest, li.load-more' );//Override buddypress load more click function
-		$(document).on('click', '#load-more-activity', function (e) {
+		$('#buddypress [data-bp-list="activity"]').on('click', 'li.load-newest, li.load-more', function (e) {
 			e.preventDefault();
 			var self = $(this);
 			var page = self.data('page');
 			var limit = self.data('limit');
+			var loadMoreLink = $(e.currentTarget).children().first();
+			loadMoreLink.addClass('loading');
 			$.ajax({
 				type: "post",
 				url: buddypress_shortcode.ajax_url,
@@ -55,9 +57,11 @@
 					'nonce': buddypress_shortcode.ajax_nonce,
 				},
 				success: function (res) {
-					$('ul.activity-list.item-list.bp-list').append(res.data);
-					var newPage = self.data('page') + 1;
-					self.data('page', newPage);
+					if (true === res.success) {
+						$(e.currentTarget).before(res.data);
+						loadMoreLink.removeClass('loading');
+						self.data('page', newPage);
+					}
 				},
 			});
 		});

@@ -83,6 +83,39 @@ class Shortcodes_For_Buddypress_Public {
 	        wp_enqueue_script( 'youzify-directories', YOUZIFY_ASSETS .'js/youzify-directories.min.js', YOUZIFY_VERSION, true );
 	    }
 
+		if ( bp_shortcode_is_shortcode_page() ) {
+			if ( 'nouveau' === get_option( '_bp_theme_package_id' ) && ! wp_style_is( 'bp-nouveau', 'enqueued' ) ) {
+				$nouveau = new BP_Nouveau();
+				$nouveau->enqueue_styles();
+			}
+
+			if ( ! wp_style_is( 'emojionearea', 'enqueued' ) ) {
+				wp_enqueue_style( 'emojionearea' );
+			}
+
+			if ( ! wp_style_is( 'bp-medium-editor', 'enqueued' ) ) {
+				wp_enqueue_style( 'bp-medium-editor' );
+			}
+			if ( class_exists( 'Buddypress_Quotes' ) ) {
+				if ( ! wp_style_is( 'wb-font-awesome', 'enqueued' ) ) {
+					wp_enqueue_style( 'wb-font-awesome' );
+				}
+				if ( ! wp_style_is( 'wb-icons', 'enqueued' ) ) {
+					wp_enqueue_style( 'wb-icons' );
+				}
+				if ( ! wp_style_is( 'buddypress-quotes', 'enqueued' ) ) {
+					wp_enqueue_style( 'buddypress-quotes' );
+				}
+				if ( ! wp_style_is( 'bpquotes-slick-css', 'enqueued' ) ) {
+					wp_enqueue_style( 'bpquotes-slick-css' );
+				}
+			}
+
+			if ( ! wp_style_is( 'jquery-datetimepicker', 'enqueued' ) ) {
+				wp_enqueue_style( 'jquery-datetimepicker' );
+			}
+		}
+
 	}
 
 	/**
@@ -104,20 +137,7 @@ class Shortcodes_For_Buddypress_Public {
 		 * class.
 		 */
 
-		if ( defined( 'RTMEDIA_VERSION' ) ) {
-			wp_enqueue_script(
-				'rtmedia-backbone',
-				plugin_dir_url( __FILE__ ) . 'js/rtMedia.backbone.js',
-				array(
-					'plupload-all',
-					'backbone',
-					// Whole rtmedia-backbone file is dependent on rtmedia-main  file (eg. rtMediaHook).
-					'rtmedia-main',
-				),
-				RTMEDIA_VERSION,
-				true
-			);
-		}
+		
 		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
 		if(function_exists('bp_is_active') &&  bp_is_active('activity')){
 			$_bp_theme_package = get_option( '_bp_theme_package_id' );
@@ -133,6 +153,67 @@ class Shortcodes_For_Buddypress_Public {
 						'ajax_nonce' => wp_create_nonce( 'bpsp-nonce' ),
 						)
 					)
+				);
+			}
+		}
+
+		if ( bp_shortcode_is_shortcode_page() ) {
+
+			if ( ! wp_script_is( 'bp-nouveau-activity', 'enqueued' ) ) {
+				wp_enqueue_script( 'bp-nouveau-activity' );
+			}
+
+			if ( ! wp_script_is( 'bp-attachments-activity', 'enqueued' ) ) {
+				wp_enqueue_script( 'bp-attachments-activity' );
+			}
+
+			if ( ! wp_script_is( 'giphy', 'enqueued' ) ) {
+				wp_enqueue_script( 'giphy' );
+			}
+
+			if ( ! wp_script_is( 'emojionearea', 'enqueued' ) ) {
+				wp_enqueue_script( 'emojionearea' );
+			}
+
+			if ( ! wp_script_is( 'bp-medium-editor', 'enqueued' ) ) {
+				wp_enqueue_script( 'bp-medium-editor' );
+			}
+
+			if ( ! wp_script_is( 'bp-media-dropzone', 'enqueued' ) ) {
+				wp_enqueue_script( 'bp-media-dropzone' );
+			}
+
+			if ( ! wp_script_is( 'bp-nouveau-media', 'enqueued' ) ) {
+				wp_enqueue_script( 'bp-nouveau-media' );
+			}
+
+			if ( class_exists( 'Buddypress_Quotes' ) ) {
+				if ( ! wp_script_is( 'buddypress-quotes', 'enqueued' ) ) {
+					wp_enqueue_script( 'buddypress-quotes' );
+				}
+				if ( ! wp_script_is( 'bpquotes-slick-js', 'enqueued' ) ) {
+					wp_enqueue_script( 'bpquotes-slick-js' );
+				}
+			}
+
+			if ( ! wp_script_is( 'jquery-datetimepicker', 'enqueued' ) ) {
+				wp_enqueue_script( 'jquery-datetimepicker' );
+			}
+
+			wp_enqueue_script( $this->plugin_name );
+
+			if ( defined( 'RTMEDIA_VERSION' ) ) {
+				wp_enqueue_script(
+					'rtmedia-backbone',
+					plugin_dir_url( __FILE__ ) . 'js/rtMedia.backbone.js',
+					array(
+						'plupload-all',
+						'backbone',
+						// Whole rtmedia-backbone file is dependent on rtmedia-main  file (eg. rtMediaHook).
+						'rtmedia-main',
+					),
+					RTMEDIA_VERSION,
+					true
 				);
 			}
 		}
@@ -446,7 +527,7 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		if ( isset( $scripts_args['bp-nouveau'] ) ) {
-			$scripts_args['bp-nouveau']['file'] = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/js/buddypress-nouveau%s.js';
+			$scripts_args['bp-nouveau']['file'] = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/js/buddypress-nouveau.js';
 		}
 		return $scripts_args;
 	}
@@ -590,5 +671,22 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		return $buttons;
+	}
+
+	public function buddypress_shortcode_filter_activity_action_wrapper( $args ) {
+
+		if ( empty( $args['container_classes'] ) ) {
+			return $args;
+		}
+
+		if ( false !== array_search( '-meta', $args['container_classes'] ) ) {
+			$args['container_classes'] = array_map(
+				function( $str ) {
+					return str_replace( '-meta', 'activity-meta', $str );
+				},
+				$args['container_classes']
+			);
+		}
+		return $args;
 	}
 }

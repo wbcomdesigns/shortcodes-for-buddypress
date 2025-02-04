@@ -235,6 +235,8 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_action( 'wp_ajax_nopriv_bpsp_activities_load', $plugin_public, 'buddypress_shortcodes_load_activities' );
 		$this->loader->add_filter( 'bp_before_nouveau_wrapper_parse_args', $plugin_public, 'buddypress_shortcodes_filter_activity_action_wrapper', 10, 1 );
 
+		$this->loader->add_filter( 'bp_after_nouveau_wrapper_parse_args', $plugin_public, 'buddypress_shortcode_filter_activity_action_wrapper', 10 );
+
 		if ( function_exists('buddypress') && isset( buddypress()->buddyboss ) ) {
 			$this->loader->add_filter( 'bb_nouveau_get_activity_entry_bubble_buttons', $plugin_public, 'buddypress_shortcode_activity_entry_bubble_buttons', 10, 2 );
 		}
