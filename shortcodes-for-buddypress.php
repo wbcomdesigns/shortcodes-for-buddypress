@@ -377,45 +377,6 @@ if ( ! function_exists( 'shortcodes_for_buddypress_categories_registered' ) ) {
 	add_action( 'elementor/elements/categories_registered', 'shortcodes_for_buddypress_categories_registered' );
 }
 
-/** 
- * This function includes and registers custom Elementor widgets for BuddyPress features,
- * making them available for use within the Elementor page builder. It conditionally includes 
- * the required widget files to prevent multiple inclusions, ensuring they are only included 
- * if they exist, thus avoiding potential errors.
- * 
- * @since 1.0.0
- * @return void
- */
-if ( ! function_exists( 'shortcodes_for_buddypress_widgets_registered' ) ) {
-
-	function shortcodes_for_buddypress_widgets_registered() {
-		
-		// Array of widgets file path.
-		$widgets = array(
-			'buddypress-shortcodes-element.php',
-			'buddypress-members-element.php',
-			'buddypress-groups-element.php',
-		);
-
-		if(is_array($widgets) && !empty($widgets)){
-			foreach($widgets as $widget){
-				$widget_path = plugin_dir_path( __FILE__ ) . $widget;
-				
-				// Checking if widget file exists.
-				if ( file_exists( $widget_path ) ) {
-
-					// Including widget file.
-					require_once $widget_path;
-				}
-			}
-		}
-	}
-
-	// Hook to register widgets into Elementor.
-	add_action( 'elementor/widgets/widgets_registered', 'shortcodes_for_buddypress_widgets_registered', 15 );
-
-}
-
 /**
  * Processes and formats BuddyPress comments for activity streams.
  *

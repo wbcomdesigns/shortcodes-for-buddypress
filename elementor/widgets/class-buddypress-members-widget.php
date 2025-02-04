@@ -1,29 +1,83 @@
 <?php
-namespace Elementor;
+
+namespace BPSPElementor\Widgets;
+
+use Elementor\Controls_Manager;
+use Elementor\Group_Control_Background;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Typography;
+use Elementor\Widget_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit;   // Exit if accessed directly.
 }
 
-class Buddypress_Shortcode_Members_Widget extends Widget_Base {
+class Members extends Widget_Base {
 
+	/**
+	 * Retrieve the widget name.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
 	public function get_name() {
-		return 'buddypress_shortcode_members_widget';
+		return 'bpsp_member';
 	}
 
+	/**
+	 * Retrieve the widget title.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return string Widget title.
+	 */
 	public function get_title() {
-		return esc_html__( 'Members List', 'shortcodes-for-buddypress' );
+		return __( 'Members List', 'shortcodes-for-buddypress' );
 	}
 
+	/**
+	 * Retrieve the widget icon.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return string Widget icon.
+	 */
 	public function get_icon() {
 		return 'eicon-person';
 	}
 
+	/**
+	 * Retrieve the list of categories the widget belongs to.
+	 *
+	 * Used to determine where to display the widget in the editor.
+	 *
+	 * Note that currently Elementor supports only one category.
+	 * When multiple categories passed, Elementor uses the first one.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return array Widget categories.
+	 */
 	public function get_categories() {
 		return array( 'buddypress-widgets' );
 	}
 
-	public function get_user_roles() {
+	/**
+	 * Get User roles to display as elementor options
+	 *
+	 * @return array
+	 */
+	private function get_user_roles() {
 		global $wp_roles;
 
 		$all_roles = $wp_roles->roles;
@@ -33,7 +87,12 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 		return $user_roles;
 	}
 
-	public function get_member_types() {
+	/**
+	 * Get buddypress member type to display as elementor options
+	 *
+	 * @return void
+	 */
+	private function get_member_types() {
 		$member_types = array( '' => 'All' );
 		if ( function_exists( 'bp_get_member_types' ) ) {
 			$member_types += bp_get_member_types( array(), 'names' );
@@ -41,6 +100,13 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 		return $member_types;
 	}
+
+	/**
+	 * Register Retina Logo controls.
+	 *
+	 * @since 1.6.1
+	 * @access protected
+	 */
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_content',
@@ -171,122 +237,42 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 		$this->end_controls_section();
 
 	}
+
+	/**
+	 * Render Retina Image output on the frontend.
+	 *
+	 * Written in PHP and used to generate the final HTML.
+	 *
+	 * @since 1.6.1
+	 * @access protected
+	 */
 	protected function render() {
-		global $members_args;
 
-		$settings          = $this->get_settings_for_display();
-		$classes           = array();
+		$settings = $this->get_settings_for_display();
+		$args     = '';
 
-		add_filter( 'bp_members_pagination_count', '__return_zero' );
-		add_filter( 'bp_get_members_pagination_links', '__return_zero' );
+		if ( isset( $settings['sfb_title'] ) && ! empty( $settings['sfb_title'] ) ) {
+			$settings['sfb_title'] = '"' . $settings['sfb_title'] . '"';
+		}
 
-		$loop_classes = static function () use ( $classes ) {
+		foreach ( $settings as $setting_key => $setting ) {
+			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
 
-			$classes[] = 'item-list';
-			$classes[] = 'members-list';
-			$classes[] = 'bp-list';
-
-			$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-			$members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '3';
-
-			if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-				$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
-				if ( isset( $grid_classes[ $members_layout ] ) ) {
-					$classes = array_merge(
-						$classes,
-						array(
-							'grid',
-							$grid_classes[ $members_layout ],
-						)
-					);
-				}
-			} else {
-				$classes = array_merge(
-					$classes,
-					array(
-						'grid',
-						'three',
-					)
-				);
-			}
-
-			return $classes;
-		};
-		add_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
-
-		$args = array(
-			'title'    => $settings['sfb_title'],
-			'per_page' => $settings['sfb_per_page'],
-			'object'   => 'members',
-		);
-
-		$members_args = $args;
-		unset( $members_args['title'] );
-
-		$members_ajax_querystring = static function ( $ajax_querystring, $object ) {
-			global $members_args;
-			$qs = array();
-
-			if ( ! empty( $members_args ) ) {
-				foreach ( $members_args as $key => $value ) {
-					if ( $value != '' ) {
-						$qs[] = $key . '=' . $value;
-					}
+				if ( is_array( $settings[ $setting_key ] ) && ! empty( $settings[ $setting_key ] ) ) {
+					$key   = substr( $setting_key, 4 );
+					$args .= $key . '=' . join( ',', $setting ) . ' ';
+				} elseif ( ! empty( $settings[ $setting_key ] ) ) {
+					$key   = substr( $setting_key, 4 );
+					$args .= $key . '=' . $setting . ' ';
 				}
 			}
+		}
 
-			$query_string = empty( $qs ) ? '' : join( '&', (array) $qs );
-			if ( $query_string != '' ) {
-				$ajax_querystring .= '&' . $query_string;
-			}
+		$args      = apply_filters( 'bp_shortcode_pro_members_element_args', trim( $args ) );
+		$shortcode = '[members-listing ' . $args . ']';
+		echo do_shortcode( $shortcode );
 
-			return $ajax_querystring;
-		};
-
-		add_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
-		?>
-
-		<div class="buddypress-members-element">
-			<?php if ( $args['title'] ) : ?>
-				<h3 class="activity-shortcode-title"><?php echo esc_html( $args['title'] ); ?></h3>
-			<?php endif; ?>
-			<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav members">
-				<?php if ( function_exists( 'bp_nouveau_before_members_directory_content' ) ) {
-					bp_nouveau_before_members_directory_content(); 
-				}?>
-
-				<div class="screen-content">
-					<div id="members-dir-list" class="members dir-list" data-bp-list="">
-					<?php 
-
-						/** Code to be executed when Youzify is active along with Elementor and BuddyPress.
-						 * 
-						 * @since 2.7.2
-						 */
-						
-						if( class_exists( 'Youzify' ) ) {	
-							shortcodes_for_buddypress_template( 'youzify/members/bp-shortcodes-members-youzify.php' );
-							
-						} else {
-							bp_get_template_part( 'members/members-loop' ); 
-						} 
-					?>
-					</div>
-
-					<?php if ( function_exists( 'bp_nouveau_after_members_directory_content' ) ) {
-						bp_nouveau_after_members_directory_content(); 
-					}?>
-				</div>
-			</div>
-		</div>
-
-		<?php
-		remove_filter( 'bp_ajax_querystring', $members_ajax_querystring, 99, 2 );
-		remove_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
-
-		remove_filter( 'bp_members_pagination_count', '__return_zero' );
-		remove_filter( 'bp_get_members_pagination_links', '__return_zero' );
 	}
-}
 
-\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Buddypress_Shortcode_Members_Widget() );
+
+}

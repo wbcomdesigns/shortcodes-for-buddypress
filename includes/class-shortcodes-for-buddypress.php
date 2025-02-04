@@ -161,6 +161,12 @@ class Shortcodes_For_Buddypress {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-member-schortcode.php';
 
+		/**
+		 * The class responsible for load and render elementor widgets
+		 *
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'elementor/class-buddypress-shortcode-elements.php';
+
 		$this->loader = new Shortcodes_For_Buddypress_Loader();
 
 	}

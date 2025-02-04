@@ -1,42 +1,101 @@
 <?php
-namespace Elementor;
+
+namespace BPSPElementor\Widgets;
+
+use Elementor\Controls_Manager;
+use Elementor\Group_Control_Background;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Typography;
+use Elementor\Widget_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit;   // Exit if accessed directly.
 }
 
-class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
+class Groups extends Widget_Base {
 
+	/**
+	 * Retrieve the widget name.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
 	public function get_name() {
-		return 'buddypress_shortcode_groups_widget';
+		return 'bpsp_group';
 	}
 
+	/**
+	 * Retrieve the widget title.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return string Widget title.
+	 */
 	public function get_title() {
-		return esc_html__( 'Groups', 'shortcodes-for-buddypress' );
+		return __( 'Groups List', 'shortcodes-for-buddypress' );
 	}
 
+	/**
+	 * Retrieve the widget icon.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return string Widget icon.
+	 */
 	public function get_icon() {
-		return 'eicon-toggle';
+		return 'eicon-user-circle-o';
 	}
 
+	/**
+	 * Retrieve the list of categories the widget belongs to.
+	 *
+	 * Used to determine where to display the widget in the editor.
+	 *
+	 * Note that currently Elementor supports only one category.
+	 * When multiple categories passed, Elementor uses the first one.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return array Widget categories.
+	 */
 	public function get_categories() {
 		return array( 'buddypress-widgets' );
 	}
 
-	public function get_group_types() {
-		$group_types = array( '' => 'All' );
-		if ( function_exists( 'bp_get_group_type' ) ) {
+	/**
+	 * Get the group types to display as options in widget
+	 *
+	 * @return void
+	 */
+	protected function get_group_types() {
+		$group_types = array();
+		if ( function_exists( 'bp_groups_get_group_types' ) ) {
 			$get_group_types = bp_groups_get_group_types( array(), 'objects' );
+			$group_types     = array();
 			foreach ( $get_group_types as $key => $value ) {
-				$group_types[ $key ] = $value->name;
+				$group_types[ $key ] = $value->labels['singular_name'];
 			}
 		}
-
 		return $group_types;
 	}
 
+	/**
+	 * Register Retina Logo controls.
+	 *
+	 * @since 1.6.1
+	 * @access protected
+	 */
 	protected function register_controls() {
-
 		$this->start_controls_section(
 			'section_content',
 			array(
@@ -214,140 +273,44 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-
 	}
 
+	/**
+	 * Render Retina Image output on the frontend.
+	 *
+	 * Written in PHP and used to generate the final HTML.
+	 *
+	 * @since 1.6.1
+	 * @access protected
+	 */
 	protected function render() {
-		
-		if ( function_exists( 'bp_is_active' ) && ( bp_is_active( 'groups' ) ) ) {
-			
-			global $groups_args;			
-			$settings                 = $this->get_settings_for_display();
-			$classes                  = array();
 
-			add_filter( 'bp_get_groups_pagination_count', '__return_zero' );
-			add_filter( 'bp_get_groups_pagination_links', '__return_zero' );
+		$settings = $this->get_settings_for_display();
 
-			$loop_classes = static function () use ( $classes ) {
-				$classes[] = 'item-list';
-				$classes[] = 'groups-list';
-				$classes[] = 'bp-list';
+		$args = '';
 
-				$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-				$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : '3';
-
-				if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-					$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
-					if ( isset( $grid_classes[ $groups_layout ] ) ) {
-						$classes = array_merge(
-							$classes,
-							array(
-								'grid',
-								$grid_classes[ $groups_layout ],
-							)
-						);
-					}
-				} else {
-					$classes = array_merge(
-						$classes,
-						array(
-							'grid',
-							'three',
-						)
-					);
-				}
-
-				return $classes;
-			};
-			add_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
-
-			$args = array(
-				'title'    => $settings['sfb_title'],
-				'per_page' => $settings['sfb_per_page'],
-				'object'   => 'groups',
-			);
-
-			$groups_args = $args;
-			unset( $groups_args['title'] );
-
-			$groups_ajax_querystring = static function ( $ajax_querystring, $object ) {
-				global $groups_args;
-				$qs = array();
-
-				if ( ! empty( $groups_args ) ) {
-					foreach ( $groups_args as $key => $value ) {
-						if ( $value != '' ) {
-							$qs[] = $key . '=' . $value;
-						}
-					}
-				}
-
-				$query_string = empty( $qs ) ? '' : join( '&', (array) $qs );
-				if ( $query_string != '' ) {
-					$ajax_querystring .= '&' . $query_string;
-				}
-
-				return $ajax_querystring;
-			};
-
-			add_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );
-
-			?>
-			<div class="buddypress-groups-element">
-			
-				<?php if ( $args['title'] ) : ?>
-					<h3 class="activity-shortcode-title"><?php echo esc_html( $args['title'] ); ?></h3>
-				<?php endif; ?>
-				
-				<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav groups">
-					<?php if ( function_exists( 'bp_nouveau_before_groups_directory_content' ) ) {
-						bp_nouveau_before_groups_directory_content();
-					}
-					?>
-					<?php if ( function_exists( 'bp_nouveau_template_notices' ) ) {
-						bp_nouveau_template_notices(); 
-					}
-					?>
-
-					<div class="screen-content">
-						<div id="groups-dir-list" class="groups dir-list" data-bp-list="">
-						<?php 
-							/** Code to be executed when Youzify is active along with Elementor and BuddyPress for editing groups listing shortcode.
-							 * 
-							 * @since 2.7.2 
-							 */						
-							if ( class_exists( 'Youzify' ) ) {
-								shortcodes_for_buddypress_template( 'youzify/groups/bp-shortcodes-groups-youzify.php' );
-							} else {
-								bp_get_template_part( 'groups/groups-loop' );							
-							}
-						?>
-						</div>
-
-						<?php if ( function_exists( 'bp_nouveau_after_groups_directory_content' ) ) {
-							bp_nouveau_after_groups_directory_content();
-						}?>
-					</div>
-				</div>
-			</div>
-			
-			<?php
-			remove_filter( 'bp_nouveau_get_loop_classes', $loop_classes );
-			remove_filter( 'bp_ajax_querystring', $groups_ajax_querystring, 99, 2 );
-			remove_filter( 'bp_get_groups_pagination_count', '__return_zero' );
-			remove_filter( 'bp_get_groups_pagination_links', '__return_zero' );
-		} else {
-			?>
-			<div class="bpsp-flex-container">
-				<div><i class="fa fa-exclamation-circle bpsp-fa-icon"></i></div>
-				<p><?php echo esc_html__('Please enable the Group Component.', 'shortcodes-for-buddypress'); ?></p>
-			</div>
-			<?php
+		if ( isset( $settings['sfb_title'] ) && ! empty( $settings['sfb_title'] ) ) {
+			$settings['sfb_title'] = '"' . $settings['sfb_title'] . '"';
 		}
-		
+
+		foreach ( $settings as $setting_key => $setting ) {
+			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
+
+				if ( is_array( $settings[ $setting_key ] ) && ! empty( $settings[ $setting_key ] ) ) {
+					$key   = substr( $setting_key, 4 );
+					$args .= $key . '=' . join( ',', $setting ) . ' ';
+				} elseif ( ! empty( $settings[ $setting_key ] ) ) {
+					$key   = substr( $setting_key, 4 );
+					$args .= $key . '=' . $setting . ' ';
+				}
+			}
+		}
+
+		$args      = apply_filters( 'bp_shortcode_groups_element_args', trim( $args ) );
+		$shortcode = '[groups-listing ' . $args . ']';
+		echo do_shortcode( $shortcode );
 
 	}
+
 
 }
-
-\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Buddypress_Shortcode_Groups_Widget() );

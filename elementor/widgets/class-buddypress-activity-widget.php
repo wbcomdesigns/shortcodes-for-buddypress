@@ -1,40 +1,83 @@
 <?php
-namespace Elementor;
+
+namespace BPSPElementor\Widgets;
+
+use Elementor\Controls_Manager;
+use Elementor\Group_Control_Background;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Border;
+use Elementor\Widget_Base;
+use Elementor\Group_Control_Typography;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit;   // Exit if accessed directly.
 }
 
-class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
+class Activity extends Widget_Base {
 
+	/**
+	 * Retrieve the widget name.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
 	public function get_name() {
-		return 'buddypress_shortcode_activity_widget';
+		return 'bpsp_activity';
 	}
 
+	/**
+	 * Retrieve the widget title.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return string Widget title.
+	 */
 	public function get_title() {
-		return esc_html__( 'Activity List', 'shortcodes-for-buddypress' );
+		return __( 'Activity List', 'shortcodes-for-buddypress' );
 	}
 
+	/**
+	 * Retrieve the widget icon.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return string Widget icon.
+	 */
 	public function get_icon() {
 		return 'eicon-time-line';
 	}
 
+	/**
+	 * Retrieve the list of categories the widget belongs to.
+	 *
+	 * Used to determine where to display the widget in the editor.
+	 *
+	 * Note that currently Elementor supports only one category.
+	 * When multiple categories passed, Elementor uses the first one.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @access public
+	 *
+	 * @return array Widget categories.
+	 */
 	public function get_categories() {
 		return array( 'buddypress-widgets' );
 	}
 
-	public function is_buddypress_plugin_activate() {
-
-		$plugin = 'buddypress/bp-loader.php';
-
-		$plugins = get_site_option( 'active_sitewide_plugins' );
-		if ( isset( $plugins[ $plugin ] ) ) {
-			return true;
-		} else {
-			return in_array( $plugin, (array) get_option( 'active_plugins', array() ), true );
-		}
-	}
-
+	/**
+	 * Register Retina Logo controls.
+	 *
+	 * @since 1.6.1
+	 * @access protected
+	 */
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_content',
@@ -384,105 +427,42 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 
 	}
 
+	/**
+	 * Render Retina Image output on the frontend.
+	 *
+	 * Written in PHP and used to generate the final HTML.
+	 *
+	 * @since 1.6.1
+	 * @access protected
+	 */
 	protected function render() {
-		if ( function_exists( 'bp_is_active' ) && ( bp_is_active( 'activity' ) ) ) {
-			
-			global $activity_args;
 
-			wp_enqueue_script( 'bp-nouveau-activity' );
-			$settings = $this->get_settings_for_display();
+		$settings = $this->get_settings_for_display();
+		$args     = '';
 
-			$args = array(
-				'title'            => $settings['sfb_title'],
-				'per_page'         => ( isset( $settings['sfb_number'] ) ) ? $settings['sfb_number'] : 20,
-				'display_comments' => 'threaded',
-				'container_class'  => 'activity',
-			);
-
-			$activity_args = $args;
-			unset( $activity_args['title'] );
-
-			$activity_ajax_querystring = static function ( $ajax_querystring, $object ) {
-				global $activity_args;
-				$qs = array();
-
-				if ( ! empty( $activity_args ) ) {
-					foreach ( $activity_args as $key => $value ) {
-						if ( $value != '' ) {
-							$qs[] = $key . '=' . $value;
-						}
-					}
-				}
-
-				$query_string = empty( $qs ) ? '' : join( '&', (array) $qs );
-				if ( $query_string != '' ) {
-					$ajax_querystring .= '&' . $query_string;
-				}
-
-				return $ajax_querystring;
-			};
-
-			add_filter( 'bp_ajax_querystring', $activity_ajax_querystring, 99, 2 );
-
-			?>
-			
-			<div class="buddypress-activity-element">
-				<?php if ( $args['title'] ) : ?>
-					<h3 class="activity-shortcode-title"><?php echo esc_html( $args['title'] ); ?></h3>
-				<?php endif; ?>
-			
-				<div id="buddypress" class="buddypress-wrap bp-dir-hori-nav activity">
-					<?php if ( function_exists( 'bp_nouveau_before_activity_directory_content' ) ) : ?>	
-						<?php bp_nouveau_before_activity_directory_content(); ?>
-					<?php endif; ?>
-
-					<div class="screen-content">
-						<?php if( function_exists( 'bp_nouveau_activity_hook' ) ) {
-							bp_nouveau_activity_hook( 'before_directory', 'list' ); 
-						}?>
-
-						<div id="activity-stream" class="activity" data-bp-list="activity" data-ajax="false">
-							<?php if ( class_exists( 'Youzify' ) ) { 
-								try {
-									shortcodes_for_buddypress_template( 'youzify/activity/bp-shortcodes-activity-youzify.php' );
-								} catch (\Throwable $th) {
-									// throw $th;
-									// error_log($th);
-								}
-							} else {
-								bp_get_template_part( 'activity/activity-loop' ); 
-							}
-							?>
-						</div>
-
-						<?php if( function_exists( 'bp_nouveau_after_activity_directory_content' ) ) {
-							bp_nouveau_after_activity_directory_content(); 
-						}
-						?>
-
-					</div>
-				</div>
-			</div>
-			<?php
-			remove_filter( 'bp_ajax_querystring', $activity_ajax_querystring, 99, 2 );
-
-			?>
-			<style>
-			.elementor-element-<?php echo esc_html( $this->get_id() ); ?> #buddypress .load-more{ display:none}
-			</style>
-			<?php
-		} else {
-			/** This user notice will render when user uses activity shortcode with Elementor and the activity component is disabled . */
-			?>
-			<div class="bpsp-flex-container">
-				<div><i class="fa fa-exclamation-circle bpsp-fa-icon"></i></div>
-				<p><?php echo esc_html__( 'Please enable the Activity Component.', 'shortcodes-for-buddypress' ); ?></p>
-			</div>
-			<?php
+		if ( isset( $settings['sfb_title'] ) && ! empty( $settings['sfb_title'] ) ) {
+			$settings['sfb_title'] = '"' . $settings['sfb_title'] . '"';
 		}
+
+		if ( isset( $settings['sfb_loggedin_user_activity'] ) && 'yes' === $settings['sfb_loggedin_user_activity'] ) {
+			$settings['sfb_user_id'] = apply_filters( 'bp_shortcode_pro_loggedin_user_activity', bp_loggedin_user_id() );
+		}
+
+		foreach ( $settings as $setting_key => $setting ) {
+
+			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
+				if ( ! empty( $settings[ $setting_key ] ) ) {
+					$key   = substr( $setting_key, 4 );
+					$args .= $key . '=' . $setting . ' ';
+				}
+			}
+		}
+
+		$args      = apply_filters( 'bp_shortcode_pro_activity_element_args', trim( $args ) );
+		$shortcode = '[activity-listing ' . $args . ']';
+		echo do_shortcode( $shortcode );
+
 	}
 
+
 }
-
-
-\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Buddypress_Shortcode_Activity_Widget() );
