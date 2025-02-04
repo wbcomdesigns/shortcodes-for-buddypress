@@ -83,9 +83,9 @@ class BPSP_Elementor_Widgets {
 		$this->include_widgets_files();
 	
 		// Register Widgets.
-		Plugin::instance()->widgets_manager->register( new Widgets\Activity() );
-		Plugin::instance()->widgets_manager->register( new Widgets\Members() );
-		Plugin::instance()->widgets_manager->register( new Widgets\Groups() );
+		Plugin::instance()->widgets_manager->register( new Widgets\Buddypress_Shortcode_Activity_Widget() );
+		Plugin::instance()->widgets_manager->register( new Widgets\Buddypress_Shortcode_Members_Widget() );
+		Plugin::instance()->widgets_manager->register( new Widgets\Buddypress_Shortcode_Groups_Widget() );
 	}
 
 	/**
@@ -98,8 +98,12 @@ class BPSP_Elementor_Widgets {
 	 */
 	public function include_widgets_files() {
 		// $js_files    = $this->get_widget_script();
-		$widget_list = $this->get_widget_list();
-
+		// $widget_list = $this->get_widget_list();
+		$widget_list = array(
+			'Buddypress_Shortcode_Activity_Widget' => 'activity',
+			'Buddypress_Shortcode_Members_Widget' => 'members',
+			'Buddypress_Shortcode_Groups_Widget' => 'groups',
+		);
 		if ( ! empty( $widget_list ) ) {
 			foreach ( $widget_list as $handle => $data ) {
 				require_once plugin_dir_path( __FILE__ ) . 'widgets/class-buddypress-' . $data . '-widget.php';

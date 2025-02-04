@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;   // Exit if accessed directly.
 }
 
-class Members extends Widget_Base {
+class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 	/**
 	 * Retrieve the widget name.
@@ -25,7 +25,7 @@ class Members extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'bpsp_member';
+		return 'buddypress_shortcode_members_widget';
 	}
 
 	/**
