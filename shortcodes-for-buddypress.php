@@ -150,7 +150,7 @@ HardG\BuddyPress120URLPolyfills\Loader::init();
  */
 function shortcodes_for_buddypress_run() {
 	//Checks if the pro plugin is installed and activated.
-	if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+	if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && function_exists( 'run_shortcodes_for_buddypress_pro' )) {
 		//Deactivates the core plugin if pro plugin is activated.
 		deactivate_plugins( 'shortcodes-for-buddypress/shortcodes-for-buddypress.php' );
 	} else {
@@ -237,12 +237,12 @@ function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
 
     // Sanitize the plugin parameter.
     $plugin = sanitize_text_field( $plugin );
+	$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
+	$requested_plugin = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : '';
 
     // Verify if the activated plugin matches the current plugin and BuddyPress is active.
     if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
-        // Sanitize the $_REQUEST parameters to prevent any potential security issues.
-        $action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
-        $requested_plugin = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : '';
+        // Sanitize the $_REQUEST parameters to prevent any potential security issues.  
 
         // Check if the plugin was activated via the WordPress Plugins page.
         if ( 'activate' === $action && $requested_plugin === $plugin ) {
