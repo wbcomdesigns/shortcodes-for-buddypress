@@ -21,7 +21,7 @@
 				<?php echo bp_get_groups_pagination_count(); ?>
 			</div>
 
-			<ul id="groups-list" class="item-list groups-list bp-list bpsp-groups-list">
+			<ul id="groups-list" class="item-list groups-list bp-list bpsp-groups-list <?php echo esc_attr( $grid ); ?> <?php echo esc_attr( $column ); ?>">
 
 				<?php
 				while ( bp_groups() ) :

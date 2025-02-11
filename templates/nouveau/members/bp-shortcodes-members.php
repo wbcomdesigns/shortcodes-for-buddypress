@@ -23,7 +23,7 @@
 				<?php echo bp_get_members_pagination_count(); ?>
 			</div>
 			
-			<ul id="members-list" class="item-list members-list bp-list bpsp-members-list" >
+			<ul id="members-list" class="item-list members-list bp-list bpsp-members-list <?php echo esc_attr( $grid ); ?> <?php echo esc_attr( $column ); ?>" >
 
 			<?php
 			while ( bp_members() ) :

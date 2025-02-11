@@ -50,7 +50,9 @@ class GroupShortCode extends BPShortCode {
 				'parent_id'          => 0,
 				'update_meta_cache'  => true,
 				'container_class'    => 'group', // default container,
-				'loop-layout'        => ! empty( $atts['loop-layout'] ) ? $atts['loop-layout'] : '',
+				'grid'               => 'yes', // Display as a grid or list
+				'loop_layout'        => 'three', // Columns of group layout. This will work only grid layout
+				'container_class'    => 'groups', //(string) Default 'groups' . Allows to change the class of the shortcode contents wrapper.
 			),
 			$atts
 		);
@@ -85,6 +87,8 @@ class GroupShortCode extends BPShortCode {
 
 		$template_args = apply_filters( 'group_shortcode_template_args', array(
 			'query'  		=> $query,
+			'grid'   		=> 'yes' === $atts['grid'] ? 'grid' : '',
+			'column' 		=> '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '',
 			'groups_atts'   => $bash_query_args,
 		));
 

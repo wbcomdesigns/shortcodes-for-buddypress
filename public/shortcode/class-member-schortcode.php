@@ -86,7 +86,8 @@ class MemberShortCode extends BPShortCode {
 			'meta_value'          => false, // Only return users where the usermeta value matches. Requires meta_key.
 			'populate_extras'     => true,      // Fetch usermeta? Friend count, last active etc.
 			'container_class'     => 'members', // default container,
-			'loop-layout'         => ! empty( $atts['loop-layout'] ) ? $atts['loop-layout'] : 'three',
+			'grid'                => 'yes', // Display pagination on members listing. Default true
+			'loop_layout'         => 'three', // Display pagination on members listing. Default true
 			),
 			$atts
 		);
@@ -118,6 +119,8 @@ class MemberShortCode extends BPShortCode {
 
 		$template_args = apply_filters( 'member_shortcode_template_args', array(
 			'query'  		=> $query,
+			'grid'   		=> 'yes' === $atts['grid'] ? 'grid' : '',
+			'column' 		=> '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '',
 			'members_atts'	=> $bash_query_args
 		));
 
