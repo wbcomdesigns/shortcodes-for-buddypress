@@ -45,7 +45,7 @@ if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', app
 			$bp_shortcode_pro = esc_html__( 'Wbcom Designs - Shortcode For BuddyPress Pro', 'shortcodes-for-buddypress' );
 			echo '<div class="error"><p>';
 			/* translators: %s: */
-			echo sprintf( esc_html__( '%1$s and %2$s will not activate togather. Please deactivate %1$s', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bp_shortcode_pro ) . '</strong>', '<strong>' . esc_html( $bp_shortcode ) . '</strong>' );
+			echo sprintf( esc_html__( '%1$s and %2$s will not activate together. Please deactivate %1$s', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bp_shortcode_pro ) . '</strong>', '<strong>' . esc_html( $bp_shortcode ) . '</strong>' );
 			echo '</p></div>';
 		}
 	);
