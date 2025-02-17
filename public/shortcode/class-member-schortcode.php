@@ -131,11 +131,13 @@ class MemberShortCode extends BPShortCode {
 		<div class="members-listing <?php echo esc_attr( $atts['container_class'] ); ?>">
 			<?php echo ! empty( $atts['title'] ) ? '<h4>' . esc_html( $atts['title'] ) . '</h4>' : ''; ?>
 			<?php do_action( 'member_shortcode_inside_container', $atts, $template_args ); ?>
-			<?php if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) : ?>
-				<?php bp_shortcode_get_template( 'members/bb-shortcodes-members.php', $template_args, get_option( '_bp_theme_package_id' ) ); ?>
-			<?php else : ?>
-				<?php bp_shortcode_get_template( 'members/bp-shortcodes-members.php', $template_args, get_option( '_bp_theme_package_id' ) ); ?>
-			<?php endif; ?>	
+			<?php if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) { 
+						 bp_shortcode_get_template( 'members/bb-shortcodes-members.php', $template_args, get_option( '_bp_theme_package_id' ) );
+					 }elseif( class_exists( 'Youzify' ) ){ 
+						 bp_shortcode_get_template( 'members/bp-shortcodes-members.php', $template_args, 'youzify' ); 
+					 }else{ 
+						 bp_shortcode_get_template( 'members/bp-shortcodes-members.php', $template_args, get_option( '_bp_theme_package_id' ) ); 
+				 } ?>
 		</div>
 		<?php
 		$output = ob_get_contents();

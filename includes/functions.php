@@ -74,7 +74,7 @@ function bp_shortcode_locate_template( $template_name, $template_path, $default_
 			$template_name,
 		)
 	);
-
+	
 	// Get default template.
 	if ( ! $template && false !== $default_path ) {
 		$default_path = $default_path ? $default_path : SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR . 'templates/';
@@ -82,6 +82,7 @@ function bp_shortcode_locate_template( $template_name, $template_path, $default_
 			$template = trailingslashit( $default_path . $template_path ) . $template_name;
 		}
 	}
+
 	return apply_filters( 'bp_shortcode_locate_template', $template, $template_name, $template_path, $default_path );
 }
 

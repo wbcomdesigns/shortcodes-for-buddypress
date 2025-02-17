@@ -84,7 +84,7 @@ class Shortcodes_For_Buddypress_Public {
 	    }
 
 		if ( bp_shortcode_is_shortcode_page() ) {
-			if ( 'nouveau' === get_option( '_bp_theme_package_id' ) && ! wp_style_is( 'bp-nouveau', 'enqueued' ) ) {
+			if ( 'nouveau' === get_option( '_bp_theme_package_id' ) && ! wp_style_is( 'bp-nouveau', 'enqueued' ) && class_exists( 'BP_Nouveau' ) ) {
 				$nouveau = new BP_Nouveau();
 				$nouveau->enqueue_styles();
 			}
@@ -142,7 +142,7 @@ class Shortcodes_For_Buddypress_Public {
 		if(function_exists('bp_is_active') &&  bp_is_active('activity')){
 			$_bp_theme_package = get_option( '_bp_theme_package_id' );
 			
-			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-public.js', array( 'jquery', 'bp-nouveau-activity' ), $this->version, true );
+			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-public.js', array( 'jquery' ), $this->version, true );
 			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) )  && ('nouveau' === $_bp_theme_package)) {
 				wp_enqueue_script( $this->plugin_name );
 				wp_localize_script(

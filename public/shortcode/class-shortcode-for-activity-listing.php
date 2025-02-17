@@ -109,11 +109,13 @@ class ActivityShortCode extends BPShortCode {
 			<div class="activity-listing">
 				<?php echo ! empty( $atts['title'] ) ? '<h4>' . esc_html( $atts['title'] ) . '</h4>' : ''; ?>
 				<?php do_action( 'activity_shortcode_inside_container', $atts, $template_args ); ?>
-				<?php if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) : ?>
-					<?php bp_shortcode_get_template( 'activity/bp-shortcodes-activity.php', $template_args, get_option( '_bp_theme_package_id' ) ); ?>
-				<?php else : ?>
-					<?php bp_shortcode_get_template( 'activity/bp-shortcodes-activity.php', $template_args, get_option( '_bp_theme_package_id' ) ); ?>
-				<?php endif; ?>	
+				<?php if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) { 
+						 bp_shortcode_get_template( 'activity/bp-shortcodes-activity.php', $template_args, get_option( '_bp_theme_package_id' ) );
+					 }elseif( class_exists( 'Youzify' ) ){ 
+						 bp_shortcode_get_template( 'activity/bp-shortcodes-activity.php', $template_args, 'youzify' ); 
+					 }else{ 
+						 bp_shortcode_get_template( 'activity/bp-shortcodes-activity.php', $template_args, get_option( '_bp_theme_package_id' ) ); 
+				 } ?>	
 			</div>
 			<?php
 		}
