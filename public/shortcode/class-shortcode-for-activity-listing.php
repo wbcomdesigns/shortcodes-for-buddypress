@@ -21,7 +21,9 @@ class ActivityShortCode extends BPShortCode {
 
 	// Method to handle Class A shortcode logic
 	public function handle_shortcode( $atts, $content = '' ) {
-
+		if ( is_admin() ) {
+			return '';
+		}
 		// Apply filter to attributes
 		$atts = apply_filters( 'activity_shortcode_attributes', $atts );
 

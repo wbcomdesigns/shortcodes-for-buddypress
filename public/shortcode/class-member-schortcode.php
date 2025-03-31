@@ -21,7 +21,9 @@ class MemberShortCode extends BPShortCode {
 
 	// Method to handle Class A shortcode logic
 	public function handle_shortcode( $atts, $content = '' ) {
-
+		if ( is_admin() ) {
+			return '';
+		}
 		// Allow filtering of attributes
 		$atts = apply_filters( 'member_shortcode_attributes', $atts );
 
