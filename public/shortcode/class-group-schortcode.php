@@ -94,6 +94,15 @@ class GroupShortCode extends BPShortCode {
 			'groups_atts'   => $bash_query_args,
 		));
 
+		if( class_exists( 'Youzify' )  ){
+			$template_args = apply_filters( 'group_shortcode_template_args', array(
+				'query'  		=> $query,
+				'grid'   		=> 'yes' === $atts['grid'] ? 'grid' : '',
+				'column' 		=> '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '',
+				'groups_atts'   => $template_args,
+			));
+		}
+
 		$output = '';
 		ob_start();
 		if ( ! bp_is_active( 'groups' ) ) {

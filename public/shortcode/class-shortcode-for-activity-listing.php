@@ -91,6 +91,14 @@ class ActivityShortCode extends BPShortCode {
 			'activity_atts'	=> $bash_query,
 		));
 
+		if( class_exists( 'Youzify' )  ){
+			$template_args = apply_filters( 'activity_shortcode_template_args', array(
+				'query'         => build_query( $bash_query ),
+				'limit'         => ! empty( $atts['per_page'] ) ? $atts['per_page'] : 10,
+				'activity_atts'	=> $template_args,
+			));
+		}
+
 		do_action( 'before_activity_shortcode_render', $atts );
 
 		$output        = '';

@@ -9,8 +9,6 @@
  * @since 2.7.2
  * 
  */
-global $activity_atts;
-
 /**
  * Fires before the activity directory listing.
  *
@@ -33,8 +31,8 @@ endif;
 do_action( 'before_activity_listing_output', $atts, $activity_atts ); ?>
 
 <?php 
-if ( !empty( $activity_atts['bpsh_query'] ) ) {
-    $bp_activities  = $activity_atts['bpsh_query'];
+if ( !empty( $activity_atts['query'] ) ) {
+    $bp_activities  = $activity_atts['query'];
 } else {
     $bp_activities  = bp_ajax_querystring( 'activity' );
 }

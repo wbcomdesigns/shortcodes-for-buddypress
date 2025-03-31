@@ -126,6 +126,15 @@ class MemberShortCode extends BPShortCode {
 			'members_atts'	=> $bash_query_args
 		));
 
+		if( class_exists( 'Youzify' )  ){
+			$template_args = apply_filters( 'member_shortcode_template_args', array(
+				'query'  		=> $query,
+				'grid'   		=> 'yes' === $atts['grid'] ? 'grid' : '',
+				'column' 		=> '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '',
+				'members_atts'	=> $template_args
+			));
+		}
+
 		$output = '';
 		ob_start();
 		do_action( 'member_shortcode_before_output', $atts );

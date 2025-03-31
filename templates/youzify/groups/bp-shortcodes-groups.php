@@ -6,18 +6,15 @@
  * @since 2.7.2
  * 
  */
-
-global $groups_atts;
-
 ?>
 
 <div id="bp-shortcode-groups" class="bp-dir-hori-nav <?php if ( !empty( $groups_atts['container_class'] ) ) { echo esc_attr( $groups_atts['container_class'] ); } ?>">
 	<div class="screen-content youzify youzify-directory youzify-groups-directory-page youzify-blue-scheme youzify-tabs-list-gradient">
-		<input type="hidden" data-bp-filter="groups" value="<?php if ( !empty( $groups_atts['bpsh_query'] ) ) { echo esc_attr( $groups_atts['bpsh_query'] ); } ?>" />
+		<input type="hidden" data-bp-filter="groups" value="<?php if ( !empty( $groups_atts['query'] ) ) { echo esc_attr( $groups_atts['query'] ); } ?>" />
 		<div id="groups-dir-list" class="groups dir-list" data-bp-list="groups" data-ajax="false">
 			<?php 
                 if ( !empty( $groups_atts ) ) {
-                    $bp_groups  = bp_has_groups( $groups_atts['bpsh_query'] );
+                    $bp_groups  = bp_has_groups( $groups_atts['query'] );
                 } else {
                     $bp_groups  = bp_has_groups( bp_ajax_querystring( 'groups' ) );
                 }
