@@ -16,7 +16,9 @@
  */
 
 do_action( 'bp_before_directory_activity' );
-
+$activity_atts['allow_posting'] = false;
+$activity_atts['load_more'] = false;
+$activity_atts['use_compat'] = false;
 if ( ( !empty( $activity_atts ) ) && ( $activity_atts['use_compat'] ) ) {
 
 }
