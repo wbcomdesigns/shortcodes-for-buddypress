@@ -103,6 +103,19 @@
                  * @since 2.7.2
                  */
                 do_action( 'bp_after_directory_groups_list' ); ?>
+                <div id="pag-bottom" class="pagination">
+
+                    <div class="pag-count" id="group-dir-count-bottom">
+                        <?php bp_groups_pagination_count(); ?>
+                    </div>
+
+                    <?php if (bp_get_groups_pagination_links()) : ?>
+                        <div class="pagination-links" id="group-dir-pag-bottom">
+                            <?php bp_groups_pagination_links(); ?>
+                        </div>
+                    <?php endif; ?>
+
+                </div>
                                 
 		    <?php else : ?>
                 <div id="message" class="info">

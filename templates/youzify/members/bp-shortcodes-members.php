@@ -116,7 +116,20 @@
 		 * @since 1.1.0
 		 */
 		do_action( 'bp_after_directory_members_list' ); ?>
-		
+		<div id="pag-bottom" class="pagination">
+
+			<?php do_action('youzify_after_directory_members_actions'); ?>
+			<div class="pag-count" id="member-dir-count-bottom">
+				<?php bp_members_pagination_count(); ?>
+			</div>
+
+			<?php if (bp_get_members_pagination_links()) : ?>
+				<div class="pagination-links" id="member-dir-pag-bottom">
+					<?php bp_members_pagination_links(); ?>
+				</div>
+			<?php endif; ?>
+
+		</div>
 	<?php endif; ?>
 	
 </div>
