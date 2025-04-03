@@ -583,6 +583,12 @@ table.notifications.bp-tables-user tr:last-child th {
     min-width: auto;
 }
 
+.bb-grid .buddypress-wrap .bp-pagination .bpsp-group-pagination,
+.bb-grid .buddypress-wrap .bp-pagination .bpsp-member-pagination {
+    display: flex;
+    flex-flow: wrap;
+}
+
 @media only screen and (max-width: 767px) {
 
     #members-dir-list ul#bps-members-list li.bps-item-entry,

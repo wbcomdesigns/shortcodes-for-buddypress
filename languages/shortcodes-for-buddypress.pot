@@ -1,14 +1,14 @@
-# Copyright (C) 2024
+# Copyright (C) 2025
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 07:04:13+00:00\n"
+"POT-Creation-Date: 2025-04-03 11:53:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Varun Dubey\n"
 "Language-Team: Wbcom Designs\n"
 "Language: en\n"
@@ -116,7 +116,7 @@ msgid "General"
 msgstr ""
 
 #: admin/class-shortcodes-for-buddypress-admin.php:128
-msgid "BP Shortcodes"
+msgid "Shortcodes"
 msgstr ""
 
 #: admin/class-shortcodes-for-buddypress-admin.php:151
@@ -145,7 +145,6 @@ msgstr ""
 
 #: admin/class-shortcodes-for-buddypress-admin.php:209
 #: admin/settings/buddypress-shortcode-general-settings.php:63
-#: buddypress-groups-element.php:15
 msgid "Groups"
 msgstr ""
 
@@ -990,7 +989,7 @@ msgid "Action"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-plugins-page.php:12
-#: admin/wbcom/wbcom-admin-settings.php:322
+#: admin/wbcom/wbcom-admin-settings.php:327
 msgid "Themes & Extension"
 msgstr ""
 
@@ -1009,8 +1008,8 @@ msgstr ""
 
 #: admin/wbcom/templates/wbcom-plugins-page.php:23
 #: admin/wbcom/templates/wbcom-plugins-page.php:362
-#: admin/wbcom/wbcom-admin-settings.php:241
-#: admin/wbcom/wbcom-admin-settings.php:242
+#: admin/wbcom/wbcom-admin-settings.php:246
+#: admin/wbcom/wbcom-admin-settings.php:247
 msgid "Our Themes"
 msgstr ""
 
@@ -1526,7 +1525,7 @@ msgid ""
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:12
-#: admin/wbcom/wbcom-admin-settings.php:328
+#: admin/wbcom/wbcom-admin-settings.php:333
 msgid "Help & Support"
 msgstr ""
 
@@ -1568,240 +1567,284 @@ msgid ""
 "guarantee any delay."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:210
+#: admin/wbcom/wbcom-admin-settings.php:215
 msgid "Activate"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:211
+#: admin/wbcom/wbcom-admin-settings.php:216
 msgid "Deactivate"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:233
-#: admin/wbcom/wbcom-admin-settings.php:234
+#: admin/wbcom/wbcom-admin-settings.php:238
+#: admin/wbcom/wbcom-admin-settings.php:239
 msgid "Our Plugins"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:249
-#: admin/wbcom/wbcom-admin-settings.php:250
+#: admin/wbcom/wbcom-admin-settings.php:254
+#: admin/wbcom/wbcom-admin-settings.php:255
 msgid "Support"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:316
+#: admin/wbcom/wbcom-admin-settings.php:321
 msgid "Settings"
 msgstr ""
 
-#: buddypress-groups-element.php:43 buddypress-members-element.php:48
-#: buddypress-shortcodes-element.php:42
+#: elementor/class-buddypress-shortcode-elements.php:65
+#: shortcodes-for-buddypress.php:370
+msgid "BuddyPress Widgets"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-activity-widget.php:41
+msgid "Activity List"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-activity-widget.php:85
+#: elementor/widgets/class-buddypress-groups-widget.php:102
+#: elementor/widgets/class-buddypress-members-widget.php:114
 msgid "Query"
 msgstr ""
 
-#: buddypress-groups-element.php:50 buddypress-members-element.php:55
-#: buddypress-shortcodes-element.php:49
+#: elementor/widgets/class-buddypress-activity-widget.php:92
+#: elementor/widgets/class-buddypress-groups-widget.php:109
+#: elementor/widgets/class-buddypress-members-widget.php:121
 msgid "Title"
 msgstr ""
 
-#: buddypress-groups-element.php:52 buddypress-members-element.php:57
-#: buddypress-shortcodes-element.php:51
+#: elementor/widgets/class-buddypress-activity-widget.php:94
+#: elementor/widgets/class-buddypress-groups-widget.php:111
+#: elementor/widgets/class-buddypress-members-widget.php:123
 msgid "Add activity title"
 msgstr ""
 
-#: buddypress-groups-element.php:59
-msgid "Display number of group"
-msgstr ""
-
-#: buddypress-groups-element.php:62 buddypress-members-element.php:67
-msgid "How many members display on page."
-msgstr ""
-
-#: buddypress-groups-element.php:72 buddypress-members-element.php:77
-#: buddypress-shortcodes-element.php:71
-msgid "Shortcodes for BuddyPress PRO"
-msgstr ""
-
-#: buddypress-groups-element.php:74 buddypress-members-element.php:79
-#: buddypress-shortcodes-element.php:73
-msgid "Power up up your listing with custom queries and templates."
-msgstr ""
-
-#: buddypress-groups-element.php:87
-msgid "Listing Groups"
-msgstr ""
-
-#: buddypress-groups-element.php:96 buddypress-members-element.php:113
-#: buddypress-shortcodes-element.php:95 buddypress-shortcodes-element.php:263
-#: buddypress-shortcodes-element.php:296
-msgid "Background"
-msgstr ""
-
-#: buddypress-groups-element.php:107 buddypress-shortcodes-element.php:256
-msgid "Normal"
-msgstr ""
-
-#: buddypress-groups-element.php:124 buddypress-shortcodes-element.php:289
-msgid "Hover"
-msgstr ""
-
-#: buddypress-groups-element.php:158 buddypress-groups-element.php:193
-#: buddypress-members-element.php:138 buddypress-shortcodes-element.php:120
-#: buddypress-shortcodes-element.php:353
-msgid "Border Radius"
-msgstr ""
-
-#: buddypress-groups-element.php:171 buddypress-groups-element.php:206
-#: buddypress-members-element.php:162 buddypress-shortcodes-element.php:132
-#: buddypress-shortcodes-element.php:374
-msgid "Padding"
-msgstr ""
-
-#: buddypress-members-element.php:15
-msgid "Members List"
-msgstr ""
-
-#: buddypress-members-element.php:64
-msgid "Per Page"
-msgstr ""
-
-#: buddypress-members-element.php:92
-msgid "Listing"
-msgstr ""
-
-#: buddypress-members-element.php:100
-msgid "View"
-msgstr ""
-
-#: buddypress-members-element.php:150
-msgid "Margin"
-msgstr ""
-
-#: buddypress-shortcodes-element.php:15
-msgid "Acivity List"
-msgstr ""
-
-#: buddypress-shortcodes-element.php:58
+#: elementor/widgets/class-buddypress-activity-widget.php:101
 msgid "display number of activities"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:61
+#: elementor/widgets/class-buddypress-activity-widget.php:104
 msgid "How many activity items to display."
 msgstr ""
 
-#: buddypress-shortcodes-element.php:86
+#: elementor/widgets/class-buddypress-activity-widget.php:114
+#: elementor/widgets/class-buddypress-groups-widget.php:131
+#: elementor/widgets/class-buddypress-members-widget.php:143
+msgid "Shortcodes for BuddyPress PRO"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-activity-widget.php:116
+#: elementor/widgets/class-buddypress-groups-widget.php:133
+#: elementor/widgets/class-buddypress-members-widget.php:145
+msgid "Power up up your listing with custom queries and templates."
+msgstr ""
+
+#: elementor/widgets/class-buddypress-activity-widget.php:129
 msgid "Activity Item Container"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:144
+#: elementor/widgets/class-buddypress-activity-widget.php:138
+#: elementor/widgets/class-buddypress-activity-widget.php:305
+#: elementor/widgets/class-buddypress-activity-widget.php:338
+#: elementor/widgets/class-buddypress-groups-widget.php:155
+#: elementor/widgets/class-buddypress-members-widget.php:179
+msgid "Background"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-activity-widget.php:163
+#: elementor/widgets/class-buddypress-activity-widget.php:395
+#: elementor/widgets/class-buddypress-groups-widget.php:217
+#: elementor/widgets/class-buddypress-groups-widget.php:252
+#: elementor/widgets/class-buddypress-members-widget.php:204
+msgid "Border Radius"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-activity-widget.php:175
+#: elementor/widgets/class-buddypress-activity-widget.php:416
+#: elementor/widgets/class-buddypress-groups-widget.php:230
+#: elementor/widgets/class-buddypress-groups-widget.php:265
+#: elementor/widgets/class-buddypress-members-widget.php:228
+msgid "Padding"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-activity-widget.php:187
 msgid "Spacing items"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:163
+#: elementor/widgets/class-buddypress-activity-widget.php:206
 msgid "Load More Button"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:172 buddypress-shortcodes-element.php:230
+#: elementor/widgets/class-buddypress-activity-widget.php:214
+#: elementor/widgets/class-buddypress-activity-widget.php:272
 msgid "Base Style"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:185
+#: elementor/widgets/class-buddypress-activity-widget.php:227
 msgid "Display"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:189
+#: elementor/widgets/class-buddypress-activity-widget.php:231
 msgid "Inline"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:190
+#: elementor/widgets/class-buddypress-activity-widget.php:232
 msgid "Block"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:201
+#: elementor/widgets/class-buddypress-activity-widget.php:243
 msgid "Alignment"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:205
+#: elementor/widgets/class-buddypress-activity-widget.php:247
 msgid "Left"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:209
+#: elementor/widgets/class-buddypress-activity-widget.php:251
 msgid "Center"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:213
+#: elementor/widgets/class-buddypress-activity-widget.php:255
 msgid "Right"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:246
+#: elementor/widgets/class-buddypress-activity-widget.php:288
 msgid "Typography"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:275 buddypress-shortcodes-element.php:308
+#: elementor/widgets/class-buddypress-activity-widget.php:298
+#: elementor/widgets/class-buddypress-groups-widget.php:166
+msgid "Normal"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-activity-widget.php:317
+#: elementor/widgets/class-buddypress-activity-widget.php:350
 msgid "Color"
 msgstr ""
 
-#: buddypress-shortcodes-element.php:320
+#: elementor/widgets/class-buddypress-activity-widget.php:331
+#: elementor/widgets/class-buddypress-groups-widget.php:183
+msgid "Hover"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-activity-widget.php:362
 msgid "Border Color"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:233
-msgid "Please check if Activity Stream is active in BuddyPress Components page."
+#: elementor/widgets/class-buddypress-groups-widget.php:41
+msgid "Groups List"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:761
-#. translators: %1$s is the name of the group.
-msgid "Group logo of %1$s"
+#: elementor/widgets/class-buddypress-groups-widget.php:118
+msgid "Display number of group"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:879
-msgid "Please check if Notifications is active in BuddyPress Components page."
+#: elementor/widgets/class-buddypress-groups-widget.php:121
+#: elementor/widgets/class-buddypress-members-widget.php:133
+msgid "How many members display on page."
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:883
-msgid "Please Log in to view notifications"
+#: elementor/widgets/class-buddypress-groups-widget.php:146
+msgid "Listing Groups"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:952
+#: elementor/widgets/class-buddypress-members-widget.php:41
+msgid "Members List"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-members-widget.php:130
+msgid "Per Page"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-members-widget.php:158
+msgid "Listing"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-members-widget.php:166
+msgid "View"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-members-widget.php:216
+msgid "Margin"
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:302
+msgid "No Template Found."
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:311
+msgid "Please enable the Notifications Component."
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:319
+msgid "Please Log in to view notifications."
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:391
 #. translators: %s: member name
 msgid "Profile photo of %s"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1000
+#: public/class-shortcodes-for-buddypress-public.php:439
 msgid "Post in: Profile"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1014
+#: public/class-shortcodes-for-buddypress-public.php:453
 msgid "Post in: Group"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1015
+#: public/class-shortcodes-for-buddypress-public.php:454
 msgid "Start typing the group name..."
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1032
+#: public/class-shortcodes-for-buddypress-public.php:471
 #. translators: %s: display buddypress user firstname.
 msgid "What's new, %s?"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1033
+#: public/class-shortcodes-for-buddypress-public.php:472
 msgid "Post what's new"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1034
+#: public/class-shortcodes-for-buddypress-public.php:473
 msgid "Post in"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1035
+#: public/class-shortcodes-for-buddypress-public.php:474
 msgid "Post Update"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1036
+#: public/class-shortcodes-for-buddypress-public.php:475
 msgid "Cancel"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1075
+#: public/class-shortcodes-for-buddypress-public.php:514
 msgid "Go PRO"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:1141
+#: public/class-shortcodes-for-buddypress-public.php:580
 msgid "Sorry, there was no activity found."
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:640
+msgid "Pin to Group"
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:640
+msgid "Pin to Feed"
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:650
+msgid "Unpin from Group"
+msgstr ""
+
+#: public/class-shortcodes-for-buddypress-public.php:650
+msgid "Unpin from Feed"
+msgstr ""
+
+#: public/shortcode/class-group-schortcode.php:114
+msgid "To view groups, please enable the group component."
+msgstr ""
+
+#: public/shortcode/class-shortcode-for-activity-listing.php:112
+msgid "To view activities, please enable the activity component."
 msgstr ""
 
 #: shortcodes-for-buddypress.php:44
@@ -1814,44 +1857,53 @@ msgstr ""
 
 #: shortcodes-for-buddypress.php:48
 #. translators: %s:
-msgid "%1$s and %2$s will not activate togather. Please deactivate %1$s"
+msgid "%1$s and %2$s will not activate together. Please deactivate %1$s"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:196 shortcodes-for-buddypress.php:377
+#: shortcodes-for-buddypress.php:330
 msgid "Shortcodes For BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:197 shortcodes-for-buddypress.php:378
+#: shortcodes-for-buddypress.php:331
 msgid "BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:198
-msgid "install BuddyPress"
+#: shortcodes-for-buddypress.php:332
+msgid "Install BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:202 shortcodes-for-buddypress.php:383
+#: shortcodes-for-buddypress.php:336
 #. translators: 1: Shortcodes For BuddyPress, 2: BuddyPress
 msgid ""
 "%1$s is ineffective as it requires %2$s to be installed and active. Please "
 "%3$s."
 msgstr ""
 
-#: shortcodes-for-buddypress.php:379
-msgid "Install BuddyPress"
+#: templates/legacy/activity/bp-shortcodes-activity.php:78
+#: templates/nouveau/activity/bp-shortcodes-activity.php:56
+msgid "Load More"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:417
-msgid "BuddyPress Widgets"
+#: templates/legacy/activity/bp-shortcodes-activity.php:87
+msgid "Sorry, there was no activity found. Please try a different filter."
 msgstr ""
 
-#: templates/legacy/groups/bp-shortcodes-groups.php:53
-#. translators: accessibility text
-msgid "Groups directory"
+#: templates/legacy/groups/bp-shortcodes-groups.php:62
+#: templates/nouveau/groups/bb-shortcodes-groups.php:96
+#: templates/nouveau/groups/bp-shortcodes-groups.php:58
+#. translators: %s: last activity timestamp (e.g. "Active 1 hour ago")
+#. translators: %s = last activity timestamp (e.g. "active 1 hour ago")
+#. translators: %s: last activity timestamp (e.g. "Active 1 hour ago")
+msgid "Active %s"
 msgstr ""
 
-#: templates/legacy/members/bp-shortcodes-members.php:36
-#. translators: accessibility text
-msgid "Members directory"
+#: templates/legacy/groups/bp-shortcodes-groups.php:121
+#: templates/youzify/groups/bp-shortcodes-groups.php:122
+msgid "There were no groups found."
+msgstr ""
+
+#: templates/legacy/members/bp-shortcodes-members.php:103
+msgid "Sorry, no members were found."
 msgstr ""
 
 #: templates/legacy/notifications/notifications-loop.php:37
@@ -1859,36 +1911,66 @@ msgstr ""
 msgid "Unread notifications"
 msgstr ""
 
-#: templates/nouveau/activity/bp-shortcodes-activity.php:41
-msgid "Load More"
-msgstr ""
-
-#: templates/nouveau/groups/bp-shortcodes-groups.php:115
-#. translators: %s: last activity timestamp (e.g. "Active 1 hour ago")
-msgid "Active %s"
-msgstr ""
-
-#: templates/nouveau/notifications/notifications-loop.php:37
-msgid "Select all"
-msgstr ""
-
-#: templates/nouveau/notifications/notifications-loop.php:38
+#: templates/legacy/notifications/notifications-loop.php:44
+#: templates/nouveau/notifications/notifications-loop.php:40
 msgid "Notification"
 msgstr ""
 
-#: templates/nouveau/notifications/notifications-loop.php:40
+#: templates/legacy/notifications/notifications-loop.php:45
+#: templates/nouveau/notifications/notifications-loop.php:41
 msgid "Date Received"
 msgstr ""
 
-#: templates/nouveau/notifications/notifications-loop.php:43
+#: templates/legacy/notifications/notifications-loop.php:46
+#: templates/nouveau/notifications/notifications-loop.php:42
 msgid "Actions"
 msgstr ""
 
-#: templates/nouveau/notifications/notifications-loop.php:56
-msgid "Select this notification"
+#: templates/nouveau/activity/parts/bp-whats-new-toolbar.php:15
+msgid "Attach photo"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:365
-msgctxt "button"
-msgid "Load More"
+#: templates/nouveau/activity/parts/bp-whats-new-toolbar.php:25
+msgid "Attach video"
+msgstr ""
+
+#: templates/nouveau/activity/parts/bp-whats-new-toolbar.php:35
+msgid "Attach document"
+msgstr ""
+
+#: templates/nouveau/activity/parts/bp-whats-new-toolbar.php:44
+msgid "Choose a GIF"
+msgstr ""
+
+#: templates/nouveau/members/bb-shortcodes-members.php:231
+msgid "More Options"
+msgstr ""
+
+#: templates/nouveau/notifications/notifications-loop.php:76
+msgid "This member has no unread notifications."
+msgstr ""
+
+#: templates/youzify/activity/bp-shortcodes-activity.php:99
+msgid "View Conversation"
+msgstr ""
+
+#: templates/youzify/activity/bp-shortcodes-activity.php:112
+#: templates/youzify/activity/bp-shortcodes-activity.php:152
+msgid "Comment"
+msgstr ""
+
+#: templates/youzify/activity/bp-shortcodes-activity.php:154
+msgid "Write a Comment ..."
+msgstr ""
+
+#: templates/youzify/activity/bp-shortcodes-activity.php:159
+msgid "Post"
+msgstr ""
+
+#: templates/youzify/activity/bp-shortcodes-activity.php:211
+msgid "There were no activities found."
+msgstr ""
+
+#: templates/youzify/groups/bp-shortcodes-groups.php:85
+msgid "Manage Group"
 msgstr ""
