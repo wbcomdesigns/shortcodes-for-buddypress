@@ -149,14 +149,14 @@ if ( bp_has_activities( $bp_activities ) ) : ?>
                                     <div class="ac-reply-content">
                                         <div class="ac-textarea<?php if ( $emoji_active ) echo ' youzify-comments-emojis';?>">
                                             <label for="ac-input-<?php bp_activity_id(); ?>" class="bp-screen-reader-text"><?php
-                                                echo esc_html__( 'Comment', 'youzify' );
+                                                echo esc_html__( 'Comment', 'shortcodes-for-buddypress' );
                                             ?></label>
                                             <textarea id="ac-input-<?php bp_activity_id(); ?>" class="ac-input bp-suggestions" name="ac_input_<?php bp_activity_id(); ?>" placeholder="<?php echo esc_attr__( 'Write a Comment ...', 'shortcodes-for-buddypress' ); ?>"></textarea>
                                             <?php if ( $emoji_active ) : ?>
                                                 <div class="youzify-load-emojis"><i class="far fa-smile"></i></div>
                                             <?php endif; ?>
                                         </div>
-                                        <input type="submit" name="ac_form_submit" value="<?php esc_attr_e( 'Post', 'buddypress' ); ?>" style="display: none;">
+                                        <input type="submit" name="ac_form_submit" value="<?php esc_attr_e( 'Post', 'shortcodes-for-buddypress' ); ?>" style="display: none;">
                                         <div class="youzify-wall-comments-buttons">
                                             <?php do_action( 'youzify_activity_comment_buttons' ); ?>
                                             <div class="youzify-send-comment"><i class="fas fa-paper-plane"></i></div>

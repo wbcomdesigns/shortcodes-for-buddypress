@@ -41,9 +41,9 @@ add_filter(
 			<thead>
 				<tr>
 					<th class="icon"></th>
-					<th class="title"><?php esc_html_e( 'Notification', 'buddypress' ); ?></th>
-					<th class="date"><?php esc_html_e( 'Date Received', 'buddypress' ); ?></th>
-					<th class="actions"><?php esc_html_e( 'Actions', 'buddypress' ); ?></th>
+					<th class="title"><?php esc_html_e( 'Notification', 'shortcodes-for-buddypress' ); ?></th>
+					<th class="date"><?php esc_html_e( 'Date Received', 'shortcodes-for-buddypress' ); ?></th>
+					<th class="actions"><?php esc_html_e( 'Actions', 'shortcodes-for-buddypress' ); ?></th>
 				</tr>
 			</thead>
 
