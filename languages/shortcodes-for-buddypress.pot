@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-03 11:53:14+00:00\n"
+"POT-Creation-Date: 2025-04-07 05:59:55+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1839,7 +1839,7 @@ msgstr ""
 msgid "Unpin from Feed"
 msgstr ""
 
-#: public/shortcode/class-group-schortcode.php:114
+#: public/shortcode/class-group-schortcode.php:116
 msgid "To view groups, please enable the group component."
 msgstr ""
 

@@ -129,6 +129,11 @@ table.notifications.bp-tables-user thead th.date {
 
 
 /*Members and Groups Shortcode*/
+.bpsp-member-count,
+.bpsp-group-count {
+    margin: 0 0 15px;
+}
+
 .members.dir-list.one ul.rg-member-list.grid>li,
 .groups.dir-list.one ul.rg-group-list.grid>li {
     padding-top: 0;
