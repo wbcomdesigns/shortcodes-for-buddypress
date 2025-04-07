@@ -32,7 +32,7 @@ if ( bp_has_groups( $query ) ) {
 		<div class="bpsp-group-count">	
 			<?php echo bp_get_groups_pagination_count(); ?>
 		</div>
-		<ul id="groups-list" class="bb-platform-shortcode groups-dir-list bpsp-groups-list <?php bp_nouveau_loop_classes(); ?><?php echo esc_attr( ' ' . $cover_class . ' ' . $group_alignment ); ?> <?php echo esc_attr( $grid ); ?> <?php echo esc_attr( $column ); ?>">
+		<ul id="groups-list" class="bb-platform-shortcode <?php bp_nouveau_loop_classes(); ?><?php echo esc_attr( ' ' . $cover_class . ' ' . $group_alignment ); ?> <?php echo esc_attr( $classes ); ?>">
 			<?php
 			while ( bp_groups() ) :
 				bp_the_group();

@@ -5,6 +5,7 @@
  * @since 3.0.0
  * @version 12.0.0
  */
+
 ?>
 
 <div id="buddypress" class="<?php echo esc_attr( bp_nouveau_get_container_classes() ); ?>">
@@ -21,8 +22,7 @@
 				<?php echo bp_get_groups_pagination_count(); ?>
 			</div>
 
-			<ul id="groups-list" class="item-list groups-list bp-list bpsp-groups-list <?php echo esc_attr( $grid ); ?> <?php echo esc_attr( $column ); ?>">
-
+			<ul id="groups-list" class="<?php echo esc_attr( $classes ); ?>">
 				<?php
 				while ( bp_groups() ) :
 					bp_the_group();

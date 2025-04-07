@@ -118,19 +118,22 @@ class MemberShortCode extends BPShortCode {
 		foreach ( $bash_query_args as $bash_query_key => $bash_query ) {
 			$query .= false !== $bash_query && '' !== $bash_query ? '&' . $bash_query_key . '=' . $bash_query : '';
 		}
-
+			$grid   = 'yes' === $atts['grid'] ? 'grid' : '';
+			$column = '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '';
 		$template_args = apply_filters( 'member_shortcode_template_args', array(
 			'query'  		=> $query,
-			'grid'   		=> 'yes' === $atts['grid'] ? 'grid' : '',
-			'column' 		=> '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '',
+			'grid'   		=> $grid,
+			'column' 		=> $column,
+			'classes'		=> $this->handle_classes( $grid, $column),
 			'members_atts'	=> $bash_query_args
 		));
 
 		if( class_exists( 'Youzify' )  ){
 			$template_args = apply_filters( 'member_shortcode_template_args', array(
 				'query'  		=> $query,
-				'grid'   		=> 'yes' === $atts['grid'] ? 'grid' : '',
-				'column' 		=> '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '',
+				'grid'   		=> $grid,
+				'column' 		=> $column,
+				'classes'		=> $this->handle_classes( $grid, $column),
 				'members_atts'	=> $template_args
 			));
 		}
@@ -160,52 +163,46 @@ class MemberShortCode extends BPShortCode {
 		return apply_filters( 'member_shortcode_output', $output );
 	}
 
-	/**
-	 * Get user by role in
-	 *
-	 * @param array $roles
-	 * @return array user's id
-	 */
-	private function get_role_in_users( $roles ) {
-		if ( empty( $roles ) ) {
-			return false;
+
+	public function handle_classes( $grid, $column) {
+		$classes      = array( 'item-list', 'members-list', 'bp-list', 'bpsp-members-list', $grid, $column);
+		$active_theme = wp_get_theme();
+		if( 'REIGN' == $active_theme ){
+			   $classes   = [];
+			   $classes[] = 'item-list';
+			   $classes[] = 'members-list';
+			   $classes[] = 'bp-list';
+			   $classes[] = 'rg-member-list';
+			   
+			   global $wbtm_reign_settings;
+			   $classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] : 'wbtm-member-directory-type-2';
+		   
+			   $bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
+			   $members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '3';
+		   
+			   if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
+				   $grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
+				   if ( isset( $grid_classes[ $members_layout ] ) ) {
+					   $classes = array_merge(
+						   $classes,
+						   array(
+							   'grid',
+							   $grid_classes[ $members_layout ],
+						   )
+					   );
+				   }
+			   } else {
+				   $classes = array_merge(
+					   $classes,
+					   array(
+						   'grid',
+						   'three',
+					   )
+				   );
+			   }
 		}
-
-		$users   = get_users( array( 'role__in' => $roles ) );
-		$user_id = array();
-
-		if ( ! empty( $users ) ) {
-			foreach ( $users as $user ) {
-				$user_id[] = $user->ID;
-			}
-		}
-
-		return apply_filters( 'bp_shortcode_pro_get_users_by_role_in', $user_id );
-
-	}
-
-	/**
-	 * Get user ids by role not in
-	 *
-	 * @param array $roles
-	 * @return array user's id
-	 */
-	private function get_role_not_in_users( $roles ) {
-		if ( empty( $roles ) ) {
-			return false;
-		}
-
-		$users   = get_users( array( 'role__in' => $roles ) );
-		$user_id = array();
-
-		if ( ! empty( $users ) ) {
-			foreach ( $users as $user ) {
-				$user_id[] = $user->ID;
-			}
-		}
-
-		return apply_filters( 'bp_shortcode_pro_get_users_by_role_not_in', $user_id );
-
+		$classes = implode(' ',$classes);
+		return $classes;
 	}
 }
 

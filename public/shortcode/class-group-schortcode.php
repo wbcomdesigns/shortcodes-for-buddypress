@@ -46,7 +46,7 @@ class GroupShortCode extends BPShortCode {
 				'group_type__in'     => '',
 				'group_type__not_in' => '',
 				'meta_query'         => false,
-				( function_exists( 'bp_use_theme_compat_with_current_theme' ) ) ? bp_use_theme_compat_with_current_theme() : '',
+				'use_compat'         =>( function_exists( 'bp_use_theme_compat_with_current_theme' ) ) ? bp_use_theme_compat_with_current_theme() : '',
 				'include'            => false,
 				'exclude'            => false,
 				'parent_id'          => 0,
@@ -54,7 +54,6 @@ class GroupShortCode extends BPShortCode {
 				'container_class'    => 'group', // default container,
 				'grid'               => 'yes', // Display as a grid or list
 				'loop_layout'        => 'three', // Columns of group layout. This will work only grid layout
-				'container_class'    => 'groups', //(string) Default 'groups' . Allows to change the class of the shortcode contents wrapper.
 			),
 			$atts
 		);
@@ -86,19 +85,22 @@ class GroupShortCode extends BPShortCode {
 		foreach ( $bash_query_args as $bash_query_key => $bash_query ) {
 			$query .= false !== $bash_query && '' !== $bash_query ? '&' . $bash_query_key . '=' . $bash_query : '';
 		}
-
+		$grid = 'yes' === $atts['grid'] ? 'grid' : '';
+		$column = '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '';
 		$template_args = apply_filters( 'group_shortcode_template_args', array(
 			'query'  		=> $query,
-			'grid'   		=> 'yes' === $atts['grid'] ? 'grid' : '',
-			'column' 		=> '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '',
+			'grid'   		=> $grid,
+			'column' 		=> $column,
+			'classes'		=> $this->handle_classes( $grid, $column),
 			'groups_atts'   => $bash_query_args,
 		));
 
 		if( class_exists( 'Youzify' )  ){
 			$template_args = apply_filters( 'group_shortcode_template_args', array(
 				'query'  		=> $query,
-				'grid'   		=> 'yes' === $atts['grid'] ? 'grid' : '',
-				'column' 		=> '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '',
+				'grid'   		=> $grid,
+				'column' 		=> $column,
+				'classes'		=> $this->handle_classes( $grid, $column),
 				'groups_atts'   => $template_args,
 			));
 		}
@@ -139,6 +141,64 @@ class GroupShortCode extends BPShortCode {
 
 		// Apply filter to modify output before returning
 		return apply_filters( 'group_shortcode_output', $output );
+	}
+
+
+	public function handle_classes( $grid, $column) {
+		$classes            = array( 'item-list', 'groups-list', 'bp-list', 'bpsp-groups-list', $grid, $column);
+		$active_theme = wp_get_theme();
+		if( 'REIGN' == $active_theme ){
+			$bp_nouveau            = bp_nouveau();
+			$classes 			   = [];
+			$classes[]             = 'item-list';
+			$classes[]             = 'groups-list';
+			$classes[]             = 'bp-list';
+			$classes[]             = 'rg-group-list';
+			$component             = sanitize_key( 'groups' );
+			$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
+			$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : 'three';
+			
+			global $wbtm_reign_settings;
+			$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['group_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['group_directory_type'] : 'wbtm-group-directory-type-2';
+			
+			
+		
+			if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
+				$customizer_option = sprintf( '%s_layout', $component );
+				$layout_prefs      = bp_nouveau_get_temporary_setting(
+					$customizer_option,
+					bp_nouveau_get_appearance_settings( $customizer_option )
+				);
+		
+				if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
+					$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
+					if ( isset( $grid_classes[ $layout_prefs ] ) ) {
+						$classes = array_merge(
+							$classes, array(
+								'grid',
+								$grid_classes[ $layout_prefs ],
+							)
+						);
+					}
+		
+					if ( ! isset( $bp_nouveau->{$component} ) ) {
+						$bp_nouveau->{$component} = new stdClass();
+					}
+					// Set the global for a later use.
+					$bp_nouveau->{$component}->loop_layout = $layout_prefs;
+				}
+			} else {
+				$classes = array_merge(
+					$classes,
+					array(
+						'grid',
+						$groups_layout,
+					)
+				);
+			}
+		}
+		$classes = implode(' ',$classes);
+		return $classes;
 	}
 }
 
