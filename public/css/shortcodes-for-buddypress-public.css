@@ -442,6 +442,12 @@ div#youzify.bp-shortcode-activity {
     padding: 0 20px;
 }
 
+.youzify .activity-content .reign-content-wrp,
+.youzify .activity-content .buddyx-content-wrp {
+    display: block;
+    padding: 0 25px;
+}
+
 /*BuddyX Theme*/
 .bps-activity-content .bp-group-activity-preview,
 .bps-activity-content .bp-member-activity-preview,
