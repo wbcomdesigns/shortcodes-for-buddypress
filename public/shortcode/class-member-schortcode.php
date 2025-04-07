@@ -167,7 +167,7 @@ class MemberShortCode extends BPShortCode {
 	public function handle_classes( $grid, $column) {
 		$classes      = array( 'item-list', 'members-list', 'bp-list', 'bpsp-members-list', $grid, $column);
 		$active_theme = wp_get_theme();
-		if( 'REIGN' == $active_theme ){
+		if( 'REIGN' == $active_theme && ! class_exists( 'Youzify' ) ){
 			   $classes   = [];
 			   $classes[] = 'item-list';
 			   $classes[] = 'members-list';
