@@ -96,11 +96,11 @@ class GroupShortCode extends BPShortCode {
 		));
 
 		if( class_exists( 'Youzify' )  ){
+			unset($template_args['classes']);
 			$template_args = apply_filters( 'group_shortcode_template_args', array(
 				'query'  		=> $query,
 				'grid'   		=> $grid,
 				'column' 		=> $column,
-				'classes'		=> $this->handle_classes( $grid, $column),
 				'groups_atts'   => $template_args,
 			));
 		}

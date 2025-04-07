@@ -129,11 +129,11 @@ class MemberShortCode extends BPShortCode {
 		));
 
 		if( class_exists( 'Youzify' )  ){
+			unset($template_args['classes']);
 			$template_args = apply_filters( 'member_shortcode_template_args', array(
 				'query'  		=> $query,
 				'grid'   		=> $grid,
 				'column' 		=> $column,
-				'classes'		=> $this->handle_classes( $grid, $column),
 				'members_atts'	=> $template_args
 			));
 		}
