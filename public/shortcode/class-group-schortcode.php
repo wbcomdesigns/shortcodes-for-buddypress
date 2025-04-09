@@ -145,7 +145,7 @@ class GroupShortCode extends BPShortCode {
 
 
 	public function handle_classes( $grid, $column) {
-		$classes            = array( 'item-list', 'groups-list', 'bp-list', 'bpsp-groups-list', $grid, $column);
+		$classes            = array( 'item-list', 'groups-list', 'groups-dir-list', 'bp-list', 'bpsp-groups-list', $grid, $column);
 		$active_theme = wp_get_theme();
 		if( 'REIGN' == $active_theme && ! class_exists( 'Youzify' ) ){
 			$bp_nouveau            = bp_nouveau();
@@ -153,6 +153,7 @@ class GroupShortCode extends BPShortCode {
 			$classes[]             = 'item-list';
 			$classes[]             = 'groups-list';
 			$classes[]             = 'bp-list';
+			$classes[]             = 'groups-dir-list';
 			$classes[]             = 'rg-group-list';
 			$component             = sanitize_key( 'groups' );
 			$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );

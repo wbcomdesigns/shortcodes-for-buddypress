@@ -45,25 +45,41 @@ if ( bp_has_groups( $query ) ) {
 						<div class="list-wrap">
 						
 						<?php
-						if ( ! bp_disable_group_cover_image_uploads() && bb_platform_group_element_enable( 'cover-images' ) ) {
-							$group_cover_image_url = bp_attachments_get_attachment(
-								'url',
-								array(
-									'object_dir' => 'groups',
-									'item_id'    => $bp_group_id,
-								)
-							);
-							$has_default_cover     = function_exists( 'bb_attachment_get_cover_image_class' ) ? bb_attachment_get_cover_image_class( $bp_group_id, 'group' ) : '';
-							?>
-								<div class="bs-group-cover bb-shortcode-group-only only-grid-view <?php echo esc_attr( $has_default_cover . ' cover-' . $group_cover_height ); ?>">
-									<a href="<?php bp_group_permalink(); ?>">
-									<?php if ( ! empty( $group_cover_image_url ) ) { ?>
-											<img src="<?php echo esc_url( $group_cover_image_url ); ?>">
-										<?php } ?>
-									</a>
-								</div>
+								$active_theme = wp_get_theme();
+								if ( 'BuddyBoss Theme' == $active_theme ) {
+								if ( ! bp_disable_group_cover_image_uploads() && bb_platform_group_element_enable( 'cover-images' ) ) {
+									$group_cover_image_url = bp_attachments_get_attachment(
+										'url',
+										array(
+											'object_dir' => 'groups',
+											'item_id'    => $bp_group_id,
+										)
+									);
+									$has_default_cover     = function_exists( 'bb_attachment_get_cover_image_class' ) ? bb_attachment_get_cover_image_class( $bp_group_id, 'group' ) : '';
+									?>
+										<div class="bs-group-cover bb-shortcode-group-only only-grid-view <?php echo esc_attr( $has_default_cover . ' cover-' . $group_cover_height ); ?>">
+											<a href="<?php bp_group_permalink(); ?>">
+											<?php if ( ! empty( $group_cover_image_url ) ) { ?>
+													<img src="<?php echo esc_url( $group_cover_image_url ); ?>">
+												<?php } ?>
+											</a>
+										</div>
+										<?php
+									}
+								}
+								?>
+
 								<?php
-						}
+								$active_theme = wp_get_theme();
+								if ( 'BuddyX' == $active_theme || 'BuddyxPro' == $active_theme ) {
+									if ( function_exists( 'buddyx_render_group_cover_image' ) ) {
+										buddyx_render_group_cover_image();
+									}
+								} elseif ( 'REIGN' == $active_theme ) {
+									if ( function_exists( 'reign_render_group_cover_image' ) ) {
+										reign_render_group_cover_image();
+									}
+								}
 
 						if ( ! bp_disable_group_avatar_uploads() && bb_platform_group_element_enable( 'avatars' ) ) {
 							?>
