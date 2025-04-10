@@ -14,6 +14,10 @@ table.notifications.bp-tables-user thead th.date {
     width: 100%;
 }
 
+.members-list .user-update {
+    display: none;
+}
+
 /*Activity Shortcode*/
 .activity-list.bp-list .bps-activity-item {
     position: relative;
