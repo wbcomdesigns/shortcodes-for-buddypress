@@ -455,6 +455,15 @@ div#youzify.bp-shortcode-activity {
     margin: 0;
 }
 
+.site-wrapper #groups-list.bp-list.bb-platform-shortcode .item {
+    justify-content: center;
+}
+
+.site-wrapper .buddypress-wrap .bb-platform-shortcode.grid.bp-list>li .list-wrap .buddyx-mem-cover-wrapper+.list-wrap-inner .item-avatar {
+    margin-top: -80px;
+    margin-bottom: 15px;
+}
+
 /*Reign Theme*/
 .activity-list.bp-list .bps-activity-item{
     border-radius: var(--reign-global-border-radius)!important;
@@ -519,6 +528,10 @@ div#youzify.bp-shortcode-activity {
 }
 .bp-shortcode-activity .friendship-button.is_friend.generic-button a.friendship-button.is_friend {
     padding: 0 25px;
+}
+
+.bp-nouveau #buddypress.buddypress-wrap .bb-platform-shortcode.grid.bp-list.wbtm-group-directory-type-3>li .action .generic-button button {
+    text-align: center;
 }
 
 /*SocialV Theme*/

@@ -32,7 +32,7 @@ $enabled_joined_date   = ! function_exists( 'bb_enabled_member_directory_element
 				<?php echo bp_get_members_pagination_count(); ?>
 			</div>
 		
-			<ul id="members-list" class="<?php echo esc_attr( $classes ); ?>">
+			<ul id="members-list" class="bb-platform-shortcode <?php echo esc_attr( $classes ); ?>">
 			<?php
 			while ( bp_members() ) :
 				bp_the_member();
