@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-11 06:17:31+00:00\n"
+"POT-Creation-Date: 2025-04-11 06:34:03+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1788,7 +1788,7 @@ msgid "Themes & Extension"
 msgstr ""
 
 #: elementor/class-buddypress-shortcode-elements.php:65
-#: shortcodes-for-buddypress.php:370
+#: shortcodes-for-buddypress.php:367
 msgid "BuddyPress Widgets"
 msgstr ""
 
@@ -2058,19 +2058,19 @@ msgstr ""
 msgid "%1$s and %2$s will not activate together. Please deactivate %1$s"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:330
+#: shortcodes-for-buddypress.php:327
 msgid "Shortcodes For BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:331
+#: shortcodes-for-buddypress.php:328
 msgid "BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:332
+#: shortcodes-for-buddypress.php:329
 msgid "Install BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:336
+#: shortcodes-for-buddypress.php:333
 #. translators: 1: Shortcodes For BuddyPress, 2: BuddyPress
 msgid ""
 "%1$s is ineffective as it requires %2$s to be installed and active. Please "

@@ -136,9 +136,6 @@ register_deactivation_hook( __FILE__, 'shortcodes_for_buddypress_deactivate' );
 require_once plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress.php';
 
-require_once __DIR__ . '/vendor/autoload.php';
-HardG\BuddyPress120URLPolyfills\Loader::init();
-
 /**
  * This function will deactivate the Shortcodes_for_Buddypress core plugin if Shortcodes_for_Buddypress Pro plugin is activated.
  * This was done to avoid conflicts between the functionalities of both the plugins.
