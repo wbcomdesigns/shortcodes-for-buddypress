@@ -29,7 +29,7 @@ $enabled_joined_date   = ! function_exists( 'bb_enabled_member_directory_element
 		<?php if ( bp_has_members( $query ) ) : ?>
 			
 			<div class="bpsp-member-count">			
-				<?php echo bp_get_members_pagination_count(); ?>
+				<?php echo wp_kses_post( bp_get_members_pagination_count() ); ?>
 			</div>
 		
 			<ul id="members-list" class="bb-platform-shortcode <?php echo esc_attr( $classes ); ?>">
