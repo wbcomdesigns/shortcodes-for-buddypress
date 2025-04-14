@@ -30,7 +30,7 @@ $group_cover_height = function_exists( 'bb_get_group_cover_image_height' ) ? bb_
 if ( bp_has_groups( $query ) ) {
 	?>
 		<div class="bpsp-group-count">	
-			<?php echo bp_get_groups_pagination_count(); ?>
+			<?php echo wp_kses_post( bp_get_groups_pagination_count() ); ?>
 		</div>
 		<ul id="groups-list" class="bb-platform-shortcode <?php bp_nouveau_loop_classes(); ?><?php echo esc_attr( ' ' . $cover_class . ' ' . $group_alignment ); ?> <?php echo esc_attr( $classes ); ?>">
 			<?php
