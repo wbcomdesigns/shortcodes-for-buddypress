@@ -21,7 +21,7 @@ class MemberShortCode extends BPShortCode {
 
 	// Method to handle Class A shortcode logic
 	public function handle_shortcode( $atts, $content = '' ) {
-		if ( is_admin() ) {
+		if ( is_admin() && ! wp_doing_ajax() && ! isset( $_GET['elementor-preview'] ) ) {
 			return '';
 		}
 		// Allow filtering of attributes
