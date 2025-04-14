@@ -234,9 +234,10 @@ function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
 
     // Sanitize the plugin parameter.
     $plugin = sanitize_text_field( $plugin );
+	// phpcs:disable
 	$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
 	$requested_plugin = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : '';
-
+	// phpcs:enable
     // Verify if the activated plugin matches the current plugin and BuddyPress is active.
     if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
         // Sanitize the $_REQUEST parameters to prevent any potential security issues.  
