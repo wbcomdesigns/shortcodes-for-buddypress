@@ -20,7 +20,7 @@
 		<?php if ( bp_has_members( $query ) ) : ?>
 			
 			<div class="bpsp-member-count">			
-				<?php echo bp_get_members_pagination_count(); ?>
+				<?php echo wp_kses_post( bp_get_members_pagination_count() ); ?>
 			</div>
 			
 			<ul id="members-list" class="<?php echo esc_attr( $classes ); ?>" >
