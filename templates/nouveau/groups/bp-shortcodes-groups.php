@@ -19,7 +19,7 @@
 		<?php if ( bp_has_groups( $query ) ) : ?>
 		
 			<div class="bpsp-group-count">	
-				<?php echo bp_get_groups_pagination_count(); ?>
+				<?php echo wp_kses_post( bp_get_groups_pagination_count() ); ?>
 			</div>
 
 			<ul id="groups-list" class="<?php echo esc_attr( $classes ); ?>">
