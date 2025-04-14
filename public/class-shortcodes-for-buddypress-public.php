@@ -691,8 +691,10 @@ class Shortcodes_For_Buddypress_Public {
 	}
 	
 	public function buddypress_shortcode_enable_share( $is_enable ) {
-
-		$is_enable = true;
+		if( bp_shortcode_is_shortcode_page() ){
+			$is_enable = true;
+		}
 		return $is_enable;
 	}
+	
 }
