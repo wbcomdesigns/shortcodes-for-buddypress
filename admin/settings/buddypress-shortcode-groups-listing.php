@@ -16,7 +16,7 @@ global $bp_grp_types;
 	<div class="wbcom-wrapper-admin">
 		<div class="wbcom-admin-title-section">
 			<p class="wbcom-welcome-description">
-				<?php echo esc_html( 'The [groups-listing] shortcode allows you to display listing of groups in posts/pages.' ); ?>
+				<?php echo esc_html( 'The [groups-listing] shortcode allows you to display a listing of groups in posts/pages.' ); ?>
 			</p>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
@@ -201,7 +201,7 @@ global $bp_grp_types;
 						<label for="group_types_search">
 							<?php esc_html_e( 'order', 'shortcodes-for-buddypress' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Sort activies by "ASC" or "DESC"', 'shortcodes-for-buddypress' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Sort activities by "ASC" or "DESC"', 'shortcodes-for-buddypress' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label class="bupr-switch">
@@ -310,7 +310,7 @@ global $bp_grp_types;
 						<label for="group_types_search">
 							<?php esc_html_e( 'group_type__not_in', 'shortcodes-for-buddypress' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Array or comma-separated list of group types that will be excluded from results.', 'shortcodes-for-buddypress' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Array or comma-separated list of group types to exclude from results.', 'shortcodes-for-buddypress' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label class="bupr-switch">

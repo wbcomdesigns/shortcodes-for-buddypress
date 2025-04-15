@@ -18,7 +18,7 @@ global $bp_grp_types;
 			<p class="wbcom-welcome-description">
 				<?php echo esc_html( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.' ); ?>
 				<br>
-				<?php echo esc_html( 'The [activity-listing] is work as same as site-wide activity page work.' ); ?>
+				<?php echo esc_html( 'The [activity-listing] works the same as the site-wide activity page.' ); ?>
 			</p>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
@@ -28,7 +28,7 @@ global $bp_grp_types;
 						<label for="group_types_search">
 							<?php esc_html_e( 'title', 'shortcodes-for-buddypress' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'The title for the activities. Title will display on the top of the activities.', 'shortcodes-for-buddypress' ); ?></p>
+						<p class="description"><?php esc_html_e( 'The title for the activities. It will be displayed above the activity list.', 'shortcodes-for-buddypress' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label class="bupr-switch">
@@ -107,7 +107,7 @@ global $bp_grp_types;
 						<label for="group_types_search">
 							<?php esc_html_e( 'sort', 'shortcodes-for-buddypress' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Sort activies by "ASC" or "DESC"', 'shortcodes-for-buddypress' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Sort activities by "ASC" or "DESC"', 'shortcodes-for-buddypress' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label class="bupr-switch">
@@ -171,7 +171,7 @@ global $bp_grp_types;
 						<label for="group_types_search">
 							<?php esc_html_e( 'scope', 'shortcodes-for-buddypress' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Use a BuddyPress pre-built filter. - "just-me" - retrieves items belonging only to a user; this is equivalent to passing a "user_id" argument. - "friends" - retrieves items belonging to the friends of a user. - "groups" - retrieves items belonging to groups to which a user belongs to. - "favorites" - retrieves a users favorited activity items. - "mentions" - retrieves items where a user has received an @-mention.', 'shortcodes-for-buddypress' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Use a BuddyPress pre-built filter. - "just-me" - retrieves items belonging only to a user; this is equivalent to passing a "user_id" argument. - "friends" - retrieves items belonging to the friends of a user. - "groups" - retrieves items from groups the user belongs to. - "favorites" - retrieves a users favorited activity items. - "mentions" - retrieves items where a user has received an @-mention.', 'shortcodes-for-buddypress' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label class="bupr-switch">
@@ -187,7 +187,7 @@ global $bp_grp_types;
 						<label for="group_types_search">
 							<?php esc_html_e( 'object', 'shortcodes-for-buddypress' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Filters by the `component` column in the database, which is generally the component ID in the case of BuddyPress components, or the plugin slug in the case of plugins.', 'shortcodes-for-buddypress' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Filters by the `component` column in the database. This is usually the component ID for BuddyPress components or the plugin slug for third-party plugins.', 'shortcodes-for-buddypress' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
 						<label class="bupr-switch">

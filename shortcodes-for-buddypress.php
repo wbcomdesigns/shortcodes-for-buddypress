@@ -45,7 +45,7 @@ if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', app
 			$bp_shortcode_pro = esc_html__( 'Wbcom Designs - Shortcode For BuddyPress Pro', 'shortcodes-for-buddypress' );
 			echo '<div class="error"><p>';
 			/* translators: %s: */
-			echo sprintf( esc_html__( '%1$s and %2$s will not activate together. Please deactivate %1$s', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bp_shortcode_pro ) . '</strong>', '<strong>' . esc_html( $bp_shortcode ) . '</strong>' );
+			echo sprintf( esc_html__( '%1$s and %2$s cannot be activated simultaneously. Please deactivate %1$s to continue.', 'shortcodes-for-buddypress' ), '<strong>' . esc_html( $bp_shortcode_pro ) . '</strong>', '<strong>' . esc_html( $bp_shortcode ) . '</strong>' );
 			echo '</p></div>';
 		}
 	);
@@ -76,7 +76,7 @@ if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME' ) ) {
 /**
  * This function will get triggered when plugin gets activated.
  * In this function we are including the plugin activator file.
- * Plugin activator file will contain all the functionalities that were needed at the time of plugin activation.
+ * The activator file contains all the functionality required during plugin activation.
  *  
  * @since 1.0.0
  * @return void 
@@ -87,11 +87,11 @@ function shortcodes_for_buddypress_activate() {
 	$activator_file_path  = plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-activator.php';
 	
 	// Checking if the activator file exists.
-	if(file_exists($activator_file_path)){
+	if( file_exists( $activator_file_path ) ){
 		// Including activator file if it exists.
 		require_once $activator_file_path;
 		// Checking if activator class exits.
-		if(class_exists('Shortcodes_For_Buddypress_Activator')){
+		if( class_exists( 'Shortcodes_For_Buddypress_Activator' ) ){
 			// Call to activate function if the activator file exists.
 			Shortcodes_For_Buddypress_Activator::activate();
 		}
@@ -103,8 +103,8 @@ register_activation_hook( __FILE__, 'shortcodes_for_buddypress_activate' );
 /**
  * This function will get triggered when plugin gets deactivated.
  * In this function we are including the plugin deactivator file.
- * Plugin deactivator file will contain all the functionalities that were needed at the time of plugin deactivation.
- * Including clearing unnecessary data reagrding postmeta, termmeta and usermeta.
+ * The deactivator file includes all functionalities required during plugin deactivation,
+ * including clearing unnecessary data from postmeta, termmeta, and usermeta.
  * 
  * @since 1.0.0
  * @return void 
@@ -138,7 +138,7 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddyp
 
 /**
  * This function will deactivate the Shortcodes_for_Buddypress core plugin if Shortcodes_for_Buddypress Pro plugin is activated.
- * This was done to avoid conflicts between the functionalities of both the plugins.
+ * This prevents conflicts between the core and Pro versions of the plugin.
  * 
  * If Shortcodes_for_Buddypress Pro plugin was not found it will continue the execution of the core plugin.
  *  
@@ -146,12 +146,12 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddyp
  * @return void
  */
 function shortcodes_for_buddypress_run() {
-	//Checks if the pro plugin is installed and activated.
+	// Check if the Pro plugin is installed and activated.
 	if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && function_exists( 'run_shortcodes_for_buddypress_pro' )) {
-		//Deactivates the core plugin if pro plugin is activated.
+		// Deactivate the core plugin if the Pro version is active.
 		deactivate_plugins( 'shortcodes-for-buddypress/shortcodes-for-buddypress.php' );
 	} else {
-		//Begins execution of the current plugin.
+		// Otherwise, begin execution of the current plugin.
 		$plugin = new Shortcodes_For_Buddypress();
 		$plugin->run();
 	}
@@ -164,8 +164,8 @@ shortcodes_for_buddypress_run();
  * 
  * This function verifies whether BuddyPress or BuddyBoss is active on the site. If neither is active,
  * it deactivates the Shortcodes for BuddyPress plugin and displays an admin notice informing the user
- * that BuddyPress or BuddyBoss is required. The function only runs in the admin area to avoid unnecessary
- * checks on the frontend.
+ * that BuddyPress or BuddyBoss is required. The function is executed only in the admin area to prevent
+ *  unnecessary checks on the frontend.
  *
  * The function uses `deactivate_plugins()` conditionally, ensuring deactivation only when neither BuddyPress
  * nor BuddyBoss is present. It optimizes the plugin status checks by using `is_plugin_active()` and 
@@ -218,8 +218,8 @@ if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
  *
  * This function is triggered when the plugin is activated. It checks if BuddyPress
  * (or BuddyBoss) is active and then redirects the user to the plugin's settings page.
- * The redirection only occurs in the admin area and is performed using `wp_safe_redirect()`
- * for added security. All input parameters are sanitized to ensure safe processing.
+ * The redirection occurs only in the admin area and is performed using wp_safe_redirect() for enhanced security.
+ * All input parameters are sanitized to ensure safe processing.
  *
  * @since 1.0.0
  * @param string $plugin Path to the plugin file relative to the plugins directory.
@@ -291,8 +291,8 @@ function shortcodes_for_buddypress_do_activation_redirect() {
 add_action( 'admin_init', 'shortcodes_for_buddypress_do_activation_redirect' );
 
 /**
- * This function is triggered in the admin area when BuddyPress or BuddyBoss is required
- * but not active. It outputs a message to the admin dashboard, informing the user that 
+ * This function is triggered in the admin area if BuddyPress or BuddyBoss is required but not active.
+ * It outputs a message to the admin dashboard, informing the user that 
  * the Shortcodes for BuddyPress plugin requires BuddyPress or BuddyBoss to function correctly.
  * The notice provides a link to install BuddyPress if it is missing.
  *
@@ -456,8 +456,8 @@ function shortcodes_for_buddypress_iterate_comments( $comments, $max_depth = 5, 
  * Adds custom classes to the BuddyPress groups loop.
  *
  * This function adjusts the classes applied to the BuddyPress groups loop based on user preferences
- * and customizer settings. It retrieves the layout preferences for the groups loop and applies 
- * appropriate grid classes to adjust the display of groups. This helps provide a customized 
+ * and customizer settings. The function retrieves the layout preferences for the groups loop and applies 
+ * the corresponding grid classes to adjust the display of groups. This helps provide a customized 
  * layout experience for BuddyPress groups within themes that support BuddyPress.
  *
  * It is optimized to ensure performance with large groups by directly retrieving the necessary

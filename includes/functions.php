@@ -1,10 +1,11 @@
 <?php
 
-/** Includes EDD sell services template file.
+/**
+ * Includes Shortcodes for BuddyPress template file.
  *
  * @since 1.0.0
- * @param string $file_name file name to include the specific template. 
- * @return void.
+ * @param string $file_name File name to include the specific template.
+ * @return void
  */
 
 function shortcodes_for_buddypress_template( $file_name ) {
@@ -26,7 +27,7 @@ function shortcodes_for_buddypress_template( $file_name ) {
 	}
 	
 	/** Apply filter to extend the functionality of template override so that user can use this filter to replace current template path with its own template path.
-	 * If template path exist then include the template and list the functionality of shortcode.
+	 * If the template path exists, include the template and load the shortcode functionality.
 	 * @since 2.7.2
 	 */
 

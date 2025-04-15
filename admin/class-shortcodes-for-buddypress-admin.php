@@ -39,7 +39,13 @@ class Shortcodes_For_Buddypress_Admin {
 	 */
 	private $version;
 
-
+	/**
+	 * The settings of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $plugin_settings_tabs    Settings array of this plugin.
+	 */
 	private $plugin_settings_tabs;
 
 	/**
@@ -59,7 +65,12 @@ class Shortcodes_For_Buddypress_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    1.0.0
+	 * This function enqueues the plugin-specific admin stylesheet only
+	 * on the appropriate admin pages to avoid unnecessary loading elsewhere.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $hook The current admin page hook suffix.
 	 */
 	public function enqueue_styles( $hook ) {
 
@@ -82,9 +93,14 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Register the JavaScript for the admin area.
+	 * Register the script for the admin area.
 	 *
-	 * @since    1.0.0
+	 * This function enqueues the plugin-specific admin script only
+	 * on the appropriate admin pages to avoid unnecessary loading elsewhere.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $hook The current admin page hook suffix.
 	 */
 	public function enqueue_scripts( $hook ) {
 
@@ -105,6 +121,15 @@ class Shortcodes_For_Buddypress_Admin {
 
 	}
 
+	/**
+	 * Hide all admin notices on specific Wbcom settings pages.
+	 *
+	 * This function removes all admin notices (both `admin_notices` and `all_admin_notices`)
+	 * when viewing specified Wbcom plugin settings or support pages to provide a cleaner admin UI.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
 	public function wbcom_hide_all_admin_notices_from_setting_page() {
 		$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'shortcodes-for-buddypress' );
 		$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
@@ -170,44 +195,69 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Actions performed to create tabs on the sub menu page
+	 * Render the settings tabs for the BuddyPress Shortcodes plugin.
+	 *
+	 * Displays tab navigation based on the plugin settings.
 	 *
 	 * @since 1.0.0
 	 */
 	public function buddypress_shortcodes_plugin_settings_tabs() {
-		$current_tab = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'buddypress-shortcode-welcome';
-		echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
-		foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
-			$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
-			echo '<li class="' . esc_attr( $tab_key ) . '"><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=' . esc_attr( $this->plugin_name ) . '&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
-		}
-		echo '</div></ul></div>';
+		$current_tab = ( filter_input( INPUT_GET, 'tab' ) !== null )
+			? sanitize_text_field( filter_input( INPUT_GET, 'tab' ) )
+			: 'buddypress-shortcode-welcome';
+
+		echo '<div class="wbcom-tabs-section">';
+			echo '<div class="nav-tab-wrapper">';
+
+				// Responsive Menu Toggle
+				echo '<div class="wb-responsive-menu">';
+					echo '<span>' . esc_html__( 'Menu', 'shortcodes-for-buddypress' ) . '</span>';
+					echo '<input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn">';
+					echo '<label class="wb-toggle-icon" for="wb-toggle-btn">';
+						echo '<span class="wb-icon-bars"></span>';
+					echo '</label>';
+				echo '</div>'; // .wb-responsive-menu
+
+				// Tab Navigation List
+				echo '<ul>';
+					foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
+						$active = ( $current_tab === $tab_key ) ? 'nav-tab-active' : '';
+						echo '<li class="' . esc_attr( $tab_key ) . '">';
+							echo '<a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=' . esc_attr( $this->plugin_name ) . '&tab=' . esc_attr( $tab_key ) . '">';
+								echo esc_html( $tab_caption );
+							echo '</a>';
+						echo '</li>';
+					}
+				echo '</ul>';
+
+			echo '</div>'; // .nav-tab-wrapper
+		echo '</div>'; // .wbcom-tabs-section
 	}
 
 
-		/**
-		 * Register all settings.
-		 *
-		 * @since 2.0.0
-		 */
+	/**
+	 * Register all settings tabs and their content callbacks.
+	 *
+	 * @since 2.0.0
+	 */
 	public function buddypress_shortcodes_plugin_settings() {
-		$this->plugin_settings_tabs['buddypress-shortcode-welcome'] = esc_html__( 'Welcome', 'shortcodes-for-buddypress' );
-		add_settings_section( 'buddypress-shortcode-welcome', ' ', array( &$this, 'buddypress_shortcodes_welcome_content' ), 'buddypress-shortcode-welcome' );
 
-		$this->plugin_settings_tabs['buddypress-shortcode-general'] = esc_html__( 'General', 'shortcodes-for-buddypress' );
-		add_settings_section( 'buddypress-shortcode-general', ' ', array( &$this, 'buddypress_shortcodes_general_settings_content' ), 'buddypress-shortcode-general' );
+		$tabs = [
+			'buddypress-shortcode-welcome'           => [ 'Welcome', 'buddypress_shortcodes_welcome_content' ],
+			'buddypress-shortcode-general'           => [ 'General', 'buddypress_shortcodes_general_settings_content' ],
+			'buddypress-shortcode-activities'        => [ 'Activities', 'buddypress_shortcodes_activities_settings_content' ],
+			'buddypress-shortcode-member'            => [ 'Members', 'buddypress_shortcodes_member_settings_content' ],
+			'buddypress-shortcode-groups'            => [ 'Groups', 'buddypress_shortcodes_groups_settings_content' ],
+			'buddypress-shortcode-user-notification' => [ 'User Notification', 'buddypress_shortcodes_user_notification_settings_content' ],
+		];
 
-		$this->plugin_settings_tabs['buddypress-shortcode-activities'] = esc_html__( 'Activities', 'shortcodes-for-buddypress' );
-		add_settings_section( 'buddypress-shortcode-activities', ' ', array( &$this, 'buddypress_shortcodes_activities_settings_content' ), 'buddypress-shortcode-activities' );
+		foreach ( $tabs as $tab_slug => $tab_data ) {
+			$label    = esc_html__( $tab_data[0], 'shortcodes-for-buddypress' );
+			$callback = [ $this, $tab_data[1] ];
 
-		$this->plugin_settings_tabs['buddypress-shortcode-member'] = esc_html__( 'Members', 'shortcodes-for-buddypress' );
-		add_settings_section( 'buddypress-shortcode-member', ' ', array( &$this, 'buddypress_shortcodes_member_settings_content' ), 'buddypress-shortcode-member' );
-
-		$this->plugin_settings_tabs['buddypress-shortcode-groups'] = esc_html__( 'Groups', 'shortcodes-for-buddypress' );
-		add_settings_section( 'buddypress-shortcode-groups', ' ', array( &$this, 'buddypress_shortcodes_groups_settings_content' ), 'buddypress-shortcode-groups' );
-
-		$this->plugin_settings_tabs['buddypress-shortcode-user-notification'] = esc_html__( 'User Notification', 'shortcodes-for-buddypress' );
-		add_settings_section( 'buddypress-shortcode-user-notification', ' ', array( &$this, 'buddypress_shortcodes_user_notification_settings_content' ), 'buddypress-shortcode-user-notification' );
+			$this->plugin_settings_tabs[ $tab_slug ] = $label;
+			add_settings_section( $tab_slug, ' ', $callback, $tab_slug );
+		}
 	}
 
 	/**

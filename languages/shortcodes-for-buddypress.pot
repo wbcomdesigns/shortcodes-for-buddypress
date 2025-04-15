@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-11 06:34:03+00:00\n"
+"POT-Creation-Date: 2025-04-15 05:24:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -106,51 +106,30 @@ msgstr ""
 msgid "Shortcode For BuddyPress"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:125
+#: admin/class-shortcodes-for-buddypress-admin.php:150
 msgid "WB Plugins"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:126
-#: admin/class-shortcodes-for-buddypress-admin.php:197
+#: admin/class-shortcodes-for-buddypress-admin.php:151
 msgid "General"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:128
+#: admin/class-shortcodes-for-buddypress-admin.php:153
 msgid "Shortcodes"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:148
+#: admin/class-shortcodes-for-buddypress-admin.php:173
 msgid "BuddyPress Shortcodes"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:152
+#: admin/class-shortcodes-for-buddypress-admin.php:177
 #: admin/wbcom/templates/wbcom-license-page.php:13
 #. translators: %s:
 msgid "Version %s"
 msgstr ""
 
-#: admin/class-shortcodes-for-buddypress-admin.php:194
-msgid "Welcome"
-msgstr ""
-
-#: admin/class-shortcodes-for-buddypress-admin.php:200
-#: admin/settings/buddypress-shortcode-general-settings.php:27
-msgid "Activities"
-msgstr ""
-
-#: admin/class-shortcodes-for-buddypress-admin.php:203
-#: admin/settings/buddypress-shortcode-general-settings.php:45
-msgid "Members"
-msgstr ""
-
-#: admin/class-shortcodes-for-buddypress-admin.php:206
-#: admin/settings/buddypress-shortcode-general-settings.php:63
-msgid "Groups"
-msgstr ""
-
-#: admin/class-shortcodes-for-buddypress-admin.php:209
-#: admin/settings/buddypress-shortcode-general-settings.php:81
-msgid "User Notification"
+#: admin/class-shortcodes-for-buddypress-admin.php:214
+msgid "Menu"
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:29
@@ -161,11 +140,7 @@ msgid "title"
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:31
-#: admin/settings/buddypress-shortcode-groups-listing.php:29
-#: admin/settings/buddypress-shortcode-member-listing.php:29
-msgid ""
-"The title for the activities. Title will display on the top of the "
-"activities."
+msgid "The title for the activities. It will be displayed above the activity list."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:35
@@ -296,7 +271,7 @@ msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:110
 #: admin/settings/buddypress-shortcode-groups-listing.php:204
-msgid "Sort activies by \"ASC\" or \"DESC\""
+msgid "Sort activities by \"ASC\" or \"DESC\""
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:115
@@ -381,9 +356,9 @@ msgid ""
 "Use a BuddyPress pre-built filter. - \"just-me\" - retrieves items "
 "belonging only to a user; this is equivalent to passing a \"user_id\" "
 "argument. - \"friends\" - retrieves items belonging to the friends of a "
-"user. - \"groups\" - retrieves items belonging to groups to which a user "
-"belongs to. - \"favorites\" - retrieves a users favorited activity items. - "
-"\"mentions\" - retrieves items where a user has received an @-mention."
+"user. - \"groups\" - retrieves items from groups the user belongs to. - "
+"\"favorites\" - retrieves a users favorited activity items. - \"mentions\" "
+"- retrieves items where a user has received an @-mention."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:188
@@ -392,9 +367,9 @@ msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:190
 msgid ""
-"Filters by the `component` column in the database, which is generally the "
-"component ID in the case of BuddyPress components, or the plugin slug in "
-"the case of plugins."
+"Filters by the `component` column in the database. This is usually the "
+"component ID for BuddyPress components or the plugin slug for third-party "
+"plugins."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-activity-listing.php:194
@@ -499,44 +474,67 @@ msgstr ""
 msgid "Whether to pre-fetch the activity metadata for the queried items."
 msgstr ""
 
+#: admin/settings/buddypress-shortcode-general-settings.php:27
+msgid "Activities"
+msgstr ""
+
 #: admin/settings/buddypress-shortcode-general-settings.php:30
 msgid ""
-"BuddyPress Activity Shortcode allows you to embed BuddyPress activities in "
-"posts/pages using shortcodes. "
+"The BuddyPress Activity shortcode allows you to embed BuddyPress activities "
+"into posts and pages. "
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-general-settings.php:36
 msgid "[activity-listing]"
 msgstr ""
 
+#: admin/settings/buddypress-shortcode-general-settings.php:45
+msgid "Members"
+msgstr ""
+
 #: admin/settings/buddypress-shortcode-general-settings.php:48
 msgid ""
-"BuddyPress Members Shortcode allows you to embed BuddyPress members in "
-"posts/pages using shortcodes."
+"The BuddyPress Members shortcode allows you to embed BuddyPress members "
+"into posts and pages."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-general-settings.php:54
 msgid "[members-listing]"
 msgstr ""
 
+#: admin/settings/buddypress-shortcode-general-settings.php:63
+msgid "Groups"
+msgstr ""
+
 #: admin/settings/buddypress-shortcode-general-settings.php:66
 msgid ""
-"BuddyPress Groups Shortcode allows you to embed BuddyPress groups in "
-"posts/pages using shortcodes."
+"The BuddyPress Groups shortcode allows you to embed BuddyPress groups into "
+"posts and pages."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-general-settings.php:72
 msgid "[groups-listing]"
 msgstr ""
 
+#: admin/settings/buddypress-shortcode-general-settings.php:81
+msgid "User Notification"
+msgstr ""
+
 #: admin/settings/buddypress-shortcode-general-settings.php:84
 msgid ""
-"BuddyPress Notification Shortcode allows you to embed BuddyPress "
-"notificaition list in posts/pages using shortcodes."
+"The BuddyPress Notifications shortcode allows you to embed the BuddyPress "
+"notification list into posts and pages."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-general-settings.php:90
 msgid "[notifications-listing]"
+msgstr ""
+
+#: admin/settings/buddypress-shortcode-groups-listing.php:29
+#: admin/settings/buddypress-shortcode-member-listing.php:29
+msgid ""
+"The title for the activities. Title will display on the top of the "
+"activities."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-groups-listing.php:42
@@ -709,9 +707,7 @@ msgid "group_type__not_in"
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-groups-listing.php:313
-msgid ""
-"Array or comma-separated list of group types that will be excluded from "
-"results."
+msgid "Array or comma-separated list of group types to exclude from results."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-groups-listing.php:329
@@ -755,7 +751,7 @@ msgid "Default - upage"
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-member-listing.php:124
-msgid "The class of conainer of member loop."
+msgid "The class of container of member loop."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-member-listing.php:129
@@ -897,9 +893,9 @@ msgstr ""
 
 #: admin/settings/buddypress-shortcode-welcome-page.php:19
 msgid ""
-"Shortcodes & Elementor Widgets For BuddyPress plugin allows you to embed "
-"BuddyPress Activities, BuddyPress Members and Groups in posts/pages using "
-"shortcodes."
+"The Shortcodes for BuddyPress plugin makes it easy to display BuddyPress "
+"Activities, Members, and Groups directly on your pages or posts using "
+"simple shortcodes or Elementor widgets."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-welcome-page.php:26
@@ -919,8 +915,8 @@ msgstr ""
 
 #: admin/settings/buddypress-shortcode-welcome-page.php:33
 msgid ""
-"We have prepared an extensive guide on BuddyPress Ads to learn all aspects "
-"of the plugin. You will find most of your answers here."
+"Explore our detailed guide on Shortcodes For BuddyPress to understand all "
+"the features and how to make the most of them."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-welcome-page.php:34
@@ -933,8 +929,8 @@ msgstr ""
 
 #: admin/settings/buddypress-shortcode-welcome-page.php:41
 msgid ""
-"We strive to offer the best customer care via our support center. Once your "
-"theme is activated, you can ask us for help anytime."
+"Our support team is here to assist you with any questions or issues. Feel "
+"free to contact us anytime through our support center."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-welcome-page.php:42
@@ -942,13 +938,13 @@ msgid "Get Support"
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-welcome-page.php:47
-msgid "Got Feedback?"
+msgid "Share Your Feedback"
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-welcome-page.php:48
 msgid ""
-"We want to hear about your experience with the plugin. We would also love "
-"to hear any suggestions you may for future updates."
+"We’d love to hear about your experience with the plugin. Your feedback and "
+"suggestions help us improve future updates."
 msgstr ""
 
 #: admin/settings/buddypress-shortcode-welcome-page.php:49
@@ -1724,25 +1720,25 @@ msgid "Help & Support"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:14
-msgid "How can we help you?"
+msgid "How can we assist you?"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:15
 msgid ""
-"Our team is here to help you out at anytime. If you have any idea about how "
-"we could improve. You can share access to your site on our helpdesk if it "
-"can help getting faster."
+"Our team is here to support you at any time. If you have ideas for "
+"improvements, feel free to share them. You can also grant us access to your "
+"site through our helpdesk for quicker assistance."
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:24
-msgid "Tickets Support"
+msgid "Ticket Support"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:25
 msgid ""
-"Open a ticket on our helpdesk, we don't guarantee a fast response but "
-"within a week. Except if you've purchased one of our product we'll reply "
-"within 24 hours."
+"Open a ticket on our helpdesk. We aim to respond within a week, but if "
+"you’ve purchased one of our products, you’ll receive a reply within 24 "
+"hours."
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:28
@@ -1788,7 +1784,7 @@ msgid "Themes & Extension"
 msgstr ""
 
 #: elementor/class-buddypress-shortcode-elements.php:65
-#: shortcodes-for-buddypress.php:367
+#: shortcodes-for-buddypress.php:368
 msgid "BuddyPress Widgets"
 msgstr ""
 
@@ -1815,7 +1811,7 @@ msgid "Add activity title"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:101
-msgid "display number of activities"
+msgid "Display Number of Activities"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:104
@@ -1830,8 +1826,7 @@ msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:116
 #: elementor/widgets/class-buddypress-groups-widget.php:133
-#: elementor/widgets/class-buddypress-members-widget.php:145
-msgid "Power up up your listing with custom queries and templates."
+msgid "Power up your listing with custom queries and templates."
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:129
@@ -1863,7 +1858,7 @@ msgid "Padding"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:187
-msgid "Spacing items"
+msgid "Item Spacing"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:206
@@ -1931,12 +1926,11 @@ msgid "Groups List"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-groups-widget.php:118
-msgid "Display number of group"
+msgid "Display Number of Groups"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-groups-widget.php:121
-#: elementor/widgets/class-buddypress-members-widget.php:133
-msgid "How many members display on page."
+msgid "How many groups to display per page."
 msgstr ""
 
 #: elementor/widgets/class-buddypress-groups-widget.php:146
@@ -1949,6 +1943,14 @@ msgstr ""
 
 #: elementor/widgets/class-buddypress-members-widget.php:130
 msgid "Per Page"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-members-widget.php:133
+msgid "How many members display on page."
+msgstr ""
+
+#: elementor/widgets/class-buddypress-members-widget.php:145
+msgid "Power up up your listing with custom queries and templates."
 msgstr ""
 
 #: elementor/widgets/class-buddypress-members-widget.php:158
@@ -1972,7 +1974,7 @@ msgid "Please enable the Notifications Component."
 msgstr ""
 
 #: public/class-shortcodes-for-buddypress-public.php:319
-msgid "Please Log in to view notifications."
+msgid "Please log in to view your notifications."
 msgstr ""
 
 #: public/class-shortcodes-for-buddypress-public.php:391
@@ -2037,7 +2039,7 @@ msgstr ""
 msgid "Unpin from Feed"
 msgstr ""
 
-#: public/shortcode/class-group-schortcode.php:116
+#: public/shortcode/class-group-shortcode.php:116
 msgid "To view groups, please enable the group component."
 msgstr ""
 
@@ -2055,22 +2057,24 @@ msgstr ""
 
 #: shortcodes-for-buddypress.php:48
 #. translators: %s:
-msgid "%1$s and %2$s will not activate together. Please deactivate %1$s"
-msgstr ""
-
-#: shortcodes-for-buddypress.php:327
-msgid "Shortcodes For BuddyPress"
+msgid ""
+"%1$s and %2$s cannot be activated simultaneously. Please deactivate %1$s to "
+"continue."
 msgstr ""
 
 #: shortcodes-for-buddypress.php:328
-msgid "BuddyPress"
+msgid "Shortcodes For BuddyPress"
 msgstr ""
 
 #: shortcodes-for-buddypress.php:329
+msgid "BuddyPress"
+msgstr ""
+
+#: shortcodes-for-buddypress.php:330
 msgid "Install BuddyPress"
 msgstr ""
 
-#: shortcodes-for-buddypress.php:333
+#: shortcodes-for-buddypress.php:334
 #. translators: 1: Shortcodes For BuddyPress, 2: BuddyPress
 msgid ""
 "%1$s is ineffective as it requires %2$s to be installed and active. Please "

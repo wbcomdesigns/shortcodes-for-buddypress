@@ -8,7 +8,7 @@ Stable tag: 2.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin will generate a Shortcode for Listing Activity Streams, Members, and Groups on any post/page on the website.
+This plugin generates shortcodes for Listing Activity Streams, Members, and Groups on any post/page on the website.
 
 == Description ==
 
@@ -35,7 +35,7 @@ If you need more help, please contact us for [Custom Development](https://wbcomd
 
 = Does This plugin require BuddyPress =
 
-Yes, It needs you to have BuddyPress installed and activated.
+Yes, it requires BuddyPress installed and activated.
 
 = Where Do I Ask for Support? =
 
@@ -115,8 +115,8 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 = 2.6.2 =
 * Fix: (#153) Managed shortcode notifications order actions
 * Fix: (#151) Fixed error on adding shortcode
-* Fix: (#148) Fixed php error while activate free and pro plugins togather
-* Fix: (#153) fixed UI of [notifications-listing] shortcode border
+* Fix: (#148) Fixed php error while activate free and pro plugins together
+* Fix: (#153) Fixed UI of [notifications-listing] shortcode border
 * Fix: (#152) Fixed buddyboss notification does not work
 
 = 2.6.1 =

@@ -240,7 +240,7 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 		padding: 20px !important;
 	}
 
-	.notice.bp-shortcode-noticee .bp-shortcode-notice-inner {
+	.notice.bp-shortcode-notice .bp-shortcode-notice-inner {
 		display: block;
 	}
 

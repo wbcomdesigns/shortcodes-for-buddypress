@@ -152,14 +152,14 @@ class Shortcodes_For_Buddypress {
 		 * side of the site.
 		 *
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-group-schortcode.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-group-shortcode.php';
 
 		/**
 		 * The class responsible for rendering of members shortcode that occur in the public-facing
 		 * side of the site.
 		 *
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-member-schortcode.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-member-shortcode.php';
 
 		/**
 		 * The class responsible for load and render elementor widgets

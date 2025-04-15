@@ -98,7 +98,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 		$this->add_control(
 			'sfb_number',
 			array(
-				'label'       => __( 'display number of activities', 'shortcodes-for-buddypress' ),
+				'label'       => __( 'Display Number of Activities', 'shortcodes-for-buddypress' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => 20,
 				'description' => __( 'How many activity items to display.', 'shortcodes-for-buddypress' ),
@@ -113,7 +113,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 					array(
 						'title'    => __( 'Shortcodes for BuddyPress PRO', 'shortcodes-for-buddypress' ),
 						'messages' => array(
-							__( 'Power up up your listing with custom queries and templates.', 'shortcodes-for-buddypress' ),
+							__( 'Power up your listing with custom queries and templates.', 'shortcodes-for-buddypress' ),
 						),
 						'link'     => 'https://wbcomdesigns.com/downloads/shortcodes-for-buddypress-pro',
 					)
@@ -184,7 +184,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 		$this->add_control(
 			'spacing_items',
 			array(
-				'label'     => __( 'Spacing items', 'shortcodes-for-buddypress' ),
+				'label'     => __( 'Item Spacing', 'shortcodes-for-buddypress' ),
 				'type'      => Controls_Manager::SLIDER,
 				'range'     => array(
 					'px' => array(

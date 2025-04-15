@@ -16,7 +16,7 @@ global $bp_grp_types;
 	<div class="wbcom-wrapper-admin">
 		<div class="wbcom-admin-title-section">
 			<p class="wbcom-welcome-description">
-				<?php echo esc_html( 'The [members-listing] shortcode allows you to display listing of members listing in posts/pages.' ); ?>
+				<?php echo esc_html( 'The [members-listing] shortcode allows you to display a listing of members listing in posts/pages.' ); ?>
 			</p>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
@@ -121,7 +121,7 @@ global $bp_grp_types;
 							<label for="group_types_search">
 								<?php esc_html_e( 'container_class', 'shortcodes-for-buddypress' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'The class of conainer of member loop.', 'shortcodes-for-buddypress' ); ?></p>
+							<p class="description"><?php esc_html_e( 'The class of container of member loop.', 'shortcodes-for-buddypress' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">

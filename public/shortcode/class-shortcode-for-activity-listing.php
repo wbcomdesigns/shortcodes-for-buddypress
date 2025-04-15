@@ -19,7 +19,7 @@
 
 class ActivityShortCode extends BPShortCode {
 
-	// Method to handle Class A shortcode logic
+	// Method to handle member shortcode logic
 	public function handle_shortcode( $atts, $content = '' ) {
 		if ( is_admin() && ! wp_doing_ajax() && ! isset( $_GET['elementor-preview'] ) ) {
 			return '';

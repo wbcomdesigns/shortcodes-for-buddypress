@@ -115,10 +115,10 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 		$this->add_control(
 			'sfb_per_page',
 			array(
-				'label'       => __( 'Display number of group', 'shortcodes-for-buddypress' ),
+				'label'       => __( 'Display Number of Groups', 'shortcodes-for-buddypress' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => 20,
-				'description' => __( 'How many members display on page.', 'shortcodes-for-buddypress' ),
+				'description' => __( 'How many groups to display per page.', 'shortcodes-for-buddypress' ),
 			)
 		);
 
@@ -130,7 +130,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 					array(
 						'title'    => __( 'Shortcodes for BuddyPress PRO', 'shortcodes-for-buddypress' ),
 						'messages' => array(
-							__( 'Power up up your listing with custom queries and templates.', 'shortcodes-for-buddypress' ),
+							__( 'Power up your listing with custom queries and templates.', 'shortcodes-for-buddypress' ),
 						),
 						'link'     => 'https://wbcomdesigns.com/downloads/shortcodes-for-buddypress-pro',
 					)

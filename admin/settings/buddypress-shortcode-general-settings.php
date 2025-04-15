@@ -16,7 +16,7 @@ global $bp_grp_types;
 	<div class="wbcom-wrapper-admin">
 		<div class="wbcom-admin-title-section">
 			<p class="wbcom-welcome-description">
-				<?php echo esc_html( 'Shortcodes & Elementor Widgets For BuddyPress plugin allows you to embed BuddyPress Activities, BuddyPress Members and Groups in posts/pages using shortcodes.' ); ?>
+				<?php echo esc_html( 'The "Shortcodes & Elementor Widgets for BuddyPress" plugin allows you to embed BuddyPress Activities, Members, and Groups into posts and pages using shortcodes.' ); ?>
 			</p>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
@@ -27,8 +27,8 @@ global $bp_grp_types;
 							<?php esc_html_e( 'Activities', 'shortcodes-for-buddypress' ); ?>
 						</label>
 						<span class="bp-shortcode-read-more">
-							<p class="description"><?php esc_html_e( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes. ', 'shortcodes-for-buddypress' ); ?></p>
-							<a href="<?php echo esc_attr( 'https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/activity-parameters/what-are-accepted-parameters-for-activity-shortcodes/' );?>" class="bpsh_read_more" target="_blank"><?php echo esc_html( ' read more' ); ?></a>
+							<p class="description"><?php esc_html_e( 'The BuddyPress Activity shortcode allows you to embed BuddyPress activities into posts and pages. ', 'shortcodes-for-buddypress' ); ?></p>
+							<a href="<?php echo esc_attr( 'https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/activity-parameters/what-are-accepted-parameters-for-activity-shortcodes/' );?>" class="bpsh_read_more" target="_blank"><?php echo esc_html( ' Read more' ); ?></a>
 						</span>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -45,8 +45,8 @@ global $bp_grp_types;
 							<?php esc_html_e( 'Members', 'shortcodes-for-buddypress' ); ?>
 						</label>
 						<span class="bp-shortcode-read-more">
-							<p class="description"><?php esc_html_e( 'BuddyPress Members Shortcode allows you to embed BuddyPress members in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?></p>
-							<a href="<?php echo esc_attr( 'https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/member-parameters/what-are-accepted-parameters-for-members-listing-shortcodes/' );?>" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'read more' ); ?></a>
+							<p class="description"><?php esc_html_e( 'The BuddyPress Members shortcode allows you to embed BuddyPress members into posts and pages.', 'shortcodes-for-buddypress' ); ?></p>
+							<a href="<?php echo esc_attr( 'https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/member-parameters/what-are-accepted-parameters-for-members-listing-shortcodes/' );?>" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'Read more' ); ?></a>
 						</span>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -63,8 +63,8 @@ global $bp_grp_types;
 							<?php esc_html_e( 'Groups', 'shortcodes-for-buddypress' ); ?>
 						</label>
 						<span class="bp-shortcode-read-more">
-							<p class="description"><?php esc_html_e( 'BuddyPress Groups Shortcode allows you to embed BuddyPress groups in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?></p>
-							<a href="<?php echo esc_attr( 'https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/group-parameters/what-are-accepted-parameters-for-group-shortcodes/' );?>" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'read more' ); ?></a>
+							<p class="description"><?php esc_html_e( 'The BuddyPress Groups shortcode allows you to embed BuddyPress groups into posts and pages.', 'shortcodes-for-buddypress' ); ?></p>
+							<a href="<?php echo esc_attr( 'https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/group-parameters/what-are-accepted-parameters-for-group-shortcodes/' );?>" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'Read more' ); ?></a>
 						</span>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -81,8 +81,8 @@ global $bp_grp_types;
 							<?php esc_html_e( 'User Notification', 'shortcodes-for-buddypress' ); ?>
 						</label>
 						<span class="bp-shortcode-read-more">
-							<p class="description"><?php esc_html_e( 'BuddyPress Notification Shortcode allows you to embed BuddyPress notificaition list in posts/pages using shortcodes.', 'shortcodes-for-buddypress' ); ?></p>
-							<a href="<?php echo esc_attr( 'https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/notification-parameters/what-are-accepted-parameters-for-users-notification-listing-shortcodes/' );?>" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'read more' ); ?></a>
+							<p class="description"><?php esc_html_e( 'The BuddyPress Notifications shortcode allows you to embed the BuddyPress notification list into posts and pages.', 'shortcodes-for-buddypress' ); ?></p>
+							<a href="<?php echo esc_attr( 'https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/notification-parameters/what-are-accepted-parameters-for-users-notification-listing-shortcodes/' );?>" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'Read more' ); ?></a>
 						</span>
 					</div>
 					<div class="wbcom-settings-section-options">

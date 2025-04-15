@@ -297,7 +297,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 */
 		public function wbcom_admin_setting_header_html() {
 			$page          = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
-			$plugin_active = $theme_active = $support_active = $settings_active = '';
+			$plugin_active = $theme_active = $support_active = $settings_active = $license_active = '';
 			switch ( $page ) {
 				case 'wbcom-plugins-page':
 					$plugin_active = 'is_active';
@@ -343,7 +343,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 	}
 
 	/**
-	 * Initialte Wbcom plugin manager.
+	 * Initialize Wbcom plugin manager.
 	 *
 	 * @return void
 	 */

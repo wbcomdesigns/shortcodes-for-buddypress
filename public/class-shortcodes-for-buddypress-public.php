@@ -264,7 +264,7 @@ class Shortcodes_For_Buddypress_Public {
 			'page'            => 1,
 			'per_page'        => 20,
 			'max'             => '',
-			'container_class' => 'notification', // default container,
+			'container_class' => 'notification', // Default container class.
 			'bpsh_query'      => $bpsh_query,
 		);
 		
@@ -316,7 +316,7 @@ class Shortcodes_For_Buddypress_Public {
 			?>
 			<div class="bpsp-feedback bpsp-info">
 				<span class="bpsp-icon" aria-hidden="true"></span>
-				<p><?php echo esc_html__('Please Log in to view notifications.', 'shortcodes-for-buddypress'); ?></p>
+				<p><?php echo esc_html__('Please log in to view your notifications.', 'shortcodes-for-buddypress'); ?></p>
 			</div>
 			<?php
 		}
@@ -330,7 +330,7 @@ class Shortcodes_For_Buddypress_Public {
 	}
 
 	/**
-	 * Set Activity Params when activity elementor widget load on page.
+	 * Set activity params when the Activity Elementor widget loads on a page.
 	 * 
 	 * @since 1.0.0
 	 * @return array $params used for internationalization before AJAX usage.
@@ -403,7 +403,7 @@ class Shortcodes_For_Buddypress_Public {
 		 * @param array $value The array containing the button params. Must look like:
 		 * array( 'buttonid' => array(
 		 *  'id'      => 'buttonid',                            // Id for your action
-		 *  'caption' => __( 'Button caption', 'text-domain' ),
+		 *  'caption' => __( 'Button caption', 'shortcodes-for-buddypress' ),
 		 *  'icon'    => 'dashicons-*',                         // The dashicon to use
 		 *  'order'   => 0,
 		 *  'handle'  => 'button-script-handle',                // The handle of the registered script to enqueue
@@ -553,7 +553,7 @@ class Shortcodes_For_Buddypress_Public {
 	}
 
 	/**
-	 * Loader for activity shortcode
+	 * Loader for activity shortcode.
 	 */
 	public function buddypress_shortcodes_load_activities() {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bpsp-nonce' ) ) {
@@ -605,7 +605,7 @@ class Shortcodes_For_Buddypress_Public {
 
 		global $activities_template;
 
-		// Pin post action only for allowed posts based on user role.
+		// Show pin post action only for users allowed based on their role.
 		if (
 		'activity_update' === $activities_template->activity->type &&
 		! in_array( $activities_template->activity->privacy, array( 'media', 'document', 'video' ), true ) &&
@@ -636,7 +636,7 @@ class Shortcodes_For_Buddypress_Public {
 		)
 		) {
 
-			// Remove for activities related to group for main activity screen.
+			// Exclude pin action for group-related activities on the main activity screen.
 			$pinned_action_label = bp_is_group_activity() ? esc_html__( 'Pin to Group', 'shortcodes-for-buddypress' ) : ( 'groups' === bp_get_activity_object_name() ? esc_html__( 'Pin to Group', 'shortcodes-for-buddypress' ) : esc_html__( 'Pin to Feed', 'shortcodes-for-buddypress' ) );
 			$pinned_action_class = 'pin-activity';
 			$pinned_id           = ! empty( $GLOBALS['activities_template']->pinned_id ) ? $GLOBALS['activities_template']->pinned_id : bp_get_option( 'bb_pinned_post', 0 );
