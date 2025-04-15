@@ -318,7 +318,6 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 		// Allow filtering of shortcode arguments
 		$args      = apply_filters( 'bp_shortcode_pro_members_element_args', trim( $args ) );
-		$args .= '&populate_extras=false';
 		// Build and render the shortcode
 		$shortcode = '[members-listing ' . $args . ']';
 		echo do_shortcode( $shortcode );
