@@ -36,7 +36,7 @@ class ActivityShortCode extends BPShortCode {
 	 * @return string HTML output of the activity stream.
 	 */
 	public function handle_shortcode( $atts, $content = '' ) {
-		if ( is_admin() && ! wp_doing_ajax() && ! isset( $_GET['elementor-preview'] ) ) {
+		if ( is_admin() && ! wp_doing_ajax() && ! isset( $_GET['elementor-preview'] ) ) {	// phpcs:ignore
 			return '';
 		}
 		// Apply filter to attributes

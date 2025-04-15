@@ -21,7 +21,7 @@ class MemberShortCode extends BPShortCode {
 
 	// Method to handle member shortcode logic
 	public function handle_shortcode( $atts, $content = '' ) {
-		if ( is_admin() && ! wp_doing_ajax() && ! isset( $_GET['elementor-preview'] ) ) {
+		if ( is_admin() && ! wp_doing_ajax() && ! isset( $_GET['elementor-preview'] ) ) {	// phpcs:ignore
 			return '';
 		}
 		// Allow filtering of attributes
@@ -82,7 +82,7 @@ class MemberShortCode extends BPShortCode {
 			( function_exists( 'bp_use_theme_compat_with_current_theme' ) ) ? bp_use_theme_compat_with_current_theme() : '',
 			'meta_key'            => false, // Only return users with this usermeta.
 			'meta_value'          => false, // Only return users where the usermeta value matches. Requires meta_key.
-			'populate_extras'     => true,      // Fetch usermeta? Friend count, last active etc.
+			'populate_extras'     => false,      // Fetch usermeta? Friend count, last active etc.
 			'container_class'     => 'members', // default container,
 			'grid'                => 'yes', // Display pagination on members listing. Default true
 			'loop_layout'         => 'three', // Display pagination on members listing. Default true

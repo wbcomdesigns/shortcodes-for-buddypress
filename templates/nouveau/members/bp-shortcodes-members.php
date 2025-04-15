@@ -20,7 +20,7 @@
 	// Main members directory container
 	// data-bp-list="members" enables BuddyPress JavaScript functionality
 	?>
-	<div id="members-dir-list" class="members dir-list" data-bp-list="members">
+	<div id="members-dir-list" class="members dir-list" data-bp-list="members"  data-ajax="false">
 		
 		<?php
 		// Display member type message if a specific member type is being viewed
