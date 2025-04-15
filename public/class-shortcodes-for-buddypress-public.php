@@ -72,9 +72,16 @@ class Shortcodes_For_Buddypress_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$extension = is_rtl() ? '.rtl.css' : '.css';
+			$path      = is_rtl() ? '/rtl' : '';
+		} else {
+			$extension = is_rtl() ? '.rtl.css' : '.min.css';
+			$path      = is_rtl() ? '/rtl' : '/min';
+		}
 
-		 do_action( 'before_enqueue_buddypress_shortcode_styles' );
-		 wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/shortcodes-for-buddypress-public.css', array(), $this->version, 'all' );
+		do_action( 'before_enqueue_buddypress_shortcode_styles' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/shortcodes-for-buddypress-public' . $extension, array(), $this->version, 'all' );
 		 
 		if ( class_exists( 'Youzify' ) && ( (bp_shortcode_is_shortcode_page('members-listing') || bp_shortcode_is_shortcode_page('groups-listing')  || bp_shortcode_is_shortcode_page('activity-listing') ) ) )  { 
 			wp_enqueue_script( 'masonry' );
@@ -141,9 +148,17 @@ class Shortcodes_For_Buddypress_Public {
 		
 		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
 		if(function_exists('bp_is_active') &&  bp_is_active('activity')){
+			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+				$extension = '.js';
+				$path      = '';
+			} else {
+				$extension = '.min.js';
+				$path      = '/min';
+			}
+
 			$_bp_theme_package = get_option( '_bp_theme_package_id' );
 			
-			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/shortcodes-for-buddypress-public.js', array( 'jquery' ), $this->version, true );
+			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/shortcodes-for-buddypress-public' . $extension, array( 'jquery' ), $this->version, true );
 			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) )  && ('nouveau' === $_bp_theme_package)) {
 				wp_enqueue_script( $this->plugin_name );
 				wp_localize_script(
@@ -206,7 +221,7 @@ class Shortcodes_For_Buddypress_Public {
 			if ( defined( 'RTMEDIA_VERSION' ) ) {
 				wp_enqueue_script(
 					'rtmedia-backbone',
-					plugin_dir_url( __FILE__ ) . 'js/rtMedia.backbone.js',
+					plugin_dir_url( __FILE__ ) . 'js/vendor/rtMedia.backbone.js',
 					array(
 						'plupload-all',
 						'backbone',
@@ -528,7 +543,7 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		if ( isset( $scripts_args['bp-nouveau'] ) ) {
-			$scripts_args['bp-nouveau']['file'] = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/js/buddypress-nouveau.js';
+			$scripts_args['bp-nouveau']['file'] = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL . 'public/js/vendor/buddypress-nouveau.js';
 		}
 		return $scripts_args;
 	}
