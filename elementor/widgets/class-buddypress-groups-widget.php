@@ -1,4 +1,16 @@
 <?php
+/**
+ * BuddyPress Groups Elementor Widget
+ *
+ * This file defines the Elementor widget for displaying BuddyPress groups.
+ * It provides a user-friendly interface for creating and customizing groups
+ * listings through the Elementor page builder, leveraging the underlying
+ * [groups-listing] shortcode functionality.
+ *
+ * @package    Shortcodes_For_Buddypress
+ * @subpackage Elementor/Widgets
+ * @since      1.6.1
+ */
 
 namespace BPSPElementor\Widgets;
 
@@ -13,15 +25,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;   // Exit if accessed directly.
 }
 
+/**
+ * BuddyPress Groups Elementor Widget Class
+ *
+ * This widget allows users to display BuddyPress groups listings in their
+ * Elementor-built pages. It provides controls for customizing the appearance
+ * and behavior of the groups listing, and ultimately generates a shortcode
+ * that is processed by the plugin's shortcode system.
+ *
+ * @since 1.6.1
+ */
 class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 
 	/**
 	 * Retrieve the widget name.
 	 *
+	 * The name is used to identify the widget in Elementor's system.
+	 *
 	 * @since 1.6.1
-	 *
 	 * @access public
-	 *
 	 * @return string Widget name.
 	 */
 	public function get_name() {
@@ -31,10 +53,10 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	/**
 	 * Retrieve the widget title.
 	 *
+	 * The title is displayed in the Elementor editor.
+	 *
 	 * @since 1.6.1
-	 *
 	 * @access public
-	 *
 	 * @return string Widget title.
 	 */
 	public function get_title() {
@@ -44,10 +66,10 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	/**
 	 * Retrieve the widget icon.
 	 *
+	 * The icon is displayed in the Elementor editor.
+	 *
 	 * @since 1.6.1
-	 *
 	 * @access public
-	 *
 	 * @return string Widget icon.
 	 */
 	public function get_icon() {
@@ -58,14 +80,10 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	 * Retrieve the list of categories the widget belongs to.
 	 *
 	 * Used to determine where to display the widget in the editor.
-	 *
-	 * Note that currently Elementor supports only one category.
-	 * When multiple categories passed, Elementor uses the first one.
+	 * This widget is placed in the 'buddypress-widgets' category.
 	 *
 	 * @since 1.6.1
-	 *
 	 * @access public
-	 *
 	 * @return array Widget categories.
 	 */
 	public function get_categories() {
@@ -73,9 +91,14 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Get the group types to display as options in widget
+	 * Get BuddyPress group types to display as Elementor options.
 	 *
-	 * @return void
+	 * Retrieves all registered BuddyPress group types and formats them
+	 * for use in Elementor control options.
+	 *
+	 * @since 1.6.1
+	 * @access protected
+	 * @return array Array of group types with type slug as key and type name as value.
 	 */
 	protected function get_group_types() {
 		$group_types = array();
@@ -90,12 +113,16 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Register Retina Logo controls.
+	 * Register widget controls.
+	 *
+	 * Adds different input fields to allow the user to customize the widget settings.
+	 * The controls are organized into sections for better organization.
 	 *
 	 * @since 1.6.1
 	 * @access protected
 	 */
 	protected function register_controls() {
+		// Content Section - Query Options
 		$this->start_controls_section(
 			'section_content',
 			array(
@@ -103,6 +130,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
+		// Title control
 		$this->add_control(
 			'sfb_title',
 			array(
@@ -112,6 +140,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
+		// Per page control
 		$this->add_control(
 			'sfb_per_page',
 			array(
@@ -122,6 +151,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
+		// Pro version notice
 		$this->add_control(
 			'go_sfb_pro_notice',
 			array(
@@ -140,6 +170,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Style Section - Listing Appearance
 		$this->start_controls_section(
 			'section_style',
 			array(
@@ -148,6 +179,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
+		// Background control
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
@@ -158,8 +190,10 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
+		// Normal/Hover state tabs
 		$this->start_controls_tabs( 'tabs_listing_style' );
 
+		// Normal state tab
 		$this->start_controls_tab(
 			'sfb_tab_listing_normal',
 			array(
@@ -167,6 +201,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
+		// Normal state box shadow
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -177,6 +212,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 
 		$this->end_controls_tab();
 
+		// Hover state tab
 		$this->start_controls_tab(
 			'sfb_tab_listing_hover',
 			array(
@@ -184,6 +220,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
+		// Hover state box shadow
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -196,6 +233,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 
 		$this->end_controls_tabs();
 
+		// Divider
 		$this->add_control(
 			'sfb_hr_listing',
 			array(
@@ -203,6 +241,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
+		// Border control for list item wrapper
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -211,6 +250,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
+		// Border radius control for list item wrapper
 		$this->add_control(
 			'sfb_listing_border_radius',
 			array(
@@ -220,10 +260,10 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} #groups-list > li > .list-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-
 			)
 		);
 
+		// Padding control for list item wrapper
 		$this->add_responsive_control(
 			'sfb_listing_padding',
 			array(
@@ -233,19 +273,19 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} #groups-list > li > .list-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-
 			)
 		);
 
+		// Border control for list item
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
 				'name'     => 'sfb_listing_border_one',
 				'selector' => '{{WRAPPER}} #groups-list > li',
-
 			)
 		);
 
+		// Border radius control for list item
 		$this->add_control(
 			'sfb_listing_border_radius_one',
 			array(
@@ -255,10 +295,10 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} #groups-list > li' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-
 			)
 		);
 
+		// Padding control for list item
 		$this->add_responsive_control(
 			'sfb_listing_padding_one',
 			array(
@@ -268,7 +308,6 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} #groups-list > li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-
 			)
 		);
 
@@ -276,41 +315,46 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Render Retina Image output on the frontend.
+	 * Render widget output on the frontend.
 	 *
-	 * Written in PHP and used to generate the final HTML.
+	 * This method takes the widget settings, converts them to shortcode attributes,
+	 * and renders the [groups-listing] shortcode with those attributes.
 	 *
 	 * @since 1.6.1
 	 * @access protected
 	 */
 	protected function render() {
-
+		// Get all widget settings
 		$settings = $this->get_settings_for_display();
+		$args     = '';
 
-		$args = '';
-
+		// Add quotes around title if it exists
 		if ( isset( $settings['sfb_title'] ) && ! empty( $settings['sfb_title'] ) ) {
 			$settings['sfb_title'] = '"' . $settings['sfb_title'] . '"';
 		}
 
+		// Build shortcode attributes from settings
 		foreach ( $settings as $setting_key => $setting ) {
+			// Only process settings that start with 'sfb_'
 			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
-
+				// Handle array values
 				if ( is_array( $settings[ $setting_key ] ) && ! empty( $settings[ $setting_key ] ) ) {
-					$key   = substr( $setting_key, 4 );
+					$key   = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
 					$args .= $key . '=' . join( ',', $setting ) . ' ';
-				} elseif ( ! empty( $settings[ $setting_key ] ) ) {
-					$key   = substr( $setting_key, 4 );
+				} 
+				// Handle non-empty scalar values
+				elseif ( ! empty( $settings[ $setting_key ] ) ) {
+					$key   = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
 					$args .= $key . '=' . $setting . ' ';
 				}
 			}
 		}
 
+		// Allow filtering of shortcode arguments
 		$args      = apply_filters( 'bp_shortcode_groups_element_args', trim( $args ) );
+		
+		// Build and render the shortcode
 		$shortcode = '[groups-listing ' . $args . ']';
 		echo do_shortcode( $shortcode );
-
 	}
-
-
 }

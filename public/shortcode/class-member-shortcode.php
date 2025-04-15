@@ -30,23 +30,19 @@ class MemberShortCode extends BPShortCode {
 		// Attributes
 		if ( ! empty( $atts ) && array_key_exists( 'exclude_member_role', $atts ) ) {
 
-			if ( strpos( $atts['exclude_member_role'], ',' ) !== false ) {
-				$exclude_roles = explode( ',', $atts['exclude_member_role'] );
-			} else {
-				$exclude_roles = $atts['exclude_member_role'];
+			if ( ! empty( $atts['exclude_member_role'] ) ) {
+				$exclude_roles = is_string( $atts['exclude_member_role'] ) ? explode( ',', $atts['exclude_member_role'] ) : $atts['exclude_member_role'];
+				$users_data    = get_users( array( 'role__in' => $exclude_roles ) );
+				$uid_collection = wp_list_pluck( $users_data, 'ID' );
 			}
-			if ( isset( $atts['exclude'] ) && strpos( $atts['exclude'], ',' ) !== false ) {
-				$exclude_ids = explode( ',', $atts['exclude'] );
+
+			if ( ! empty( $atts['exclude'] ) ) {
+				$exclude_ids = is_string( $atts['exclude'] ) ? explode( ',', $atts['exclude'] ) : $atts['exclude'];
 			} else {
 				$exclude_ids = array();
 			}
-			$users_data     = get_users( array( 'role__in' => $exclude_roles ) );
-			$uid_collection = array();
-			foreach ( $users_data as $key => $users ) {
-				$uid_collection[] = $users->ID;
-			}
-			$u               = array_unique( array_merge( $uid_collection, $exclude_ids ) );
-			$atts['exclude'] = rtrim( implode( ',', $u ), ',' );
+
+			$atts['exclude'] = implode( ',', array_unique( array_merge( $uid_collection, $exclude_ids ) ) );
 			unset( $atts['exclude_member_role'] );
 		}
 		if ( ! empty( $atts ) && array_key_exists( 'include_member_role', $atts ) ) {

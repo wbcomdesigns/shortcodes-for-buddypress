@@ -90,6 +90,10 @@ function bp_shortcode_locate_template( $template_name, $template_path, $default_
 function bp_shortcode_is_shortcode_page( $shortcode = '' ) {
 	global $post;
 
+	if ( ! isset( $post ) || ! is_a( $post, 'WP_Post' ) ) {
+		return false;
+	}
+
 	if ( empty( $shortcode ) ) {
 		// Check for default shortcodes if $shortcode is empty
 		$has_shortcode = (

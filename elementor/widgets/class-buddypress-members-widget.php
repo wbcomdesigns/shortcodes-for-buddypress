@@ -1,4 +1,16 @@
 <?php
+/**
+ * BuddyPress Members Elementor Widget
+ *
+ * This file defines the Elementor widget for displaying BuddyPress members.
+ * It provides a user-friendly interface for creating and customizing members
+ * listings through the Elementor page builder, leveraging the underlying
+ * [members-listing] shortcode functionality.
+ *
+ * @package    Shortcodes_For_Buddypress
+ * @subpackage Elementor/Widgets
+ * @since      1.6.1
+ */
 
 namespace BPSPElementor\Widgets;
 
@@ -13,15 +25,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;   // Exit if accessed directly.
 }
 
+/**
+ * BuddyPress Members Elementor Widget Class
+ *
+ * This widget allows users to display BuddyPress members listings in their
+ * Elementor-built pages. It provides controls for customizing the appearance
+ * and behavior of the members listing, and ultimately generates a shortcode
+ * that is processed by the plugin's shortcode system.
+ *
+ * @since 1.6.1
+ */
 class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 	/**
 	 * Retrieve the widget name.
 	 *
+	 * The name is used to identify the widget in Elementor's system.
+	 *
 	 * @since 1.6.1
-	 *
 	 * @access public
-	 *
 	 * @return string Widget name.
 	 */
 	public function get_name() {
@@ -31,10 +53,10 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	/**
 	 * Retrieve the widget title.
 	 *
+	 * The title is displayed in the Elementor editor.
+	 *
 	 * @since 1.6.1
-	 *
 	 * @access public
-	 *
 	 * @return string Widget title.
 	 */
 	public function get_title() {
@@ -44,10 +66,10 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	/**
 	 * Retrieve the widget icon.
 	 *
+	 * The icon is displayed in the Elementor editor.
+	 *
 	 * @since 1.6.1
-	 *
 	 * @access public
-	 *
 	 * @return string Widget icon.
 	 */
 	public function get_icon() {
@@ -58,14 +80,10 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	 * Retrieve the list of categories the widget belongs to.
 	 *
 	 * Used to determine where to display the widget in the editor.
-	 *
-	 * Note that currently Elementor supports only one category.
-	 * When multiple categories passed, Elementor uses the first one.
+	 * This widget is placed in the 'buddypress-widgets' category.
 	 *
 	 * @since 1.6.1
-	 *
 	 * @access public
-	 *
 	 * @return array Widget categories.
 	 */
 	public function get_categories() {
@@ -73,9 +91,14 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Get User roles to display as elementor options
+	 * Get User roles to display as Elementor options.
 	 *
-	 * @return array
+	 * Retrieves all WordPress user roles and formats them for use
+	 * in Elementor control options.
+	 *
+	 * @since 1.6.1
+	 * @access private
+	 * @return array Array of user roles with role slug as key and role name as value.
 	 */
 	private function get_user_roles() {
 		global $wp_roles;
@@ -88,9 +111,14 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Get buddypress member type to display as elementor options
+	 * Get BuddyPress member types to display as Elementor options.
 	 *
-	 * @return void
+	 * Retrieves all registered BuddyPress member types and formats them
+	 * for use in Elementor control options.
+	 *
+	 * @since 1.6.1
+	 * @access private
+	 * @return array Array of member types with type slug as key and type name as value.
 	 */
 	private function get_member_types() {
 		$member_types = array( '' => 'All' );
@@ -102,12 +130,16 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Register Retina Logo controls.
+	 * Register widget controls.
+	 *
+	 * Adds different input fields to allow the user to customize the widget settings.
+	 * The controls are organized into sections for better organization.
 	 *
 	 * @since 1.6.1
 	 * @access protected
 	 */
 	protected function register_controls() {
+		// Content Section - Query Options
 		$this->start_controls_section(
 			'section_content',
 			array(
@@ -115,6 +147,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
+		// Title control
 		$this->add_control(
 			'sfb_title',
 			array(
@@ -124,6 +157,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
+		// Per page control
 		$this->add_control(
 			'sfb_per_page',
 			array(
@@ -134,6 +168,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
+		// Pro version notice
 		$this->add_control(
 			'go_sfb_pro_notice',
 			array(
@@ -152,6 +187,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Style Section - Listing Appearance
 		$this->start_controls_section(
 			'sfb_section_style',
 			array(
@@ -160,6 +196,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
+		// Remove default border
 		$this->add_control(
 			'sfb_listing_no_border',
 			array(
@@ -172,6 +209,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
+		// Background control
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
@@ -182,6 +220,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
+		// Box shadow control
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -190,6 +229,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
+		// Border control
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -198,6 +238,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
+		// Border radius control
 		$this->add_control(
 			'sfb_listing_border_radius',
 			array(
@@ -210,6 +251,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
+		// Margin control
 		$this->add_responsive_control(
 			'sfb_listing_margin',
 			array(
@@ -222,6 +264,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
+		// Padding control
 		$this->add_responsive_control(
 			'sfb_listing_padding',
 			array(
@@ -239,40 +282,46 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Render Retina Image output on the frontend.
+	 * Render widget output on the frontend.
 	 *
-	 * Written in PHP and used to generate the final HTML.
+	 * This method takes the widget settings, converts them to shortcode attributes,
+	 * and renders the [members-listing] shortcode with those attributes.
 	 *
 	 * @since 1.6.1
 	 * @access protected
 	 */
 	protected function render() {
-
+		// Get all widget settings
 		$settings = $this->get_settings_for_display();
 		$args     = '';
 
+		// Add quotes around title if it exists
 		if ( isset( $settings['sfb_title'] ) && ! empty( $settings['sfb_title'] ) ) {
 			$settings['sfb_title'] = '"' . $settings['sfb_title'] . '"';
 		}
 
+		// Build shortcode attributes from settings
 		foreach ( $settings as $setting_key => $setting ) {
+			// Only process settings that start with 'sfb_'
 			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
-
+				// Handle array values
 				if ( is_array( $settings[ $setting_key ] ) && ! empty( $settings[ $setting_key ] ) ) {
-					$key   = substr( $setting_key, 4 );
+					$key   = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
 					$args .= $key . '=' . join( ',', $setting ) . ' ';
-				} elseif ( ! empty( $settings[ $setting_key ] ) ) {
-					$key   = substr( $setting_key, 4 );
+				} 
+				// Handle non-empty scalar values
+				elseif ( ! empty( $settings[ $setting_key ] ) ) {
+					$key   = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
 					$args .= $key . '=' . $setting . ' ';
 				}
 			}
 		}
 
+		// Allow filtering of shortcode arguments
 		$args      = apply_filters( 'bp_shortcode_pro_members_element_args', trim( $args ) );
+		
+		// Build and render the shortcode
 		$shortcode = '[members-listing ' . $args . ']';
 		echo do_shortcode( $shortcode );
-
 	}
-
-
 }

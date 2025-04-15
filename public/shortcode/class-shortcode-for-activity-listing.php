@@ -1,6 +1,9 @@
 <?php
 /**
- * The shortcode class for activity
+ * The shortcode class for BuddyPress activity streams
+ *
+ * This class handles the [activity-listing] shortcode which allows users to embed
+ * BuddyPress activity streams on any WordPress post or page.
  *
  * @link       https://wbcomdesigns.com/plugins
  * @since      1.7.0
@@ -10,16 +13,28 @@
  */
 
 /**
- * The public-facing functionality of the plugin.
+ * The ActivityShortCode class.
+ *
+ * Implements the functionality for the [activity-listing] shortcode which displays
+ * BuddyPress activity streams with various filtering and display options.
  *
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/shortcode
  * @author     Wbcom Designs <admin@wbcomdesigns.com>
  */
-
 class ActivityShortCode extends BPShortCode {
 
-	// Method to handle member shortcode logic
+	/**
+	 * Handles the shortcode logic and renders the activity stream.
+	 *
+	 * This method processes the shortcode attributes, prepares the query arguments,
+	 * and renders the activity stream using the appropriate template.
+	 *
+	 * @since 1.7.0
+	 * @param array  $atts    Shortcode attributes.
+	 * @param string $content Shortcode content.
+	 * @return string HTML output of the activity stream.
+	 */
 	public function handle_shortcode( $atts, $content = '' ) {
 		if ( is_admin() && ! wp_doing_ajax() && ! isset( $_GET['elementor-preview'] ) ) {
 			return '';
@@ -27,75 +42,99 @@ class ActivityShortCode extends BPShortCode {
 		// Apply filter to attributes
 		$atts = apply_filters( 'activity_shortcode_attributes', $atts );
 
-		// Attributes
+		// Define and merge shortcode attributes with defaults
 		$atts = shortcode_atts(
 			array(
-			'title'            => '', // title of the section
-			'pagination'       => 1, // show or not.
-			'load_more'        => 0,
-			'display_comments' => 'threaded',
-			'include'          => false, // pass an activity_id or string of IDs comma-separated
-			'exclude'          => false, // pass an activity_id or string of IDs comma-separated
-			'in'               => false, // comma-separated list or array of activity IDs among which to search
-			'sort'             => 'DESC', // sort DESC or ASC
-			'page'             => 1, // which page to load
-			'per_page'         => 10, // how many per page
-			'max'              => false, // max number to return
-			'count_total'      => true,
-			'scope'            => false,
-			// Filtering
-			'user_id'          => false, // user_id to filter on
-			'object'           => false, // object to filter on e.g. groups, profile, status, friends
-			'action'           => false, // action to filter on e.g. activity_update, new_forum_post, profile_updated
-			'primary_id'       => false, // object ID to filter on e.g. a group_id or forum_id or blog_id etc.
-			'secondary_id'     => false, // secondary object ID to filter on e.g. a post_id
-						// Searching
-			'search_terms'     => false, // specify terms to search on
+			// Display options
+			'title'            => '',      // Optional title to display above the activity stream
+			'pagination'       => 1,       // Whether to show pagination (1 = yes, 0 = no)
+			'load_more'        => 0,       // Whether to use AJAX "Load More" button instead of pagination (1 = yes, 0 = no)
+			'display_comments' => 'threaded', // How to display comments: 'threaded', 'flat', or 'false' to hide
+			'container_class'  => 'activity', // CSS class for the container element
+			'hide_on_activity' => 1,       // Whether to hide this shortcode on BuddyPress activity pages (1 = yes, 0 = no)
+			'allow_posting'    => false,   // Whether to show the activity posting form (experimental)
+			
+			// Activity selection
+			'include'          => false,   // Activity IDs to include (comma-separated string or array)
+			'exclude'          => false,   // Activity IDs to exclude (comma-separated string or array)
+			'in'               => false,   // Only include activities with these IDs (comma-separated string or array)
+			
+			// Pagination
+			'page'             => 1,       // Which page to display
+			'per_page'         => 10,      // Number of activities per page
+			'max'              => false,   // Maximum number of activities to return in total
+			
+			// Sorting
+			'sort'             => 'DESC',  // Sort order: 'DESC' (newest first) or 'ASC' (oldest first)
+			'count_total'      => true,    // Whether to count the total number of activities
+			
+			// Filtering options
+			'scope'            => false,   // Activity scope (e.g., 'all', 'just-me', 'friends', etc.)
+			'user_id'          => false,   // Filter by user ID
+			'object'           => false,   // Filter by object type (e.g., 'groups', 'profile', 'status', 'friends')
+			'action'           => false,   // Filter by action type (e.g., 'activity_update', 'new_forum_post', 'profile_updated')
+			'primary_id'       => false,   // Filter by primary object ID (e.g., group_id, forum_id, blog_id)
+			'secondary_id'     => false,   // Filter by secondary object ID (e.g., post_id)
+			
+			// Search options
+			'search_terms'     => false,   // Terms to search for in activities
+			
+			// Theme compatibility
 			'use_compat'       => ( function_exists( 'bp_use_theme_compat_with_current_theme' ) ) ? bp_use_theme_compat_with_current_theme() : '',
-			'allow_posting'    => false, // experimental, some of the themes may not support it.
-			'container_class'  => 'activity', // default container,
-			'hide_on_activity' => 1, // hide on user and group activity pages
 			),
 			$atts
 		);
 
 
+		// Define keys that should be excluded from the activity query but kept for template use
+		// These attributes control the display rather than the activity query itself
 		$exclude_keys = array( 'allow_posting', 'container_class', 'load_more' );
 
+		// Special handling for BuddyBoss Platform when displaying group activities
+		// This sets the scope to 'activity' for proper display in BuddyBoss
 		if ( 'groups' === $atts['object'] && bp_is_active( 'groups' ) ) {
 			if ( ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) ) {
 				$atts['scope'] = 'activity';
 			}
 		}
 
-		// Apply filter to the bash query
-		$bash_query    = apply_filters(
+		// Create the query arguments by filtering the attributes
+		// This removes empty values and applies any custom filtering via the hook
+		$bash_query = apply_filters(
 			'activity_shortcode_bash_query',
 			array_filter(
 				$atts,
 				function( $value, $key ) use ( $exclude_keys ) {
 					if ( in_array( $key, $exclude_keys ) ) {
-						return true; // Keep the key-value pair (do not filter)
+						return true; // Keep these special keys regardless of their value
 					}
 
-					// Filter by non-empty and non-false values
+					// For all other keys, only keep them if they have a value
 					return ! empty( $value ) && $value !== false;
 				},
 				ARRAY_FILTER_USE_BOTH
 			)
 		);
 
+		// Prepare arguments to pass to the template
+		// This includes the query string, pagination limits, and display options
 		$template_args = apply_filters( 'activity_shortcode_template_args', array(
-			'query'         => build_query( $bash_query ),
-			'limit'         => ! empty( $atts['per_page'] ) ? $atts['per_page'] : 10,
-			'activity_atts'	=> $bash_query,
+			'query'         => build_query( $bash_query ),  // Convert query array to URL parameters
+			'limit'         => ! empty( $atts['per_page'] ) ? $atts['per_page'] : 10,  // Items per page
+			'activity_atts'	=> $bash_query,  // Pass the full query args for reference
+			'allow_posting' => ! empty( $atts['allow_posting'] ) ? $atts['allow_posting'] : false,  // Whether to show posting form
+			'load_more'     => ! empty( $atts['load_more'] ) ? $atts['load_more'] : false,  // Whether to use AJAX loading
 		));
 
+		// Special handling for Youzify theme compatibility
+		// Youzify requires a different structure for the template arguments
 		if( class_exists( 'Youzify' )  ){
 			$template_args = apply_filters( 'activity_shortcode_template_args', array(
 				'query'         => build_query( $bash_query ),
 				'limit'         => ! empty( $atts['per_page'] ) ? $atts['per_page'] : 10,
-				'activity_atts'	=> $template_args,
+				'activity_atts'	=> $template_args,  // Note: Youzify expects the entire args array here
+				'allow_posting' => ! empty( $atts['allow_posting'] ) ? $atts['allow_posting'] : false,
+				'load_more'     => ! empty( $atts['load_more'] ) ? $atts['load_more'] : false,
 			));
 		}
 
@@ -142,35 +181,46 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Get user ids belonging to a specific role.
+	 * Retrieves user IDs belonging to specific WordPress roles.
 	 *
-	 * @param string|array $roles list of roles.
+	 * This method queries the WordPress database to find users with the specified
+	 * roles and returns an array of their user IDs. This is useful for filtering
+	 * activities by user role rather than individual user IDs.
 	 *
-	 * @return array
+	 * @since 1.7.0
+	 * @param string|array $roles A comma-separated string or array of WordPress role names.
+	 *                            Example: 'administrator,editor' or ['administrator', 'editor']
+	 * @return array An array of user IDs. Returns [0] if no users are found or if roles are empty.
 	 */
 	private function get_user_ids_by_roles( $roles ) {
-
+		// Default return value for invalid/empty results
 		$invalid_ids = array( 0 );
+		
+		// Return default if no roles provided
 		if ( empty( $roles ) ) {
-			return $invalid_ids;// invalid ids.
+			return $invalid_ids;
 		}
 
+		// Convert string of roles to array if needed
 		if ( ! is_array( $roles ) ) {
 			$roles = explode( ',', $roles );
 		}
 
-		// trim space etc.
+		// Sanitize role names by trimming whitespace
 		$roles = array_map( 'trim', $roles );
 
+		// Query WordPress for users with the specified roles
 		$user_query = new WP_User_Query(
 			array(
-				'role__in' => $roles,
-				'fields'   => 'ID',
+				'role__in' => $roles, // Find users with any of these roles
+				'fields'   => 'ID',   // Return only user IDs
 			)
 		);
 
+		// Get the results from the query
 		$ids = $user_query->get_results();
 
+		// Return default invalid ID if no users found
 		if ( empty( $ids ) ) {
 			$ids = $invalid_ids;
 		}

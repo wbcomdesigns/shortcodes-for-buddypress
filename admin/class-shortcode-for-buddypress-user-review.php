@@ -69,6 +69,10 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 				$this->time_limit = WEEK_IN_SECONDS;
 			}
 
+			if ( ! isset( $this->time_limit ) ) {
+				$this->time_limit = WEEK_IN_SECONDS;
+			}
+
 			// Add actions.
 			add_action( 'admin_init', array( $this, 'check_installation_date' ) );
 			add_action( 'admin_init', array( $this, 'set_no_bug' ), 5 );
@@ -84,7 +88,7 @@ if ( ! class_exists( 'BuddyPress_Shortcode_Feedback' ) ) :
 			// Get the years.
 			$years = (int) ( intval( $seconds ) / YEAR_IN_SECONDS ) % 100 ;			
 			if ( $years > 1 ) {
-				/* translators: Number of years */
+				/* translators: %s: Number of years */
 				return sprintf( __( '%s years', 'shortcodes-for-buddypress' ), $years );
 			} elseif ( $years > 0 ) {
 				return __( 'a year', 'shortcodes-for-buddypress' );

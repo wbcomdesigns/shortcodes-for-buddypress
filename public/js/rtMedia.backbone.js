@@ -202,7 +202,11 @@ jQuery( function( $ ) {
 
 			return url;
 		},
-		getNext: function( page, el, element) {
+		getNext: function(page, el, element) {
+			if (nextpage <= 0) {
+				console.error('Invalid next page value');
+				return;
+			}
 
 			if ( jQuery( '.rtmedia-no-media-found' ).length > 0 ) {
 				var rtmediaListUl = jQuery( '<ul/>', {
@@ -329,6 +333,9 @@ jQuery( function( $ ) {
 								jQuery( '#rtm-media-gallery-uploader' ).slideUp();
 							}
 						}
+					},
+					error: function(xhr, status, error) {
+						console.error('Error fetching next page:', error);
 					}
 				} );
 			}
@@ -1423,7 +1430,7 @@ jQuery( document ).ready( function( $ ) {
 			$.each( objUploadView.upload_remove_array, function( i, rfile ) {
 				if ( upl.getFile( rfile ) ) {
 					upl.removeFile( upl.getFile( rfile ) );
-				}
+ 				}
 			} );
 
 			/*
