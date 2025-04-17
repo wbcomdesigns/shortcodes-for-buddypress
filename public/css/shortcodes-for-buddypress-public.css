@@ -683,8 +683,8 @@ ul.activity-list.item-list.bp-list.bp-shortcode-activity .bp-generic-meta.-meta.
     flex: auto;
 }
 
-.elementor-widget-buddypress_shortcode_activity_widget .bp-generic-meta.-meta.action .acomment-reply.bp-primary-action:before,
-.bp-list.bp-shortcode-activity .bp-generic-meta.-meta.action .acomment-reply.bp-primary-action:before{
+.elementor-widget-buddypress_shortcode_activity_widget .activity-content  .bp-generic-meta.-meta.action .acomment-reply.bp-primary-action:before,
+.bp-list.bp-shortcode-activity .activity-content .bp-generic-meta.-meta.action .acomment-reply.bp-primary-action:before {
     content: "\ee33";
     font-family: bb-icons;
     font-size: 24px;
