@@ -120,7 +120,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 
 		// Number of activities control
 		$this->add_control(
-			'sfb_number',
+			'sfb_per_page',
 			array(
 				'label'       => __( 'Display Number of Activities', 'shortcodes-for-buddypress' ),
 				'type'        => Controls_Manager::NUMBER,
