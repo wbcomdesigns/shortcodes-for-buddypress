@@ -623,7 +623,7 @@ class Shortcodes_For_Buddypress_Public {
 
 		// Show pin post action only for users allowed based on their role.
 		if (
-		'activity_update' === $activities_template->activity->type &&
+		'activity_update' === $activities_template->activity->type && function_exists('groups_is_user_admin') && function_exists('groups_is_user_mod') &&
 		! in_array( $activities_template->activity->privacy, array( 'media', 'document', 'video' ), true ) &&
 		(
 			(
