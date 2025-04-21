@@ -100,7 +100,7 @@
 		<?php else : ?>
 
 			<div id="message" class="info">
-				<p><?php esc_html_e( 'Sorry, no members were found.', 'shortcodes-for-buddypress' ); ?></p>
+				<p><?php esc_html_e( 'Sorry, no members were found. Please try different search criteria.', 'shortcodes-for-buddypress' ); ?></p>
 			</div>
 
 		<?php endif; ?>

@@ -593,7 +593,7 @@ class Shortcodes_For_Buddypress_Public {
 		} else {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Sorry, there was no activity found.', 'shortcodes-for-buddypress' ),
+					'message' => __( 'Sorry, no activities were found.', 'shortcodes-for-buddypress' ),
 				)
 			);
 		}

@@ -1,10 +1,15 @@
 <?php
 /**
- * This file is used for rendering and saving plugin welcome settings.
+ * Welcome Page for Shortcodes for BuddyPress Plugin
+ *
+ * This file is responsible for rendering the welcome page of the plugin,
+ * providing users with an overview of the plugin's features, documentation,
+ * support resources, and feedback options.
  *
  * @since    1.0.0
+ * @package  Shortcodes_For_Buddypress
+ * @subpackage Shortcodes_For_Buddypress/admin/settings
  * @author   Wbcom Designs
- * @package  Bp_Add_Group_Types
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

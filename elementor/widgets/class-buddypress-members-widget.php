@@ -177,7 +177,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 					array(
 						'title'    => __( 'Shortcodes for BuddyPress PRO', 'shortcodes-for-buddypress' ),
 						'messages' => array(
-							__( 'Power up up your listing with custom queries and templates.', 'shortcodes-for-buddypress' ),
+							__( 'Power up your listing with custom queries and templates.', 'shortcodes-for-buddypress' ),
 						),
 						'link'     => 'https://wbcomdesigns.com/downloads/shortcodes-for-buddypress-pro',
 					)

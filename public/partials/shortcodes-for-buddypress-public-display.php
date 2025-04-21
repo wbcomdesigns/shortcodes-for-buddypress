@@ -1,9 +1,11 @@
 <?php
 
 /**
- * Provide a public-facing view for the plugin
+ * Public-Facing View for Shortcodes for BuddyPress Plugin
  *
- * This file is used to markup the public-facing aspects of the plugin.
+ * This file is used to render the public-facing aspects of the plugin,
+ * such as displaying shortcodes for BuddyPress components like activity streams,
+ * member directories, and group directories.
  *
  * @link       https://wbcomdesigns.com/plugins
  * @since      1.0.0

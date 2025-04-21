@@ -84,7 +84,7 @@ $load_more = false;
 		
 		<?php else : ?>
 			<div id="message" class="info">
-				<p><?php esc_html_e( 'Sorry, there was no activity found. Please try a different filter.', 'shortcodes-for-buddypress' ); ?></p>
+				<p><?php esc_html_e( 'Sorry, no activities were found. Please try a different filter.', 'shortcodes-for-buddypress' ); ?></p>
 			</div>
 		<?php endif; ?>
 		

@@ -26,7 +26,7 @@ global $bp_grp_types;
 							<label for="group_types_search">
 								<?php esc_html_e( 'title', 'shortcodes-for-buddypress' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'The title for the activities. Title will display on the top of the activities.', 'shortcodes-for-buddypress' ); ?></p>
+							<p class="description"><?php esc_html_e( 'The title for the activities. The title will be displayed above the activity list.', 'shortcodes-for-buddypress' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">

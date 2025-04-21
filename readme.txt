@@ -8,11 +8,11 @@ Stable tag: 2.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin generates shortcodes for Listing Activity Streams, Members, and Groups on any post/page on the website.
+This plugin generates shortcodes for Listing Activity Streams, Members, and Groups on any post or page on the website.
 
 == Description ==
 
-This plugin will add an extended feature to BuddyPress. It will use Shortcode for Listing Activity Streams, Members directory, and Groups directory on any post/page within the website.
+This plugin will add an extended feature to BuddyPress. It will use Shortcode for Listing Activity Streams, Members directory, and Groups directory on any post or page within the website.
 
 With our current update, we have added three widgets to display the activity stream, member directory, and group directory using Elementor.
 
