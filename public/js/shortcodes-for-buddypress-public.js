@@ -39,7 +39,7 @@
 		});
 
 		// load more for activity
-		$( '#buddypress [data-bp-list="activity"]' ).off( 'click', 'li.load-newest, li.load-more' );//Override buddypress load more click function
+		$( '#buddypress [data-bp-list="activity"]' ).off( 'click', 'li.load-newest, li.load-more' );//Override BuddyPress load more click function
 		$('#buddypress [data-bp-list="activity"]').on('click', 'li.load-newest, li.load-more', function (e) {
 			e.preventDefault();
 			var self = $(this);

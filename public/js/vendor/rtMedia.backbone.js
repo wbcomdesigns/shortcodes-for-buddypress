@@ -58,7 +58,7 @@ jQuery( function( $ ) {
 			let media_children = $( this ).closest('li').find( 'div.acomment-content ul.rtmedia-list' );
 			if ( media_children.length > 0 ) {
 				/**
-				 * remove ul if exists, so buddypress comment js doesn't get confused between media ul and child comment ul
+				 * remove ul if exists, so BuddyPress comment js doesn't get confused between media ul and child comment ul
 				 */
 				media_children.remove();
 			}
@@ -1091,7 +1091,7 @@ jQuery( document ).ready( function( $ ) {
 			var textarea = $('#whats-new');
 			textarea.removeAttr('disabled');
 			/**
-			 * set focus to textarea after buddypress timeout code
+			 * set focus to textarea after BuddyPress timeout code
 			 */
 			setTimeout(function () {
 				textarea.focus();
@@ -1103,7 +1103,7 @@ jQuery( document ).ready( function( $ ) {
 	 */
 
 	/**
-	 * UI changes for buddypress nouveau theme on activity page
+	 * UI changes for BuddyPress nouveau theme on activity page
 	 */
 	if ( bp_template_pack && 'legacy' !== bp_template_pack ) {
 
@@ -1179,7 +1179,7 @@ jQuery( document ).ready( function( $ ) {
 	// Handling the "post update: button on activity page
 	/**
 	 * Commented by : Naveen giri
-	 * Reason : Commenting this code because its overriding buddypress functionality
+	 * Reason : Commenting this code because its overriding BuddyPress functionality
 	 * 			and introducing issue Duplicate activity generation  Issue #108.
 	 */
 	/*JQuery( '#aw-whats-new-submit' ).removeAttr( 'disabled' );

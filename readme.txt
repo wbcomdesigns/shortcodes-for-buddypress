@@ -107,7 +107,7 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 * Fix: (#161) Group Listing issue
 * Fix: (#162) Page title issue with Buddyx
 * Fix: (#106) Shortcode activity page has two stories options
-* Update: Buddypress class for the default theme
+* Update: BuddyPress class for the default theme
 
 = 2.6.3 =
 * Fix: (#161) Pagination missing
