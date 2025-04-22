@@ -4,11 +4,11 @@ Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcodes, BuddyPress Widgets
 Requires at least: 5.0.0
 Tested up to: 6.8.0
-Stable tag: 2.8.0
+Stable tag: 2.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin generates shortcodes for Listing Activity Streams, Members, and Groups on any post or page on the website.
+This plugin generates shortcodes for Listing Activity Streams, Members, and Groups on any website post or page.
 
 == Description ==
 
@@ -19,7 +19,7 @@ With our current update, we have added three widgets to display the activity str
 [vimeo https://vimeo.com/554193567 ]
 
 === THEME - WORDPRESS THEME WITH OUTSTANDING BUDDYPRESS SUPPORT ===
-* [FREE BuddyPress Theme: BuddyX](https://wordpress.org/themes/buddyx/) - Offers unique layouts with clean code and easy-to-customize options, giving you a whole new way to visualize BuddyPress.
+* [FREE BuddyPress Theme: BuddyX](https://wordpress.org/themes/buddyx/) - Offers unique layouts with clean code and easy-to-customise options, giving you a whole new way to visualize BuddyPress.
 
 == Installation ==
 This section describes how to install the plugin and get it working.
@@ -49,6 +49,25 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying group listing based on the given user ID screenshot-4.png
 
 == Changelog ==
+= 2.9.0 =
+* Added: Support for shortcode parameter handling in Elementor and Youzify setups.  
+* Added: UI support and styling improvements for Reign, BuddyBoss, and Youzify themes.  
+* Added: Function to handle default theme class integration (Reign & others).  
+* Added: Proper documentation links for shortcode parameters.
+* Updated: Group and member listing UIs, pagination, and comment replies with BB Platform.  
+* Updated: Code readability with inline comments.  
+* Updated: Language strings for better clarity and localization.  
+* Updated: CSS/JS loading to occur only when shortcode or widget is active.  
+* Updated: Minified JS and CSS files and included RTL support.
+* Fixed: Fatal errors on plugin activation, especially with Youzify and Elementor.  
+* Fixed: Load more activities not working in Elementor widgets.  
+* Fixed: Share functionality in activity shortcodes.  
+* Fixed: Link preview in Elementor widgets.  
+* Fixed: Shortcode behavior on Youzify-powered pages.  
+* Fixed: Spacing and layout issues for group/member count.  
+* Fixed: PHP warnings (undefined offset), PHPCS compliance issues, and hard-coded text domain warnings.
+* Removed: Obsolete code and files from the Wbcom folder for a cleaner codebase.
+
 = 2.8.0 =
 * Fix: Resolved double popup issue with Youzify after scheduling an activity.
 * Fix: Addressed issues with scheduling activities in Youzify.
