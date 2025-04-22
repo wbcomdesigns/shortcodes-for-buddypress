@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-21T11:26:17+05:30\n"
+"POT-Creation-Date: 2025-04-22T04:31:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: shortcodes-for-buddypress\n"
@@ -1799,7 +1799,7 @@ msgstr ""
 msgid "Start typing the group name..."
 msgstr ""
 
-#. translators: %s: display buddypress user firstname.
+#. translators: %s: display BuddyPress user firstname.
 #: public/class-shortcodes-for-buddypress-public.php:487
 msgid "What's new, %s?"
 msgstr ""
