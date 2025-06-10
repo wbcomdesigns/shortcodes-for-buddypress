@@ -155,9 +155,28 @@
 			
 			<?php
 			// Display a message if no members are found
+				// Display empty state with helpful message
 			else :
-
-				bp_nouveau_user_feedback( 'members-loop-none' );
+				$message = __('No members were found matching the current criteria.', 'shortcodes-for-buddypress');
+				
+				// Add helpful suggestions based on query
+				if (!empty($query)) {
+					// If filtering by member type
+					if (strpos($query, 'member_type=') !== false) {
+						$message .= ' ' . __('Try selecting a different member type or removing the filter.', 'shortcodes-for-buddypress');
+					}
+					
+					// If searching
+					if (strpos($query, 'search_terms=') !== false) {
+						$message .= ' ' . __('Try using different search terms or browsing all members.', 'shortcodes-for-buddypress');
+					}
+				}
+			?>
+			<div class="bp-feedback info">
+				<span class="bp-icon" aria-hidden="true"></span>
+				<p><?php echo esc_html($message); ?></p>
+			</div>
+			<?php 
 
 		endif;
 			?>
