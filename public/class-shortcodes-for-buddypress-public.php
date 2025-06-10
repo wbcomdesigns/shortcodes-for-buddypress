@@ -72,6 +72,11 @@ class Shortcodes_For_Buddypress_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+
+		  // Only load styles when needed
+		if (!$this->has_shortcode_on_page()) {
+			return;
+		}
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 			$extension = is_rtl() ? '.rtl.css' : '.css';
 			$path      = is_rtl() ? '/rtl' : '';
@@ -234,6 +239,77 @@ class Shortcodes_For_Buddypress_Public {
 			}
 		}
 		
+	}
+
+	/**
+	 * Check if current page has any of our shortcodes
+	 *
+	 * @return boolean
+	*/
+	private function has_shortcode_on_page() {
+		global $post;
+		
+		if (!is_a($post, 'WP_Post')) {
+			return false;
+		}
+		
+		$shortcodes = array(
+			'activity-listing', 
+			'members-listing', 
+			'groups-listing', 
+			'notifications-listing'
+		);
+		
+		foreach ($shortcodes as $shortcode) {
+			if (has_shortcode($post->post_content, $shortcode)) {
+				return true;
+			}
+		}
+		
+		// Check for Elementor widgets
+		if (defined('ELEMENTOR_VERSION')) {
+			$elementor_data = get_post_meta($post->ID, '_elementor_data', true);
+			return $this->check_elementor_data_for_widgets($elementor_data);
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Check Elementor data for our widgets
+	 *
+	 * @param string $elementor_data
+	 * @return boolean
+	*/
+	private function check_elementor_data_for_widgets($elementor_data) {
+		if (empty($elementor_data)) {
+			return false;
+		}
+		
+		$data = json_decode($elementor_data, true);
+		if (!is_array($data)) {
+			return false;
+		}
+		
+		$widget_types = array(
+			'buddypress_shortcode_activity_widget',
+			'buddypress_shortcode_members_widget',
+			'buddypress_shortcode_groups_widget'
+		);
+		
+		foreach ($data as $element) {
+			if (isset($element['widgetType']) && in_array($element['widgetType'], $widget_types)) {
+				return true;
+			}
+			
+			if (isset($element['elements']) && is_array($element['elements'])) {
+				if ($this->check_elementor_data_for_widgets(json_encode($element['elements']))) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	public function bp_shortcode_js_css() {
