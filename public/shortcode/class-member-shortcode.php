@@ -136,7 +136,7 @@ class MemberShortCode extends BPShortCode {
 			'meta_key'            => $atts['meta_key'],
 			'meta_value'          => $atts['meta_value'],
 		);
-		
+
 		if (function_exists('bp_core_get_active_member_count') && bp_core_get_active_member_count() > 5000) {
 			$atts = $this->optimize_for_large_community($atts);
 		}
@@ -234,6 +234,95 @@ class MemberShortCode extends BPShortCode {
 		}
 		$classes = implode(' ',$classes);
 		return $classes;
+	}
+
+	/**
+	 * Get cached member data with proper invalidation
+	 *
+	 * @param int $member_id The member ID
+	 * @return array Member data
+	*/
+	private function get_cached_member_data($member_id) {
+		// Create cache key
+		$cache_key = 'bpsh_member_' . $member_id;
+		
+		// Try to get from object cache
+		$member_data = wp_cache_get($cache_key, 'bpsh_members');
+		
+		// If not in object cache, try transient
+		if (false === $member_data) {
+			$member_data = get_transient($cache_key);
+		}
+		
+		// If no cached data, get fresh data
+		if (false === $member_data) {
+			// Get basic user data
+			$user_data = get_userdata($member_id);
+			
+			if (!$user_data) {
+				return false;
+			}
+			
+			$member_data = array(
+				'id' => $member_id,
+				'name' => $user_data->display_name,
+				'url' => bp_core_get_user_domain($member_id),
+				'avatar' => bp_core_fetch_avatar(array(
+					'item_id' => $member_id,
+					'type' => 'full',
+					'html' => false
+				)),
+				'last_activity' => bp_get_user_last_activity($member_id),
+			);
+			
+			// Get member type if available
+			if (function_exists('bp_get_member_type')) {
+				$member_data['member_type'] = bp_get_member_type($member_id);
+			}
+			
+			// Cache duration based on activity level
+			$cache_duration = $this->get_member_cache_duration($member_id);
+			
+			// Cache the data
+			wp_cache_set($cache_key, $member_data, 'bpsh_members', $cache_duration);
+			set_transient($cache_key, $member_data, $cache_duration);
+		}
+		
+		return $member_data;
+	}
+
+	/**
+	 * Determine appropriate cache duration for a member
+	 *
+	 * @param int $member_id Member ID
+	 * @return int Cache duration in seconds
+	*/
+	private function get_member_cache_duration($member_id) {
+		// Check last activity
+		$last_activity = bp_get_user_last_activity($member_id);
+		
+		if (empty($last_activity)) {
+			// If no activity, cache longer
+			return 30 * MINUTE_IN_SECONDS;
+		}
+		
+		// Convert to timestamp
+		$last_activity_time = strtotime($last_activity);
+		$current_time = time();
+		$time_diff = $current_time - $last_activity_time;
+		
+		// If active in last hour, short cache
+		if ($time_diff < HOUR_IN_SECONDS) {
+			return 2 * MINUTE_IN_SECONDS;
+		}
+		
+		// If active in last day, medium cache
+		if ($time_diff < DAY_IN_SECONDS) {
+			return 5 * MINUTE_IN_SECONDS;
+		}
+		
+		// Less active users, longer cache
+		return 15 * MINUTE_IN_SECONDS;
 	}
 }
 
