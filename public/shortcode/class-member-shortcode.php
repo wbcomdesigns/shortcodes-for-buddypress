@@ -19,6 +19,36 @@
 
 class MemberShortCode extends BPShortCode {
 
+	/**
+	 * Optimize query arguments for large communities
+	 *
+	 * @param array $args Original query arguments
+	 * @return array Modified query arguments
+	 */
+	private function optimize_for_large_community($args) {
+		// Check if this is a large community
+		$is_large_community = false;
+		
+		if (function_exists('bp_core_get_active_member_count')) {
+			$is_large_community = bp_core_get_active_member_count() > 5000;
+		}
+		
+		// If this is a large community, apply limits
+		if ($is_large_community) {
+			// Ensure reasonable per_page
+			if (!isset($args['per_page']) || $args['per_page'] > 50) {
+				$args['per_page'] = 50;
+			}
+			
+			// Force a reasonable max value
+			if (!isset($args['max']) || $args['max'] > 250 || $args['max'] === false) {
+				$args['max'] = 250;
+			}
+		}
+		
+		return $args;
+	}
+
 	// Method to handle member shortcode logic
 	public function handle_shortcode( $atts, $content = '' ) {
 		if ( is_admin() && ! wp_doing_ajax() && ! isset( $_GET['elementor-preview'] ) ) {	// phpcs:ignore
@@ -106,6 +136,10 @@ class MemberShortCode extends BPShortCode {
 			'meta_key'            => $atts['meta_key'],
 			'meta_value'          => $atts['meta_value'],
 		);
+		
+		if (function_exists('bp_core_get_active_member_count') && bp_core_get_active_member_count() > 5000) {
+			$atts = $this->optimize_for_large_community($atts);
+		}
 
 		// Apply filter to modify query arguments
 		$bash_query_args = apply_filters( 'member_shortcode_bash_query_args', $bash_query_args );
@@ -151,6 +185,7 @@ class MemberShortCode extends BPShortCode {
 		</div>
 		<?php
 		$output = ob_get_contents();
+		
 		ob_end_clean();
 
 		do_action( 'after_member_shortcode_render', $template_args );
