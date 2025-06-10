@@ -31,40 +31,110 @@
 	 
 	$(document).ready( function() {
 		
-		$( document  ).on('click', '#aw-whats-new-reset, #aw-whats-new-submit', function(){						
-			bp.Nouveau.setStorage( 'bp-activity','filter','');
-			setTimeout(function(){				
-				bp.Nouveau.setStorage( 'bp-activity','filter',$('#activity_filters_objects').val() );
-			}, 3000);			
+		// Main BuddyPress Shortcode object
+		var BPSH = {
+			/**
+			 * Initialize the plugin
+			 */
+			init: function() {
+				this.setupEventListeners();
+				this.setupLoadMore();
+			},
+			
+			/**
+			 * Set up event listeners using event delegation
+			 */
+			setupEventListeners: function() {
+				// Use document for event delegation to handle dynamically loaded content
+				$(document)
+					.on('click', '#aw-whats-new-reset, #aw-whats-new-submit', this.handleActivityFormActions)
+					.on('click', '.bpsh-load-more', this.handleLoadMore);
+					
+				// Handle window events with debouncing
+				var resizeTimer;
+				$(window).on('resize', function() {
+					clearTimeout(resizeTimer);
+					resizeTimer = setTimeout(function() {
+						BPSH.handleResize();
+					}, 250);
+				});
+			},
+			
+			/**
+			 * Handle activity form reset/submit
+			 */
+			handleActivityFormActions: function() {
+				bp.Nouveau.setStorage('bp-activity', 'filter', '');
+				setTimeout(function() {
+					bp.Nouveau.setStorage('bp-activity', 'filter', $('#activity_filters_objects').val());
+				}, 300);
+			},
+			
+			/**
+			 * Set up load more functionality
+			 */
+			setupLoadMore: function() {
+				// Unbind previous handlers to prevent duplication
+				$('#buddypress [data-bp-list="activity"]').off('click', 'li.load-newest, li.load-more');
+				
+				// Use event delegation for better performance
+				$('#buddypress [data-bp-list="activity"]').on('click', 'li.load-newest, li.load-more', this.handleActivityLoadMore);
+			},
+			
+			/**
+			 * Handle load more clicks for activity
+			 */
+			handleActivityLoadMore: function(e) {
+				e.preventDefault();
+				var self = $(this);
+				var page = self.data('page');
+				var limit = self.data('limit');
+				var loadMoreLink = self.children().first();
+				
+				// Show loading state
+				loadMoreLink.addClass('loading');
+				
+				// Send AJAX request
+				$.ajax({
+					type: "post",
+					url: buddypress_shortcode.ajax_url,
+					data: {
+						'action': 'bpsp_activities_load',
+						'page': page,
+						'limit': limit,
+						'nonce': buddypress_shortcode.ajax_nonce,
+					},
+					success: function(res) {
+						if (true === res.success) {
+							// Insert new content
+							$(e.currentTarget).before(res.data);
+							
+							// Update page counter for next load
+							var newPage = page + 1;
+							self.data('page', newPage);
+						}
+					},
+					complete: function() {
+						// Remove loading state
+						loadMoreLink.removeClass('loading');
+					}
+				});
+			},
+			
+			/**
+			 * Handle window resize events
+			 */
+			handleResize: function() {
+				// Responsive adjustments if needed
+			}
+		};
+    
+		// Initialize on document ready
+		$(document).ready(function() {
+			BPSH.init();
 		});
 
-		// load more for activity
-		$( '#buddypress [data-bp-list="activity"]' ).off( 'click', 'li.load-newest, li.load-more' );//Override BuddyPress load more click function
-		$('#buddypress [data-bp-list="activity"]').on('click', 'li.load-newest, li.load-more', function (e) {
-			e.preventDefault();
-			var self = $(this);
-			var page = self.data('page');
-			var limit = self.data('limit');
-			var loadMoreLink = $(e.currentTarget).children().first();
-			loadMoreLink.addClass('loading');
-			$.ajax({
-				type: "post",
-				url: buddypress_shortcode.ajax_url,
-				data: {
-					'action': 'bpsp_activities_load',
-					'page': page, // Increment the page for the request
-					'limit': limit,
-					'nonce': buddypress_shortcode.ajax_nonce,
-				},
-				success: function (res) {
-					if (true === res.success) {
-						$(e.currentTarget).before(res.data);
-						loadMoreLink.removeClass('loading');
-						self.data('page', newPage);
-					}
-				},
-			});
-		});
+
 		// load more for activity
 
 		function initLoadMore() {
