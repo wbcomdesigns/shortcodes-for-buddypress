@@ -158,7 +158,7 @@ $enabled_joined_date   = ! function_exists( 'bb_enabled_member_directory_element
 									?>
 
 									<h2 class="list-title member-name">
-										<a href="<?php echo esc_url( $bp_get_member_permalink ); ?>"><?php bp_member_name(); ?></a>
+										<a href="<?php echo esc_url( $bp_get_member_permalink ); ?>"><?php echo esc_html(bp_member_name()); ?></a>
 									</h2>
 
 									<?php
