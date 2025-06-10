@@ -241,6 +241,8 @@ class Shortcodes_For_Buddypress {
 		if ( function_exists('buddypress') && isset( buddypress()->buddyboss ) ) {
 			$this->loader->add_filter( 'bb_nouveau_get_activity_entry_bubble_buttons', $plugin_public, 'buddypress_shortcode_activity_entry_bubble_buttons', 10, 2 );
 		}
+		$this->loader->add_action( 'wp_ajax_bpsh_load_more_members', $plugin_public, 'buddypress_shortcode_ajax_load_more_members' );
+		$this->loader->add_action( 'wp_ajax_nopriv_bpsh_load_more_members', $plugin_public, 'buddypress_shortcode_ajax_load_more_members' );
 
 	}
 
