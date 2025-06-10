@@ -265,6 +265,11 @@ class Shortcodes_For_Buddypress_Admin {
 			'buddypress-shortcode-member'            => [ 'Members', 'buddypress_shortcodes_member_settings_content' ],
 			'buddypress-shortcode-groups'            => [ 'Groups', 'buddypress_shortcodes_groups_settings_content' ],
 			'buddypress-shortcode-user-notification' => [ 'User Notification', 'buddypress_shortcodes_user_notification_settings_content' ],
+			// yha se.....
+			'buddypress-shortcode-performance_settings' => [ 'Performance Settings', 'buddypress_shortcodes_render_performance_settings_description' ],
+			// 'buddypress-shortcode-cache_duration' => [ 'Cache Duration', 'render_cache_duration_field' ],
+			// 'buddypress-shortcode-max_items' => [ 'Maximum Items', 'render_max_items_field' ],
+			// 'buddypress-shortcode-sanitize_performance' => [ 'Sanitize Settings', 'sanitize_performance_settings' ],
 		];
 
 		foreach ( $tabs as $tab_slug => $tab_data ) {
@@ -341,5 +346,36 @@ class Shortcodes_For_Buddypress_Admin {
 			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-user-notification-listing.php';
 		}
 	}
+	/**
+	 * performance tab content
+	 *
+	 * @return void
+	 */
+	public function buddypress_shortcodes_render_performance_settings_description(){
+		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-user-performance-setting.php' ) ) {
+			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-user-performance-setting.php';
+		}
+	}
+
+	/**
+	 * Save plugin admin options
+	*/
+	public function buddypress_shortcodes_save_options() {
+		if ( isset( $_POST[ 'option_page' ] ) && 'bpsh_performance_settings'=== $_POST[ 'option_page' ]) {
+			$option_value = wp_unslash( $_POST[ 'bpsh_performance_settings'] );	// phpcs:ignore
+
+			update_option( 'bpsh_performance_settings', $option_value );
+		}
+		
+	}
+
+	/**
+	 * Register the settings
+	*/
+	public function buddypress_shortcodes_register_settings(){
+		register_setting( 'bpsh_settings_group', 'bpsh_performance_settings' );	// phpcs:ignore
+	}
+
+
 
 }

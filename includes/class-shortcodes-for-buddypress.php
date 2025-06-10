@@ -204,6 +204,8 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'buddypress_shortcodes_add_submenu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'buddypress_shortcodes_plugin_settings' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wbcom_hide_all_admin_notices_from_setting_page' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'buddypress_shortcodes_save_options' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'buddypress_shortcodes_register_settings' );
 	}
 
 	/**
