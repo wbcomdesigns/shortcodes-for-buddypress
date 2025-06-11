@@ -265,11 +265,7 @@ class Shortcodes_For_Buddypress_Admin {
 			'buddypress-shortcode-member'            => [ 'Members', 'buddypress_shortcodes_member_settings_content' ],
 			'buddypress-shortcode-groups'            => [ 'Groups', 'buddypress_shortcodes_groups_settings_content' ],
 			'buddypress-shortcode-user-notification' => [ 'User Notification', 'buddypress_shortcodes_user_notification_settings_content' ],
-			// yha se.....
 			'buddypress-shortcode-performance_settings' => [ 'Performance Settings', 'buddypress_shortcodes_render_performance_settings_description' ],
-			// 'buddypress-shortcode-cache_duration' => [ 'Cache Duration', 'render_cache_duration_field' ],
-			// 'buddypress-shortcode-max_items' => [ 'Maximum Items', 'render_max_items_field' ],
-			// 'buddypress-shortcode-sanitize_performance' => [ 'Sanitize Settings', 'sanitize_performance_settings' ],
 		];
 
 		foreach ( $tabs as $tab_slug => $tab_data ) {
