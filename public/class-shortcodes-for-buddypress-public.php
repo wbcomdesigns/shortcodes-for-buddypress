@@ -60,7 +60,7 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function enqueue_styles() {
 		global $post;
-		
+
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -82,13 +82,13 @@ class Shortcodes_For_Buddypress_Public {
 
 		do_action( 'before_enqueue_buddypress_shortcode_styles' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/shortcodes-for-buddypress-public' . $extension, array(), $this->version, 'all' );
-		 
-		if ( class_exists( 'Youzify' ) && ( (bp_shortcode_is_shortcode_page('members-listing') || bp_shortcode_is_shortcode_page('groups-listing')  || bp_shortcode_is_shortcode_page('activity-listing') ) ) )  { 
+
+		if ( class_exists( 'Youzify' ) && ( ( bp_shortcode_is_shortcode_page( 'members-listing' ) || bp_shortcode_is_shortcode_page( 'groups-listing' ) || bp_shortcode_is_shortcode_page( 'activity-listing' ) ) ) ) {
 			wp_enqueue_script( 'masonry' );
-	        wp_enqueue_style( 'youzify-directories', YOUZIFY_ASSETS . 'css/youzify-directories.min.css', array(), YOUZIFY_VERSION );
-	        wp_enqueue_style( 'youzify', YOUZIFY_ASSETS . 'css/youzify.min.css', array(), YOUZIFY_VERSION );
-	        wp_enqueue_script( 'youzify-directories', YOUZIFY_ASSETS .'js/youzify-directories.min.js', YOUZIFY_VERSION, true );
-	    }
+			wp_enqueue_style( 'youzify-directories', YOUZIFY_ASSETS . 'css/youzify-directories.min.css', array(), YOUZIFY_VERSION );
+			wp_enqueue_style( 'youzify', YOUZIFY_ASSETS . 'css/youzify.min.css', array(), YOUZIFY_VERSION );
+			wp_enqueue_script( 'youzify-directories', YOUZIFY_ASSETS . 'js/youzify-directories.min.js', YOUZIFY_VERSION, true );
+		}
 
 		if ( bp_shortcode_is_shortcode_page() ) {
 
@@ -123,7 +123,6 @@ class Shortcodes_For_Buddypress_Public {
 				wp_enqueue_style( 'jquery-datetimepicker' );
 			}
 		}
-
 	}
 
 	/**
@@ -145,9 +144,8 @@ class Shortcodes_For_Buddypress_Public {
 		 * class.
 		 */
 
-		
 		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
-		if(function_exists('bp_is_active') &&  bp_is_active('activity')){
+		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
 			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 				$extension = '.js';
 				$path      = '';
@@ -157,16 +155,18 @@ class Shortcodes_For_Buddypress_Public {
 			}
 
 			$_bp_theme_package = get_option( '_bp_theme_package_id' );
-			
+
 			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/shortcodes-for-buddypress-public' . $extension, array( 'jquery' ), $this->version, true );
-			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) )  && ('nouveau' === $_bp_theme_package)) {
+			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) ) && ( 'nouveau' === $_bp_theme_package ) ) {
 				wp_enqueue_script( $this->plugin_name );
 				wp_localize_script(
 					$this->plugin_name,
 					'buddypress_shortcode',
-					apply_filters( 'bp_activity_localized_params' , array(
-						'ajax_url'   => admin_url( 'admin-ajax.php' ),
-						'ajax_nonce' => wp_create_nonce( 'bpsp-nonce' ),
+					apply_filters(
+						'bp_activity_localized_params',
+						array(
+							'ajax_url'   => admin_url( 'admin-ajax.php' ),
+							'ajax_nonce' => wp_create_nonce( 'bpsp-nonce' ),
 						)
 					)
 				);
@@ -216,6 +216,12 @@ class Shortcodes_For_Buddypress_Public {
 				wp_enqueue_script( 'jquery-datetimepicker' );
 			}
 
+			// Add Support for Buddyboss media video
+			if ( ! wp_script_is( 'bp-media-videojs', 'enqueued' ) ) {
+				wp_enqueue_script( 'bp-media-videojs' );
+				wp_enqueue_style( 'bp-media-videojs-css' );
+			}
+
 			wp_enqueue_script( $this->plugin_name );
 
 			if ( defined( 'RTMEDIA_VERSION' ) ) {
@@ -233,7 +239,6 @@ class Shortcodes_For_Buddypress_Public {
 				);
 			}
 		}
-		
 	}
 
 	public function bp_shortcode_js_css() {
@@ -283,17 +288,17 @@ class Shortcodes_For_Buddypress_Public {
 			'container_class' => 'notification', // Default container class.
 			'bpsh_query'      => $bpsh_query,
 		);
-		
+
 		// Apply filter to modify the notifications attributes.
-		$notifications_atts = apply_filters( 'bpsh_notification_query_args' , shortcode_atts( $default_atts, $atts ) );
+		$notifications_atts = apply_filters( 'bpsh_notification_query_args', shortcode_atts( $default_atts, $atts ) );
 		extract( $notifications_atts );
-		
+
 		$_bp_theme_package = get_option( '_bp_theme_package_id' );
 
 		ob_start();
-		if(is_user_logged_in() ){
-			if ( function_exists( 'bp_is_active' ) && bp_is_active('notifications') ) {
-			
+		if ( is_user_logged_in() ) {
+			if ( function_exists( 'bp_is_active' ) && bp_is_active( 'notifications' ) ) {
+
 				if ( $title != '' ) {
 					?>
 					<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
@@ -309,34 +314,34 @@ class Shortcodes_For_Buddypress_Public {
 
 				/**
 				 * If none of the template exists, then display user notice.
+				 *
 				 * @since 2.7.2
 				 */
 				if ( $no_template ) {
 					?>
 					<div class="bpsp-feedback bpsp-info">
 						<span class="bpsp-icon"></span>
-						<p><?php echo esc_html__('No Template Found.', 'shortcodes-for-buddypress'); ?></p>
+						<p><?php echo esc_html__( 'No Template Found.', 'shortcodes-for-buddypress' ); ?></p>
 					</div>
 					<?php
 				}
 			} else {
-				
+
 				?>
 				<div class="bpsp-feedback bpsp-info">
 					<span class="bpsp-icon"></span>
-					<p><?php echo esc_html__('Please enable the Notifications Component.', 'shortcodes-for-buddypress'); ?></p>
+					<p><?php echo esc_html__( 'Please enable the Notifications Component.', 'shortcodes-for-buddypress' ); ?></p>
 				</div>
 				<?php
 			}
-		}else{
+		} else {
 			?>
 			<div class="bpsp-feedback bpsp-info">
 				<span class="bpsp-icon" aria-hidden="true"></span>
-				<p><?php echo esc_html__('Please log in to view your notifications.', 'shortcodes-for-buddypress'); ?></p>
+				<p><?php echo esc_html__( 'Please log in to view your notifications.', 'shortcodes-for-buddypress' ); ?></p>
 			</div>
 			<?php
 		}
-		
 
 		$output = ob_get_clean();
 
@@ -347,7 +352,7 @@ class Shortcodes_For_Buddypress_Public {
 
 	/**
 	 * Set activity params when the Activity Elementor widget loads on a page.
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return array $params used for internationalization before AJAX usage.
 	 */
@@ -366,14 +371,14 @@ class Shortcodes_For_Buddypress_Public {
 				}
 			}
 		}
-		
+
 		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 			$current_component = 'activity';
 		}
 		if ( $current_component == '' ) {
 			return $params;
 		}
-				
+
 		$activity_params = array(
 			'user_id'    => bp_loggedin_user_id(),
 			'object'     => 'user',
@@ -623,7 +628,7 @@ class Shortcodes_For_Buddypress_Public {
 
 		// Show pin post action only for users allowed based on their role.
 		if (
-		'activity_update' === $activities_template->activity->type && function_exists('groups_is_user_admin') && function_exists('groups_is_user_mod') &&
+		'activity_update' === $activities_template->activity->type && function_exists( 'groups_is_user_admin' ) && function_exists( 'groups_is_user_mod' ) &&
 		! in_array( $activities_template->activity->privacy, array( 'media', 'document', 'video' ), true ) &&
 		(
 			(
@@ -697,7 +702,7 @@ class Shortcodes_For_Buddypress_Public {
 
 		if ( false !== array_search( '-meta', $args['container_classes'] ) ) {
 			$args['container_classes'] = array_map(
-				function( $str ) {
+				function ( $str ) {
 					return str_replace( '-meta', 'activity-meta', $str );
 				},
 				$args['container_classes']
@@ -705,12 +710,11 @@ class Shortcodes_For_Buddypress_Public {
 		}
 		return $args;
 	}
-	
+
 	public function buddypress_shortcode_enable_share( $is_enable ) {
-		if( bp_shortcode_is_shortcode_page() ){
+		if ( bp_shortcode_is_shortcode_page() ) {
 			$is_enable = true;
 		}
 		return $is_enable;
 	}
-	
 }
