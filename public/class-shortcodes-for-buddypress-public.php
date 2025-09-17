@@ -72,16 +72,10 @@ class Shortcodes_For_Buddypress_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$extension = is_rtl() ? '.rtl.css' : '.css';
-			$path      = is_rtl() ? '/rtl' : '';
-		} else {
-			$extension = is_rtl() ? '.rtl.css' : '.min.css';
-			$path      = is_rtl() ? '/rtl' : '/min';
-		}
-
+		// Use the utility function to get the correct asset URL
 		do_action( 'before_enqueue_buddypress_shortcode_styles' );
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/shortcodes-for-buddypress-public' . $extension, array(), $this->version, 'all' );
+		$asset_url = shortcodes_for_buddypress_get_asset_url( 'public/css', 'shortcodes-for-buddypress-public', 'css' );
+		wp_enqueue_style( $this->plugin_name, $asset_url, array(), $this->version, 'all' );
 
 		if ( class_exists( 'Youzify' ) && ( ( bp_shortcode_is_shortcode_page( 'members-listing' ) || bp_shortcode_is_shortcode_page( 'groups-listing' ) || bp_shortcode_is_shortcode_page( 'activity-listing' ) ) ) ) {
 			wp_enqueue_script( 'masonry' );
@@ -146,17 +140,12 @@ class Shortcodes_For_Buddypress_Public {
 
 		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
 		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
-			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-				$extension = '.js';
-				$path      = '';
-			} else {
-				$extension = '.min.js';
-				$path      = '/min';
-			}
+			// Use the utility function to get the correct asset URL
+			$asset_url = shortcodes_for_buddypress_get_asset_url( 'public/js', 'shortcodes-for-buddypress-public', 'js' );
 
 			$_bp_theme_package = get_option( '_bp_theme_package_id' );
 
-			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/shortcodes-for-buddypress-public' . $extension, array( 'jquery' ), $this->version, true );
+			wp_register_script( $this->plugin_name, $asset_url, array( 'jquery' ), $this->version, true );
 			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) ) && ( 'nouveau' === $_bp_theme_package ) ) {
 				wp_enqueue_script( $this->plugin_name );
 				wp_localize_script(
