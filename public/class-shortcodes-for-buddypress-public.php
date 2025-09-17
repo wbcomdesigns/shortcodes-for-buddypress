@@ -173,7 +173,7 @@ class Shortcodes_For_Buddypress_Public {
 			}
 		}
 
-		if ( bp_shortcode_is_shortcode_page() ) {
+		if ( bp_shortcode_is_shortcode_page( 'activity-listing' ) ) {
 
 			if ( ! wp_script_is( 'bp-nouveau-activity', 'enqueued' ) ) {
 				wp_enqueue_script( 'bp-nouveau-activity' );
