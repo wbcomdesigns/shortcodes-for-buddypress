@@ -312,7 +312,7 @@ endif;
 new BuddyPress_Shortcode_Feedback(
 	array(
 		'slug'       => 'shortcodes-for-buddypress',
-		'name'       => __( 'Shortcode For BuddyPress', 'shortcodes-for-buddypress' ),
+		'name'       => esc_html( 'Shortcode For BuddyPress' ),
 		'time_limit' => WEEK_IN_SECONDS,
 	)
 );
