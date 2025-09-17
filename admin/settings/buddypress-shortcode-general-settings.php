@@ -74,24 +74,6 @@ global $bp_grp_types;
 					</div>
 				</div>
 			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'User Notification', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<span class="bp-shortcode-read-more">
-							<p class="description"><?php esc_html_e( 'The BuddyPress Notifications shortcode allows you to embed the BuddyPress notification list into posts and pages.', 'shortcodes-for-buddypress' ); ?></p>
-							<a href="<?php echo esc_attr( 'https://docs.wbcomdesigns.com/docs/shortcode-for-buddypress-pro/notification-parameters/what-are-accepted-parameters-for-users-notification-listing-shortcodes/' );?>" class="bpsh_read_more" target="_blank"><?php echo esc_html( 'Read more' ); ?></a>
-						</span>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( '[notifications-listing]', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>

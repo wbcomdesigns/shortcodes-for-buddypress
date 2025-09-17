@@ -60,115 +60,95 @@ class Shortcodes_For_Buddypress {
 	protected $plugin_basename;
 
 	/**
-	 * Define the core functionality of the plugin.
-	 *
-	 * Set the plugin name and the plugin version that can be used throughout the plugin.
-	 * Load the dependencies, define the locale, and set the hooks for the admin area and
-	 * the public-facing side of the site.
+	 * Initialize the plugin
 	 *
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' ) ) {
-			$this->version = SHORTCODES_FOR_BUDDYPRESS_VERSION;
-		} else {
-			$this->version = '1.0.0';
-		}
+		$this->version = defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' )
+			? SHORTCODES_FOR_BUDDYPRESS_VERSION
+			: '1.0.0';
+
 		$this->plugin_name     = 'shortcodes-for-buddypress';
 		$this->plugin_basename = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME;
+
+		$this->init();
+	}
+
+	/**
+	 * Initialize all components
+	 */
+	private function init() {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Include the following files that make up the plugin:
-	 *
-	 * - Shortcodes_For_Buddypress_Loader. Orchestrates the hooks of the plugin.
-	 * - Shortcodes_For_Buddypress_i18n. Defines internationalization functionality.
-	 * - Shortcodes_For_Buddypress_Admin. Defines all hooks for the admin area.
-	 * - Shortcodes_For_Buddypress_Public. Defines all hooks for the public side of the site.
-	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
+	 * Load plugin dependencies
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
 	private function load_dependencies() {
+		$plugin_path = plugin_dir_path( dirname( __FILE__ ) );
 
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-shortcodes-for-buddypress-loader.php';
+		// Core classes
+		$this->load_core_classes( $plugin_path );
 
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-shortcodes-for-buddypress-i18n.php';
+		// Admin classes
+		$this->load_admin_classes( $plugin_path );
 
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-shortcodes-for-buddypress-admin.php';
+		// Public classes
+		$this->load_public_classes( $plugin_path );
 
-		/**
-		 * The class responsible review on plugin by user.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-shortcode-for-buddypress-user-review.php';
+		// Shortcode classes
+		$this->load_shortcode_classes( $plugin_path );
 
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-shortcodes-for-buddypress-public.php';
+		// Elementor integration
+		if ( did_action( 'elementor/loaded' ) ) {
+			require_once $plugin_path . 'elementor/class-buddypress-shortcode-elements.php';
+		}
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
-
-
-
-		/**
-		 * The class responsible for rendering of all shortcode that occur in the public-facing
-		 * side of the site.
-		 *
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-shortcodes-for-buddypress-shortcode.php';
-
-		/**
-		 * The class responsible for rendering of activity shortcode that occur in the public-facing
-		 * side of the site.
-		 *
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-shortcode-for-activity-listing.php';
-
-		/**
-		 * The class responsible for rendering of group directory shortcode that occur in the public-facing
-		 * side of the site.
-		 *
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-group-shortcode.php';
-
-		/**
-		 * The class responsible for rendering of members shortcode that occur in the public-facing
-		 * side of the site.
-		 *
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-member-shortcode.php';
-
-		/**
-		 * The class responsible for load and render elementor widgets
-		 *
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'elementor/class-buddypress-shortcode-elements.php';
-
+		// Initialize loader
 		$this->loader = new Shortcodes_For_Buddypress_Loader();
+	}
 
+	/**
+	 * Load core plugin classes
+	 */
+	private function load_core_classes( $path ) {
+		require_once $path . 'includes/class-shortcodes-for-buddypress-loader.php';
+		require_once $path . 'includes/class-shortcodes-for-buddypress-i18n.php';
+	}
+
+	/**
+	 * Load admin-specific classes
+	 */
+	private function load_admin_classes( $path ) {
+		require_once $path . 'admin/class-shortcodes-for-buddypress-admin.php';
+		require_once $path . 'admin/wbcom/wbcom-admin-settings.php';
+	}
+
+	/**
+	 * Load public-facing classes
+	 */
+	private function load_public_classes( $path ) {
+		require_once $path . 'public/class-shortcodes-for-buddypress-public.php';
+	}
+
+	/**
+	 * Load shortcode classes
+	 */
+	private function load_shortcode_classes( $path ) {
+		// Base shortcode class
+		require_once $path . 'public/shortcode/class-shortcodes-for-buddypress-shortcode.php';
+
+		// Individual shortcodes
+		require_once $path . 'public/shortcode/class-shortcode-for-activity-listing.php';
+		require_once $path . 'public/shortcode/class-group-shortcode.php';
+		require_once $path . 'public/shortcode/class-member-shortcode.php';
 	}
 
 	/**
@@ -222,7 +202,6 @@ class Shortcodes_For_Buddypress {
 
 		$this->loader->add_filter( 'bp_nouveau_get_search_primary_object', $plugin_public, 'buddypress_shortcodes_bp_nouveau_get_search_primary_object', 10 );
 		$this->loader->add_filter( 'body_class', $plugin_public, 'buddypress_shortcodes_body_classes' );
-		$this->loader->add_shortcode( 'notifications-listing', $plugin_public, 'buddypress_shortcodes_notifications' );
 
 		$this->loader->add_filter( 'bp_core_get_js_strings', $plugin_public, 'shortcodes_for_buddypress_activity_localize_scripts', 10, 1 );
 

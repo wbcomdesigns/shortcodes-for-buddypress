@@ -61,27 +61,23 @@ class Shortcodes_For_Buddypress_Public {
 	public function enqueue_styles() {
 		global $post;
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Shortcodes_For_Buddypress_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Shortcodes_For_Buddypress_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-		// Use the utility function to get the correct asset URL
 		do_action( 'before_enqueue_buddypress_shortcode_styles' );
-		$asset_url = shortcodes_for_buddypress_get_asset_url( 'public/css', 'shortcodes-for-buddypress-public', 'css' );
-		wp_enqueue_style( $this->plugin_name, $asset_url, array(), $this->version, 'all' );
+
+		// Always load main stylesheet
+		bp_shortcode_enqueue(
+			$this->plugin_name,
+			'public/css',
+			'shortcodes-for-buddypress-public',
+			'css',
+			array(),
+			$this->version
+		);
 
 		if ( class_exists( 'Youzify' ) && ( ( bp_shortcode_is_shortcode_page( 'members-listing' ) || bp_shortcode_is_shortcode_page( 'groups-listing' ) || bp_shortcode_is_shortcode_page( 'activity-listing' ) ) ) ) {
 			wp_enqueue_script( 'masonry' );
 			wp_enqueue_style( 'youzify-directories', YOUZIFY_ASSETS . 'css/youzify-directories.min.css', array(), YOUZIFY_VERSION );
 			wp_enqueue_style( 'youzify', YOUZIFY_ASSETS . 'css/youzify.min.css', array(), YOUZIFY_VERSION );
-			wp_enqueue_script( 'youzify-directories', YOUZIFY_ASSETS . 'js/youzify-directories.min.js', YOUZIFY_VERSION, true );
+			wp_enqueue_script( 'youzify-directories', YOUZIFY_ASSETS . 'js/youzify-directories.min.js', array(), YOUZIFY_VERSION, true );
 		}
 
 		if ( bp_shortcode_is_shortcode_page() ) {
@@ -139,13 +135,13 @@ class Shortcodes_For_Buddypress_Public {
 		 */
 
 		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
-		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
-			// Use the utility function to get the correct asset URL
-			$asset_url = shortcodes_for_buddypress_get_asset_url( 'public/js', 'shortcodes-for-buddypress-public', 'js' );
 
+		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
 			$_bp_theme_package = get_option( '_bp_theme_package_id' );
 
-			wp_register_script( $this->plugin_name, $asset_url, array( 'jquery' ), $this->version, true );
+			// Register the script using simplified function
+			$script_url = bp_shortcode_asset( 'public/js', 'shortcodes-for-buddypress-public', 'js' );
+			wp_register_script( $this->plugin_name, $script_url, array( 'jquery' ), $this->version, true );
 			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) ) && ( 'nouveau' === $_bp_theme_package ) ) {
 				wp_enqueue_script( $this->plugin_name );
 				wp_localize_script(
@@ -237,7 +233,7 @@ class Shortcodes_For_Buddypress_Public {
 	public function buddypress_shortcodes_body_classes( $classes ) {
 		global $post;
 
-		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'activity-listing' ) || has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'groups-listing' ) || has_shortcode( $post->post_content, 'notifications-listing' ) ) ) {
+		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'activity-listing' ) || has_shortcode( $post->post_content, 'members-listing' ) || has_shortcode( $post->post_content, 'groups-listing' ) ) ) {
 			$classes[] = 'bpsh-buddypress';
 			$classes[] = 'buddypress';
 		}
@@ -255,89 +251,6 @@ class Shortcodes_For_Buddypress_Public {
 		return $object;
 	}
 
-	/**
-	 * Display Loggedin User Notifications
-	 *
-	 * @since    1.0.0
-	 */
-	public function buddypress_shortcodes_notifications( $atts, $content = null ) {
-		global $notifications_atts;
-
-		$bpsh_query = build_query( $atts );
-		if ( ! empty( $bpsh_query ) ) {
-			$bpsh_query = '&' . $bpsh_query;
-		}
-
-		$default_atts = array(
-			'title'           => '',
-			'order'           => 'DESC',
-			'page'            => 1,
-			'per_page'        => 20,
-			'max'             => '',
-			'container_class' => 'notification', // Default container class.
-			'bpsh_query'      => $bpsh_query,
-		);
-
-		// Apply filter to modify the notifications attributes.
-		$notifications_atts = apply_filters( 'bpsh_notification_query_args', shortcode_atts( $default_atts, $atts ) );
-		extract( $notifications_atts );
-
-		$_bp_theme_package = get_option( '_bp_theme_package_id' );
-
-		ob_start();
-		if ( is_user_logged_in() ) {
-			if ( function_exists( 'bp_is_active' ) && bp_is_active( 'notifications' ) ) {
-
-				if ( $title != '' ) {
-					?>
-					<h3 class="section-title"><span><?php echo esc_html( $title ); ?></span></h3>
-					<?php
-				}
-				do_action( 'before_render_notifications_shortcode', $atts );
-				if ( $_bp_theme_package == 'legacy' ) {
-					$no_template = ( false === shortcodes_for_buddypress_template( 'legacy/notifications/notifications-loop.php' ) ) ? true : false;
-				} else {
-					$no_template = ( false === shortcodes_for_buddypress_template( 'nouveau/notifications/notifications-loop.php' ) ) ? true : false;
-				}
-				do_action( 'after_render_notifications_shortcode', $atts );
-
-				/**
-				 * If none of the template exists, then display user notice.
-				 *
-				 * @since 2.7.2
-				 */
-				if ( $no_template ) {
-					?>
-					<div class="bpsp-feedback bpsp-info">
-						<span class="bpsp-icon"></span>
-						<p><?php echo esc_html__( 'No Template Found.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<?php
-				}
-			} else {
-
-				?>
-				<div class="bpsp-feedback bpsp-info">
-					<span class="bpsp-icon"></span>
-					<p><?php echo esc_html__( 'Please enable the Notifications Component.', 'shortcodes-for-buddypress' ); ?></p>
-				</div>
-				<?php
-			}
-		} else {
-			?>
-			<div class="bpsp-feedback bpsp-info">
-				<span class="bpsp-icon" aria-hidden="true"></span>
-				<p><?php echo esc_html__( 'Please log in to view your notifications.', 'shortcodes-for-buddypress' ); ?></p>
-			</div>
-			<?php
-		}
-
-		$output = ob_get_clean();
-
-		// Apply filter on the output before returning it
-		$output = apply_filters( 'modify_notifications_output', $output, $atts, $notifications_atts );
-		return $output;
-	}
 
 	/**
 	 * Set activity params when the Activity Elementor widget loads on a page.

@@ -8,11 +8,6 @@
     --bps-border-radius: 10px;
 }
 
-table.notifications.bp-tables-user thead th.date {
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
 
 .members-list .user-update {
     display: none;
@@ -371,42 +366,7 @@ div#groups-dir-list.groups.four ul#bps-groups-list li.bps-item-entry{
 }
 
 
-/*Notifications*/
-
-.bps-notifications-shortcode table.notifications.bp-tables-user .bulk-select-all,
-.bps-notifications-shortcode table.notifications.bp-tables-user tr td.bulk-select-check{
-    text-align: left;
-}
-
-.bps-notifications-shortcode table.notifications.bp-tables-user thead th input[type="checkbox"],
-.bps-notifications-shortcode table.notifications.bp-tables-user tbody td input[type="checkbox"] {
-    margin-right:8px;
-    cursor: pointer;
-}
-
-.bps-notifications-shortcode table.notifications.bp-tables-user {
-    border: 1px solid #e3e3e3;
-    text-align: center;
-}
-
-.bps-notifications-shortcode table.notification-settings td:first-child,
-.bps-notifications-shortcode table.notification-settings th.icon,
-.bps-notifications-shortcode table.notifications td:first-child,
-.bps-notifications-shortcode table.notifications th.icon {
-    display: none;
-}
-
-
 /* Youzify Plugin */
-.youzify-light-lighting-mode .bps-notifications-shortcode table.notifications.bp-tables-user{
-    background-color: var(--yzfy-card-bg-color);
-}
-
-.youzify-light-lighting-mode .bps-notifications-shortcode table.notifications.bp-tables-user thead th{
-    background-color: var(--yzfy-scheme-color) !important;
-    color: var(--yzfy-scheme-text-color) !important;
-    padding: 10px 5px;
-}
 
 .youzify-wall-embed .youzify-embed-action .group-button a{
     border-radius: 50px;
@@ -548,9 +508,6 @@ div#youzify.bp-shortcode-activity {
 }
 
 /*BB Theme*/
-table.notifications.bp-tables-user tr:last-child th {
-    border-bottom:1px solid var(--bb-content-border-color);
-}
 .buddyboss-theme .buddypress-wrap ul.bp-list.groups-list.rg-group-list .bs-group-cover a {
     position: relative;
     display: block;

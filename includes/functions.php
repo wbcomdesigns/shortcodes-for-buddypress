@@ -189,73 +189,57 @@ function bp_shortcode_member_cover() {
 }
 
 /**
- * Get the appropriate asset file extension and path based on debug mode and RTL settings.
+ * Get asset URL for CSS or JS files
  *
- * This utility function centralizes the logic for determining asset paths and extensions,
- * reducing code duplication across admin and public classes.
+ * Simplified function that handles debug mode, minification, and RTL
  *
- * @since 2.9.1
- * @param string $type The type of asset ('css' or 'js').
- * @return array {
- *     Array containing extension and path information.
- *     @type string $extension The file extension including prefix (e.g., '.min.css', '.rtl.css').
- *     @type string $path      The subdirectory path (e.g., '/min', '/rtl').
- * }
+ * @param string $path     Path relative to plugin root (e.g., 'admin/css')
+ * @param string $filename Base filename without extension
+ * @param string $type     Asset type: 'css' or 'js'
+ * @return string Complete URL to the asset
  */
-function shortcodes_for_buddypress_get_asset_info( $type = 'css' ) {
-	$asset_info = array();
+function bp_shortcode_asset( $path, $filename, $type = 'css' ) {
+	$debug = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
 
+	// Simple logic for file extension and path
 	if ( 'css' === $type ) {
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$asset_info['extension'] = is_rtl() ? '.rtl.css' : '.css';
-			$asset_info['path']      = is_rtl() ? '/rtl' : '';
+		$suffix = $debug ? '' : '.min';
+		$rtl = is_rtl() ? '.rtl' : '';
+		$file = $filename . $rtl . $suffix . '.css';
+
+		// For RTL, check if file exists in rtl subfolder
+		if ( is_rtl() && ! $debug ) {
+			$full_path = $path . '/rtl/' . $filename . $suffix . '.css';
 		} else {
-			$asset_info['extension'] = is_rtl() ? '.rtl.css' : '.min.css';
-			$asset_info['path']      = is_rtl() ? '/rtl' : '/min';
+			$full_path = $path . '/' . $file;
 		}
-	} elseif ( 'js' === $type ) {
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$asset_info['extension'] = '.js';
-			$asset_info['path']      = '';
-		} else {
-			$asset_info['extension'] = '.min.js';
-			$asset_info['path']      = '/min';
-		}
+	} else {
+		$suffix = $debug ? '' : '.min';
+		$full_path = $path . '/' . $filename . $suffix . '.js';
 	}
 
-	/**
-	 * Filter the asset information array.
-	 *
-	 * @since 2.9.1
-	 * @param array  $asset_info Array containing extension and path.
-	 * @param string $type       The type of asset ('css' or 'js').
-	 */
-	return apply_filters( 'shortcodes_for_buddypress_asset_info', $asset_info, $type );
+	return plugin_dir_url( dirname( __FILE__ ) ) . $full_path;
 }
 
 /**
- * Build the complete URL for a plugin asset file.
+ * Enqueue a plugin asset (CSS or JS)
  *
- * @since 2.9.1
- * @param string $base_path The base path within the plugin (e.g., 'admin/css', 'public/js').
- * @param string $filename  The base filename without extension (e.g., 'shortcodes-for-buddypress-admin').
- * @param string $type      The type of asset ('css' or 'js').
- * @return string The complete URL to the asset file.
+ * Wrapper function to simplify asset enqueuing
+ *
+ * @param string $handle   Unique handle for the asset
+ * @param string $path     Path relative to plugin root
+ * @param string $filename Base filename without extension
+ * @param string $type     Asset type: 'css' or 'js'
+ * @param array  $deps     Dependencies
+ * @param string $version  Version number
+ * @return void
  */
-function shortcodes_for_buddypress_get_asset_url( $base_path, $filename, $type = 'css' ) {
-	$asset_info = shortcodes_for_buddypress_get_asset_info( $type );
+function bp_shortcode_enqueue( $handle, $path, $filename, $type = 'css', $deps = array(), $version = SHORTCODES_FOR_BUDDYPRESS_VERSION ) {
+	$url = bp_shortcode_asset( $path, $filename, $type );
 
-	// Build the complete URL
-	$url = plugin_dir_url( dirname( __FILE__ ) ) . $base_path . $asset_info['path'] . '/' . $filename . $asset_info['extension'];
-
-	/**
-	 * Filter the complete asset URL.
-	 *
-	 * @since 2.9.1
-	 * @param string $url       The complete URL to the asset.
-	 * @param string $base_path The base path within the plugin.
-	 * @param string $filename  The base filename without extension.
-	 * @param string $type      The type of asset.
-	 */
-	return apply_filters( 'shortcodes_for_buddypress_asset_url', $url, $base_path, $filename, $type );
+	if ( 'css' === $type ) {
+		wp_enqueue_style( $handle, $url, $deps, $version );
+	} else {
+		wp_enqueue_script( $handle, $url, $deps, $version, true );
+	}
 }

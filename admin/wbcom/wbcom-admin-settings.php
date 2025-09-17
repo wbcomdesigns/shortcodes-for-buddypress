@@ -195,9 +195,10 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			} else {
 				$version = '1.0.0';
 			}
-			if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
-				wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', array(), $version);
-			}
+			// Font Awesome removed - external CDN not allowed for WordPress.org compliance
+			// if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
+			//	wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', array(), $version);
+			// }
 			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) ) {
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 					$extension = '.js';

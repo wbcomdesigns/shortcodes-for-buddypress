@@ -73,25 +73,25 @@ class Shortcodes_For_Buddypress_Admin {
 	 * @param string $hook The current admin page hook suffix.
 	 */
 	public function enqueue_styles( $hook ) {
+		$page = filter_input( INPUT_GET, 'page' );
+		$allowed_pages = array(
+			'wbcomplugins',
+			'wbcom-plugins-page',
+			'wbcom-support-page',
+			'shortcodes-for-buddypress'
+		);
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Shortcodes_For_Buddypress_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Shortcodes_For_Buddypress_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-		$shortcode_style = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
-		if ( 'wb-plugins_page_shortcodes-for-buddypress' === $hook || 'wbcomplugins' === $shortcode_style || 'wbcom-plugins-page' === $shortcode_style || 'wbcom-support-page' === $shortcode_style ) {
-			// Use the utility function to get the correct asset URL
-			$asset_url = shortcodes_for_buddypress_get_asset_url( 'admin/css', 'shortcodes-for-buddypress-admin', 'css' );
-			wp_enqueue_style( $this->plugin_name, $asset_url, array(), $this->version, 'all' );
+		// Only load on our admin pages
+		if ( 'wb-plugins_page_shortcodes-for-buddypress' === $hook || in_array( $page, $allowed_pages ) ) {
+			bp_shortcode_enqueue(
+				$this->plugin_name,
+				'admin/css',
+				'shortcodes-for-buddypress-admin',
+				'css',
+				array(),
+				$this->version
+			);
 		}
-
 	}
 
 	/**
@@ -105,24 +105,17 @@ class Shortcodes_For_Buddypress_Admin {
 	 * @param string $hook The current admin page hook suffix.
 	 */
 	public function enqueue_scripts( $hook ) {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Shortcodes_For_Buddypress_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Shortcodes_For_Buddypress_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+		// Only load on specific settings page
 		if ( 'settings_page_bpsh-shortcodes' === $hook ) {
-			// Use the utility function to get the correct asset URL
-			$asset_url = shortcodes_for_buddypress_get_asset_url( 'admin/js', 'shortcodes-for-buddypress-admin', 'js' );
-			wp_enqueue_script( $this->plugin_name, $asset_url, array( 'jquery' ), $this->version, false );
+			bp_shortcode_enqueue(
+				$this->plugin_name,
+				'admin/js',
+				'shortcodes-for-buddypress-admin',
+				'js',
+				array( 'jquery' ),
+				$this->version
+			);
 		}
-
 	}
 
 	/**
@@ -247,16 +240,15 @@ class Shortcodes_For_Buddypress_Admin {
 	public function buddypress_shortcodes_plugin_settings() {
 
 		$tabs = [
-			'buddypress-shortcode-welcome'           => [ 'Welcome', 'buddypress_shortcodes_welcome_content' ],
-			'buddypress-shortcode-general'           => [ 'General', 'buddypress_shortcodes_general_settings_content' ],
-			'buddypress-shortcode-activities'        => [ 'Activities', 'buddypress_shortcodes_activities_settings_content' ],
-			'buddypress-shortcode-member'            => [ 'Members', 'buddypress_shortcodes_member_settings_content' ],
-			'buddypress-shortcode-groups'            => [ 'Groups', 'buddypress_shortcodes_groups_settings_content' ],
-			'buddypress-shortcode-user-notification' => [ 'User Notification', 'buddypress_shortcodes_user_notification_settings_content' ],
+			'buddypress-shortcode-welcome'    => [ esc_html__( 'Welcome', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_welcome_content' ],
+			'buddypress-shortcode-general'    => [ esc_html__( 'General', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_general_settings_content' ],
+			'buddypress-shortcode-activities' => [ esc_html__( 'Activities', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_activities_settings_content' ],
+			'buddypress-shortcode-member'     => [ esc_html__( 'Members', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_member_settings_content' ],
+			'buddypress-shortcode-groups'     => [ esc_html__( 'Groups', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_groups_settings_content' ],
 		];
 
 		foreach ( $tabs as $tab_slug => $tab_data ) {
-			$label    = esc_html__( $tab_data[0], 'shortcodes-for-buddypress' );
+			$label    = $tab_data[0];
 			$callback = [ $this, $tab_data[1] ];
 
 			$this->plugin_settings_tabs[ $tab_slug ] = $label;

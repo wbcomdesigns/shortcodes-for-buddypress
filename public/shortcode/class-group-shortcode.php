@@ -1,150 +1,242 @@
 <?php
 /**
- * The shortcode class for members
+ * Group shortcode class
  *
- * @link       https://wbcomdesigns.com/plugins
+ * Handles the [groups-listing] shortcode for displaying BuddyPress groups
+ *
+ * @package    Shortcodes_For_Buddypress
+ * @subpackage Shortcodes_For_Buddypress/shortcode
  * @since      1.7.0
- *
- * @package    Shortcodes_For_Buddypress
- * @subpackage Shortcodes_For_Buddypress/shortcode
- */
-
-/**
- * The public-facing functionality of the plugin.
- *
- * @package    Shortcodes_For_Buddypress
- * @subpackage Shortcodes_For_Buddypress/shortcode
- * @author     Wbcom Designs <admin@wbcomdesigns.com>
  */
 
 class GroupShortCode extends BPShortCode {
 
-	// Method to handle member shortcode logic
-	public function handle_shortcode( $atts, $content = '' ) {
-		if ( is_admin() && ! wp_doing_ajax() && ! isset( $_GET['elementor-preview'] ) ) {	// phpcs:ignore
-			return '';
-		}
-		// Apply filter to modify attributes
-		$atts = apply_filters( 'group_shortcode_attributes', $atts );
-
-		// Attributes
-		$atts = shortcode_atts(
-			array(
-				'title'              => '',
-				'type'               => 'alphabetical', // popular, alphabetical, invites, single-group
-				'order'              => 'DESC',
-				'orderby'            => 'last_activity',
-				'page'               => 1,
-				'per_page'           => 20,
-				'max'                => false,
-				'show_hidden'        => false,
-				'page_arg'           => 'grpage',
-				'user_id'            => false,
-				'slug'               => false,
-				'search_terms'       => false,
-				'group_type'         => false,
-				'group_type__in'     => '',
-				'group_type__not_in' => '',
-				'meta_query'         => false,
-				'use_compat'         =>( function_exists( 'bp_use_theme_compat_with_current_theme' ) ) ? bp_use_theme_compat_with_current_theme() : '',
-				'include'            => false,
-				'exclude'            => false,
-				'parent_id'          => 0,
-				'update_meta_cache'  => true,
-				'container_class'    => 'group', // default container,
-				'grid'               => 'yes', // Display as a grid or list
-				'loop_layout'        => 'three', // Columns of group layout. This will work only grid layout
-			),
-			$atts
+	/**
+	 * Set default attributes for groups shortcode
+	 */
+	protected function set_defaults() {
+		$this->defaults = array(
+			'title'              => '',
+			'type'               => 'alphabetical',
+			'order'              => 'DESC',
+			'orderby'            => 'last_activity',
+			'page'               => 1,
+			'per_page'           => 20,
+			'max'                => false,
+			'show_hidden'        => false,
+			'page_arg'           => 'grpage',
+			'user_id'            => false,
+			'slug'               => false,
+			'search_terms'       => false,
+			'group_type'         => false,
+			'group_type__in'     => '',
+			'group_type__not_in' => '',
+			'meta_query'         => false,
+			'use_compat'         => function_exists( 'bp_use_theme_compat_with_current_theme' )
+				? bp_use_theme_compat_with_current_theme()
+				: '',
+			'include'            => false,
+			'exclude'            => false,
+			'parent_id'          => 0,
+			'update_meta_cache'  => true,
+			'container_class'    => 'group',
+			'grid'               => 'yes',
+			'loop_layout'        => 'three',
 		);
+	}
 
-		do_action( 'before_group_shortcode_render', $atts );
+	/**
+	 * Output the groups listing HTML
+	 *
+	 * @param array  $atts    Final attributes
+	 * @param string $content Shortcode content
+	 * @return string HTML output
+	 */
+	protected function output( $atts, $content = '' ) {
 
-		$bash_query_args = array(
+		// Get query args and template variables
+		$query = $this->get_query_args( $atts );
+		$template_vars = $this->get_template_vars( $atts, $query );
+
+		// Generate HTML output
+		return $this->generate_html( $atts, $template_vars );
+	}
+
+	/**
+	 * Get query arguments for groups loop
+	 *
+	 * @param array $atts Shortcode attributes
+	 * @return array Query args for bp_has_groups()
+	 */
+	private function get_query_args( $atts ) {
+		$query_args = array(
 			'include'            => $atts['include'],
 			'exclude'            => $atts['exclude'],
 			'type'               => $atts['type'],
 			'page'               => $atts['page'],
 			'per_page'           => $atts['per_page'],
 			'max'                => $atts['max'],
+			'show_hidden'        => $atts['show_hidden'],
 			'user_id'            => $atts['user_id'],
+			'slug'               => $atts['slug'],
+			'search_terms'       => $atts['search_terms'],
 			'order'              => $atts['order'],
 			'orderby'            => $atts['orderby'],
-			// 'show_hidden'        => $atts['show_hidden'],
-			// 'slug'               => $atts['slug'],
 			'group_type'         => $atts['group_type'],
 			'group_type__in'     => $atts['group_type__in'],
 			'group_type__not_in' => $atts['group_type__not_in'],
+			'meta_query'         => $atts['meta_query'],
 			'parent_id'          => $atts['parent_id'],
+			'update_meta_cache'  => $atts['update_meta_cache'],
 		);
 
-		// Apply filter to modify query arguments
-		$bash_query_args = apply_filters( 'group_shortcode_bash_query_args', $bash_query_args );
+		// Remove empty values to avoid issues with BuddyPress query
+		$query_args = array_filter( $query_args, function( $value ) {
+			return $value !== false && $value !== '' && $value !== null;
+		});
 
-		$query = '';
-		foreach ( $bash_query_args as $bash_query_key => $bash_query ) {
-			$query .= false !== $bash_query && '' !== $bash_query ? '&' . $bash_query_key . '=' . $bash_query : '';
-		}
+		return apply_filters( 'group_shortcode_bash_query_args', $query_args );
+	}
+
+	/**
+	 * Get template variables for group display
+	 *
+	 * @param array $atts  Shortcode attributes
+	 * @param array $query Query arguments
+	 * @return array Template variables
+	 */
+	private function get_template_vars( $atts, $query ) {
+		// Build query string
+		$query_string = $this->build_query_string( $query );
+
+		// Determine grid settings
 		$grid = 'yes' === $atts['grid'] ? 'grid' : '';
-		$column = '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '';
-		$template_args = apply_filters( 'group_shortcode_template_args', array(
-			'query'  		=> $query,
-			'grid'   		=> $grid,
-			'column' 		=> $column,
-			'classes'		=> $this->handle_classes( $grid, $column),
-			'groups_atts'   => $bash_query_args,
-		));
+		$column = ( $grid && $atts['loop_layout'] ) ? $atts['loop_layout'] : '';
 
-		if( class_exists( 'Youzify' )  ){
-			unset($template_args['classes']);
-			$template_args = apply_filters( 'group_shortcode_template_args', array(
-				'query'  		=> $query,
-				'grid'   		=> $grid,
-				'column' 		=> $column,
-				'groups_atts'   => $template_args,
-			));
+		$args = array(
+			'query'       => $query_string,
+			'grid'        => $grid,
+			'column'      => $column,
+			'classes'     => $this->get_container_classes( $grid, $column ),
+			'groups_atts' => $query,
+		);
+
+		// Youzify theme requires different structure
+		if ( class_exists( 'Youzify' ) ) {
+			unset( $args['classes'] );
+			$args['groups_atts'] = $args;
 		}
 
-		$output = '';
+		return apply_filters( 'group_shortcode_template_args', $args );
+	}
+
+	/**
+	 * Build query string from arguments
+	 *
+	 * @param array $query_args Query arguments
+	 * @return string Query string
+	 */
+	private function build_query_string( $query_args ) {
+		$query_parts = array();
+
+		foreach ( $query_args as $key => $value ) {
+			if ( false !== $value && '' !== $value ) {
+				$query_parts[] = $key . '=' . $value;
+			}
+		}
+
+		return implode( '&', $query_parts );
+	}
+
+	/**
+	 * Generate the complete HTML output
+	 *
+	 * @param array $atts          Shortcode attributes
+	 * @param array $template_vars Template variables
+	 * @return string Complete HTML
+	 */
+	private function generate_html( $atts, $template_vars ) {
+		do_action( 'before_group_shortcode_render', $atts );
+
 		ob_start();
+
 		if ( ! bp_is_active( 'groups' ) ) {
-			?>	
-			<div class="bp-messages-feedback">
-				<div class="bp-messages bp-user-messages-feedback">
-					<div class="bp-feedback info">
-						<span class="bp-icon" aria-hidden="true"></span>
-						<p><?php esc_attr_e( 'To view groups, please enable the group component.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-				</div>
-			</div>
-			<?php
+			$this->show_disabled_message();
 		} else {
-			?>
-			<div class="groups-listing <?php echo esc_attr( $atts['container_class'] ); ?>">
-				<?php echo ! empty( $atts['title'] ) ? '<h4>' . esc_html( $atts['title'] ) . '</h4>' : ''; ?>
-				<?php do_action( 'group_shortcode_inside_container', $atts, $template_args ); ?>
-
-				<?php if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) { 
-						 bp_shortcode_get_template( 'groups/bb-shortcodes-groups.php', $template_args, get_option( '_bp_theme_package_id' ) );
-					 }elseif( class_exists( 'Youzify' ) ){ 
-						 bp_shortcode_get_template( 'groups/bp-shortcodes-groups.php', $template_args, 'youzify' ); 
-					 }else{ 
-						 bp_shortcode_get_template( 'groups/bp-shortcodes-groups.php', $template_args, get_option( '_bp_theme_package_id' ) ); 
-				 } ?>
-			</div>
-			<?php
+			$this->show_groups( $atts, $template_vars );
 		}
-		$output = ob_get_contents();
-		ob_end_clean();
 
-		do_action( 'after_group_shortcode_render', $template_args );
+		$output = ob_get_clean();
 
-		// Apply filter to modify output before returning
+		do_action( 'after_group_shortcode_render', $template_vars );
+
 		return apply_filters( 'group_shortcode_output', $output );
 	}
 
+	/**
+	 * Show message when groups component is disabled
+	 */
+	private function show_disabled_message() {
+		?>
+		<div class="bp-messages-feedback">
+			<div class="bp-messages bp-user-messages-feedback">
+				<div class="bp-feedback info">
+					<span class="bp-icon" aria-hidden="true"></span>
+					<p><?php esc_html_e( 'To view groups, please enable the group component.', 'shortcodes-for-buddypress' ); ?></p>
+				</div>
+			</div>
+		</div>
+		<?php
+	}
 
-	public function handle_classes( $grid, $column) {
+	/**
+	 * Show the groups listing content
+	 *
+	 * @param array $atts          Shortcode attributes
+	 * @param array $template_vars Template variables
+	 */
+	private function show_groups( $atts, $template_vars ) {
+		?>
+		<div class="groups-listing <?php echo esc_attr( $atts['container_class'] ); ?>">
+			<?php if ( ! empty( $atts['title'] ) ) : ?>
+				<h4><?php echo esc_html( $atts['title'] ); ?></h4>
+			<?php endif; ?>
+
+			<?php do_action( 'group_shortcode_inside_container', $atts, $template_vars ); ?>
+
+			<?php $this->load_template( $template_vars ); ?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Load the group template file
+	 *
+	 * @param array $template_vars Template variables
+	 */
+	private function load_template( $template_vars ) {
+		if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
+			$template = 'groups/bb-shortcodes-groups.php';
+			$theme = get_option( '_bp_theme_package_id' );
+		} elseif ( class_exists( 'Youzify' ) ) {
+			$template = 'groups/bp-shortcodes-groups.php';
+			$theme = 'youzify';
+		} else {
+			$template = 'groups/bp-shortcodes-groups.php';
+			$theme = get_option( '_bp_theme_package_id' );
+		}
+
+		bp_shortcode_get_template( $template, $template_vars, $theme );
+	}
+
+	/**
+	 * Get container CSS classes
+	 *
+	 * @param string $grid   Grid class
+	 * @param string $column Column class
+	 * @return string CSS classes
+	 */
+	private function get_container_classes( $grid, $column ) {
 		$classes            = array( 'item-list', 'groups-list', 'groups-dir-list', 'bp-list', 'bpsp-groups-list', $grid, $column);
 		$active_theme = wp_get_theme();
 		if( 'REIGN' == $active_theme && ! class_exists( 'Youzify' ) ){
