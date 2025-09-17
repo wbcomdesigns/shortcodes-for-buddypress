@@ -604,23 +604,6 @@ class Shortcodes_For_Buddypress_Public {
 		}
 	}
 
-	/**
-	 * Load activity meta class
-	 */
-	public function buddypress_shortcodes_filter_activity_action_wrapper( $r ) {
-		global $post;
-		if ( is_a( $post, 'WP_Post' ) ) {
-
-			if ( ! empty( $r['container_classes'] ) ) {
-				$r['container_classes'] = array_merge( $r['container_classes'], array( 'activity-meta' ) );
-			} else {
-				$r['container_classes'] = array( 'activity-meta' );
-				$r['classes']           = array( 'activity-meta' );
-			}
-		}
-		return apply_filters( 'bp_activity_action_wrapper_classes', $r );
-	}
-
 
 	public function buddypress_shortcode_activity_entry_bubble_buttons( $buttons, $activity_id ) {
 
