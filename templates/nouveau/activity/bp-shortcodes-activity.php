@@ -14,7 +14,7 @@
 // Main container with BuddyPress classes
 // The bp_nouveau_get_container_classes() function adds appropriate styling classes
 ?>
-<div id="buddypress" class="<?php echo esc_attr( bp_nouveau_get_container_classes() ); ?>">
+<div id="buddypress" class="<?php echo esc_attr( function_exists( 'bp_nouveau_get_container_classes' ) ? bp_nouveau_get_container_classes() : 'buddypress-wrap bp-dir-hori-nav' ); ?>">
 
 		<?php
 		// Activity posting form section
@@ -72,7 +72,52 @@
 
 				<?php
 				// Start the activity loop if activities are found
-				if ( bp_has_activities( $query ) ) :
+				// Add error handling for BuddyPress compatibility issues
+				$has_activities = false;
+				$bp_error = false;
+
+				// Validate and sanitize query before passing to BuddyPress
+				$clean_query = '';
+				if ( ! empty( $query ) ) {
+					// If query is already a string, use it. If array, convert it properly
+					if ( is_array( $query ) ) {
+						$clean_query = http_build_query( $query );
+					} else {
+						$clean_query = $query;
+					}
+				}
+
+				try {
+					// Try with clean query first
+					if ( ! empty( $clean_query ) ) {
+						$has_activities = bp_has_activities( $clean_query );
+					} else {
+						// Fallback to basic activity query
+						$has_activities = bp_has_activities( 'per_page=5' );
+					}
+				} catch ( TypeError $e ) {
+					// Handle specific BuddyPress TypeError - this is the core issue
+					if ( strpos( $e->getMessage(), 'get_activity_comments' ) !== false ) {
+						// This is the specific BuddyPress bug, use a simpler query
+						try {
+							$has_activities = bp_has_activities( 'display_comments=false&per_page=5' );
+						} catch ( Exception $fallback_error ) {
+							$has_activities = false;
+							$bp_error = 'compatibility';
+						}
+					} else {
+						$has_activities = false;
+						$bp_error = 'compatibility';
+					}
+				} catch ( Error $e ) {
+					$has_activities = false;
+					$bp_error = 'general';
+				} catch ( Throwable $e ) {
+					$has_activities = false;
+					$bp_error = 'compatibility';
+				}
+
+				if ( $has_activities ) :
 				?>
 					
 					<ul class="activity-list item-list bp-list">
@@ -106,11 +151,23 @@
 					</ul>
 						
 				<?php
-				// Display a message if no activities are found
+				// Display a message if no activities are found or there's an error
 				else :
 				?>
 
+					<?php if ( $bp_error === 'compatibility' ) : ?>
+						<div class="bp-feedback error">
+							<span class="bp-icon" aria-hidden="true"></span>
+							<p><?php esc_html_e( 'Activity listing is temporarily unavailable due to BuddyPress compatibility issues. Please contact the site administrator.', 'shortcodes-for-buddypress' ); ?></p>
+						</div>
+					<?php elseif ( $bp_error === 'general' ) : ?>
+						<div class="bp-feedback error">
+							<span class="bp-icon" aria-hidden="true"></span>
+							<p><?php esc_html_e( 'Activity listing is temporarily unavailable. Please try again later.', 'shortcodes-for-buddypress' ); ?></p>
+						</div>
+					<?php else : ?>
 						<?php bp_nouveau_user_feedback( 'activity-loop-none' ); ?>
+					<?php endif; ?>
 
 				<?php endif; ?>
 

@@ -40,8 +40,13 @@
 			// Display the total number of members found
 			// Uses the BuddyPress pagination count function
 			?>
-			<div class="bpsp-member-count">			
-				<?php echo wp_kses_post( bp_get_members_pagination_count() ); ?>
+			<div class="bpsp-member-count">
+				<?php
+				$pagination_count = bp_get_members_pagination_count();
+				if ( ! empty( $pagination_count ) ) {
+					echo wp_kses_post( $pagination_count );
+				}
+				?>
 			</div>
 			
 			<?php
@@ -74,7 +79,14 @@
 						// Links to the member's profile
 						?>
 						<div class="item-avatar">
-							<a href="<?php bp_member_permalink(); ?>"><?php echo wp_kses_post( bp_member_avatar( bp_nouveau_avatar_args() ) ); ?></a>
+							<a href="<?php bp_member_permalink(); ?>">
+								<?php
+								$member_avatar = bp_member_avatar( bp_nouveau_avatar_args() );
+								if ( ! empty( $member_avatar ) ) {
+									echo wp_kses_post( $member_avatar );
+								}
+								?>
+							</a>
 						</div>
 
 						<div class="item">
@@ -86,7 +98,14 @@
 								// bp_member_name() outputs the member's display name
 								?>
 								<h2 class="list-title member-name">
-									<a href="<?php bp_member_permalink(); ?>"><?php echo esc_html( bp_member_name() ); ?></a>
+									<a href="<?php bp_member_permalink(); ?>">
+										<?php
+										$member_name = bp_member_name();
+										if ( ! empty( $member_name ) ) {
+											echo esc_html( $member_name );
+										}
+										?>
+									</a>
 								</h2>
 
 								<?php
@@ -95,7 +114,10 @@
 								?>
 								<?php if ( bp_nouveau_member_has_meta() ) : ?>
 									<p class="item-meta last-activity">
-										<?php bp_nouveau_member_meta(); ?>
+										<?php
+										// bp_nouveau_member_meta() echoes directly, no need for wp_kses_post
+										bp_nouveau_member_meta();
+										?>
 									</p><!-- .item-meta -->
 								<?php endif; ?>
 
@@ -129,7 +151,12 @@
 							?>
 							<?php if ( bp_get_member_latest_update() && ! bp_nouveau_loop_is_grid() ) : ?>
 								<div class="user-update">
-									<p class="update"><?php echo esc_html( bp_member_latest_update() ); ?></p>
+									<?php
+									$latest_update = bp_member_latest_update();
+									if ( ! empty( $latest_update ) ) :
+									?>
+										<p class="update"><?php echo esc_html( $latest_update ); ?></p>
+									<?php endif; ?>
 								</div>
 							<?php endif; ?>
 
@@ -147,8 +174,13 @@
 			?>
 			<?php if ( ! empty( $members_atts['per_page'] ) ) : ?>
 			<div class="bp-pagination">
-				<div class="bpsp-member-pagination bp-pagination-links bottom">			
-					<?php echo wp_kses_post( bp_get_members_pagination_links() ); ?>
+				<div class="bpsp-member-pagination bp-pagination-links bottom">
+					<?php
+					$pagination_links = bp_get_members_pagination_links();
+					if ( ! empty( $pagination_links ) ) {
+						echo wp_kses_post( $pagination_links );
+					}
+					?>
 				</div>
 			</div>
 			<?php endif; ?>

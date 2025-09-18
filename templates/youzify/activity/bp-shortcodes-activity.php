@@ -39,7 +39,49 @@ if ( !empty( $activity_atts['query'] ) ) {
     $bp_activities  = bp_ajax_querystring( 'activity' );
 }
 
-if ( bp_has_activities( $bp_activities ) ) : ?>
+<?php
+// Add error handling for BuddyPress compatibility issues
+$has_activities = false;
+$bp_error = false;
+
+// Validate and sanitize query before passing to BuddyPress
+$clean_query = '';
+if ( ! empty( $bp_activities ) ) {
+	// If query is already a string, use it. If array, convert it properly
+	if ( is_array( $bp_activities ) ) {
+		$clean_query = http_build_query( $bp_activities );
+	} else {
+		$clean_query = $bp_activities;
+	}
+}
+
+try {
+	// Try with clean query first, fallback to basic query if it fails
+	if ( ! empty( $clean_query ) ) {
+		$has_activities = bp_has_activities( $clean_query );
+	} else {
+		// Fallback to basic activity query
+		$has_activities = bp_has_activities( 'per_page=5' );
+	}
+} catch ( TypeError $e ) {
+	// Handle BuddyPress version compatibility issues - try basic query
+	try {
+		$has_activities = bp_has_activities( 'per_page=5' );
+	} catch ( Exception $fallback_error ) {
+		$has_activities = false;
+		$bp_error = 'compatibility';
+	}
+} catch ( Error $e ) {
+	// Handle other PHP errors - try basic query
+	try {
+		$has_activities = bp_has_activities( 'per_page=5' );
+	} catch ( Exception $fallback_error ) {
+		$has_activities = false;
+		$bp_error = 'general';
+	}
+}
+
+if ( $has_activities ) : ?>
 
 <div id="youzify" class="bp-shortcode-activity youzify youzify-page noLightbox youzify-horizontal-layout youzify-page-btns-border-oval youzify-tabs-list-gradient youzify-global-wall youzify-blue-scheme">
 	<div id="activity" class="activity">
@@ -67,7 +109,7 @@ if ( bp_has_activities( $bp_activities ) ) : ?>
 
                             <div class="activity-avatar"><a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar(); ?></a></div>
 
-                            <div class="activity-head"><?php bp_activity_action( array( 'no_timestamp' => true ) );?><div class="youzify-timestamp-area"><?php if ( function_exists( 'youzify_get_activity_time_stamp_meta' ) ) { echo wp_kses_post( youzify_get_activity_time_stamp_meta() ); } ?></div></div>
+                            <div class="activity-head"><?php bp_activity_action( array( 'no_timestamp' => true ) );?><div class="youzify-timestamp-area"><?php if ( function_exists( 'youzify_get_activity_time_stamp_meta' ) ) { $timestamp = youzify_get_activity_time_stamp_meta(); if ( ! empty( $timestamp ) ) { echo wp_kses_post( $timestamp ); } } ?></div></div>
 
                         </div>
 
@@ -104,9 +146,12 @@ if ( bp_has_activities( $bp_activities ) ) : ?>
 
                                 if ( bp_activity_can_favorite() ) {
                                     if( function_exists( 'youzify_get_post_like_button' ) ) {
-                                        echo wp_kses_post( youzify_get_post_like_button() );
+                                        $like_button = youzify_get_post_like_button();
+                                        if ( ! empty( $like_button ) ) {
+                                            echo wp_kses_post( $like_button );
+                                        }
                                     }
-                                    
+
                                 }
 
                                 if ( bp_activity_can_comment() ) : ?><a href="<?php bp_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php echo esc_html__( 'Comment', 'shortcodes-for-buddypress' ); ?></a><?php
@@ -207,9 +252,19 @@ if ( bp_has_activities( $bp_activities ) ) : ?>
     	</ul>
     </div>
 <?php else : ?>
-    <div id="message" class="info">
-		<p><?php echo esc_html__( 'There were no activities found.', 'shortcodes-for-buddypress' ); ?></p>
-	</div>
+	<?php if ( $bp_error === 'compatibility' ) : ?>
+		<div id="message" class="error">
+			<p><?php esc_html_e( 'Activity listing is temporarily unavailable due to BuddyPress compatibility issues. Please contact the site administrator.', 'shortcodes-for-buddypress' ); ?></p>
+		</div>
+	<?php elseif ( $bp_error === 'general' ) : ?>
+		<div id="message" class="error">
+			<p><?php esc_html_e( 'Activity listing is temporarily unavailable. Please try again later.', 'shortcodes-for-buddypress' ); ?></p>
+		</div>
+	<?php else : ?>
+		<div id="message" class="info">
+			<p><?php echo esc_html__( 'There were no activities found.', 'shortcodes-for-buddypress' ); ?></p>
+		</div>
+	<?php endif; ?>
 <?php endif; ?>
 
 <?php do_action( 'after_activity_listing_output', $atts, $activity_atts ); ?>

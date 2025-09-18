@@ -1,330 +1,275 @@
 <?php
 /**
- * Bp add group type general setting file.
+ * BuddyPress Activity Shortcode Settings Page
  *
  * @since    1.0.0
  * @author   Wbcom Designs
- * @package  Bp_Add_Group_Types
+ * @package  Shortcodes_For_Buddypress
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-global $bp_grp_types;
 ?>
 <div class="wbcom-tab-content">
 	<div class="wbcom-wrapper-admin">
 		<div class="wbcom-admin-title-section">
+			<h3><?php esc_html_e( 'Activity Listing Shortcode', 'shortcodes-for-buddypress' ); ?></h3>
 			<p class="wbcom-welcome-description">
-				<?php echo esc_html( 'BuddyPress Activity Shortcode allows you to embed BuddyPress activities in posts/pages using shortcodes.' ); ?>
-				<br>
-				<?php echo esc_html( 'The [activity-listing] works the same as the site-wide activity page.' ); ?>
+				<?php esc_html_e( 'The [activity-listing] shortcode allows you to embed BuddyPress activity streams anywhere in your WordPress site.', 'shortcodes-for-buddypress' ); ?>
 			</p>
 		</div>
-		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'title', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'The title for the activities. It will be displayed above the activity list.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - string', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'page', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Which page of results to fetch. Using page=1 without per_page will result in no pagination.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - int', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - 1', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'per_page', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Number of results per page.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - int', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - 20', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'max', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Maximum number of results to return.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - int|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false ( unlimited )', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'count_total', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'An additional DB query is run to count the total activity items for the query.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - string|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - true', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'sort', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Sort activities by "ASC" or "DESC"', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - string', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - DESC', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'exclude', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Array of activity IDs to exclude.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - array|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'in', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Array of IDs to limit query by (IN). "in" is intended to be used in conjunction with other filter parameters.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - array|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'include', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Array of exact activity IDs to query. Providing an "include" array will override all other filters passed in the argument array. When viewing the permalink page for a single activity item, this value defaults to the ID of that item.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - array|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'scope', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Use a BuddyPress pre-built filter. - "just-me" - retrieves items belonging only to a user; this is equivalent to passing a "user_id" argument. - "friends" - retrieves items belonging to the friends of a user. - "groups" - retrieves items from groups the user belongs to. - "favorites" - retrieves a users favorited activity items. - "mentions" - retrieves items where a user has received an @-mention.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - string', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'object', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Filters by the `component` column in the database. This is usually the component ID for BuddyPress components or the plugin slug for third-party plugins.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - string|array|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'user_id', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'The ID(s) of user(s) whose activity should be fetched.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - int|array|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'action', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Filters by the `type` column in the database.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - string|array|bool	', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'primary_id', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Filters by the `item_id` column in the database.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - int|array|bool	', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'secondary_id', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Filters by the `secondary_item_id` column in the database.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - int|array|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'offset', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Return only activity items with an ID greater than or equal to this one.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - int|array|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'show_hidden', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Whether to show items marked hide_sitewide.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - false', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'spam', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Spam status. "ham_only", "spam_only", or false to show all activity regardless of spam status.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - string|bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - ham_only', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
-					<div class="wbcom-settings-section-options-heading">
-						<label for="group_types_search">
-							<?php esc_html_e( 'populate_extras', 'shortcodes-for-buddypress' ); ?>
-						</label>
-						<p class="description"><?php esc_html_e( 'Whether to pre-fetch the activity metadata for the queried items.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-					<div class="wbcom-settings-section-options">
-						<label class="bupr-switch">
-						<p class="description"><?php esc_html_e( 'Type - bool', 'shortcodes-for-buddypress' ); ?></p>
-						<p class="description"><?php esc_html_e( 'Default - true', 'shortcodes-for-buddypress' ); ?></p>
-						</label>
-					</div>
-				</div>
+
+		<!-- Basic Usage Examples -->
+		<div class="wbcom-admin-option-wrap">
+			<h4><?php esc_html_e( 'Basic Usage Examples', 'shortcodes-for-buddypress' ); ?></h4>
+			<div class="wbcom-code-examples">
+				<p><code>[activity-listing]</code> - <?php esc_html_e( 'Display default activity stream', 'shortcodes-for-buddypress' ); ?></p>
+				<p><code>[activity-listing title="Latest Activities" per_page="5"]</code> - <?php esc_html_e( 'Show 5 activities with a title', 'shortcodes-for-buddypress' ); ?></p>
+				<p><code>[activity-listing object="groups" user_id="1"]</code> - <?php esc_html_e( 'Show group activities for user 1', 'shortcodes-for-buddypress' ); ?></p>
+				<p><code>[activity-listing scope="friends" per_page="10"]</code> - <?php esc_html_e( 'Show friends activities', 'shortcodes-for-buddypress' ); ?></p>
 			</div>
 		</div>
+
+		<!-- Display Options -->
+		<div class="wbcom-admin-option-wrap">
+			<h4><?php esc_html_e( 'Display Options', 'shortcodes-for-buddypress' ); ?></h4>
+			<table class="form-table">
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'title', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Display a title above the activity list', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> string</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>title="Community Activities"</code></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'pagination', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Enable/disable pagination links', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> boolean (0 or 1)</p>
+						<p><strong><?php esc_html_e( 'Default:', 'shortcodes-for-buddypress' ); ?></strong> 1</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>pagination="0"</code></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'load_more', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Show "Load More" button instead of pagination', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> boolean (0 or 1)</p>
+						<p><strong><?php esc_html_e( 'Default:', 'shortcodes-for-buddypress' ); ?></strong> 0</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>load_more="1"</code></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'allow_posting', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Allow users to post new activities from the shortcode', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> boolean (true or false)</p>
+						<p><strong><?php esc_html_e( 'Default:', 'shortcodes-for-buddypress' ); ?></strong> false</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>allow_posting="true"</code></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<!-- Pagination & Limiting -->
+		<div class="wbcom-admin-option-wrap">
+			<h4><?php esc_html_e( 'Pagination & Limiting', 'shortcodes-for-buddypress' ); ?></h4>
+			<table class="form-table">
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'per_page', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Number of activities to show per page', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> integer</p>
+						<p><strong><?php esc_html_e( 'Default:', 'shortcodes-for-buddypress' ); ?></strong> 10</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>per_page="20"</code></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'page', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Which page of results to display', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> integer</p>
+						<p><strong><?php esc_html_e( 'Default:', 'shortcodes-for-buddypress' ); ?></strong> 1</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>page="2"</code></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'max', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Maximum total activities to retrieve', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> integer or false (unlimited)</p>
+						<p><strong><?php esc_html_e( 'Default:', 'shortcodes-for-buddypress' ); ?></strong> false</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>max="50"</code></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<!-- Filtering Options -->
+		<div class="wbcom-admin-option-wrap">
+			<h4><?php esc_html_e( 'Filtering Options', 'shortcodes-for-buddypress' ); ?></h4>
+			<table class="form-table">
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'scope', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Pre-built activity filters', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Options:', 'shortcodes-for-buddypress' ); ?></strong></p>
+						<ul style="margin-left: 20px;">
+							<li><code>just-me</code> - <?php esc_html_e( 'Current user activities only', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>friends</code> - <?php esc_html_e( 'Friends activities', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>groups</code> - <?php esc_html_e( 'Groups user belongs to', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>favorites</code> - <?php esc_html_e( 'Favorited activities', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>mentions</code> - <?php esc_html_e( '@mentions of current user', 'shortcodes-for-buddypress' ); ?></li>
+						</ul>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>scope="friends"</code></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'user_id', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Show activities from specific user(s)', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> integer or comma-separated IDs</p>
+						<p><strong><?php esc_html_e( 'Examples:', 'shortcodes-for-buddypress' ); ?></strong></p>
+						<ul style="margin-left: 20px;">
+							<li><code>user_id="1"</code> - <?php esc_html_e( 'Single user', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>user_id="1,2,3"</code> - <?php esc_html_e( 'Multiple users', 'shortcodes-for-buddypress' ); ?></li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'object', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Filter by BuddyPress component', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Common values:', 'shortcodes-for-buddypress' ); ?></strong></p>
+						<ul style="margin-left: 20px;">
+							<li><code>activity</code> - <?php esc_html_e( 'Status updates', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>groups</code> - <?php esc_html_e( 'Group activities', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>friends</code> - <?php esc_html_e( 'Friendship connections', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>blogs</code> - <?php esc_html_e( 'Blog posts and comments', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>profile</code> - <?php esc_html_e( 'Profile updates', 'shortcodes-for-buddypress' ); ?></li>
+						</ul>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>object="groups"</code></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'action', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Filter by specific activity types', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Common values:', 'shortcodes-for-buddypress' ); ?></strong></p>
+						<ul style="margin-left: 20px;">
+							<li><code>activity_update</code> - <?php esc_html_e( 'Status updates', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>new_blog_post</code> - <?php esc_html_e( 'New blog posts', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>new_blog_comment</code> - <?php esc_html_e( 'Blog comments', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>created_group</code> - <?php esc_html_e( 'Group creations', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>joined_group</code> - <?php esc_html_e( 'Group joins', 'shortcodes-for-buddypress' ); ?></li>
+							<li><code>friendship_created</code> - <?php esc_html_e( 'New friendships', 'shortcodes-for-buddypress' ); ?></li>
+						</ul>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>action="activity_update,new_blog_post"</code></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'search_terms', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Search activities by keywords', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> string</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>search_terms="announcement"</code></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<!-- Advanced Options -->
+		<div class="wbcom-admin-option-wrap">
+			<h4><?php esc_html_e( 'Advanced Options', 'shortcodes-for-buddypress' ); ?></h4>
+			<table class="form-table">
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'sort', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Sort order of activities', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Options:', 'shortcodes-for-buddypress' ); ?></strong> ASC (oldest first) or DESC (newest first)</p>
+						<p><strong><?php esc_html_e( 'Default:', 'shortcodes-for-buddypress' ); ?></strong> DESC</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>sort="ASC"</code></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'include', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Show only specific activity IDs', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> comma-separated activity IDs</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>include="1,2,3"</code></p>
+						<p class="notice notice-info" style="padding: 10px;"><?php esc_html_e( 'Note: This overrides all other filters', 'shortcodes-for-buddypress' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'exclude', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Exclude specific activity IDs', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> comma-separated activity IDs</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>exclude="10,15,20"</code></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'primary_id', 'shortcodes-for-buddypress' ); ?></label>
+					</th>
+					<td>
+						<p class="description"><?php esc_html_e( 'Filter by item ID (e.g., group ID for group activities)', 'shortcodes-for-buddypress' ); ?></p>
+						<p><strong><?php esc_html_e( 'Type:', 'shortcodes-for-buddypress' ); ?></strong> integer or comma-separated IDs</p>
+						<p><strong><?php esc_html_e( 'Example:', 'shortcodes-for-buddypress' ); ?></strong> <code>primary_id="5"</code></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<!-- Complex Examples -->
+		<div class="wbcom-admin-option-wrap">
+			<h4><?php esc_html_e( 'Complex Examples', 'shortcodes-for-buddypress' ); ?></h4>
+			<div class="wbcom-code-examples">
+				<p><strong><?php esc_html_e( 'Friends activities with pagination:', 'shortcodes-for-buddypress' ); ?></strong></p>
+				<p><code>[activity-listing scope="friends" per_page="15" pagination="1" title="My Friends Activities"]</code></p>
+
+				<p><strong><?php esc_html_e( 'Group activities for specific groups:', 'shortcodes-for-buddypress' ); ?></strong></p>
+				<p><code>[activity-listing object="groups" primary_id="1,2,3" per_page="10"]</code></p>
+
+				<p><strong><?php esc_html_e( 'Status updates only with load more:', 'shortcodes-for-buddypress' ); ?></strong></p>
+				<p><code>[activity-listing action="activity_update" load_more="1" per_page="5"]</code></p>
+
+				<p><strong><?php esc_html_e( 'Search results with specific users:', 'shortcodes-for-buddypress' ); ?></strong></p>
+				<p><code>[activity-listing search_terms="project" user_id="1,5,10" max="20"]</code></p>
+			</div>
+		</div>
+
 	</div>
 </div>

@@ -40,7 +40,14 @@
                                 ?>
 
                                 <a href="<?php bp_group_url(); ?>" class="item-avatar">
-                                    <div class="youzify-group-avatar"><?php echo wp_kses_post( bp_core_fetch_avatar( array( 'object' => 'group', 'avatar_dir' => 'group-avatars', 'item_id' => bp_get_group_id(), 'width' => '100', 'height' => '100', 'type' => 'full') ) ); ?></div>
+                                    <div class="youzify-group-avatar">
+                                        <?php
+                                        $group_avatar = bp_core_fetch_avatar( array( 'object' => 'group', 'avatar_dir' => 'group-avatars', 'item_id' => bp_get_group_id(), 'width' => '100', 'height' => '100', 'type' => 'full') );
+                                        if ( ! empty( $group_avatar ) ) {
+                                            echo wp_kses_post( $group_avatar );
+                                        }
+                                        ?>
+                                    </div>
                                 </a>
 
                                 <div class="item">
@@ -49,7 +56,10 @@
                                     <div class="item-meta">
                                         <div class="group-status">
                                             <?php if ( function_exists( 'youzify_get_group_status' ) ) {
-                                                echo wp_kses_post( youzify_get_group_status( bp_get_group_status() ) );
+                                                $group_status = youzify_get_group_status( bp_get_group_status() );
+                                                if ( ! empty( $group_status ) ) {
+                                                    echo wp_kses_post( $group_status );
+                                                }
                                             }?>
 
                                         </div>

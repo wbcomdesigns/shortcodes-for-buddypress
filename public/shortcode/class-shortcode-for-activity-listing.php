@@ -33,7 +33,7 @@ class ActivityShortCode extends BPShortCode {
 			'title'            => '',
 			'pagination'       => 1,
 			'load_more'        => 0,
-			'display_comments' => 'threaded',
+			'display_comments' => 'false',
 			'container_class'  => 'activity',
 			'hide_on_activity' => 1,
 			'allow_posting'    => false,
@@ -138,6 +138,10 @@ class ActivityShortCode extends BPShortCode {
 			}
 		}
 
+		// Force disable comments to prevent BuddyPress compatibility issues
+		// This prevents the get_activity_comments() TypeError
+		$query_args['display_comments'] = 'false';
+
 		return apply_filters( 'activity_shortcode_bash_query', $query_args );
 	}
 
@@ -150,7 +154,7 @@ class ActivityShortCode extends BPShortCode {
 	 */
 	private function get_template_vars( $atts, $query ) {
 		$args = array(
-			'query'         => build_query( $query ),
+			'query'         => http_build_query( $query ),
 			'limit'         => ! empty( $atts['per_page'] ) ? $atts['per_page'] : 10,
 			'activity_atts' => $query,
 			'allow_posting' => (bool) $atts['allow_posting'],
@@ -238,10 +242,31 @@ class ActivityShortCode extends BPShortCode {
 			$theme = get_option( '_bp_theme_package_id' );
 		}
 
-		bp_shortcode_get_template( $template, $template_vars, $theme );
+		// Add fallback error handling for template loading
+		try {
+			bp_shortcode_get_template( $template, $template_vars, $theme );
+		} catch ( Throwable $e ) {
+			// If template loading fails, show a simple fallback
+			$this->show_simple_fallback( $template_vars );
+		}
 
 		do_action( 'after_activity_shortcode_render', $template_vars );
+	}
 
+	/**
+	 * Show a simple fallback when template loading fails
+	 *
+	 * @param array $template_vars Template variables
+	 */
+	private function show_simple_fallback( $template_vars ) {
+		?>
+		<div class="activity-listing">
+			<div class="bp-feedback info">
+				<span class="bp-icon" aria-hidden="true"></span>
+				<p><?php esc_html_e( 'Activity listing is temporarily unavailable. Please check back later.', 'shortcodes-for-buddypress' ); ?></p>
+			</div>
+		</div>
+		<?php
 	}
 
 	/**

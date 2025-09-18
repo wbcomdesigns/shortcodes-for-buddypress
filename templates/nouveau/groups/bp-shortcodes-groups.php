@@ -42,8 +42,13 @@
 			// Display the total number of groups found
 			// Uses the BuddyPress pagination count function
 			?>
-			<div class="bpsp-group-count">	
-				<?php echo wp_kses_post( bp_get_groups_pagination_count() ); ?>
+			<div class="bpsp-group-count">
+				<?php
+				$pagination_count = bp_get_groups_pagination_count();
+				if ( ! empty( $pagination_count ) ) {
+					echo wp_kses_post( $pagination_count );
+				}
+				?>
 			</div>
 
 			<?php
@@ -152,8 +157,13 @@
 			?>
 			<?php if ( $groups_atts['per_page'] ) { ?>
 			<div class="bp-pagination">
-				<div class="bpsp-group-pagination bp-pagination-links bottom">	
-					<?php echo wp_kses_post( bp_get_groups_pagination_links() ); ?>
+				<div class="bpsp-group-pagination bp-pagination-links bottom">
+					<?php
+					$pagination_links = bp_get_groups_pagination_links();
+					if ( ! empty( $pagination_links ) ) {
+						echo wp_kses_post( $pagination_links );
+					}
+					?>
 				</div>
 			</div>
 			<?php } ?>
