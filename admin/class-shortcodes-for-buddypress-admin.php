@@ -245,6 +245,7 @@ class Shortcodes_For_Buddypress_Admin {
 			'buddypress-shortcode-activities' => [ esc_html__( 'Activities', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_activities_settings_content' ],
 			'buddypress-shortcode-member'     => [ esc_html__( 'Members', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_member_settings_content' ],
 			'buddypress-shortcode-groups'     => [ esc_html__( 'Groups', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_groups_settings_content' ],
+			'buddypress-shortcode-performance_settings' => [ esc_html__( 'Performance Settings', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_render_performance_settings_description' ],
 		];
 
 		foreach ( $tabs as $tab_slug => $tab_data ) {
@@ -321,5 +322,36 @@ class Shortcodes_For_Buddypress_Admin {
 			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-user-notification-listing.php';
 		}
 	}
+	/**
+	 * performance tab content
+	 *
+	 * @return void
+	 */
+	public function buddypress_shortcodes_render_performance_settings_description(){
+		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-user-performance-setting.php' ) ) {
+			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-user-performance-setting.php';
+		}
+	}
+
+	/**
+	 * Save plugin admin options
+	*/
+	public function buddypress_shortcodes_save_options() {
+		if ( isset( $_POST[ 'option_page' ] ) && 'bpsh_performance_settings'=== $_POST[ 'option_page' ]) {
+			$option_value = wp_unslash( $_POST[ 'bpsh_performance_settings'] );	// phpcs:ignore
+
+			update_option( 'bpsh_performance_settings', $option_value );
+		}
+		
+	}
+
+	/**
+	 * Register the settings
+	*/
+	public function buddypress_shortcodes_register_settings(){
+		register_setting( 'bpsh_settings_group', 'bpsh_performance_settings' );	// phpcs:ignore
+	}
+
+
 
 }

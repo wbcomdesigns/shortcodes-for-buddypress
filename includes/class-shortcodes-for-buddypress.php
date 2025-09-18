@@ -184,6 +184,8 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'buddypress_shortcodes_add_submenu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'buddypress_shortcodes_plugin_settings' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wbcom_hide_all_admin_notices_from_setting_page' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'buddypress_shortcodes_save_options' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'buddypress_shortcodes_register_settings' );
 	}
 
 	/**
@@ -216,6 +218,8 @@ class Shortcodes_For_Buddypress {
 		if ( function_exists('buddypress') && isset( buddypress()->buddyboss ) ) {
 			$this->loader->add_filter( 'bb_nouveau_get_activity_entry_bubble_buttons', $plugin_public, 'buddypress_shortcode_activity_entry_bubble_buttons', 10, 2 );
 		}
+		$this->loader->add_action( 'wp_ajax_bpsh_load_more_members', $plugin_public, 'buddypress_shortcode_ajax_load_more_members' );
+		$this->loader->add_action( 'wp_ajax_nopriv_bpsh_load_more_members', $plugin_public, 'buddypress_shortcode_ajax_load_more_members' );
 
 	}
 

@@ -61,6 +61,11 @@ class Shortcodes_For_Buddypress_Public {
 	public function enqueue_styles() {
 		global $post;
 
+		// Only load styles when needed
+		if (!$this->has_shortcode_on_page()) {
+			return;
+		}
+
 		do_action( 'before_enqueue_buddypress_shortcode_styles' );
 
 		// Always load main stylesheet
@@ -223,6 +228,125 @@ class Shortcodes_For_Buddypress_Public {
 					true
 				);
 			}
+		}
+	}
+
+	/**
+	 * Check if current page has any of our shortcodes
+	 *
+	 * @return boolean
+	*/
+	private function has_shortcode_on_page() {
+		global $post;
+		
+		if (!is_a($post, 'WP_Post')) {
+			return false;
+		}
+		
+		$shortcodes = array(
+			'activity-listing', 
+			'members-listing', 
+			'groups-listing', 
+			'notifications-listing'
+		);
+		
+		foreach ($shortcodes as $shortcode) {
+			if (has_shortcode($post->post_content, $shortcode)) {
+				return true;
+			}
+		}
+		
+		// Check for Elementor widgets
+		if (defined('ELEMENTOR_VERSION')) {
+			$elementor_data = get_post_meta($post->ID, '_elementor_data', true);
+			return $this->check_elementor_data_for_widgets($elementor_data);
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Check Elementor data for our widgets
+	 *
+	 * @param string $elementor_data
+	 * @return boolean
+	*/
+	private function check_elementor_data_for_widgets($elementor_data) {
+		if (empty($elementor_data)) {
+			return false;
+		}
+		
+		$data = json_decode($elementor_data, true);
+		if (!is_array($data)) {
+			return false;
+		}
+		
+		$widget_types = array(
+			'buddypress_shortcode_activity_widget',
+			'buddypress_shortcode_members_widget',
+			'buddypress_shortcode_groups_widget'
+		);
+		
+		foreach ($data as $element) {
+			if (isset($element['widgetType']) && in_array($element['widgetType'], $widget_types)) {
+				return true;
+			}
+			
+			if (isset($element['elements']) && is_array($element['elements'])) {
+				if ($this->check_elementor_data_for_widgets(json_encode($element['elements']))) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+
+	public function buddypress_shortcode_ajax_load_more_members() {
+		// Verify nonce
+		if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'bpsp-nonce')) {
+			wp_send_json_error(array('message' => 'Security check failed'));
+		}
+		
+		// Get the last member ID
+		$last_id = isset($_POST['last_id']) ? absint($_POST['last_id']) : 0;
+		$per_page = isset($_POST['per_page']) ? absint($_POST['per_page']) : 10;
+		
+		// Build query args
+		$args = array(
+			'exclude' => array($last_id),
+			'per_page' => $per_page,
+			'page' => 1,
+		);
+		
+		// Add any additional filters from request
+		if (isset($_POST['type'])) {
+			$args['type'] = sanitize_text_field(wp_unslash($_POST['type']));
+		}
+		
+		// Get members
+		if (bp_has_members($args)) {
+			ob_start();
+			
+			$last_member_id = 0;
+			
+			while (bp_members()) {
+				bp_the_member();
+				$last_member_id = bp_get_member_user_id();
+				
+				// Include the member template part
+				bp_get_template_part('members/members-loop-item');
+			}
+			
+			$content = ob_get_clean();
+			
+			wp_send_json_success(array(
+				'content' => $content,
+				'last_id' => $last_member_id,
+				'has_more' => bp_members_has_more_items()
+			));
+		} else {
+			wp_send_json_error(array('message' => 'No more members found'));
 		}
 	}
 
