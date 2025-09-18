@@ -2,11 +2,6 @@
 /**
  * BuddyPress Groups Elementor Widget
  *
- * This file defines the Elementor widget for displaying BuddyPress groups.
- * It provides a user-friendly interface for creating and customizing groups
- * listings through the Elementor page builder, leveraging the underlying
- * [groups-listing] shortcode functionality.
- *
  * @package    Shortcodes_For_Buddypress
  * @subpackage Elementor/Widgets
  * @since      1.6.1
@@ -26,24 +21,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * BuddyPress Groups Elementor Widget Class
- *
- * This widget allows users to display BuddyPress groups listings in their
- * Elementor-built pages. It provides controls for customizing the appearance
- * and behavior of the groups listing, and ultimately generates a shortcode
- * that is processed by the plugin's shortcode system.
+ * BuddyPress Groups Elementor Widget Class.
  *
  * @since 1.6.1
  */
 class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 
 	/**
-	 * Retrieve the widget name.
-	 *
-	 * The name is used to identify the widget in Elementor's system.
+	 * Get widget name.
 	 *
 	 * @since 1.6.1
-	 * @access public
 	 * @return string Widget name.
 	 */
 	public function get_name() {
@@ -51,12 +38,9 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Retrieve the widget title.
-	 *
-	 * The title is displayed in the Elementor editor.
+	 * Get widget title.
 	 *
 	 * @since 1.6.1
-	 * @access public
 	 * @return string Widget title.
 	 */
 	public function get_title() {
@@ -64,12 +48,9 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Retrieve the widget icon.
-	 *
-	 * The icon is displayed in the Elementor editor.
+	 * Get widget icon.
 	 *
 	 * @since 1.6.1
-	 * @access public
 	 * @return string Widget icon.
 	 */
 	public function get_icon() {
@@ -77,13 +58,9 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Retrieve the list of categories the widget belongs to.
-	 *
-	 * Used to determine where to display the widget in the editor.
-	 * This widget is placed in the 'buddypress-widgets' category.
+	 * Get widget categories.
 	 *
 	 * @since 1.6.1
-	 * @access public
 	 * @return array Widget categories.
 	 */
 	public function get_categories() {
@@ -91,14 +68,10 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Get BuddyPress group types to display as Elementor options.
-	 *
-	 * Retrieves all registered BuddyPress group types and formats them
-	 * for use in Elementor control options.
+	 * Get group types for Elementor options.
 	 *
 	 * @since 1.6.1
-	 * @access protected
-	 * @return array Array of group types with type slug as key and type name as value.
+	 * @return array Group types.
 	 */
 	protected function get_group_types() {
 		$group_types = array();
@@ -115,11 +88,8 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	/**
 	 * Register widget controls.
 	 *
-	 * Adds different input fields to allow the user to customize the widget settings.
-	 * The controls are organized into sections for better organization.
-	 *
 	 * @since 1.6.1
-	 * @access protected
+	 * @return void
 	 */
 	protected function register_controls() {
 		// Content Section - Query Options
@@ -315,13 +285,10 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Render widget output on the frontend.
-	 *
-	 * This method takes the widget settings, converts them to shortcode attributes,
-	 * and renders the [groups-listing] shortcode with those attributes.
+	 * Render widget output.
 	 *
 	 * @since 1.6.1
-	 * @access protected
+	 * @return void
 	 */
 	protected function render() {
 		// Get all widget settings

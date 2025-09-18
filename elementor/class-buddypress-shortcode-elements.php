@@ -13,17 +13,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 class BPSP_Elementor_Widgets {
 
 	/**
-	 * Instance of BPSP_Elementor_Widgets.
+	 * Instance.
 	 *
-	 * @since  1.6.1
-	 * @var null
+	 * @since 1.6.1
+	 * @var null|BPSP_Elementor_Widgets
 	 */
 	private static $_instance = null;
 
 	/**
-	 * Get instance of BPSP_Elementor_Widgets
+	 * Get instance.
 	 *
-	 * @since  1.6.1
+	 * @since 1.6.1
 	 * @return BPSP_Elementor_Widgets
 	 */
 	public static function instance() {
@@ -36,9 +36,9 @@ class BPSP_Elementor_Widgets {
 
 
 	/**
-	 * Setup actions and filters.
+	 * Constructor.
 	 *
-	 * @since  1.6.1
+	 * @since 1.6.1
 	 */
 	private function __construct() {
 		// Register category.
@@ -52,10 +52,11 @@ class BPSP_Elementor_Widgets {
 	}
 
 	/**
-	 * Register Category
+	 * Register widget category.
 	 *
 	 * @since 1.6.1
-	 * @param object $this_cat class.
+	 * @param object $this_cat Categories manager.
+	 * @return object
 	 */
 	public function register_widget_category( $this_cat ) {
 
@@ -71,12 +72,10 @@ class BPSP_Elementor_Widgets {
 	}
 
 	/**
-	 * Register Widgets
-	 *
-	 * Register new Elementor widgets.
+	 * Register widgets.
 	 *
 	 * @since 1.6.1
-	 * @access public
+	 * @return void
 	 */
 	public function register_widgets() {
 		// Its is now safe to include Widgets files.
@@ -89,12 +88,10 @@ class BPSP_Elementor_Widgets {
 	}
 
 	/**
-	 * Include Widgets files
-	 *
-	 * Load widgets files
+	 * Include widget files.
 	 *
 	 * @since 1.6.1
-	 * @access public
+	 * @return void
 	 */
 	public function include_widgets_files() {
 		// $js_files    = $this->get_widget_script();
@@ -112,10 +109,10 @@ class BPSP_Elementor_Widgets {
 	}
 
 	/**
-	 * Returns Script array.
+	 * Get widget list.
 	 *
-	 * @return array()
 	 * @since 1.6.1
+	 * @return array
 	 */
 	public static function get_widget_list() {
 		$widget_list = array(
