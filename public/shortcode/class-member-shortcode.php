@@ -1,6 +1,6 @@
 <?php
 /**
- * The shortcode class for members
+ * Members shortcode file.
  *
  * @link       https://wbcomdesigns.com/plugins
  * @since      1.7.0
@@ -10,7 +10,7 @@
  */
 
 /**
- * The public-facing functionality of the plugin.
+ * Members shortcode class.
  *
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/shortcode
@@ -20,7 +20,7 @@
 class MemberShortCode extends BPShortCode {
 
 	/**
-	 * Set default attributes for members shortcode
+	 * Set default attributes.
 	 */
 	protected function set_defaults() {
 		$this->defaults = array(
@@ -56,7 +56,10 @@ class MemberShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Prepare attributes before processing
+	 * Prepare attributes.
+	 *
+	 * @param array $atts Attributes.
+	 * @return array
 	 */
 	protected function get_final_attributes( $atts ) {
 		// Handle role-based includes/excludes first
@@ -67,11 +70,11 @@ class MemberShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Output the members listing HTML
+	 * Output shortcode HTML.
 	 *
-	 * @param array  $atts    Final attributes
-	 * @param string $content Shortcode content
-	 * @return string HTML output
+	 * @param array  $atts    Attributes.
+	 * @param string $content Content.
+	 * @return string
 	 */
 	protected function output( $atts, $content = '' ) {
 
@@ -206,10 +209,10 @@ class MemberShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Apply user role filters to include/exclude
+	 * Apply role filters.
 	 *
-	 * @param array $atts Shortcode attributes
-	 * @return array Modified attributes
+	 * @param array $atts Attributes.
+	 * @return array
 	 */
 	private function apply_role_filters( $atts ) {
 		// Handle exclude by role
@@ -234,10 +237,10 @@ class MemberShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Get all users with specific roles
+	 * Get users by roles.
 	 *
-	 * @param string|array $roles Role names (comma-separated or array)
-	 * @return array User IDs
+	 * @param string|array $roles Roles.
+	 * @return array
 	 */
 	private function get_users_with_roles( $roles ) {
 		if ( empty( $roles ) ) {
@@ -258,10 +261,10 @@ class MemberShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Convert ID string/array to clean array
+	 * Convert to array.
 	 *
-	 * @param string|array $ids IDs as string or array
-	 * @return array Array of integer IDs
+	 * @param string|array $ids IDs.
+	 * @return array
 	 */
 	private function convert_to_array( $ids ) {
 		if ( empty( $ids ) ) {
@@ -276,11 +279,11 @@ class MemberShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Combine two ID arrays into comma-separated string
+	 * Combine IDs.
 	 *
-	 * @param array $ids1 First set of IDs
-	 * @param array $ids2 Second set of IDs
-	 * @return string Comma-separated unique IDs
+	 * @param array $ids1 First IDs.
+	 * @param array $ids2 Second IDs.
+	 * @return string
 	 */
 	private function combine_ids( $ids1, $ids2 ) {
 		$merged = array_unique( array_merge( (array) $ids1, (array) $ids2 ) );

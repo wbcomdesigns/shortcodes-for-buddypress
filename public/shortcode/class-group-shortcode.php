@@ -1,8 +1,6 @@
 <?php
 /**
- * Group shortcode class
- *
- * Handles the [groups-listing] shortcode for displaying BuddyPress groups
+ * Groups shortcode file.
  *
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/shortcode
@@ -12,7 +10,7 @@
 class GroupShortCode extends BPShortCode {
 
 	/**
-	 * Set default attributes for groups shortcode
+	 * Set default attributes.
 	 */
 	protected function set_defaults() {
 		$this->defaults = array(
@@ -46,11 +44,11 @@ class GroupShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Output the groups listing HTML
+	 * Output shortcode HTML.
 	 *
-	 * @param array  $atts    Final attributes
-	 * @param string $content Shortcode content
-	 * @return string HTML output
+	 * @param array  $atts    Attributes.
+	 * @param string $content Content.
+	 * @return string
 	 */
 	protected function output( $atts, $content = '' ) {
 
@@ -63,10 +61,10 @@ class GroupShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Get query arguments for groups loop
+	 * Get query arguments.
 	 *
-	 * @param array $atts Shortcode attributes
-	 * @return array Query args for bp_has_groups()
+	 * @param array $atts Attributes.
+	 * @return array
 	 */
 	private function get_query_args( $atts ) {
 		$query_args = array(
@@ -99,11 +97,11 @@ class GroupShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Get template variables for group display
+	 * Get template variables.
 	 *
-	 * @param array $atts  Shortcode attributes
-	 * @param array $query Query arguments
-	 * @return array Template variables
+	 * @param array $atts  Attributes.
+	 * @param array $query Query arguments.
+	 * @return array
 	 */
 	private function get_template_vars( $atts, $query ) {
 		// Build query string
@@ -131,10 +129,10 @@ class GroupShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Build query string from arguments
+	 * Build query string.
 	 *
-	 * @param array $query_args Query arguments
-	 * @return string Query string
+	 * @param array $query_args Query arguments.
+	 * @return string
 	 */
 	private function build_query_string( $query_args ) {
 		$query_parts = array();
@@ -149,11 +147,11 @@ class GroupShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Generate the complete HTML output
+	 * Generate HTML.
 	 *
-	 * @param array $atts          Shortcode attributes
-	 * @param array $template_vars Template variables
-	 * @return string Complete HTML
+	 * @param array $atts          Attributes.
+	 * @param array $template_vars Template variables.
+	 * @return string
 	 */
 	private function generate_html( $atts, $template_vars ) {
 		do_action( 'before_group_shortcode_render', $atts );
@@ -174,7 +172,7 @@ class GroupShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Show message when groups component is disabled
+	 * Show disabled message.
 	 */
 	private function show_disabled_message() {
 		?>
@@ -190,10 +188,10 @@ class GroupShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Show the groups listing content
+	 * Show groups.
 	 *
-	 * @param array $atts          Shortcode attributes
-	 * @param array $template_vars Template variables
+	 * @param array $atts          Attributes.
+	 * @param array $template_vars Template variables.
 	 */
 	private function show_groups( $atts, $template_vars ) {
 		?>
@@ -210,9 +208,9 @@ class GroupShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Load the group template file
+	 * Load template.
 	 *
-	 * @param array $template_vars Template variables
+	 * @param array $template_vars Template variables.
 	 */
 	private function load_template( $template_vars ) {
 		if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
@@ -230,11 +228,11 @@ class GroupShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Get container CSS classes
+	 * Get container classes.
 	 *
-	 * @param string $grid   Grid class
-	 * @param string $column Column class
-	 * @return string CSS classes
+	 * @param string $grid   Grid class.
+	 * @param string $column Column class.
+	 * @return string
 	 */
 	private function get_container_classes( $grid, $column ) {
 		$classes            = array( 'item-list', 'groups-list', 'groups-dir-list', 'bp-list', 'bpsp-groups-list', $grid, $column);

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Fired during plugin deactivation
+ * Plugin deactivation file.
  *
  * @link       https://wbcomdesigns.com/plugins
  * @since      1.0.0
@@ -11,9 +11,7 @@
  */
 
 /**
- * Fired during plugin deactivation.
- *
- * This class defines all code necessary to run during the plugin's deactivation.
+ * Plugin deactivator class.
  *
  * @since      1.0.0
  * @package    Shortcodes_For_Buddypress
@@ -23,9 +21,7 @@
 class Shortcodes_For_Buddypress_Deactivator {
 
 	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
+	 * Deactivate plugin.
 	 *
 	 * @since    1.0.0
 	 */

@@ -1,10 +1,7 @@
 <?php
 
 /**
- * Define the internationalization functionality
- *
- * Loads and defines the internationalization files for this plugin
- * so that it is ready for translation.
+ * Internationalization file.
  *
  * @link       https://wbcomdesigns.com/plugins
  * @since      1.0.0
@@ -14,10 +11,7 @@
  */
 
 /**
- * Define the internationalization functionality.
- *
- * Loads and defines the internationalization files for this plugin
- * so that it is ready for translation.
+ * Internationalization class.
  *
  * @since      1.0.0
  * @package    Shortcodes_For_Buddypress
@@ -28,11 +22,7 @@ class Shortcodes_For_Buddypress_i18n {
 
 
 	/**
-	 * Load the plugin text domain for translation.
-	 *
-	 * Note: Since WordPress 4.6, plugins hosted on WordPress.org
-	 * no longer need to manually load text domains. WordPress
-	 * automatically loads translations for hosted plugins.
+	 * Load plugin textdomain.
 	 *
 	 * @since    1.0.0
 	 */

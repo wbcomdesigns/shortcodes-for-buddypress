@@ -1,9 +1,6 @@
 <?php
 /**
- * The shortcode class for BuddyPress activity streams
- *
- * This class handles the [activity-listing] shortcode which allows users to embed
- * BuddyPress activity streams on any WordPress post or page.
+ * Activity shortcode file.
  *
  * @link       https://wbcomdesigns.com/plugins
  * @since      1.7.0
@@ -13,10 +10,7 @@
  */
 
 /**
- * The ActivityShortCode class.
- *
- * Implements the functionality for the [activity-listing] shortcode which displays
- * BuddyPress activity streams with various filtering and display options.
+ * Activity shortcode class.
  *
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/shortcode
@@ -25,7 +19,7 @@
 class ActivityShortCode extends BPShortCode {
 
 	/**
-	 * Set default attributes for activity shortcode
+	 * Set default attributes.
 	 */
 	protected function set_defaults() {
 		$this->defaults = array(
@@ -71,11 +65,11 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Output the activity stream HTML
+	 * Output shortcode HTML.
 	 *
-	 * @param array  $atts    Final attributes
-	 * @param string $content Shortcode content
-	 * @return string HTML output
+	 * @param array  $atts    Attributes.
+	 * @param string $content Content.
+	 * @return string
 	 */
 	protected function output( $atts, $content = '' ) {
 		// Fix BuddyBoss group activities scope
@@ -92,10 +86,10 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Fix BuddyBoss group activity scope issue
+	 * Fix BuddyBoss groups.
 	 *
-	 * @param array $atts Shortcode attributes
-	 * @return array Fixed attributes
+	 * @param array $atts Attributes.
+	 * @return array
 	 */
 	private function fix_buddyboss_groups( $atts ) {
 		if ( 'groups' === $atts['object'] &&
@@ -108,10 +102,10 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Get query arguments for activity loop
+	 * Get query arguments.
 	 *
-	 * @param array $atts Shortcode attributes
-	 * @return array Query args for bp_has_activities()
+	 * @param array $atts Attributes.
+	 * @return array
 	 */
 	private function get_query_args( $atts ) {
 		// These are display-only keys, not query parameters
@@ -146,11 +140,11 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Get template variables for activity display
+	 * Get template variables.
 	 *
-	 * @param array $atts  Shortcode attributes
-	 * @param array $query Query arguments
-	 * @return array Template variables
+	 * @param array $atts  Attributes.
+	 * @param array $query Query arguments.
+	 * @return array
 	 */
 	private function get_template_vars( $atts, $query ) {
 		$args = array(
@@ -170,11 +164,11 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Generate the complete HTML output
+	 * Generate HTML.
 	 *
-	 * @param array $atts Shortcode attributes
-	 * @param array $template_vars Template variables
-	 * @return string Complete HTML
+	 * @param array $atts Attributes.
+	 * @param array $template_vars Template variables.
+	 * @return string
 	 */
 	private function generate_html( $atts, $template_vars ) {
 		do_action( 'before_activity_shortcode_render', $atts );
@@ -191,7 +185,7 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Show message when activity component is disabled
+	 * Show disabled message.
 	 */
 	private function show_disabled_message() {
 		?>
@@ -207,10 +201,10 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Show the activity stream content
+	 * Show activities.
 	 *
-	 * @param array $atts Shortcode attributes
-	 * @param array $template_vars Template variables
+	 * @param array $atts Attributes.
+	 * @param array $template_vars Template variables.
 	 */
 	private function show_activities( $atts, $template_vars ) {
 		?>
@@ -227,9 +221,9 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Load the activity template file
+	 * Load template.
 	 *
-	 * @param array $template_vars Template variables
+	 * @param array $template_vars Template variables.
 	 */
 	private function load_template( $template_vars ) {
 		$template = 'activity/bp-shortcodes-activity.php';
@@ -254,9 +248,9 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Show a simple fallback when template loading fails
+	 * Show fallback.
 	 *
-	 * @param array $template_vars Template variables
+	 * @param array $template_vars Template variables.
 	 */
 	private function show_simple_fallback( $template_vars ) {
 		?>
@@ -270,16 +264,11 @@ class ActivityShortCode extends BPShortCode {
 	}
 
 	/**
-	 * Get user IDs by WordPress roles
-	 *
-	 * This method queries the WordPress database to find users with the specified
-	 * roles and returns an array of their user IDs. This is useful for filtering
-	 * activities by user role rather than individual user IDs.
+	 * Get user IDs by roles.
 	 *
 	 * @since 1.7.0
-	 * @param string|array $roles A comma-separated string or array of WordPress role names.
-	 *                            Example: 'administrator,editor' or ['administrator', 'editor']
-	 * @return array An array of user IDs. Returns [0] if no users are found or if roles are empty.
+	 * @param string|array $roles Roles.
+	 * @return array
 	 */
 	private function get_user_ids_by_roles( $roles ) {
 		// Default return value for invalid/empty results

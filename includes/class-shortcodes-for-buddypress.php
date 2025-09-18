@@ -1,10 +1,7 @@
 <?php
 
 /**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
+ * Core plugin class file.
  *
  * @link       https://wbcomdesigns.com/plugins
  * @since      1.0.0
@@ -14,13 +11,7 @@
  */
 
 /**
- * The core plugin class.
- *
- * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
- *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
+ * Core plugin class.
  *
  * @since      1.0.0
  * @package    Shortcodes_For_Buddypress
@@ -30,37 +21,36 @@
 class Shortcodes_For_Buddypress {
 
 	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
+	 * Plugin loader.
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Shortcodes_For_Buddypress_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Shortcodes_For_Buddypress_Loader    $loader
 	 */
 	protected $loader;
 
 	/**
-	 * The unique identifier of this plugin.
+	 * Plugin identifier.
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string    $plugin_name
 	 */
 	protected $plugin_name;
 
 	/**
-	 * The current version of the plugin.
+	 * Plugin version.
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string    $version
 	 */
 	protected $version;
 	
 	protected $plugin_basename;
 
 	/**
-	 * Initialize the plugin
+	 * Constructor.
 	 *
 	 * @since    1.0.0
 	 */
@@ -76,7 +66,7 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Initialize all components
+	 * Initialize components.
 	 */
 	private function init() {
 		$this->load_dependencies();
@@ -86,7 +76,7 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Load plugin dependencies
+	 * Load dependencies.
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -116,7 +106,7 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Load core plugin classes
+	 * Load core classes.
 	 */
 	private function load_core_classes( $path ) {
 		require_once $path . 'includes/class-shortcodes-for-buddypress-loader.php';
@@ -124,7 +114,7 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Load admin-specific classes
+	 * Load admin classes.
 	 */
 	private function load_admin_classes( $path ) {
 		require_once $path . 'admin/class-shortcodes-for-buddypress-admin.php';
@@ -132,14 +122,14 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Load public-facing classes
+	 * Load public classes.
 	 */
 	private function load_public_classes( $path ) {
 		require_once $path . 'public/class-shortcodes-for-buddypress-public.php';
 	}
 
 	/**
-	 * Load shortcode classes
+	 * Load shortcode classes.
 	 */
 	private function load_shortcode_classes( $path ) {
 		// Base shortcode class
@@ -152,10 +142,7 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Shortcodes_For_Buddypress_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
+	 * Set plugin locale.
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -169,8 +156,7 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
+	 * Register admin hooks.
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -189,8 +175,7 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
+	 * Register public hooks.
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -224,7 +209,7 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Run the loader to execute all of the hooks with WordPress.
+	 * Run the loader.
 	 *
 	 * @since    1.0.0
 	 */
@@ -233,31 +218,30 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
+	 * Get plugin name.
 	 *
 	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
+	 * @return    string
 	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
 	}
 
 	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
+	 * Get loader instance.
 	 *
 	 * @since     1.0.0
-	 * @return    Shortcodes_For_Buddypress_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Shortcodes_For_Buddypress_Loader
 	 */
 	public function get_loader() {
 		return $this->loader;
 	}
 
 	/**
-	 * Retrieve the version number of the plugin.
+	 * Get plugin version.
 	 *
 	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
+	 * @return    string
 	 */
 	public function get_version() {
 		return $this->version;

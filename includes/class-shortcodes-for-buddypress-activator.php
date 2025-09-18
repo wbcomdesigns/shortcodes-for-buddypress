@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Fired during plugin activation
+ * Plugin activation file.
  *
  * @link       https://wbcomdesigns.com/plugins
  * @since      1.0.0
@@ -11,9 +11,7 @@
  */
 
 /**
- * Fired during plugin activation.
- *
- * This class defines all code necessary to run during the plugin's activation.
+ * Plugin activator class.
  *
  * @since      1.0.0
  * @package    Shortcodes_For_Buddypress
@@ -23,9 +21,7 @@
 class Shortcodes_For_Buddypress_Activator {
 
 	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
+	 * Activate plugin.
 	 *
 	 * @since    1.0.0
 	 */
