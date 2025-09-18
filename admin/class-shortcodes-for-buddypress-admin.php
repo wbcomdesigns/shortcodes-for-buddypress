@@ -245,7 +245,6 @@ class Shortcodes_For_Buddypress_Admin {
 			'buddypress-shortcode-activities' => [ esc_html__( 'Activities', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_activities_settings_content' ],
 			'buddypress-shortcode-member'     => [ esc_html__( 'Members', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_member_settings_content' ],
 			'buddypress-shortcode-groups'     => [ esc_html__( 'Groups', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_groups_settings_content' ],
-			'buddypress-shortcode-performance_settings' => [ esc_html__( 'Performance Settings', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_render_performance_settings_description' ],
 		];
 
 		foreach ( $tabs as $tab_slug => $tab_data ) {
