@@ -305,31 +305,4 @@ class Shortcodes_For_Buddypress_Admin {
 		}
 	}
 
-
-	/**
-	 * Save plugin options.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function buddypress_shortcodes_save_options() {
-		if ( isset( $_POST['option_page'] ) && 'bpsh_performance_settings' === $_POST['option_page'] ) {
-			$option_value = wp_unslash( $_POST['bpsh_performance_settings'] ); // phpcs:ignore
-
-			update_option( 'bpsh_performance_settings', $option_value );
-		}
-	}
-
-	/**
-	 * Register plugin settings.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function buddypress_shortcodes_register_settings() {
-		register_setting( 'bpsh_settings_group', 'bpsh_performance_settings' );
-	}
-
-
-
 }

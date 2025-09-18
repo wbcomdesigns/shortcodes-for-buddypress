@@ -32,14 +32,13 @@ endif;
 
 do_action( 'before_activity_listing_output', $atts, $activity_atts ); ?>
 
-<?php 
+<?php
 if ( !empty( $activity_atts['query'] ) ) {
     $bp_activities  = $activity_atts['query'];
 } else {
     $bp_activities  = bp_ajax_querystring( 'activity' );
 }
 
-<?php
 // Add error handling for BuddyPress compatibility issues
 $has_activities = false;
 $bp_error = false;
