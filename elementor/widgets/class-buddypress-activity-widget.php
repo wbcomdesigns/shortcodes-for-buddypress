@@ -68,6 +68,26 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 	}
 
 	/**
+	 * Get script dependencies.
+	 *
+	 * @since 1.6.1
+	 * @return array Script dependencies.
+	 */
+	public function get_script_depends() {
+		return array();
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * @since 1.6.1
+	 * @return array Style dependencies.
+	 */
+	public function get_style_depends() {
+		return array();
+	}
+
+	/**
 	 * Register widget controls.
 	 *
 	 * @since 1.6.1
@@ -476,8 +496,22 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 		foreach ( $settings as $setting_key => $setting ) {
 			// Only process settings that start with 'sfb_'
 			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
-				if ( ! empty( $settings[ $setting_key ] ) ) {
-					$key   = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
+				$key = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
+				// Handle array values
+				if ( is_array( $setting ) && ! empty( $setting ) ) {
+					// Filter out any nested arrays or objects
+					$flat_values = array();
+					foreach ( $setting as $val ) {
+						if ( is_scalar( $val ) ) {
+							$flat_values[] = $val;
+						}
+					}
+					if ( ! empty( $flat_values ) ) {
+						$args .= $key . '=' . implode( ',', $flat_values ) . ' ';
+					}
+				}
+				// Handle non-empty scalar values
+				elseif ( ! empty( $setting ) && is_scalar( $setting ) ) {
 					$args .= $key . '=' . $setting . ' ';
 				}
 			}

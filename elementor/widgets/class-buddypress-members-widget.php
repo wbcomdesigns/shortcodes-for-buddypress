@@ -68,6 +68,26 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	}
 
 	/**
+	 * Get script dependencies.
+	 *
+	 * @since 1.6.1
+	 * @return array Script dependencies.
+	 */
+	public function get_script_depends() {
+		return array();
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * @since 1.6.1
+	 * @return array Style dependencies.
+	 */
+	public function get_style_depends() {
+		return array();
+	}
+
+	/**
 	 * Get user roles for Elementor options.
 	 *
 	 * @since 1.6.1
@@ -266,15 +286,24 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 		// Build shortcode attributes from settings
 		foreach ( $settings as $setting_key => $setting ) {
-			$key   = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
 			// Only process settings that start with 'sfb_'
 			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
+				$key = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
 				// Handle array values
-				if ( is_array( $settings[ $setting_key ] ) && ! empty( $settings[ $setting_key ] ) ) {
-					$args .= $key . '=' . join( ',', $setting ) . ' ';
-				} 
+				if ( is_array( $setting ) && ! empty( $setting ) ) {
+					// Filter out any nested arrays or objects
+					$flat_values = array();
+					foreach ( $setting as $val ) {
+						if ( is_scalar( $val ) ) {
+							$flat_values[] = $val;
+						}
+					}
+					if ( ! empty( $flat_values ) ) {
+						$args .= $key . '=' . implode( ',', $flat_values ) . ' ';
+					}
+				}
 				// Handle non-empty scalar values
-				elseif ( ! empty( $settings[ $setting_key ] ) ) {
+				elseif ( ! empty( $setting ) && is_scalar( $setting ) ) {
 					$args .= $key . '=' . $setting . ' ';
 				}
 			}
