@@ -3,8 +3,8 @@ Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, BuddyPress Shortcodes, BuddyPress Widgets
 Requires at least: 5.0.0
-Tested up to: 6.8.0
-Stable tag: 2.9.0
+Tested up to: 6.8.2
+Stable tag: 2.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,12 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying group listing based on the given user ID screenshot-4.png
 
 == Changelog ==
+= 2.9.1 =
+* Fix: Load text domain issue.
+* Fix: Removed redundant functions for activity action wrapper.
+* Fix: Render BuddyBoss video activity in activity listing widget.
+* Fix: BuddyBoss video activity not displaying correctly.
+
 = 2.9.0 =
 * Added: Support for shortcode parameter handling in Elementor and Youzify setups.  
 * Added: UI support and styling improvements for Reign, BuddyBoss, and Youzify themes.  
