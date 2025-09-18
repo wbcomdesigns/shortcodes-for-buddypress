@@ -11,10 +11,7 @@
  */
 
 /**
- * The public-facing functionality of the plugin.
- *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the public-facing stylesheet and JavaScript.
+ * Public-facing functionality.
  *
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/public
@@ -23,29 +20,29 @@
 class Shortcodes_For_Buddypress_Public {
 
 	/**
-	 * The ID of this plugin.
+	 * Plugin ID.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @since  1.0.0
+	 * @access private
+	 * @var    string $plugin_name
 	 */
 	private $plugin_name;
 
 	/**
-	 * The version of this plugin.
+	 * Plugin version.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @since  1.0.0
+	 * @access private
+	 * @var    string $version
 	 */
 	private $version;
 
 	/**
-	 * Initialize the class and set its properties.
+	 * Constructor.
 	 *
-	 * @since    1.0.0
-	 * @param      string $plugin_name       The name of the plugin.
-	 * @param      string $version    The version of this plugin.
+	 * @since 1.0.0
+	 * @param string $plugin_name Plugin name.
+	 * @param string $version     Plugin version.
 	 */
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
@@ -54,9 +51,10 @@ class Shortcodes_For_Buddypress_Public {
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
+	 * Enqueue public stylesheets.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function enqueue_styles() {
 		global $post;
@@ -121,23 +119,13 @@ class Shortcodes_For_Buddypress_Public {
 	}
 
 	/**
-	 * Register the JavaScript for the public-facing side of the site.
+	 * Enqueue public scripts.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function enqueue_scripts() {
 		global $post;
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Shortcodes_For_Buddypress_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Shortcodes_For_Buddypress_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
 
@@ -232,10 +220,11 @@ class Shortcodes_For_Buddypress_Public {
 	}
 
 	/**
-	 * Check if current page has any of our shortcodes
+	 * Check if current page has shortcodes.
 	 *
-	 * @return boolean
-	*/
+	 * @since 1.0.0
+	 * @return bool
+	 */
 	private function has_shortcode_on_page() {
 		global $post;
 		
@@ -265,11 +254,12 @@ class Shortcodes_For_Buddypress_Public {
 	}
 
 	/**
-	 * Check Elementor data for our widgets
+	 * Check Elementor data for widgets.
 	 *
-	 * @param string $elementor_data
-	 * @return boolean
-	*/
+	 * @since 1.0.0
+	 * @param string $elementor_data Elementor data.
+	 * @return bool
+	 */
 	private function check_elementor_data_for_widgets($elementor_data) {
 		if (empty($elementor_data)) {
 			return false;
@@ -301,6 +291,12 @@ class Shortcodes_For_Buddypress_Public {
 		return false;
 	}
 
+	/**
+	 * AJAX handler for loading more members.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
 	public function buddypress_shortcode_ajax_load_more_members() {
 		// Verify nonce
 		if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'bpsp-nonce')) {
@@ -349,10 +345,23 @@ class Shortcodes_For_Buddypress_Public {
 		}
 	}
 
+	/**
+	 * Filter for BuddyPress asset loading.
+	 *
+	 * @since 1.0.0
+	 * @return bool
+	 */
 	public function bp_shortcode_js_css() {
 		return false;
 	}
 
+	/**
+	 * Add body classes for shortcode pages.
+	 *
+	 * @since 1.0.0
+	 * @param array $classes Body classes.
+	 * @return array
+	 */
 	public function buddypress_shortcodes_body_classes( $classes ) {
 		global $post;
 
@@ -364,6 +373,13 @@ class Shortcodes_For_Buddypress_Public {
 		return $classes;
 	}
 
+	/**
+	 * Filter search primary object for Nouveau.
+	 *
+	 * @since 1.0.0
+	 * @param string $object Search object.
+	 * @return string
+	 */
 	public function buddypress_shortcodes_bp_nouveau_get_search_primary_object( $object ) {
 		global $post;
 
@@ -376,10 +392,11 @@ class Shortcodes_For_Buddypress_Public {
 
 
 	/**
-	 * Set activity params when the Activity Elementor widget loads on a page.
+	 * Localize activity scripts.
 	 *
 	 * @since 1.0.0
-	 * @return array $params used for internationalization before AJAX usage.
+	 * @param array $params Script parameters.
+	 * @return array
 	 */
 	public function shortcodes_for_buddypress_activity_localize_scripts( $params = array() ) {
 		global $post;
@@ -540,9 +557,11 @@ class Shortcodes_For_Buddypress_Public {
 	}
 
 	/**
-	 * @param $texts
+	 * Generate pro template for Elementor.
 	 *
-	 * @return false|string
+	 * @since 1.0.0
+	 * @param array $texts Template texts.
+	 * @return string
 	 */
 	public static function sfb_go_pro_template( $texts ) {
 		ob_start();
@@ -566,6 +585,13 @@ class Shortcodes_For_Buddypress_Public {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Register Nouveau scripts.
+	 *
+	 * @since 1.0.0
+	 * @param array $scripts_args Script arguments.
+	 * @return array
+	 */
 	public function buddypress_shortcodes_bp_nouveau_register_scripts( $scripts_args ) {
 
 		if ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) {
@@ -578,6 +604,13 @@ class Shortcodes_For_Buddypress_Public {
 		return $scripts_args;
 	}
 
+	/**
+	 * Filter activity heartbeat strings.
+	 *
+	 * @since 1.0.0
+	 * @param array $strings Heartbeat strings.
+	 * @return array
+	 */
 	public function buddypress_shortcodes_activity_heartbeat_strings( $strings = array() ) {
 		global $post;
 		$flg = false;
@@ -599,7 +632,10 @@ class Shortcodes_For_Buddypress_Public {
 	}
 
 	/**
-	 * Loader for activity shortcode.
+	 * AJAX handler for loading activities.
+	 *
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function buddypress_shortcodes_load_activities() {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bpsp-nonce' ) ) {
@@ -630,6 +666,14 @@ class Shortcodes_For_Buddypress_Public {
 	}
 
 
+	/**
+	 * Add activity entry bubble buttons.
+	 *
+	 * @since 1.0.0
+	 * @param array $buttons Activity buttons.
+	 * @param int   $activity_id Activity ID.
+	 * @return array
+	 */
 	public function buddypress_shortcode_activity_entry_bubble_buttons( $buttons, $activity_id ) {
 
 		global $activities_template;
@@ -702,6 +746,13 @@ class Shortcodes_For_Buddypress_Public {
 		return $buttons;
 	}
 
+	/**
+	 * Filter activity action wrapper.
+	 *
+	 * @since 1.0.0
+	 * @param array $args Wrapper arguments.
+	 * @return array
+	 */
 	public function buddypress_shortcode_filter_activity_action_wrapper( $args ) {
 
 		if ( empty( $args['container_classes'] ) ) {
@@ -719,6 +770,13 @@ class Shortcodes_For_Buddypress_Public {
 		return $args;
 	}
 
+	/**
+	 * Enable share for shortcode pages.
+	 *
+	 * @since 1.0.0
+	 * @param bool $is_enable Enable share.
+	 * @return bool
+	 */
 	public function buddypress_shortcode_enable_share( $is_enable ) {
 		if ( bp_shortcode_is_shortcode_page() ) {
 			$is_enable = true;

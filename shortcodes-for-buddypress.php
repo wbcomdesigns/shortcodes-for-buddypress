@@ -30,8 +30,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-/** Functionality to activate any one of Shortcode for BuddyPress and Shortcodes for BuddyPress Pro if both exists together.
- * 
+/**
+ * Check for plugin conflicts with Pro version.
+ *
  * @since 1.0.0
  */
 if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
@@ -54,9 +55,7 @@ if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', app
 }
 
 /**
- * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
+ * Define plugin version.
  */
 if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' ) ) {
 	define( 'SHORTCODES_FOR_BUDDYPRESS_VERSION', '2.9.0' );
@@ -74,59 +73,39 @@ if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME' ) ) {
 }
 
 /**
- * This function will get triggered when plugin gets activated.
- * In this function we are including the plugin activator file.
- * The activator file contains all the functionality required during plugin activation.
- *  
+ * Plugin activation hook.
+ *
  * @since 1.0.0
- * @return void 
+ * @return void
  */
 function shortcodes_for_buddypress_activate() {
-	
-	// Complete path to the plugin activator file.
-	$activator_file_path  = plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-activator.php';
-	
-	// Checking if the activator file exists.
-	if( file_exists( $activator_file_path ) ){
-		// Including activator file if it exists.
+	$activator_file_path = plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-activator.php';
+
+	if ( file_exists( $activator_file_path ) ) {
 		require_once $activator_file_path;
-		// Checking if activator class exits.
-		if( class_exists( 'Shortcodes_For_Buddypress_Activator' ) ){
-			// Call to activate function if the activator file exists.
+		if ( class_exists( 'Shortcodes_For_Buddypress_Activator' ) ) {
 			Shortcodes_For_Buddypress_Activator::activate();
 		}
 	}	
 }
-// Registering activation hook for the plugin.
 register_activation_hook( __FILE__, 'shortcodes_for_buddypress_activate' );
 
 /**
- * This function will get triggered when plugin gets deactivated.
- * In this function we are including the plugin deactivator file.
- * The deactivator file includes all functionalities required during plugin deactivation,
- * including clearing unnecessary data from postmeta, termmeta, and usermeta.
- * 
+ * Plugin deactivation hook.
+ *
  * @since 1.0.0
- * @return void 
+ * @return void
  */
 function shortcodes_for_buddypress_deactivate() {
-	
-	// Complete path to the plugin deactivator file.
-	$deactivator_file_path  =  plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-deactivator.php';
-	
-	// Checks if deactivator file exists.
-	if(file_exists($deactivator_file_path)){
-		// Including file if file exists.
-		require_once $deactivator_file_path;
-		// Checking if deactivator class exists.
-		if(class_exists('Shortcodes_For_Buddypress_Deactivator')){
+	$deactivator_file_path = plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-deactivator.php';
 
-			// Call to the deactivate function that contains all the functionality while plugin deactivation.
+	if ( file_exists( $deactivator_file_path ) ) {
+		require_once $deactivator_file_path;
+		if ( class_exists( 'Shortcodes_For_Buddypress_Deactivator' ) ) {
 			Shortcodes_For_Buddypress_Deactivator::deactivate();
 		}
 	}
 }
-//Registering deactivation hook for the plugin.
 register_deactivation_hook( __FILE__, 'shortcodes_for_buddypress_deactivate' );
 
 /**
@@ -137,16 +116,12 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress.php';
 
 /**
- * This function will deactivate the Shortcodes_for_Buddypress core plugin if Shortcodes_for_Buddypress Pro plugin is activated.
- * This prevents conflicts between the core and Pro versions of the plugin.
- * 
- * If Shortcodes_for_Buddypress Pro plugin was not found it will continue the execution of the core plugin.
- *  
- * @since  1.0.0
+ * Initialize the plugin.
+ *
+ * @since 1.0.0
  * @return void
  */
 function shortcodes_for_buddypress_run() {
-	// Check if the Pro plugin is installed and activated.
 	if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && function_exists( 'run_shortcodes_for_buddypress_pro' )) {
 		// Deactivate the core plugin if the Pro version is active.
 		deactivate_plugins( 'shortcodes-for-buddypress/shortcodes-for-buddypress.php' );

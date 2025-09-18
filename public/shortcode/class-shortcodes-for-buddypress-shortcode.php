@@ -1,8 +1,6 @@
 <?php
 /**
- * Base shortcode class for BuddyPress shortcodes
- *
- * Provides a clean, extensible foundation for all BuddyPress shortcodes
+ * Base shortcode class.
  *
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/shortcode
@@ -12,30 +10,30 @@
 abstract class BPShortCode {
 
 	/**
-	 * Shortcode tag name
+	 * Shortcode tag.
 	 *
 	 * @var string
 	 */
 	protected $tag;
 
 	/**
-	 * Default attributes for the shortcode
+	 * Default attributes.
 	 *
 	 * @var array
 	 */
 	protected $defaults = array();
 
 	/**
-	 * Singleton instances
+	 * Singleton instances.
 	 *
 	 * @var array
 	 */
 	private static $instances = array();
 
 	/**
-	 * Initialize shortcode
+	 * Constructor.
 	 *
-	 * @param string $tag Shortcode tag name
+	 * @param string $tag Shortcode tag.
 	 */
 	protected function __construct( $tag ) {
 		$this->tag = $tag;
@@ -44,25 +42,29 @@ abstract class BPShortCode {
 	}
 
 	/**
-	 * Register the shortcode with WordPress
+	 * Register shortcode.
+	 *
+	 * @return void
 	 */
 	protected function register() {
 		add_shortcode( $this->tag, array( $this, 'render' ) );
 	}
 
 	/**
-	 * Set default attributes - override in child classes
+	 * Set default attributes.
+	 *
+	 * @return void
 	 */
 	protected function set_defaults() {
 		$this->defaults = array();
 	}
 
 	/**
-	 * Main render method - handles common logic
+	 * Render shortcode.
 	 *
-	 * @param array  $atts    Shortcode attributes
-	 * @param string $content Shortcode content
-	 * @return string Rendered output
+	 * @param array  $atts    Shortcode attributes.
+	 * @param string $content Shortcode content.
+	 * @return string
 	 */
 	public function render( $atts = array(), $content = '' ) {
 		// Don't render in admin unless it's AJAX or Elementor preview
@@ -78,20 +80,20 @@ abstract class BPShortCode {
 	}
 
 	/**
-	 * Check if we're in admin (not AJAX or preview mode)
+	 * Check if in admin preview.
 	 *
 	 * @return bool
 	 */
 	protected function is_admin_preview() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only checking if parameter exists, not processing value
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return is_admin() && ! wp_doing_ajax() && ! isset( $_GET['elementor-preview'] );
 	}
 
 	/**
-	 * Merge attributes with defaults and apply filters
+	 * Get final attributes.
 	 *
-	 * @param array $atts Raw attributes
-	 * @return array Final attributes
+	 * @param array $atts Raw attributes.
+	 * @return array
 	 */
 	protected function get_final_attributes( $atts ) {
 		$atts = shortcode_atts( $this->defaults, (array) $atts );
@@ -99,18 +101,18 @@ abstract class BPShortCode {
 	}
 
 	/**
-	 * Output the shortcode HTML - implement in child classes
+	 * Output shortcode HTML.
 	 *
-	 * @param array  $atts    Final attributes
-	 * @param string $content Shortcode content
-	 * @return string HTML output
+	 * @param array  $atts    Attributes.
+	 * @param string $content Content.
+	 * @return string
 	 */
 	abstract protected function output( $atts, $content = '' );
 
 	/**
-	 * Get singleton instance
+	 * Get singleton instance.
 	 *
-	 * @param string $tag Shortcode tag
+	 * @param string $tag Shortcode tag.
 	 * @return static
 	 */
 	public static function get_instance( $tag ) {

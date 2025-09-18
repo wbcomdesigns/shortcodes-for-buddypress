@@ -10,10 +10,7 @@
  */
 
 /**
- * The admin-specific functionality of the plugin.
- *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * Admin functionality.
  *
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/admin
@@ -22,38 +19,38 @@
 class Shortcodes_For_Buddypress_Admin {
 
 	/**
-	 * The ID of this plugin.
+	 * Plugin ID.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @since  1.0.0
+	 * @access private
+	 * @var    string $plugin_name
 	 */
 	private $plugin_name;
 
 	/**
-	 * The version of this plugin.
+	 * Plugin version.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @since  1.0.0
+	 * @access private
+	 * @var    string $version
 	 */
 	private $version;
 
 	/**
-	 * The settings of this plugin.
+	 * Plugin settings tabs.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_settings_tabs    Settings array of this plugin.
+	 * @since  1.0.0
+	 * @access private
+	 * @var    array $plugin_settings_tabs
 	 */
 	private $plugin_settings_tabs;
 
 	/**
-	 * Initialize the class and set its properties.
+	 * Constructor.
 	 *
-	 * @since    1.0.0
-	 * @param      string $plugin_name       The name of this plugin.
-	 * @param      string $version    The version of this plugin.
+	 * @since 1.0.0
+	 * @param string $plugin_name Plugin name.
+	 * @param string $version     Plugin version.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -63,14 +60,11 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * This function enqueues the plugin-specific admin stylesheet only
-	 * on the appropriate admin pages to avoid unnecessary loading elsewhere.
+	 * Enqueue admin stylesheets.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @param string $hook The current admin page hook suffix.
+	 * @param string $hook Admin page hook.
+	 * @return void
 	 */
 	public function enqueue_styles( $hook ) {
 		$page = filter_input( INPUT_GET, 'page' );
@@ -95,17 +89,13 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Register the script for the admin area.
-	 *
-	 * This function enqueues the plugin-specific admin script only
-	 * on the appropriate admin pages to avoid unnecessary loading elsewhere.
+	 * Enqueue admin scripts.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @param string $hook The current admin page hook suffix.
+	 * @param string $hook Admin page hook.
+	 * @return void
 	 */
 	public function enqueue_scripts( $hook ) {
-		// Only load on specific settings page
 		if ( 'settings_page_bpsh-shortcodes' === $hook ) {
 			bp_shortcode_enqueue(
 				$this->plugin_name,
@@ -119,10 +109,7 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Hide all admin notices on specific Wbcom settings pages.
-	 *
-	 * This function removes all admin notices (both `admin_notices` and `all_admin_notices`)
-	 * when viewing specified Wbcom plugin settings or support pages to provide a cleaner admin UI.
+	 * Hide admin notices on settings pages.
 	 *
 	 * @since 1.0.0
 	 * @return void
@@ -138,9 +125,10 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Register a submenu to handle group types
+	 * Add admin submenu page.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function buddypress_shortcodes_add_submenu_page() {
 		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
@@ -151,9 +139,10 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Actions performed to create a submenu page content
+	 * Render admin settings page.
 	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function buddypress_shortcodes_admin_settings_page() {
 		$tab = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'buddypress-shortcode-welcome';
@@ -192,11 +181,10 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Render the settings tabs for the BuddyPress Shortcodes plugin.
-	 *
-	 * Displays tab navigation based on the plugin settings.
+	 * Display settings tabs.
 	 *
 	 * @since 1.0.0
+	 * @return void
 	 */
 	public function buddypress_shortcodes_plugin_settings_tabs() {
 		$current_tab = ( filter_input( INPUT_GET, 'tab' ) !== null )
@@ -233,9 +221,10 @@ class Shortcodes_For_Buddypress_Admin {
 
 
 	/**
-	 * Register all settings tabs and their content callbacks.
+	 * Register settings tabs.
 	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function buddypress_shortcodes_plugin_settings() {
 
@@ -257,9 +246,10 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Welcome Tab Content
+	 * Welcome tab content.
 	 *
 	 * @since 1.0.0
+	 * @return void
 	 */
 	public function buddypress_shortcodes_welcome_content() {
 		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-welcome-page.php' ) ) {
@@ -267,11 +257,12 @@ class Shortcodes_For_Buddypress_Admin {
 		}
 	}
 
-		/**
-		 * General Tab Content
-		 *
-		 * @since 1.0.0
-		 */
+	/**
+	 * General tab content.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
 	public function buddypress_shortcodes_general_settings_content() {
 		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-general-settings.php' ) ) {
 			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-general-settings.php';
@@ -279,8 +270,9 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Activity tab content
+	 * Activity tab content.
 	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
 	public function buddypress_shortcodes_activities_settings_content() {
@@ -290,8 +282,9 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Member tab content
+	 * Member tab content.
 	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
 	public function buddypress_shortcodes_member_settings_content() {
@@ -301,8 +294,9 @@ class Shortcodes_For_Buddypress_Admin {
 	}
 
 	/**
-	 * Group tab content
+	 * Group tab content.
 	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
 	public function buddypress_shortcodes_groups_settings_content() {
@@ -313,22 +307,27 @@ class Shortcodes_For_Buddypress_Admin {
 
 
 	/**
-	 * Save plugin admin options
-	*/
+	 * Save plugin options.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
 	public function buddypress_shortcodes_save_options() {
-		if ( isset( $_POST[ 'option_page' ] ) && 'bpsh_performance_settings'=== $_POST[ 'option_page' ]) {
-			$option_value = wp_unslash( $_POST[ 'bpsh_performance_settings'] );	// phpcs:ignore
+		if ( isset( $_POST['option_page'] ) && 'bpsh_performance_settings' === $_POST['option_page'] ) {
+			$option_value = wp_unslash( $_POST['bpsh_performance_settings'] ); // phpcs:ignore
 
 			update_option( 'bpsh_performance_settings', $option_value );
 		}
-		
 	}
 
 	/**
-	 * Register the settings
-	*/
-	public function buddypress_shortcodes_register_settings(){
-		register_setting( 'bpsh_settings_group', 'bpsh_performance_settings' );	// phpcs:ignore
+	 * Register plugin settings.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function buddypress_shortcodes_register_settings() {
+		register_setting( 'bpsh_settings_group', 'bpsh_performance_settings' );
 	}
 
 
