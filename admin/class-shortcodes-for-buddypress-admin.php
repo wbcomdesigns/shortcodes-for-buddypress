@@ -87,15 +87,9 @@ class Shortcodes_For_Buddypress_Admin {
 		 */
 		$shortcode_style = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
 		if ( 'wb-plugins_page_shortcodes-for-buddypress' === $hook || 'wbcomplugins' === $shortcode_style || 'wbcom-plugins-page' === $shortcode_style || 'wbcom-support-page' === $shortcode_style ) {
-			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-				$extension = is_rtl() ? '.rtl.css' : '.css';
-				$path      = is_rtl() ? '/rtl' : '';
-			} else {
-				$extension = is_rtl() ? '.rtl.css' : '.min.css';
-				$path      = is_rtl() ? '/rtl' : '/min';
-			}
-
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css' . $path . '/shortcodes-for-buddypress-admin' . $extension, array(), $this->version, 'all' );
+			// Use the utility function to get the correct asset URL
+			$asset_url = shortcodes_for_buddypress_get_asset_url( 'admin/css', 'shortcodes-for-buddypress-admin', 'css' );
+			wp_enqueue_style( $this->plugin_name, $asset_url, array(), $this->version, 'all' );
 		}
 
 	}
@@ -124,15 +118,9 @@ class Shortcodes_For_Buddypress_Admin {
 		 * class.
 		 */
 		if ( 'settings_page_bpsh-shortcodes' === $hook ) {
-			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-				$extension = '.js';
-				$path      = '';
-			} else {
-				$extension = '.min.js';
-				$path      = '/min';
-			}
-
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js' . $path . '/shortcodes-for-buddypress-admin' . $extension, array( 'jquery' ), $this->version, false );
+			// Use the utility function to get the correct asset URL
+			$asset_url = shortcodes_for_buddypress_get_asset_url( 'admin/js', 'shortcodes-for-buddypress-admin', 'js' );
+			wp_enqueue_script( $this->plugin_name, $asset_url, array( 'jquery' ), $this->version, false );
 		}
 
 	}

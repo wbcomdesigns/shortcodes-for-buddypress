@@ -27,37 +27,66 @@ class MemberShortCode extends BPShortCode {
 		// Allow filtering of attributes
 		$atts = apply_filters( 'member_shortcode_attributes', $atts );
 
-		// Attributes
+		// Process exclude_member_role attribute
 		if ( ! empty( $atts ) && array_key_exists( 'exclude_member_role', $atts ) ) {
+			// Initialize variables to prevent undefined variable errors
+			$uid_collection = array();
+			$exclude_ids = array();
 
 			if ( ! empty( $atts['exclude_member_role'] ) ) {
 				$exclude_roles = is_string( $atts['exclude_member_role'] ) ? explode( ',', $atts['exclude_member_role'] ) : $atts['exclude_member_role'];
-				$users_data    = get_users( array( 'role__in' => $exclude_roles ) );
-				$uid_collection = wp_list_pluck( $users_data, 'ID' );
+				// Add limit to prevent memory issues with large user bases
+				$users_data    = get_users( array(
+					'role__in' => $exclude_roles,
+					'fields' => 'ID',  // Only get IDs for better performance
+					'number' => 9999    // Reasonable limit
+				) );
+				$uid_collection = is_array( $users_data ) ? $users_data : array();
 			}
 
 			if ( ! empty( $atts['exclude'] ) ) {
 				$exclude_ids = is_string( $atts['exclude'] ) ? explode( ',', $atts['exclude'] ) : $atts['exclude'];
-			} else {
-				$exclude_ids = array();
 			}
 
-			$atts['exclude'] = implode( ',', array_unique( array_merge( $uid_collection, $exclude_ids ) ) );
+			// Only merge if we have data to merge
+			if ( ! empty( $uid_collection ) || ! empty( $exclude_ids ) ) {
+				$atts['exclude'] = implode( ',', array_unique( array_merge( $uid_collection, $exclude_ids ) ) );
+			}
 			unset( $atts['exclude_member_role'] );
 		}
+
+		// Process include_member_role attribute
 		if ( ! empty( $atts ) && array_key_exists( 'include_member_role', $atts ) ) {
-			if ( isset( $atts['include'] ) && strpos( $atts['include'], ',' ) !== false ) {
-				$exclude_ids = explode( ',', $atts['include'] );
-			} else {
-				$exclude_ids = array();
-			}
-			$users_data     = get_users( array( 'role__in' => $exclude_roles ) );
+			// Initialize variables
 			$uid_collection = array();
-			foreach ( $users_data as $key => $users ) {
-				$uid_collection[] = $users->ID;
+			$include_ids = array();
+
+			// Get existing include IDs if any
+			if ( isset( $atts['include'] ) ) {
+				if ( is_string( $atts['include'] ) && ! empty( $atts['include'] ) ) {
+					$include_ids = explode( ',', $atts['include'] );
+				} elseif ( is_array( $atts['include'] ) ) {
+					$include_ids = $atts['include'];
+				}
 			}
-			$u               = array_unique( array_merge( $uid_collection, $exclude_ids ) );
-			$atts['include'] = rtrim( implode( ',', $u ), ',' );
+
+			// Process include_member_role
+			if ( ! empty( $atts['include_member_role'] ) ) {
+				$include_roles = is_string( $atts['include_member_role'] ) ? explode( ',', $atts['include_member_role'] ) : $atts['include_member_role'];
+				// Get users with specified roles - optimized query
+				$users_data = get_users( array(
+					'role__in' => $include_roles,
+					'fields' => 'ID',  // Only get IDs for better performance
+					'number' => 9999    // Reasonable limit
+				) );
+				$uid_collection = is_array( $users_data ) ? $users_data : array();
+			}
+
+			// Merge and set include attribute
+			if ( ! empty( $uid_collection ) || ! empty( $include_ids ) ) {
+				$merged_ids = array_unique( array_merge( $uid_collection, $include_ids ) );
+				$atts['include'] = implode( ',', $merged_ids );
+			}
 			unset( $atts['include_member_role'] );
 		}
 		
