@@ -244,10 +244,9 @@ class Shortcodes_For_Buddypress_Public {
 		}
 		
 		$shortcodes = array(
-			'activity-listing', 
-			'members-listing', 
-			'groups-listing', 
-			'notifications-listing'
+			'activity-listing',
+			'members-listing',
+			'groups-listing'
 		);
 		
 		foreach ($shortcodes as $shortcode) {

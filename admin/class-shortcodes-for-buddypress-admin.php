@@ -311,26 +311,6 @@ class Shortcodes_For_Buddypress_Admin {
 		}
 	}
 
-	/**
-	 * User notification tab content
-	 *
-	 * @return void
-	 */
-	public function buddypress_shortcodes_user_notification_settings_content() {
-		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-user-notification-listing.php' ) ) {
-			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-user-notification-listing.php';
-		}
-	}
-	/**
-	 * performance tab content
-	 *
-	 * @return void
-	 */
-	public function buddypress_shortcodes_render_performance_settings_description(){
-		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-user-performance-setting.php' ) ) {
-			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-user-performance-setting.php';
-		}
-	}
 
 	/**
 	 * Save plugin admin options
