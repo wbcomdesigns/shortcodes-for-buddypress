@@ -1,0 +1,29 @@
+{
+  "bitwise": true,
+  "browser": true,
+  "curly": true,
+  "eqeqeq": true,
+  "esversion": 6,
+  "jquery": true,
+  "latedef": true,
+  "noarg": true,
+  "nonew": true,
+  "undef": true,
+  "unused": "vars",
+  "strict": false,
+  "trailing": true,
+  "globals": {
+    "wp": true,
+    "bp": true,
+    "BP_Shortcode": true,
+    "ajaxurl": true,
+    "console": true,
+    "module": false,
+    "require": false,
+    "exports": false,
+    "Backbone": true,
+    "_": true,
+    "shortcodesForBuddypressPublic": true,
+    "shortcodesForBuddypressAdmin": true
+  }
+}
