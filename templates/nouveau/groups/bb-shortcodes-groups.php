@@ -9,6 +9,7 @@
  *
  * @package BuddyBoss\Core
  */
+defined( 'ABSPATH' ) || exit;
 
 add_filter( 'bp_get_group_description_excerpt', 'bb_get_group_description_excerpt_view_more', 99, 2 );
 

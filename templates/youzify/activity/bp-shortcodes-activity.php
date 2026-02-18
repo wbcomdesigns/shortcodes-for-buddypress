@@ -9,6 +9,7 @@
  * @since 2.7.2
  * 
  */
+defined( 'ABSPATH' ) || exit;
 /**
  * Fires before the activity directory listing.
  *

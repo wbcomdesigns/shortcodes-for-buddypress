@@ -9,6 +9,7 @@
  * @since 3.0.0
  * @version 12.0.0
  */
+defined( 'ABSPATH' ) || exit;
 ?>
 <?php
 // Main container with BuddyPress classes

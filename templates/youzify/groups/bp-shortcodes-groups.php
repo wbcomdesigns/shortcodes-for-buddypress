@@ -6,6 +6,7 @@
  * @since 2.7.2
  * 
  */
+defined( 'ABSPATH' ) || exit;
 ?>
 
 <div id="bp-shortcode-groups" class="bp-dir-hori-nav <?php if ( !empty( $groups_atts['container_class'] ) ) { echo esc_attr( $groups_atts['container_class'] ); } ?>">

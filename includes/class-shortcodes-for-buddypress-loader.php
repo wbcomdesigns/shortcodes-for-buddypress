@@ -9,6 +9,7 @@
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/includes
  */
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Plugin loader class.

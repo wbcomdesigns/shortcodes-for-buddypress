@@ -4,6 +4,7 @@
  *
  * @since 1.0.0
  */
+defined( 'ABSPATH' ) || exit;
 /**
  * Fires at the top of the groups directory template file.
  *

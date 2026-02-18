@@ -4,6 +4,7 @@
  *
  * @version 3.0.0
  */
+defined( 'ABSPATH' ) || exit;
 ?>
 <div id="bp-shortcode-members" class="bp-dir-hori-nav <?php if ( !empty( $groups_atts['container_class'] ) ) { echo esc_attr( $groups_atts['container_class'] ); } ?> youzify">
 	<?php do_action( 'bp_before_members_loop' ); ?>	

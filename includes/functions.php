@@ -9,6 +9,7 @@
  * @param string $template_path (default: '').
  * @param string $default_path (default: '').
  */
+defined( 'ABSPATH' ) || exit;
 function bp_shortcode_get_template( $template_name, $args = array(), $template_path = 'nouveau', $default_path = '' ) {
 	if ( $args && is_array( $args ) ) {
 		// phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- Please, forgive us.

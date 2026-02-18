@@ -4,6 +4,7 @@
  *
  * @since 1.0.0
  */
+defined( 'ABSPATH' ) || exit;
 $allow_posting = false;
 $load_more = false;	
 ?>
