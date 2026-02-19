@@ -62,10 +62,10 @@ class MemberShortCode extends BPShortCode {
 	 * @return array
 	 */
 	protected function get_final_attributes( $atts ) {
-		// Handle role-based includes/excludes first
+		// Handle role-based includes/excludes first.
 		$atts = $this->apply_role_filters( $atts );
 
-		// Then apply parent logic
+		// Then apply parent logic.
 		return parent::get_final_attributes( $atts );
 	}
 
@@ -99,31 +99,37 @@ class MemberShortCode extends BPShortCode {
 			'xprofile_query'      => $atts['xprofile_query'],
 		);
 
-		// Apply filter to modify query arguments
+		// Apply filter to modify query arguments.
 		$bash_query_args = apply_filters( 'member_shortcode_bash_query_args', $bash_query_args );
 
 		$query = '';
 		foreach ( $bash_query_args as $bash_query_key => $bash_query ) {
 			$query .= false !== $bash_query && '' !== $bash_query ? '&' . $bash_query_key . '=' . $bash_query : '';
 		}
-			$grid   = 'yes' === $atts['grid'] ? 'grid' : '';
-			$column = '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '';
-		$template_args = apply_filters( 'member_shortcode_template_args', array(
-			'query'  		=> $query,
-			'grid'   		=> $grid,
-			'column' 		=> $column,
-			'classes'		=> $this->handle_classes( $grid, $column),
-			'members_atts'	=> $bash_query_args
-		));
+			$grid      = 'yes' === $atts['grid'] ? 'grid' : '';
+			$column    = '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '';
+		$template_args = apply_filters(
+			'member_shortcode_template_args',
+			array(
+				'query'        => $query,
+				'grid'         => $grid,
+				'column'       => $column,
+				'classes'      => $this->handle_classes( $grid, $column ),
+				'members_atts' => $bash_query_args,
+			)
+		);
 
-		if( class_exists( 'Youzify' )  ){
-			unset($template_args['classes']);
-			$template_args = apply_filters( 'member_shortcode_template_args', array(
-				'query'  		=> $query,
-				'grid'   		=> $grid,
-				'column' 		=> $column,
-				'members_atts'	=> $template_args
-			));
+		if ( class_exists( 'Youzify' ) ) {
+			unset( $template_args['classes'] );
+			$template_args = apply_filters(
+				'member_shortcode_template_args',
+				array(
+					'query'        => $query,
+					'grid'         => $grid,
+					'column'       => $column,
+					'members_atts' => $template_args,
+				)
+			);
 		}
 
 		$output = '';
@@ -146,13 +152,15 @@ class MemberShortCode extends BPShortCode {
 			<div class="members-listing <?php echo esc_attr( $atts['container_class'] ); ?>">
 				<?php echo ! empty( $atts['title'] ) ? '<h4>' . esc_html( $atts['title'] ) . '</h4>' : ''; ?>
 				<?php do_action( 'member_shortcode_inside_container', $atts, $template_args ); ?>
-				<?php if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
-							 bp_shortcode_get_template( 'members/bb-shortcodes-members.php', $template_args, get_option( '_bp_theme_package_id' ) );
-						 }elseif( class_exists( 'Youzify' ) ){
-							 bp_shortcode_get_template( 'members/bp-shortcodes-members.php', $template_args, 'youzify' );
-						 }else{
-							 bp_shortcode_get_template( 'members/bp-shortcodes-members.php', $template_args, get_option( '_bp_theme_package_id' ) );
-					 } ?>
+				<?php
+				if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
+							bp_shortcode_get_template( 'members/bb-shortcodes-members.php', $template_args, get_option( '_bp_theme_package_id' ) );
+				} elseif ( class_exists( 'Youzify' ) ) {
+					bp_shortcode_get_template( 'members/bp-shortcodes-members.php', $template_args, 'youzify' );
+				} else {
+					bp_shortcode_get_template( 'members/bp-shortcodes-members.php', $template_args, get_option( '_bp_theme_package_id' ) );
+				}
+				?>
 			</div>
 			<?php
 		}
@@ -162,49 +170,56 @@ class MemberShortCode extends BPShortCode {
 
 		do_action( 'after_member_shortcode_render', $template_args );
 
-		// Apply filter to modify output before returning
+		// Apply filter to modify output before returning.
 		return apply_filters( 'member_shortcode_output', $output );
 	}
 
 
-	public function handle_classes( $grid, $column) {
-		$classes      = array( 'item-list', 'members-list', 'bp-list', 'bpsp-members-list', $grid, $column);
+	/**
+	 * Handle container classes.
+	 *
+	 * @param string $grid   Grid class.
+	 * @param string $column Column class.
+	 * @return string
+	 */
+	public function handle_classes( $grid, $column ) {
+		$classes      = array( 'item-list', 'members-list', 'bp-list', 'bpsp-members-list', $grid, $column );
 		$active_theme = wp_get_theme();
-		if( 'REIGN' == $active_theme && ! class_exists( 'Youzify' ) ){
-			   $classes   = [];
-			   $classes[] = 'item-list';
-			   $classes[] = 'members-list';
-			   $classes[] = 'bp-list';
-			   $classes[] = 'rg-member-list';
-			   
-			   global $wbtm_reign_settings;
-			   $classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] : 'wbtm-member-directory-type-2';
-		   
-			   $bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-			   $members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && $bp_nouveau_appearance['members_layout'] != '' ) ? $bp_nouveau_appearance['members_layout'] : '3';
-		   
-			   if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-				   $grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
-				   if ( isset( $grid_classes[ $members_layout ] ) ) {
-					   $classes = array_merge(
-						   $classes,
-						   array(
-							   'grid',
-							   $grid_classes[ $members_layout ],
-						   )
-					   );
-				   }
-			   } else {
-				   $classes = array_merge(
-					   $classes,
-					   array(
-						   'grid',
-						   'three',
-					   )
-				   );
-			   }
+		if ( 'REIGN' === $active_theme && ! class_exists( 'Youzify' ) ) {
+				$classes   = array();
+				$classes[] = 'item-list';
+				$classes[] = 'members-list';
+				$classes[] = 'bp-list';
+				$classes[] = 'rg-member-list';
+
+				global $wbtm_reign_settings;
+				$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] : 'wbtm-member-directory-type-2';
+
+				$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
+				$members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && '' !== $bp_nouveau_appearance['members_layout'] ) ? $bp_nouveau_appearance['members_layout'] : '3';
+
+			if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
+				$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
+				if ( isset( $grid_classes[ $members_layout ] ) ) {
+					$classes = array_merge(
+						$classes,
+						array(
+							'grid',
+							$grid_classes[ $members_layout ],
+						)
+					);
+				}
+			} else {
+				$classes = array_merge(
+					$classes,
+					array(
+						'grid',
+						'three',
+					)
+				);
+			}
 		}
-		$classes = implode(' ',$classes);
+		$classes = implode( ' ', $classes );
 		return $classes;
 	}
 
@@ -215,19 +230,19 @@ class MemberShortCode extends BPShortCode {
 	 * @return array
 	 */
 	private function apply_role_filters( $atts ) {
-		// Handle exclude by role
+		// Handle exclude by role.
 		if ( ! empty( $atts['exclude_member_role'] ) ) {
 			$role_user_ids = $this->get_users_with_roles( $atts['exclude_member_role'] );
-			$existing_ids = $this->convert_to_array( isset( $atts['exclude'] ) ? $atts['exclude'] : '' );
+			$existing_ids  = $this->convert_to_array( isset( $atts['exclude'] ) ? $atts['exclude'] : '' );
 
 			$atts['exclude'] = $this->combine_ids( $role_user_ids, $existing_ids );
 			unset( $atts['exclude_member_role'] );
 		}
 
-		// Handle include by role
+		// Handle include by role.
 		if ( ! empty( $atts['include_member_role'] ) ) {
 			$role_user_ids = $this->get_users_with_roles( $atts['include_member_role'] );
-			$existing_ids = $this->convert_to_array( isset( $atts['include'] ) ? $atts['include'] : '' );
+			$existing_ids  = $this->convert_to_array( isset( $atts['include'] ) ? $atts['include'] : '' );
 
 			$atts['include'] = $this->combine_ids( $role_user_ids, $existing_ids );
 			unset( $atts['include_member_role'] );
@@ -247,17 +262,19 @@ class MemberShortCode extends BPShortCode {
 			return array();
 		}
 
-		// Convert to array if string
+		// Convert to array if string.
 		if ( is_string( $roles ) ) {
 			$roles = array_map( 'trim', explode( ',', $roles ) );
 		}
 
-		// Query users efficiently
-		return get_users( array(
-			'role__in' => $roles,
-			'fields'   => 'ID',
-			'number'   => 9999
-		) );
+		// Query users efficiently.
+		return get_users(
+			array(
+				'role__in' => $roles,
+				'fields'   => 'ID',
+				'number'   => 9999,
+			)
+		);
 	}
 
 	/**

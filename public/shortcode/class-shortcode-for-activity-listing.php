@@ -23,7 +23,7 @@ class ActivityShortCode extends BPShortCode {
 	 */
 	protected function set_defaults() {
 		$this->defaults = array(
-			// Display options
+			// Display options.
 			'title'            => '',
 			'pagination'       => 1,
 			'load_more'        => 0,
@@ -32,21 +32,21 @@ class ActivityShortCode extends BPShortCode {
 			'hide_on_activity' => 1,
 			'allow_posting'    => false,
 
-			// Activity selection
+			// Activity selection.
 			'include'          => false,
 			'exclude'          => false,
 			'in'               => false,
 
-			// Pagination
+			// Pagination.
 			'page'             => 1,
 			'per_page'         => 10,
 			'max'              => false,
 
-			// Sorting
+			// Sorting.
 			'sort'             => 'DESC',
 			'count_total'      => true,
 
-			// Filtering
+			// Filtering.
 			'scope'            => false,
 			'user_id'          => false,
 			'object'           => false,
@@ -54,10 +54,10 @@ class ActivityShortCode extends BPShortCode {
 			'primary_id'       => false,
 			'secondary_id'     => false,
 
-			// Search
+			// Search.
 			'search_terms'     => false,
 
-			// Theme compatibility
+			// Theme compatibility.
 			'use_compat'       => function_exists( 'bp_use_theme_compat_with_current_theme' )
 				? bp_use_theme_compat_with_current_theme()
 				: '',
@@ -72,16 +72,16 @@ class ActivityShortCode extends BPShortCode {
 	 * @return string
 	 */
 	protected function output( $atts, $content = '' ) {
-		// Fix BuddyBoss group activities scope
+		// Fix BuddyBoss group activities scope.
 		$atts = $this->fix_buddyboss_groups( $atts );
 
-		// Get activity query args
+		// Get activity query args.
 		$query = $this->get_query_args( $atts );
 
-		// Setup template variables
+		// Setup template variables.
 		$template_vars = $this->get_template_vars( $atts, $query );
 
-		// Generate HTML
+		// Generate HTML.
 		return $this->generate_html( $atts, $template_vars );
 	}
 
@@ -93,9 +93,9 @@ class ActivityShortCode extends BPShortCode {
 	 */
 	private function fix_buddyboss_groups( $atts ) {
 		if ( 'groups' === $atts['object'] &&
-		     bp_is_active( 'groups' ) &&
-		     function_exists( 'buddypress' ) &&
-		     isset( buddypress()->buddyboss ) ) {
+			bp_is_active( 'groups' ) &&
+			function_exists( 'buddypress' ) &&
+			isset( buddypress()->buddyboss ) ) {
 			$atts['scope'] = 'activity';
 		}
 		return $atts;
@@ -108,7 +108,7 @@ class ActivityShortCode extends BPShortCode {
 	 * @return array
 	 */
 	private function get_query_args( $atts ) {
-		// These are display-only keys, not query parameters
+		// These are display-only keys, not query parameters.
 		$exclude_keys = array(
 			'allow_posting',
 			'container_class',
@@ -116,24 +116,24 @@ class ActivityShortCode extends BPShortCode {
 			'title',
 			'pagination',
 			'display_comments',
-			'hide_on_activity'
+			'hide_on_activity',
 		);
 
-		// Build query args from attributes
+		// Build query args from attributes.
 		$query_args = array();
 		foreach ( $atts as $key => $value ) {
-			// Skip display-only keys
-			if ( in_array( $key, $exclude_keys ) ) {
+			// Skip display-only keys.
+			if ( in_array( $key, $exclude_keys, true ) ) {
 				continue;
 			}
-			// Only include non-empty values
-			if ( $value !== false && $value !== '' && $value !== null ) {
+			// Only include non-empty values.
+			if ( false !== $value && '' !== $value && null !== $value ) {
 				$query_args[ $key ] = $value;
 			}
 		}
 
-		// Force disable comments to prevent BuddyPress compatibility issues
-		// This prevents the get_activity_comments() TypeError
+		// Force disable comments to prevent BuddyPress compatibility issues.
+		// This prevents the get_activity_comments() TypeError.
 		$query_args['display_comments'] = 'false';
 
 		return apply_filters( 'activity_shortcode_bash_query', $query_args );
@@ -155,7 +155,7 @@ class ActivityShortCode extends BPShortCode {
 			'load_more'     => (bool) $atts['load_more'],
 		);
 
-		// Youzify theme requires different structure
+		// Youzify theme requires different structure.
 		if ( class_exists( 'Youzify' ) ) {
 			$args['activity_atts'] = $args;
 		}
@@ -236,11 +236,11 @@ class ActivityShortCode extends BPShortCode {
 			$theme = get_option( '_bp_theme_package_id' );
 		}
 
-		// Add fallback error handling for template loading
+		// Add fallback error handling for template loading.
 		try {
 			bp_shortcode_get_template( $template, $template_vars, $theme );
 		} catch ( Throwable $e ) {
-			// If template loading fails, show a simple fallback
+			// If template loading fails, show a simple fallback.
 			$this->show_simple_fallback( $template_vars );
 		}
 
@@ -271,34 +271,34 @@ class ActivityShortCode extends BPShortCode {
 	 * @return array
 	 */
 	private function get_user_ids_by_roles( $roles ) {
-		// Default return value for invalid/empty results
+		// Default return value for invalid/empty results.
 		$invalid_ids = array( 0 );
-		
-		// Return default if no roles provided
+
+		// Return default if no roles provided.
 		if ( empty( $roles ) ) {
 			return $invalid_ids;
 		}
 
-		// Convert string of roles to array if needed
+		// Convert string of roles to array if needed.
 		if ( ! is_array( $roles ) ) {
 			$roles = explode( ',', $roles );
 		}
 
-		// Sanitize role names by trimming whitespace
+		// Sanitize role names by trimming whitespace.
 		$roles = array_map( 'trim', $roles );
 
-		// Query WordPress for users with the specified roles
+		// Query WordPress for users with the specified roles.
 		$user_query = new WP_User_Query(
 			array(
-				'role__in' => $roles, // Find users with any of these roles
-				'fields'   => 'ID',   // Return only user IDs
+				'role__in' => $roles, // Find users with any of these roles.
+				'fields'   => 'ID',   // Return only user IDs.
 			)
 		);
 
-		// Get the results from the query
+		// Get the results from the query.
 		$ids = $user_query->get_results();
 
-		// Return default invalid ID if no users found
+		// Return default invalid ID if no users found.
 		if ( empty( $ids ) ) {
 			$ids = $invalid_ids;
 		}

@@ -26,7 +26,5 @@ class Shortcodes_For_Buddypress_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
 	}
-
 }

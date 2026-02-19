@@ -9,6 +9,7 @@
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/includes
  */
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -111,7 +112,6 @@ class Shortcodes_For_Buddypress_Loader {
 		);
 
 		return $hooks;
-
 	}
 
 	/**
@@ -132,17 +132,16 @@ class Shortcodes_For_Buddypress_Loader {
 		foreach ( $this->shortcode as $hook ) {
 			add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
 		}
-
 	}
 
-	 /**
-	  * Add shortcode.
-	  *
-	  * @since    1.0.0
-	  * @param    string $hook             Shortcode tag.
-	  * @param    object $component        Component object.
-	  * @param    string $callback         Callback method.
-	  */
+	/**
+	 * Add shortcode.
+	 *
+	 * @since    1.0.0
+	 * @param    string $hook             Shortcode tag.
+	 * @param    object $component        Component object.
+	 * @param    string $callback         Callback method.
+	 */
 	public function add_shortcode( $hook, $component, $callback ) {
 		$this->shortcode = $this->add( $this->shortcode, $hook, $component, $callback, '', '' );
 	}

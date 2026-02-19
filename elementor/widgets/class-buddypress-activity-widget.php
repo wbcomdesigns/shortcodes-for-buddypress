@@ -94,7 +94,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 	 * @return void
 	 */
 	protected function register_controls() {
-		// Content Section - Query Options
+		// Content Section - Query Options.
 		$this->start_controls_section(
 			'section_content',
 			array(
@@ -102,7 +102,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Title control
+		// Title control.
 		$this->add_control(
 			'sfb_title',
 			array(
@@ -112,7 +112,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Number of activities control
+		// Number of activities control.
 		$this->add_control(
 			'sfb_per_page',
 			array(
@@ -123,7 +123,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Pro version notice
+		// Pro version notice.
 		$this->add_control(
 			'go_sfb_pro_notice',
 			array(
@@ -142,7 +142,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 
 		$this->end_controls_section();
 
-		// Style Section - Activity Item Container
+		// Style Section - Activity Item Container.
 		$this->start_controls_section(
 			'activity_item_container_section',
 			array(
@@ -151,7 +151,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Background control for activity items
+		// Background control for activity items.
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
@@ -162,7 +162,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Box shadow control for activity items
+		// Box shadow control for activity items.
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -171,7 +171,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Border control for activity items
+		// Border control for activity items.
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -180,7 +180,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Border radius control for activity items
+		// Border radius control for activity items.
 		$this->add_control(
 			'container_border_radius',
 			array(
@@ -193,7 +193,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Padding control for activity items
+		// Padding control for activity items.
 		$this->add_responsive_control(
 			'container_padding',
 			array(
@@ -206,7 +206,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Spacing between activity items
+		// Spacing between activity items.
 		$this->add_control(
 			'spacing_items',
 			array(
@@ -226,7 +226,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 
 		$this->end_controls_section();
 
-		// Style Section - Load More Button
+		// Style Section - Load More Button.
 		$this->start_controls_section(
 			'load_more_button_section',
 			array(
@@ -235,7 +235,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Base style for load more button
+		// Base style for load more button.
 		$this->add_control(
 			'base_style',
 			array(
@@ -249,7 +249,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Display type for load more button (block or inline)
+		// Display type for load more button (block or inline).
 		$this->add_control(
 			'load_more_btn_display_type',
 			array(
@@ -266,7 +266,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Alignment control for inline load more button
+		// Alignment control for inline load more button.
 		$this->add_responsive_control(
 			'load_more_btn_align',
 			array(
@@ -296,7 +296,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Base style for inline load more button
+		// Base style for inline load more button.
 		$this->add_control(
 			'load_more_btn_display_inline_block',
 			array(
@@ -312,7 +312,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Typography control for load more button
+		// Typography control for load more button.
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
@@ -322,10 +322,10 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Normal/Hover state tabs for load more button
+		// Normal/Hover state tabs for load more button.
 		$this->start_controls_tabs( 'load_more_btn_style_tabs' );
 
-		// Normal state tab
+		// Normal state tab.
 		$this->start_controls_tab(
 			'load_more_btn_style_normal_tab',
 			array(
@@ -333,7 +333,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Normal state background color
+		// Normal state background color.
 		$this->add_control(
 			'load_more_btn_background',
 			array(
@@ -346,7 +346,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Normal state text color
+		// Normal state text color.
 		$this->add_control(
 			'load_more_btn_text_color',
 			array(
@@ -361,7 +361,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		// Hover state tab
+		// Hover state tab.
 		$this->start_controls_tab(
 			'load_more_btn_style_hover_tab',
 			array(
@@ -369,7 +369,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Hover state background color
+		// Hover state background color.
 		$this->add_control(
 			'load_more_btn_hover_background',
 			array(
@@ -382,7 +382,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Hover state text color
+		// Hover state text color.
 		$this->add_control(
 			'load_more_btn_hover_text_color',
 			array(
@@ -395,7 +395,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Hover state border color
+		// Hover state border color.
 		$this->add_control(
 			'load_more_btn_hover_border',
 			array(
@@ -408,7 +408,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Hover state box shadow
+		// Hover state box shadow.
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -421,7 +421,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		// Border control for load more button
+		// Border control for load more button.
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -431,7 +431,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Border radius control for load more button
+		// Border radius control for load more button.
 		$this->add_control(
 			'load_more_btn_border_radius',
 			array(
@@ -445,7 +445,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Box shadow control for load more button
+		// Box shadow control for load more button.
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -454,7 +454,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			)
 		);
 
-		// Padding control for load more button
+		// Padding control for load more button.
 		$this->add_responsive_control(
 			'load_more_btn_padding',
 			array(
@@ -478,28 +478,28 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		// Get all widget settings
+		// Get all widget settings.
 		$settings = $this->get_settings_for_display();
 		$args     = '';
 
-		// Add quotes around title if it exists
+		// Add quotes around title if it exists.
 		if ( isset( $settings['sfb_title'] ) && ! empty( $settings['sfb_title'] ) ) {
 			$settings['sfb_title'] = '"' . $settings['sfb_title'] . '"';
 		}
 
-		// Special handling for logged-in user activity
+		// Special handling for logged-in user activity.
 		if ( isset( $settings['sfb_loggedin_user_activity'] ) && 'yes' === $settings['sfb_loggedin_user_activity'] ) {
 			$settings['sfb_user_id'] = apply_filters( 'bp_shortcode_pro_loggedin_user_activity', bp_loggedin_user_id() );
 		}
 
-		// Build shortcode attributes from settings
+		// Build shortcode attributes from settings.
 		foreach ( $settings as $setting_key => $setting ) {
-			// Only process settings that start with 'sfb_'
+			// Only process settings that start with 'sfb_'.
 			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
-				$key = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
-				// Handle array values
+				$key = substr( $setting_key, 4 ); // Remove 'sfb_' prefix.
+				// Handle array values.
 				if ( is_array( $setting ) && ! empty( $setting ) ) {
-					// Filter out any nested arrays or objects
+					// Filter out any nested arrays or objects.
 					$flat_values = array();
 					foreach ( $setting as $val ) {
 						if ( is_scalar( $val ) ) {
@@ -510,17 +510,17 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 						$args .= $key . '=' . implode( ',', $flat_values ) . ' ';
 					}
 				}
-				// Handle non-empty scalar values
+				// Handle non-empty scalar values.
 				elseif ( ! empty( $setting ) && is_scalar( $setting ) ) {
 					$args .= $key . '=' . $setting . ' ';
 				}
 			}
 		}
 
-		// Allow filtering of shortcode arguments
-		$args      = apply_filters( 'bp_shortcode_pro_activity_element_args', trim( $args ) );
-		
-		// Build and render the shortcode
+		// Allow filtering of shortcode arguments.
+		$args = apply_filters( 'bp_shortcode_pro_activity_element_args', trim( $args ) );
+
+		// Build and render the shortcode.
 		$shortcode = '[activity-listing ' . $args . ']';
 		echo do_shortcode( $shortcode );
 	}

@@ -3,7 +3,7 @@
  * Class to add top header pages of wbcom plugin and additional features.
  *
  * @author   Wbcom Designs
- * @package  Bp_Add_Group_Types
+ * @package  Shortcodes_For_BuddyPress
  */
 
 // Exit if accessed directly.
@@ -46,7 +46,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				echo esc_html( $display_extention );
 				die;
 			}
-
 		}
 
 		/**
@@ -62,7 +61,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				remove_all_actions( 'admin_notices' );
 				remove_all_actions( 'all_admin_notices' );
 			}
-
 		}
 
 		/**
@@ -102,7 +100,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 */
 		public function get_wp_repo_download_url( $slug ) {
 			$status = array();
-			include_once ABSPATH . 'wp-admin/includes/plugin-install.php'; // for plugins_api..
+			include_once ABSPATH . 'wp-admin/includes/plugin-install.php'; // For plugins_api.
 			$api = plugins_api(
 				'plugin_information',
 				array(
@@ -195,10 +193,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			} else {
 				$version = '1.0.0';
 			}
-			// Font Awesome removed - external CDN not allowed for WordPress.org compliance
-			// if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
-			//	wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', array(), $version);
-			// }
+			// Font Awesome removed - external CDN not allowed for WordPress.org compliance.
 			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) ) {
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 					$extension = '.js';
@@ -355,7 +350,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			</div>
 			<?php
 		}
-
 	}
 
 	/**

@@ -52,11 +52,11 @@ class GroupShortCode extends BPShortCode {
 	 */
 	protected function output( $atts, $content = '' ) {
 
-		// Get query args and template variables
-		$query = $this->get_query_args( $atts );
+		// Get query args and template variables.
+		$query         = $this->get_query_args( $atts );
 		$template_vars = $this->get_template_vars( $atts, $query );
 
-		// Generate HTML output
+		// Generate HTML output.
 		return $this->generate_html( $atts, $template_vars );
 	}
 
@@ -88,10 +88,13 @@ class GroupShortCode extends BPShortCode {
 			'update_meta_cache'  => $atts['update_meta_cache'],
 		);
 
-		// Remove empty values to avoid issues with BuddyPress query
-		$query_args = array_filter( $query_args, function( $value ) {
-			return $value !== false && $value !== '' && $value !== null;
-		});
+		// Remove empty values to avoid issues with BuddyPress query.
+		$query_args = array_filter(
+			$query_args,
+			function ( $value ) {
+				return $value !== false && $value !== '' && $value !== null;
+			}
+		);
 
 		return apply_filters( 'group_shortcode_bash_query_args', $query_args );
 	}
@@ -104,11 +107,11 @@ class GroupShortCode extends BPShortCode {
 	 * @return array
 	 */
 	private function get_template_vars( $atts, $query ) {
-		// Build query string
+		// Build query string.
 		$query_string = $this->build_query_string( $query );
 
-		// Determine grid settings
-		$grid = 'yes' === $atts['grid'] ? 'grid' : '';
+		// Determine grid settings.
+		$grid   = 'yes' === $atts['grid'] ? 'grid' : '';
 		$column = ( $grid && $atts['loop_layout'] ) ? $atts['loop_layout'] : '';
 
 		$args = array(
@@ -119,7 +122,7 @@ class GroupShortCode extends BPShortCode {
 			'groups_atts' => $query,
 		);
 
-		// Youzify theme requires different structure
+		// Youzify theme requires different structure.
 		if ( class_exists( 'Youzify' ) ) {
 			unset( $args['classes'] );
 			$args['groups_atts'] = $args;
@@ -215,13 +218,13 @@ class GroupShortCode extends BPShortCode {
 	private function load_template( $template_vars ) {
 		if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
 			$template = 'groups/bb-shortcodes-groups.php';
-			$theme = get_option( '_bp_theme_package_id' );
+			$theme    = get_option( '_bp_theme_package_id' );
 		} elseif ( class_exists( 'Youzify' ) ) {
 			$template = 'groups/bp-shortcodes-groups.php';
-			$theme = 'youzify';
+			$theme    = 'youzify';
 		} else {
 			$template = 'groups/bp-shortcodes-groups.php';
-			$theme = get_option( '_bp_theme_package_id' );
+			$theme    = get_option( '_bp_theme_package_id' );
 		}
 
 		bp_shortcode_get_template( $template, $template_vars, $theme );
@@ -235,11 +238,11 @@ class GroupShortCode extends BPShortCode {
 	 * @return string
 	 */
 	private function get_container_classes( $grid, $column ) {
-		$classes            = array( 'item-list', 'groups-list', 'groups-dir-list', 'bp-list', 'bpsp-groups-list', $grid, $column);
+		$classes      = array( 'item-list', 'groups-list', 'groups-dir-list', 'bp-list', 'bpsp-groups-list', $grid, $column );
 		$active_theme = wp_get_theme();
-		if( 'REIGN' == $active_theme && ! class_exists( 'Youzify' ) ){
+		if ( 'REIGN' === $active_theme && ! class_exists( 'Youzify' ) ) {
 			$bp_nouveau            = bp_nouveau();
-			$classes 			   = [];
+			$classes               = array();
 			$classes[]             = 'item-list';
 			$classes[]             = 'groups-list';
 			$classes[]             = 'bp-list';
@@ -247,31 +250,30 @@ class GroupShortCode extends BPShortCode {
 			$classes[]             = 'rg-group-list';
 			$component             = sanitize_key( 'groups' );
 			$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-			$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && $bp_nouveau_appearance['groups_layout'] != '' ) ? $bp_nouveau_appearance['groups_layout'] : 'three';
-			
+			$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && '' !== $bp_nouveau_appearance['groups_layout'] ) ? $bp_nouveau_appearance['groups_layout'] : 'three';
+
 			global $wbtm_reign_settings;
 			$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['group_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['group_directory_type'] : 'wbtm-group-directory-type-2';
-			
-			
-		
+
 			if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
 				$customizer_option = sprintf( '%s_layout', $component );
 				$layout_prefs      = bp_nouveau_get_temporary_setting(
 					$customizer_option,
 					bp_nouveau_get_appearance_settings( $customizer_option )
 				);
-		
+
 				if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
 					$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
 					if ( isset( $grid_classes[ $layout_prefs ] ) ) {
 						$classes = array_merge(
-							$classes, array(
+							$classes,
+							array(
 								'grid',
 								$grid_classes[ $layout_prefs ],
 							)
 						);
 					}
-		
+
 					if ( ! isset( $bp_nouveau->{$component} ) ) {
 						$bp_nouveau->{$component} = new stdClass();
 					}
@@ -288,7 +290,7 @@ class GroupShortCode extends BPShortCode {
 				);
 			}
 		}
-		$classes = implode(' ',$classes);
+		$classes = implode( ' ', $classes );
 		return $classes;
 	}
 }

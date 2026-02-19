@@ -107,6 +107,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	 * Get BuddyPress member types to display as Elementor options.
 	 *
 	 * Retrieves all registered BuddyPress member types and formats them
+	 *
 	 * @since 1.6.1
 	 * @return array Member types.
 	 */
@@ -126,7 +127,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	 * @return void
 	 */
 	protected function register_controls() {
-		// Content Section - Query Options
+		// Content Section - Query Options.
 		$this->start_controls_section(
 			'section_content',
 			array(
@@ -134,7 +135,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
-		// Title control
+		// Title control.
 		$this->add_control(
 			'sfb_title',
 			array(
@@ -144,7 +145,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
-		// Per page control
+		// Per page control.
 		$this->add_control(
 			'sfb_per_page',
 			array(
@@ -155,7 +156,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
-		// Pro version notice
+		// Pro version notice.
 		$this->add_control(
 			'go_sfb_pro_notice',
 			array(
@@ -174,7 +175,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 
 		$this->end_controls_section();
 
-		// Style Section - Listing Appearance
+		// Style Section - Listing Appearance.
 		$this->start_controls_section(
 			'sfb_section_style',
 			array(
@@ -183,7 +184,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
-		// Remove default border
+		// Remove default border.
 		$this->add_control(
 			'sfb_listing_no_border',
 			array(
@@ -196,7 +197,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
-		// Background control
+		// Background control.
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
@@ -207,7 +208,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
-		// Box shadow control
+		// Box shadow control.
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -216,7 +217,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
-		// Border control
+		// Border control.
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -225,7 +226,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
-		// Border radius control
+		// Border radius control.
 		$this->add_control(
 			'sfb_listing_border_radius',
 			array(
@@ -238,7 +239,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
-		// Margin control
+		// Margin control.
 		$this->add_responsive_control(
 			'sfb_listing_margin',
 			array(
@@ -251,7 +252,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 			)
 		);
 
-		// Padding control
+		// Padding control.
 		$this->add_responsive_control(
 			'sfb_listing_padding',
 			array(
@@ -265,7 +266,6 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-
 	}
 
 	/**
@@ -275,23 +275,23 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		// Get all widget settings
+		// Get all widget settings.
 		$settings = $this->get_settings_for_display();
 		$args     = '';
 
-		// Add quotes around title if it exists
+		// Add quotes around title if it exists.
 		if ( isset( $settings['sfb_title'] ) && ! empty( $settings['sfb_title'] ) ) {
 			$settings['sfb_title'] = '"' . $settings['sfb_title'] . '"';
 		}
 
-		// Build shortcode attributes from settings
+		// Build shortcode attributes from settings.
 		foreach ( $settings as $setting_key => $setting ) {
-			// Only process settings that start with 'sfb_'
+			// Only process settings that start with 'sfb_'.
 			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
-				$key = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
-				// Handle array values
+				$key = substr( $setting_key, 4 ); // Remove 'sfb_' prefix.
+				// Handle array values.
 				if ( is_array( $setting ) && ! empty( $setting ) ) {
-					// Filter out any nested arrays or objects
+					// Filter out any nested arrays or objects.
 					$flat_values = array();
 					foreach ( $setting as $val ) {
 						if ( is_scalar( $val ) ) {
@@ -302,16 +302,16 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 						$args .= $key . '=' . implode( ',', $flat_values ) . ' ';
 					}
 				}
-				// Handle non-empty scalar values
+				// Handle non-empty scalar values.
 				elseif ( ! empty( $setting ) && is_scalar( $setting ) ) {
 					$args .= $key . '=' . $setting . ' ';
 				}
 			}
 		}
 
-		// Allow filtering of shortcode arguments
-		$args      = apply_filters( 'bp_shortcode_pro_members_element_args', trim( $args ) );
-		// Build and render the shortcode
+		// Allow filtering of shortcode arguments.
+		$args = apply_filters( 'bp_shortcode_pro_members_element_args', trim( $args ) );
+		// Build and render the shortcode.
 		$shortcode = '[members-listing ' . $args . ']';
 		echo do_shortcode( $shortcode );
 	}

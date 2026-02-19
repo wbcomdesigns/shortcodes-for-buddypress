@@ -9,6 +9,7 @@
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/includes
  */
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -47,7 +48,14 @@ class Shortcodes_For_Buddypress {
 	 * @var      string    $version
 	 */
 	protected $version;
-	
+
+	/**
+	 * Plugin basename.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $plugin_basename
+	 */
 	protected $plugin_basename;
 
 	/**
@@ -83,31 +91,35 @@ class Shortcodes_For_Buddypress {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-		$plugin_path = plugin_dir_path( dirname( __FILE__ ) );
+		$plugin_path = plugin_dir_path( __DIR__ );
 
-		// Core classes
+		// Core classes.
 		$this->load_core_classes( $plugin_path );
 
-		// Admin classes
+		// Admin classes.
 		$this->load_admin_classes( $plugin_path );
 
-		// Public classes
+		// Public classes.
 		$this->load_public_classes( $plugin_path );
 
-		// Shortcode classes
+		// Shortcode classes.
 		$this->load_shortcode_classes( $plugin_path );
 
-		// Elementor integration
+		// Elementor integration.
 		if ( did_action( 'elementor/loaded' ) ) {
 			require_once $plugin_path . 'elementor/class-buddypress-shortcode-elements.php';
 		}
 
-		// Initialize loader
+		// Initialize loader.
 		$this->loader = new Shortcodes_For_Buddypress_Loader();
 	}
 
 	/**
 	 * Load core classes.
+	 *
+	 * @since  1.0.0
+	 * @param  string $path Plugin path.
+	 * @return void
 	 */
 	private function load_core_classes( $path ) {
 		require_once $path . 'includes/class-shortcodes-for-buddypress-loader.php';
@@ -116,6 +128,10 @@ class Shortcodes_For_Buddypress {
 
 	/**
 	 * Load admin classes.
+	 *
+	 * @since  1.0.0
+	 * @param  string $path Plugin path.
+	 * @return void
 	 */
 	private function load_admin_classes( $path ) {
 		require_once $path . 'admin/class-shortcodes-for-buddypress-admin.php';
@@ -124,6 +140,10 @@ class Shortcodes_For_Buddypress {
 
 	/**
 	 * Load public classes.
+	 *
+	 * @since  1.0.0
+	 * @param  string $path Plugin path.
+	 * @return void
 	 */
 	private function load_public_classes( $path ) {
 		require_once $path . 'public/class-shortcodes-for-buddypress-public.php';
@@ -131,12 +151,16 @@ class Shortcodes_For_Buddypress {
 
 	/**
 	 * Load shortcode classes.
+	 *
+	 * @since  1.0.0
+	 * @param  string $path Plugin path.
+	 * @return void
 	 */
 	private function load_shortcode_classes( $path ) {
-		// Base shortcode class
+		// Base shortcode class.
 		require_once $path . 'public/shortcode/class-shortcodes-for-buddypress-shortcode.php';
 
-		// Individual shortcodes
+		// Individual shortcodes.
 		require_once $path . 'public/shortcode/class-shortcode-for-activity-listing.php';
 		require_once $path . 'public/shortcode/class-group-shortcode.php';
 		require_once $path . 'public/shortcode/class-member-shortcode.php';
@@ -153,7 +177,6 @@ class Shortcodes_For_Buddypress {
 		$plugin_i18n = new Shortcodes_For_Buddypress_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -199,12 +222,11 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_filter( 'bp_activity_reshare_action', $plugin_public, 'buddypress_shortcode_enable_share', 10 );
 		$this->loader->add_filter( 'bp_after_nouveau_wrapper_parse_args', $plugin_public, 'buddypress_shortcode_filter_activity_action_wrapper', 10 );
 
-		if ( function_exists('buddypress') && isset( buddypress()->buddyboss ) ) {
+		if ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) {
 			$this->loader->add_filter( 'bb_nouveau_get_activity_entry_bubble_buttons', $plugin_public, 'buddypress_shortcode_activity_entry_bubble_buttons', 10, 2 );
 		}
 		$this->loader->add_action( 'wp_ajax_bpsh_load_more_members', $plugin_public, 'buddypress_shortcode_ajax_load_more_members' );
 		$this->loader->add_action( 'wp_ajax_nopriv_bpsh_load_more_members', $plugin_public, 'buddypress_shortcode_ajax_load_more_members' );
-
 	}
 
 	/**
@@ -245,5 +267,4 @@ class Shortcodes_For_Buddypress {
 	public function get_version() {
 		return $this->version;
 	}
-
 }

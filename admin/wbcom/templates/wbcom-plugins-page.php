@@ -1,4 +1,12 @@
-<?php defined( 'ABSPATH' ) || exit; ?>
+<?php
+/**
+ * Plugins page template.
+ *
+ * @package Shortcodes_For_BuddyPress
+ */
+
+defined( 'ABSPATH' ) || exit;
+?>
 <div class="wrap">
 	<div class="wbcom-bb-plugins-offer-wrapper">
 		<div id="wb_admin_logo">

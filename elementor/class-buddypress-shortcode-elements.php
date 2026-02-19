@@ -1,4 +1,10 @@
 <?php
+/**
+ * Elementor integration for Shortcodes for BuddyPress.
+ *
+ * @since   1.6.1
+ * @package Shortcodes_For_BuddyPress
+ */
 
 namespace BPSPElementor;
 
@@ -6,10 +12,14 @@ use Elementor\Plugin;
 use Elementor\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-} // Exit if accessed directly
+	exit; // Exit if accessed directly.
+}
 
-
+/**
+ * Elementor Widgets manager class.
+ *
+ * @since 1.6.1
+ */
 class BPSP_Elementor_Widgets {
 
 	/**
@@ -78,10 +88,10 @@ class BPSP_Elementor_Widgets {
 	 * @return void
 	 */
 	public function register_widgets() {
-		// Its is now safe to include Widgets files.
+		// It is now safe to include Widgets files.
 		$this->include_widgets_files();
-	
-		// Register Widgets.
+
+		// Register widgets.
 		Plugin::instance()->widgets_manager->register( new Widgets\Buddypress_Shortcode_Activity_Widget() );
 		Plugin::instance()->widgets_manager->register( new Widgets\Buddypress_Shortcode_Members_Widget() );
 		Plugin::instance()->widgets_manager->register( new Widgets\Buddypress_Shortcode_Groups_Widget() );
@@ -98,8 +108,8 @@ class BPSP_Elementor_Widgets {
 		// $widget_list = $this->get_widget_list();
 		$widget_list = array(
 			'Buddypress_Shortcode_Activity_Widget' => 'activity',
-			'Buddypress_Shortcode_Members_Widget' => 'members',
-			'Buddypress_Shortcode_Groups_Widget' => 'groups',
+			'Buddypress_Shortcode_Members_Widget'  => 'members',
+			'Buddypress_Shortcode_Groups_Widget'   => 'groups',
 		);
 		if ( ! empty( $widget_list ) ) {
 			foreach ( $widget_list as $handle => $data ) {
@@ -122,12 +132,11 @@ class BPSP_Elementor_Widgets {
 		);
 
 		// if ( bp_is_active( 'groups' ) ) {
-		// 	$widget_list[] = 'groups';
+		// $widget_list[] = 'groups';
 		// }
 
 		return $widget_list;
 	}
-
 }
 
 

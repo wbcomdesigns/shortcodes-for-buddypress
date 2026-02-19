@@ -112,7 +112,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	 * @return void
 	 */
 	protected function register_controls() {
-		// Content Section - Query Options
+		// Content Section - Query Options.
 		$this->start_controls_section(
 			'section_content',
 			array(
@@ -120,7 +120,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Title control
+		// Title control.
 		$this->add_control(
 			'sfb_title',
 			array(
@@ -130,7 +130,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Per page control
+		// Per page control.
 		$this->add_control(
 			'sfb_per_page',
 			array(
@@ -141,7 +141,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Pro version notice
+		// Pro version notice.
 		$this->add_control(
 			'go_sfb_pro_notice',
 			array(
@@ -160,7 +160,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 
 		$this->end_controls_section();
 
-		// Style Section - Listing Appearance
+		// Style Section - Listing Appearance.
 		$this->start_controls_section(
 			'section_style',
 			array(
@@ -169,7 +169,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Background control
+		// Background control.
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
@@ -180,10 +180,10 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Normal/Hover state tabs
+		// Normal/Hover state tabs.
 		$this->start_controls_tabs( 'tabs_listing_style' );
 
-		// Normal state tab
+		// Normal state tab.
 		$this->start_controls_tab(
 			'sfb_tab_listing_normal',
 			array(
@@ -191,7 +191,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Normal state box shadow
+		// Normal state box shadow.
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -202,7 +202,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		// Hover state tab
+		// Hover state tab.
 		$this->start_controls_tab(
 			'sfb_tab_listing_hover',
 			array(
@@ -210,7 +210,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Hover state box shadow
+		// Hover state box shadow.
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -223,7 +223,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		// Divider
+		// Divider.
 		$this->add_control(
 			'sfb_hr_listing',
 			array(
@@ -231,7 +231,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Border control for list item wrapper
+		// Border control for list item wrapper.
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -240,7 +240,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Border radius control for list item wrapper
+		// Border radius control for list item wrapper.
 		$this->add_control(
 			'sfb_listing_border_radius',
 			array(
@@ -253,7 +253,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Padding control for list item wrapper
+		// Padding control for list item wrapper.
 		$this->add_responsive_control(
 			'sfb_listing_padding',
 			array(
@@ -266,7 +266,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Border control for list item
+		// Border control for list item.
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
@@ -275,7 +275,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Border radius control for list item
+		// Border radius control for list item.
 		$this->add_control(
 			'sfb_listing_border_radius_one',
 			array(
@@ -288,7 +288,7 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 			)
 		);
 
-		// Padding control for list item
+		// Padding control for list item.
 		$this->add_responsive_control(
 			'sfb_listing_padding_one',
 			array(
@@ -311,23 +311,23 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		// Get all widget settings
+		// Get all widget settings.
 		$settings = $this->get_settings_for_display();
 		$args     = '';
 
-		// Add quotes around title if it exists
+		// Add quotes around title if it exists.
 		if ( isset( $settings['sfb_title'] ) && ! empty( $settings['sfb_title'] ) ) {
 			$settings['sfb_title'] = '"' . $settings['sfb_title'] . '"';
 		}
 
-		// Build shortcode attributes from settings
+		// Build shortcode attributes from settings.
 		foreach ( $settings as $setting_key => $setting ) {
-			// Only process settings that start with 'sfb_'
+			// Only process settings that start with 'sfb_'.
 			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
-				$key = substr( $setting_key, 4 ); // Remove 'sfb_' prefix
-				// Handle array values
+				$key = substr( $setting_key, 4 ); // Remove 'sfb_' prefix.
+				// Handle array values.
 				if ( is_array( $setting ) && ! empty( $setting ) ) {
-					// Filter out any nested arrays or objects
+					// Filter out any nested arrays or objects.
 					$flat_values = array();
 					foreach ( $setting as $val ) {
 						if ( is_scalar( $val ) ) {
@@ -338,17 +338,17 @@ class Buddypress_Shortcode_Groups_Widget extends Widget_Base {
 						$args .= $key . '=' . implode( ',', $flat_values ) . ' ';
 					}
 				}
-				// Handle non-empty scalar values
+				// Handle non-empty scalar values.
 				elseif ( ! empty( $setting ) && is_scalar( $setting ) ) {
 					$args .= $key . '=' . $setting . ' ';
 				}
 			}
 		}
 
-		// Allow filtering of shortcode arguments
-		$args      = apply_filters( 'bp_shortcode_pro_groups_element_args', trim( $args ) );
-		
-		// Build and render the shortcode
+		// Allow filtering of shortcode arguments.
+		$args = apply_filters( 'bp_shortcode_pro_groups_element_args', trim( $args ) );
+
+		// Build and render the shortcode.
 		$shortcode = '[groups-listing ' . $args . ']';
 		echo do_shortcode( $shortcode );
 	}

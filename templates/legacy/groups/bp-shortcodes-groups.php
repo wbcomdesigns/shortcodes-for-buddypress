@@ -2,8 +2,11 @@
 /**
  * Fires at the top of the groups directory template file.
  *
- * @since 1.0.0
+ * @since   1.0.0
+ *
+ * @package Shortcodes_For_BuddyPress
  */
+
 defined( 'ABSPATH' ) || exit;
 /**
  * Fires at the top of the groups directory template file.

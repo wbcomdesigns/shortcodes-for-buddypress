@@ -9,6 +9,7 @@
  *
  * @package BuddyBoss\Core
  */
+
 defined( 'ABSPATH' ) || exit;
 
 add_filter( 'bp_get_group_description_excerpt', 'bb_get_group_description_excerpt_view_more', 99, 2 );
@@ -50,16 +51,19 @@ if ( bp_has_groups( $query ) ) {
 
 						// Group Cover Image Rendering.
 						if ( ! bp_disable_group_cover_image_uploads() && bb_platform_group_element_enable( 'cover-images' ) ) {
-							if ( in_array( $active_theme, [ 'BuddyX', 'BuddyxPro' ], true ) && function_exists( 'buddyx_render_group_cover_image' ) ) {
+							if ( in_array( $active_theme, array( 'BuddyX', 'BuddyxPro' ), true ) && function_exists( 'buddyx_render_group_cover_image' ) ) {
 								buddyx_render_group_cover_image();
-							} elseif ( $active_theme === 'REIGN' && function_exists( 'reign_render_group_cover_image' ) ) {
+							} elseif ( 'REIGN' === $active_theme && function_exists( 'reign_render_group_cover_image' ) ) {
 								reign_render_group_cover_image();
 							} else {
-								$group_cover_image_url = bp_attachments_get_attachment( 'url', array(
-									'object_dir' => 'groups',
-									'item_id'    => $bp_group_id,
-								) );
-								$has_default_cover = function_exists( 'bb_attachment_get_cover_image_class' ) ? bb_attachment_get_cover_image_class( $bp_group_id, 'group' ) : '';
+								$group_cover_image_url = bp_attachments_get_attachment(
+									'url',
+									array(
+										'object_dir' => 'groups',
+										'item_id'    => $bp_group_id,
+									)
+								);
+								$has_default_cover     = function_exists( 'bb_attachment_get_cover_image_class' ) ? bb_attachment_get_cover_image_class( $bp_group_id, 'group' ) : '';
 								?>
 								<div class="bs-group-cover bb-shortcode-group-only only-grid-view <?php echo esc_attr( $has_default_cover . ' cover-' . $group_cover_height ); ?>">
 									<a href="<?php bp_group_permalink(); ?>">
@@ -78,7 +82,7 @@ if ( bp_has_groups( $query ) ) {
 								<?php
 						}
 						?>
-							<?php if ( $active_theme === 'REIGN' ) : ?>
+							<?php if ( 'REIGN' === $active_theme ) : ?>
 							<div class="group-content-wrap">
 							<?php endif; ?>
 								<div class="item <?php echo esc_attr( $group_members . ' ' . $join_button ); ?>">
@@ -130,7 +134,7 @@ if ( bp_has_groups( $query ) ) {
 									</div>
 
 								</div>
-							<?php if ( $active_theme === 'REIGN' ) : ?>
+							<?php if ( 'REIGN' === $active_theme ) : ?>
 							</div>
 							<?php endif; ?>
 						</div>

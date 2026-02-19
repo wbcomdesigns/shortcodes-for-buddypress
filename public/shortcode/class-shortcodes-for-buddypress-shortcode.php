@@ -1,12 +1,19 @@
 <?php
 /**
- * Base shortcode class.
+ * Base shortcode class file.
  *
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/shortcode
  * @since      1.7.0
  */
 
+/**
+ * Base shortcode class.
+ *
+ * @package    Shortcodes_For_Buddypress
+ * @subpackage Shortcodes_For_Buddypress/shortcode
+ * @since      1.7.0
+ */
 abstract class BPShortCode {
 
 	/**
@@ -67,15 +74,15 @@ abstract class BPShortCode {
 	 * @return string
 	 */
 	public function render( $atts = array(), $content = '' ) {
-		// Don't render in admin unless it's AJAX or Elementor preview
+		// Don't render in admin unless it's AJAX or Elementor preview.
 		if ( $this->is_admin_preview() ) {
 			return '';
 		}
 
-		// Merge with defaults and filter
+		// Merge with defaults and filter.
 		$atts = $this->get_final_attributes( $atts );
 
-		// Let child class handle the actual rendering
+		// Let child class handle the actual rendering.
 		return $this->output( $atts, $content );
 	}
 
@@ -117,7 +124,7 @@ abstract class BPShortCode {
 	 */
 	public static function get_instance( $tag ) {
 		$class = get_called_class();
-		$key = $class . '_' . $tag;
+		$key   = $class . '_' . $tag;
 
 		if ( ! isset( self::$instances[ $key ] ) ) {
 			self::$instances[ $key ] = new static( $tag );

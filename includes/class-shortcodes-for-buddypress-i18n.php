@@ -27,10 +27,7 @@ class Shortcodes_For_Buddypress_i18n {
 	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
-		// WordPress.org automatically handles translation loading for hosted plugins since WP 4.6
-		// load_plugin_textdomain() call removed for compliance
+		// WordPress.org automatically handles translation loading for hosted plugins since WP 4.6.
+		// The load_plugin_textdomain() call removed for compliance.
 	}
-
-
-
 }

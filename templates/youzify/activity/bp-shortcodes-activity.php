@@ -1,14 +1,15 @@
 <?php
-
 /**
- * BP Youzify - Activity Shortcode 
- * 
+ * BP Youzify - Activity Shortcode
+ *
  * Template to be used while listing activity shortcode when Youzify is active with BuddyPress.
  * Reference  from youzify activity loop template. (includes/public/templates/activity/activity-loop.php)
- * 
- * @since 2.7.2
- * 
+ *
+ * @since   2.7.2
+ *
+ * @package Shortcodes_For_BuddyPress
  */
+
 defined( 'ABSPATH' ) || exit;
 /**
  * Fires before the activity directory listing.
@@ -18,36 +19,33 @@ defined( 'ABSPATH' ) || exit;
 
 do_action( 'bp_before_directory_activity' );
 $activity_atts['allow_posting'] = false;
-$activity_atts['load_more'] = false;
-$activity_atts['use_compat'] = false;
-if ( ( !empty( $activity_atts ) ) && ( $activity_atts['use_compat'] ) ) {
-
-}
-if( empty( $atts ) ){
+$activity_atts['load_more']     = false;
+$activity_atts['use_compat']    = false;
+if ( empty( $atts ) ) {
 	$atts = array();
 }
 
-if ( ( !empty( $activity_atts ) ) && ( $activity_atts['allow_posting'] == 'true' ) &&  ( is_user_logged_in() ) ) :
+if ( ( ! empty( $activity_atts ) ) && ( 'true' === $activity_atts['allow_posting'] ) && ( is_user_logged_in() ) ) :
 	bp_get_template_part( 'activity/post-form' );
 endif;
 
 do_action( 'before_activity_listing_output', $atts, $activity_atts ); ?>
 
 <?php
-if ( !empty( $activity_atts['query'] ) ) {
-    $bp_activities  = $activity_atts['query'];
+if ( ! empty( $activity_atts['query'] ) ) {
+	$bp_activities = $activity_atts['query'];
 } else {
-    $bp_activities  = bp_ajax_querystring( 'activity' );
+	$bp_activities = bp_ajax_querystring( 'activity' );
 }
 
-// Add error handling for BuddyPress compatibility issues
+// Add error handling for BuddyPress compatibility issues.
 $has_activities = false;
-$bp_error = false;
+$bp_error       = false;
 
-// Validate and sanitize query before passing to BuddyPress
+// Validate and sanitize query before passing to BuddyPress.
 $clean_query = '';
 if ( ! empty( $bp_activities ) ) {
-	// If query is already a string, use it. If array, convert it properly
+	// If query is already a string, use it. If array, convert it properly.
 	if ( is_array( $bp_activities ) ) {
 		$clean_query = http_build_query( $bp_activities );
 	} else {
@@ -56,207 +54,240 @@ if ( ! empty( $bp_activities ) ) {
 }
 
 try {
-	// Try with clean query first, fallback to basic query if it fails
+	// Try with clean query first, fallback to basic query if it fails.
 	if ( ! empty( $clean_query ) ) {
 		$has_activities = bp_has_activities( $clean_query );
 	} else {
-		// Fallback to basic activity query
+		// Fallback to basic activity query.
 		$has_activities = bp_has_activities( 'per_page=5' );
 	}
 } catch ( TypeError $e ) {
-	// Handle BuddyPress version compatibility issues - try basic query
+	// Handle BuddyPress version compatibility issues - try basic query.
 	try {
 		$has_activities = bp_has_activities( 'per_page=5' );
 	} catch ( Exception $fallback_error ) {
 		$has_activities = false;
-		$bp_error = 'compatibility';
+		$bp_error       = 'compatibility';
 	}
 } catch ( Error $e ) {
-	// Handle other PHP errors - try basic query
+	// Handle other PHP errors - try basic query.
 	try {
 		$has_activities = bp_has_activities( 'per_page=5' );
 	} catch ( Exception $fallback_error ) {
 		$has_activities = false;
-		$bp_error = 'general';
+		$bp_error       = 'general';
 	}
 }
 
-if ( $has_activities ) : ?>
+if ( $has_activities ) :
+	?>
 
 <div id="youzify" class="bp-shortcode-activity youzify youzify-page noLightbox youzify-horizontal-layout youzify-page-btns-border-oval youzify-tabs-list-gradient youzify-global-wall youzify-blue-scheme">
 	<div id="activity" class="activity">
 		<ul id="activity-stream" class="activity-list item-list">
 
-        <?php do_action( 'youzify_before_activity_loop_posts' ); ?>
+		<?php do_action( 'youzify_before_activity_loop_posts' ); ?>
 
-            <?php while ( bp_activities() ) : bp_the_activity(); ?>
-            <?php 
-                if( is_admin() && isset( \Elementor\Plugin::$instance->editor ) && \Elementor\Plugin::$instance->editor->is_edit_mode() && bp_get_activity_type() == "friendship_created" ){
-                    continue;
-                }
-                ?>
-                <?php do_action( 'bp_before_activity_entry' );  ?>
+			<?php
+			while ( bp_activities() ) :
+				bp_the_activity();
+				?>
+				<?php
+				if ( is_admin() && isset( \Elementor\Plugin::$instance->editor ) && \Elementor\Plugin::$instance->editor->is_edit_mode() && 'friendship_created' === bp_get_activity_type() ) {
+					continue;
+				}
+				?>
+				<?php do_action( 'bp_before_activity_entry' ); ?>
 
-                <li class="activity activity_update activity-item youzify_effect fadeInDown full-visible" data-effect="fadeInDown" id="activity-<?php bp_activity_id(); ?>">
+				<li class="activity activity_update activity-item youzify_effect fadeInDown full-visible" data-effect="fadeInDown" id="activity-<?php bp_activity_id(); ?>">
 
-                    <?php do_action( 'bp_before_activity_entry_content' );  ?>
+					<?php do_action( 'bp_before_activity_entry_content' ); ?>
 
-                    <div class="activity-content">
+					<div class="activity-content">
 
-                        <div class="activity-header">
+						<div class="activity-header">
 
-                            <?php do_action( 'bp_before_activity_entry_header' ); ?>
+							<?php do_action( 'bp_before_activity_entry_header' ); ?>
 
-                            <div class="activity-avatar"><a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar(); ?></a></div>
+							<div class="activity-avatar"><a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar(); ?></a></div>
 
-                            <div class="activity-head"><?php bp_activity_action( array( 'no_timestamp' => true ) );?><div class="youzify-timestamp-area"><?php if ( function_exists( 'youzify_get_activity_time_stamp_meta' ) ) { $timestamp = youzify_get_activity_time_stamp_meta(); if ( ! empty( $timestamp ) ) { echo wp_kses_post( $timestamp ); } } ?></div></div>
+							<div class="activity-head"><?php bp_activity_action( array( 'no_timestamp' => true ) ); ?><div class="youzify-timestamp-area">
+							<?php
+							if ( function_exists( 'youzify_get_activity_time_stamp_meta' ) ) {
+								$timestamp = youzify_get_activity_time_stamp_meta();
+								if ( ! empty( $timestamp ) ) {
+									echo wp_kses_post( $timestamp ); }
+							}
+							?>
+							</div></div>
 
-                        </div>
+						</div>
 
-                        <?php bp_activity_content_body(); ?>
+						<?php bp_activity_content_body(); ?>
 
-                        <?php
+						<?php
 
-                        /**
-                         * Fires after the display of an activity entry content.
-                         *
-                         * @since 2.7.2
-                         */
-                        do_action( 'bp_activity_entry_content' ); ?>
-                        <div class="youzify-activity-statistics"><?php
+						/**
+						 * Fires after the display of an activity entry content.
+						 *
+						 * @since 2.7.2
+						 */
+						do_action( 'bp_activity_entry_content' );
+						?>
+						<div class="youzify-activity-statistics">
+						<?php
 
-                            do_action( 'youzify_before_activity_statistics' );
+							do_action( 'youzify_before_activity_statistics' );
 
-                            if ( function_exists( 'youzify_show_who_liked_activities' ) ) {
-                                youzify_show_who_liked_activities();
-                            }
-                            if ( function_exists( 'youzify_activity_comments_count' ) ) {
-                                youzify_activity_comments_count();
-                            }
-                            do_action( 'youzify_after_activity_statistics' );
+						if ( function_exists( 'youzify_show_who_liked_activities' ) ) {
+							youzify_show_who_liked_activities();
+						}
+						if ( function_exists( 'youzify_activity_comments_count' ) ) {
+							youzify_activity_comments_count();
+						}
+							do_action( 'youzify_after_activity_statistics' );
 
-                        ?></div>
-                        <div class="activity-meta" data-activity-id="<?php echo esc_attr( bp_get_activity_id() ); ?>"><?php
+						?>
+						</div>
+						<div class="activity-meta" data-activity-id="<?php echo esc_attr( bp_get_activity_id() ); ?>">
+						<?php
 
-                            if ( bp_get_activity_type() == 'activity_comment' && is_user_logged_in() ) : ?><a href="<?php bp_activity_thread_permalink(); ?>" class="button view bp-secondary-action"><?php echo esc_html__( 'View Conversation', 'shortcodes-for-buddypress' ); ?></a><?php
+						if ( 'activity_comment' === bp_get_activity_type() && is_user_logged_in() ) :
+							?>
+						<a href="<?php bp_activity_thread_permalink(); ?>" class="button view bp-secondary-action"><?php echo esc_html__( 'View Conversation', 'shortcodes-for-buddypress' ); ?></a>
+							<?php
 
-                            endif;
+							endif;
 
-                            if ( is_user_logged_in() ) :
+						if ( is_user_logged_in() ) :
 
-                                if ( bp_activity_can_favorite() ) {
-                                    if( function_exists( 'youzify_get_post_like_button' ) ) {
-                                        $like_button = youzify_get_post_like_button();
-                                        if ( ! empty( $like_button ) ) {
-                                            echo wp_kses_post( $like_button );
-                                        }
-                                    }
+							if ( bp_activity_can_favorite() ) {
+								if ( function_exists( 'youzify_get_post_like_button' ) ) {
+									$like_button = youzify_get_post_like_button();
+									if ( ! empty( $like_button ) ) {
+										echo wp_kses_post( $like_button );
+									}
+								}
+							}
 
-                                }
+							if ( bp_activity_can_comment() ) :
+								?>
+								<a href="<?php bp_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php echo esc_html__( 'Comment', 'shortcodes-for-buddypress' ); ?></a>
+								<?php
 
-                                if ( bp_activity_can_comment() ) : ?><a href="<?php bp_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php echo esc_html__( 'Comment', 'shortcodes-for-buddypress' ); ?></a><?php
+							endif;
 
-                                endif;
+							do_action( 'bp_activity_after_comment_button' );
+							/**
+							 * Fires at the end of the activity entry meta data area.
+							 *
+							 * @since 2.7.2
+							 */
+							do_action( 'bp_activity_entry_meta' );
 
-                                do_action( 'bp_activity_after_comment_button' );
-                                /**
-                                 * Fires at the end of the activity entry meta data area.
-                                 *
-                                 * @since 2.7.2
-                                 */
-                                do_action( 'bp_activity_entry_meta' );
+								endif;
 
-                                endif;
+								do_action( 'bp_activity_entry_meta_non_logged_in', bp_get_activity_id() );
 
-                                do_action( 'bp_activity_entry_meta_non_logged_in', bp_get_activity_id() );
+						?>
+						</div>
 
-                        ?></div>
+					</div>
+					<?php
 
-                    </div>
-                    <?php
+					/**
+					 * Fires before the display of the activity entry comments.
+					 *
+					 * @since 2.7.2
+					 */
+					do_action( 'bp_before_activity_entry_comments' );
+					?>
 
-                    /**
-                     * Fires before the display of the activity entry comments.
-                     *
-                     * @since 2.7.2
-                     */
-                    do_action( 'bp_before_activity_entry_comments' ); ?>
+					<?php if ( ( bp_activity_get_comment_count() || bp_activity_can_comment() ) || bp_is_single_activity() ) : ?>
 
-                    <?php if ( ( bp_activity_get_comment_count() || bp_activity_can_comment() ) || bp_is_single_activity() ) : ?>
+						<div class="activity-comments">
 
-                        <div class="activity-comments">
+							<?php bp_activity_comments(); ?>
 
-                            <?php bp_activity_comments(); ?>
+							<?php if ( is_user_logged_in() && bp_activity_can_comment() ) : ?>
+								<?php $emoji_active = 'on' === youzify_option( 'youzify_enable_comments_emoji', 'on' ) ? true : false; ?>
+								<form action="<?php bp_activity_comment_form_action(); ?>" method="post" id="ac-form-<?php bp_activity_id(); ?>" class="ac-form"<?php bp_activity_comment_form_nojs_display(); ?>>
+									<div class="ac-reply-content">
+										<div class="ac-textarea
+										<?php
+										if ( $emoji_active ) {
+											echo ' youzify-comments-emojis';}
+										?>
+										">
+											<label for="ac-input-<?php bp_activity_id(); ?>" class="bp-screen-reader-text">
+											<?php
+												echo esc_html__( 'Comment', 'shortcodes-for-buddypress' );
+											?>
+											</label>
+											<textarea id="ac-input-<?php bp_activity_id(); ?>" class="ac-input bp-suggestions" name="ac_input_<?php bp_activity_id(); ?>" placeholder="<?php echo esc_attr__( 'Write a Comment ...', 'shortcodes-for-buddypress' ); ?>"></textarea>
+											<?php if ( $emoji_active ) : ?>
+												<div class="youzify-load-emojis"><i class="far fa-smile"></i></div>
+											<?php endif; ?>
+										</div>
+										<input type="submit" name="ac_form_submit" value="<?php esc_attr_e( 'Post', 'shortcodes-for-buddypress' ); ?>" style="display: none;">
+										<div class="youzify-wall-comments-buttons">
+											<?php do_action( 'youzify_activity_comment_buttons' ); ?>
+											<div class="youzify-send-comment"><i class="fas fa-paper-plane"></i></div>
+										</div>
+										<input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>">
+									</div>
 
-                            <?php if ( is_user_logged_in() && bp_activity_can_comment() ) : ?>
-                                <?php $emoji_active = youzify_option( 'youzify_enable_comments_emoji', 'on' ) == 'on' ? true : false; ?>
-                                <form action="<?php bp_activity_comment_form_action(); ?>" method="post" id="ac-form-<?php bp_activity_id(); ?>" class="ac-form"<?php bp_activity_comment_form_nojs_display(); ?>>
-                                    <div class="ac-reply-content">
-                                        <div class="ac-textarea<?php if ( $emoji_active ) echo ' youzify-comments-emojis';?>">
-                                            <label for="ac-input-<?php bp_activity_id(); ?>" class="bp-screen-reader-text"><?php
-                                                echo esc_html__( 'Comment', 'shortcodes-for-buddypress' );
-                                            ?></label>
-                                            <textarea id="ac-input-<?php bp_activity_id(); ?>" class="ac-input bp-suggestions" name="ac_input_<?php bp_activity_id(); ?>" placeholder="<?php echo esc_attr__( 'Write a Comment ...', 'shortcodes-for-buddypress' ); ?>"></textarea>
-                                            <?php if ( $emoji_active ) : ?>
-                                                <div class="youzify-load-emojis"><i class="far fa-smile"></i></div>
-                                            <?php endif; ?>
-                                        </div>
-                                        <input type="submit" name="ac_form_submit" value="<?php esc_attr_e( 'Post', 'shortcodes-for-buddypress' ); ?>" style="display: none;">
-                                        <div class="youzify-wall-comments-buttons">
-                                            <?php do_action( 'youzify_activity_comment_buttons' ); ?>
-                                            <div class="youzify-send-comment"><i class="fas fa-paper-plane"></i></div>
-                                        </div>
-                                        <input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>">
-                                    </div>
+									<?php
 
-                                    <?php
+									/**
+									 * Fires after the activity entry comment form.
+									 *
+									 * @since 2.7.2
+									 */
+									do_action( 'bp_activity_entry_comments' );
+									?>
 
-                                    /**
-                                     * Fires after the activity entry comment form.
-                                     *
-                                     * @since 2.7.2
-                                     */
-                                    do_action( 'bp_activity_entry_comments' ); ?>
+									<?php wp_nonce_field( 'new_activity_comment', '_wpnonce_new_activity_comment' ); ?>
 
-                                    <?php wp_nonce_field( 'new_activity_comment', '_wpnonce_new_activity_comment' ); ?>
+								</form>
 
-                                </form>
+							<?php endif; ?>
 
-                            <?php endif; ?>
+						</div>
 
-                        </div>
+					<?php endif; ?>
 
-                    <?php endif; ?>
+					<?php
 
-                    <?php
+					/**
+					 * Fires after the display of the activity entry comments.
+					 *
+					 * @since 2.7.2
+					 */
+					do_action( 'bp_after_activity_entry_comments' );
+					?>
 
-                    /**
-                     * Fires after the display of the activity entry comments.
-                     *
-                     * @since 2.7.2
-                     */
-                    do_action( 'bp_after_activity_entry_comments' ); ?>
+				</li>
 
-                </li>
+				<?php
 
-                <?php
+				/**
+				 * Fires after the display of an activity entry.
+				 *
+				 * @since 2.7.2
+				 */
+				do_action( 'bp_after_activity_entry' );
+				?>
 
-                /**
-                 * Fires after the display of an activity entry.
-                 *
-                 * @since 2.7.2
-                 */
-                do_action( 'bp_after_activity_entry' ); ?>
-
-            <?php endwhile; ?>
-    	</ul>
-    </div>
+			<?php endwhile; ?>
+		</ul>
+	</div>
 <?php else : ?>
-	<?php if ( $bp_error === 'compatibility' ) : ?>
+	<?php if ( 'compatibility' === $bp_error ) : ?>
 		<div id="message" class="error">
 			<p><?php esc_html_e( 'Activity listing is temporarily unavailable due to BuddyPress compatibility issues. Please contact the site administrator.', 'shortcodes-for-buddypress' ); ?></p>
 		</div>
-	<?php elseif ( $bp_error === 'general' ) : ?>
+	<?php elseif ( 'general' === $bp_error ) : ?>
 		<div id="message" class="error">
 			<p><?php esc_html_e( 'Activity listing is temporarily unavailable. Please try again later.', 'shortcodes-for-buddypress' ); ?></p>
 		</div>
@@ -270,6 +301,6 @@ if ( $has_activities ) : ?>
 <?php do_action( 'after_activity_listing_output', $atts, $activity_atts ); ?>
 
 <?php
-if ( ( !empty( $activity_atts ) ) && ( $activity_atts['use_compat'] ) ) {
+if ( ( ! empty( $activity_atts ) ) && ( $activity_atts['use_compat'] ) ) {
 	echo '</div>';
 }

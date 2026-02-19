@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -9,6 +8,7 @@
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/public
  */
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -60,14 +60,14 @@ class Shortcodes_For_Buddypress_Public {
 	public function enqueue_styles() {
 		global $post;
 
-		// Only load styles when needed
-		if (!$this->has_shortcode_on_page()) {
+		// Only load styles when needed.
+		if ( ! $this->has_shortcode_on_page() ) {
 			return;
 		}
 
 		do_action( 'before_enqueue_buddypress_shortcode_styles' );
 
-		// Always load main stylesheet
+		// Always load main stylesheet.
 		bp_shortcode_enqueue(
 			$this->plugin_name,
 			'public/css',
@@ -133,7 +133,7 @@ class Shortcodes_For_Buddypress_Public {
 		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
 			$_bp_theme_package = get_option( '_bp_theme_package_id' );
 
-			// Register the script using simplified function
+			// Register the script using simplified function.
 			$script_url = bp_shortcode_asset( 'public/js', 'shortcodes-for-buddypress-public', 'js' );
 			wp_register_script( $this->plugin_name, $script_url, array( 'jquery' ), $this->version, true );
 			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) ) && ( 'nouveau' === $_bp_theme_package ) ) {
@@ -195,7 +195,7 @@ class Shortcodes_For_Buddypress_Public {
 				wp_enqueue_script( 'jquery-datetimepicker' );
 			}
 
-			// Add Support for Buddyboss media video
+			// Add Support for Buddyboss media video.
 			if ( ! wp_script_is( 'bp-media-videojs', 'enqueued' ) ) {
 				wp_enqueue_script( 'bp-media-videojs' );
 				wp_enqueue_style( 'bp-media-videojs-css' );
@@ -210,7 +210,7 @@ class Shortcodes_For_Buddypress_Public {
 					array(
 						'plupload-all',
 						'backbone',
-						// Whole rtmedia-backbone file is dependent on rtmedia-main  file (eg. rtMediaHook).
+						// Whole rtmedia-backbone file is dependent on rtmedia-main file (eg. rtMediaHook).
 						'rtmedia-main',
 					),
 					RTMEDIA_VERSION,
@@ -228,29 +228,29 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	private function has_shortcode_on_page() {
 		global $post;
-		
-		if (!is_a($post, 'WP_Post')) {
+
+		if ( ! is_a( $post, 'WP_Post' ) ) {
 			return false;
 		}
-		
+
 		$shortcodes = array(
 			'activity-listing',
 			'members-listing',
-			'groups-listing'
+			'groups-listing',
 		);
-		
-		foreach ($shortcodes as $shortcode) {
-			if (has_shortcode($post->post_content, $shortcode)) {
+
+		foreach ( $shortcodes as $shortcode ) {
+			if ( has_shortcode( $post->post_content, $shortcode ) ) {
 				return true;
 			}
 		}
-		
-		// Check for Elementor widgets
-		if (defined('ELEMENTOR_VERSION')) {
-			$elementor_data = get_post_meta($post->ID, '_elementor_data', true);
-			return $this->check_elementor_data_for_widgets($elementor_data);
+
+		// Check for Elementor widgets.
+		if ( defined( 'ELEMENTOR_VERSION' ) ) {
+			$elementor_data = get_post_meta( $post->ID, '_elementor_data', true );
+			return $this->check_elementor_data_for_widgets( $elementor_data );
 		}
-		
+
 		return false;
 	}
 
@@ -261,34 +261,34 @@ class Shortcodes_For_Buddypress_Public {
 	 * @param string $elementor_data Elementor data.
 	 * @return bool
 	 */
-	private function check_elementor_data_for_widgets($elementor_data) {
-		if (empty($elementor_data)) {
+	private function check_elementor_data_for_widgets( $elementor_data ) {
+		if ( empty( $elementor_data ) ) {
 			return false;
 		}
-		
-		$data = json_decode($elementor_data, true);
-		if (!is_array($data)) {
+
+		$data = json_decode( $elementor_data, true );
+		if ( ! is_array( $data ) ) {
 			return false;
 		}
-		
+
 		$widget_types = array(
 			'buddypress_shortcode_activity_widget',
 			'buddypress_shortcode_members_widget',
-			'buddypress_shortcode_groups_widget'
+			'buddypress_shortcode_groups_widget',
 		);
-		
-		foreach ($data as $element) {
-			if (isset($element['widgetType']) && in_array($element['widgetType'], $widget_types)) {
+
+		foreach ( $data as $element ) {
+			if ( isset( $element['widgetType'] ) && in_array( $element['widgetType'], $widget_types, true ) ) {
 				return true;
 			}
-			
-			if (isset($element['elements']) && is_array($element['elements'])) {
-				if ($this->check_elementor_data_for_widgets(json_encode($element['elements']))) {
+
+			if ( isset( $element['elements'] ) && is_array( $element['elements'] ) ) {
+				if ( $this->check_elementor_data_for_widgets( wp_json_encode( $element['elements'] ) ) ) {
 					return true;
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -299,50 +299,52 @@ class Shortcodes_For_Buddypress_Public {
 	 * @return void
 	 */
 	public function buddypress_shortcode_ajax_load_more_members() {
-		// Verify nonce
-		if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'bpsp-nonce')) {
-			wp_send_json_error(array('message' => 'Security check failed'));
+		// Verify nonce.
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bpsp-nonce' ) ) {
+			wp_send_json_error( array( 'message' => 'Security check failed' ) );
 		}
-		
-		// Get the last member ID
-		$last_id = isset($_POST['last_id']) ? absint($_POST['last_id']) : 0;
-		$per_page = isset($_POST['per_page']) ? absint($_POST['per_page']) : 10;
-		
-		// Build query args
+
+		// Get the last member ID.
+		$last_id  = isset( $_POST['last_id'] ) ? absint( $_POST['last_id'] ) : 0;
+		$per_page = isset( $_POST['per_page'] ) ? absint( $_POST['per_page'] ) : 10;
+
+		// Build query args.
 		$args = array(
-			'exclude' => array($last_id),
+			'exclude'  => array( $last_id ),
 			'per_page' => $per_page,
-			'page' => 1,
+			'page'     => 1,
 		);
-		
-		// Add any additional filters from request
-		if (isset($_POST['type'])) {
-			$args['type'] = sanitize_text_field(wp_unslash($_POST['type']));
+
+		// Add any additional filters from request.
+		if ( isset( $_POST['type'] ) ) {
+			$args['type'] = sanitize_text_field( wp_unslash( $_POST['type'] ) );
 		}
-		
-		// Get members
-		if (bp_has_members($args)) {
+
+		// Get members.
+		if ( bp_has_members( $args ) ) {
 			ob_start();
-			
+
 			$last_member_id = 0;
-			
-			while (bp_members()) {
+
+			while ( bp_members() ) {
 				bp_the_member();
 				$last_member_id = bp_get_member_user_id();
-				
-				// Include the member template part
-				bp_get_template_part('members/members-loop-item');
+
+				// Include the member template part.
+				bp_get_template_part( 'members/members-loop-item' );
 			}
-			
+
 			$content = ob_get_clean();
-			
-			wp_send_json_success(array(
-				'content' => $content,
-				'last_id' => $last_member_id,
-				'has_more' => bp_members_has_more_items()
-			));
+
+			wp_send_json_success(
+				array(
+					'content'  => $content,
+					'last_id'  => $last_member_id,
+					'has_more' => bp_members_has_more_items(),
+				)
+			);
 		} else {
-			wp_send_json_error(array('message' => 'No more members found'));
+			wp_send_json_error( array( 'message' => 'No more members found' ) );
 		}
 	}
 
@@ -402,12 +404,12 @@ class Shortcodes_For_Buddypress_Public {
 	public function shortcodes_for_buddypress_activity_localize_scripts( $params = array() ) {
 		global $post;
 		$current_component = '';
-		if ( isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
+		if ( isset( $post->ID ) && '' !== $post->ID && '0' !== $post->ID ) {
 			$_elementor_controls_usage = get_post_meta( get_the_ID(), '_elementor_controls_usage', true );
 			$current_component         = '';
 			if ( ! empty( $_elementor_controls_usage ) ) {
 				foreach ( $_elementor_controls_usage as $key => $value ) {
-					if ( $key == 'buddypress_shortcode_activity_widget' ) {
+					if ( 'buddypress_shortcode_activity_widget' === $key ) {
 						$current_component = 'activity';
 						break;
 					}
@@ -418,7 +420,7 @@ class Shortcodes_For_Buddypress_Public {
 		if ( isset( $post->post_content ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) ) {
 			$current_component = 'activity';
 		}
-		if ( $current_component == '' ) {
+		if ( '' === $current_component ) {
 			return $params;
 		}
 
@@ -478,7 +480,7 @@ class Shortcodes_For_Buddypress_Public {
 		if ( ! empty( $activity_buttons ) ) {
 			$activity_params['buttons'] = bp_sort_by_key( $activity_buttons, 'order', 'num' );
 
-			// Enqueue Buttons scripts and styles
+			// Enqueue Buttons scripts and styles.
 			foreach ( $activity_params['buttons'] as $key_button => $buttons ) {
 				if ( empty( $buttons['handle'] ) ) {
 					continue;
@@ -496,7 +498,7 @@ class Shortcodes_For_Buddypress_Public {
 			}
 		}
 
-		// Activity Objects
+		// Activity Objects.
 		if ( ! bp_is_single_item() && ! bp_is_user() ) {
 			$activity_objects = array(
 				'profile' => array(
@@ -506,7 +508,7 @@ class Shortcodes_For_Buddypress_Public {
 				),
 			);
 
-			// the groups component is active & the current user is at least a member of 1 group
+			// The groups component is active and the current user is at least a member of 1 group.
 			if ( bp_is_active( 'groups' ) && bp_has_groups(
 				array(
 					'user_id' => bp_loggedin_user_id(),
@@ -615,18 +617,18 @@ class Shortcodes_For_Buddypress_Public {
 	public function buddypress_shortcodes_activity_heartbeat_strings( $strings = array() ) {
 		global $post;
 		$flg = false;
-		if ( isset( $post->ID ) && $post->ID != '' && $post->ID != '0' ) {
+		if ( isset( $post->ID ) && '' !== $post->ID && '0' !== $post->ID ) {
 			$_elementor_controls_usage = get_post_meta( $post->ID, '_elementor_controls_usage', true );
 			if ( ! empty( $_elementor_controls_usage ) ) {
 				foreach ( $_elementor_controls_usage as $key => $value ) {
-					if ( $key == 'buddypress_shortcode_activity_widget' ) {
+					if ( 'buddypress_shortcode_activity_widget' === $key ) {
 						$flg = true;
 						break;
 					}
 				}
 			}
 		}
-		if ( $flg == true ) {
+		if ( true === $flg ) {
 			unset( $strings['pulse'] );
 		}
 		return $strings;
@@ -640,7 +642,7 @@ class Shortcodes_For_Buddypress_Public {
 	 */
 	public function buddypress_shortcodes_load_activities() {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bpsp-nonce' ) ) {
-			return false;
+			return;
 		}
 		$page  = ! empty( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : '2';
 		$limit = ! empty( $_POST['limit'] ) ? sanitize_text_field( wp_unslash( $_POST['limit'] ) ) : '10';
@@ -760,7 +762,7 @@ class Shortcodes_For_Buddypress_Public {
 			return $args;
 		}
 
-		if ( false !== array_search( '-meta', $args['container_classes'] ) ) {
+		if ( false !== array_search( '-meta', $args['container_classes'], true ) ) {
 			$args['container_classes'] = array_map(
 				function ( $str ) {
 					return str_replace( '-meta', 'activity-meta', $str );

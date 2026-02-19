@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Public-Facing View for Shortcodes for BuddyPress Plugin
  *
@@ -13,6 +12,7 @@
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/public/partials
  */
+
 defined( 'ABSPATH' ) || exit;
 ?>
 

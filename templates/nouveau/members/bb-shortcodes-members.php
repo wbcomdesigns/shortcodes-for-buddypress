@@ -6,7 +6,10 @@
  *
  * @since   BuddyPress 3.0.0
  * @version 1.0.0
+ *
+ * @package Shortcodes_For_BuddyPress
  */
+
 defined( 'ABSPATH' ) || exit;
 
 bp_nouveau_before_loop(); ?>
@@ -17,7 +20,7 @@ $footer_buttons_class = ( bp_is_active( 'friends' ) && bp_is_active( 'messages' 
 $is_follow_active = bp_is_active( 'activity' ) && function_exists( 'bp_is_activity_follow_active' ) && bp_is_activity_follow_active();
 $follow_class     = $is_follow_active ? ' follow-active' : '';
 
-// Member directories elements.
+// Member directory elements.
 $enabled_online_status = ! function_exists( 'bb_enabled_member_directory_element' ) || bb_enabled_member_directory_element( 'online-status' );
 $enabled_profile_type  = ! function_exists( 'bb_enabled_member_directory_element' ) || bb_enabled_member_directory_element( 'profile-type' );
 $enabled_followers     = ! function_exists( 'bb_enabled_member_directory_element' ) || bb_enabled_member_directory_element( 'followers' );
@@ -47,7 +50,7 @@ $enabled_joined_date   = ! function_exists( 'bb_enabled_member_directory_element
 				$members_list_item_content = ob_get_clean();
 				$member_loop_has_content   = ! empty( $members_list_item_content );
 
-				// Get member followers element.
+				// Get member followers count element.
 				$followers_count = '';
 				if ( $enabled_followers && function_exists( 'bb_get_followers_count' ) ) {
 					ob_start();
@@ -55,7 +58,7 @@ $enabled_joined_date   = ! function_exists( 'bb_enabled_member_directory_element
 					$followers_count = ob_get_clean();
 				}
 
-				// Member joined data.
+				// Member joined date.
 				$member_joined_date = bb_get_member_joined_date( $bp_get_member_user_id );
 
 				// Member last activity.
@@ -71,7 +74,7 @@ $enabled_joined_date   = ! function_exists( 'bb_enabled_member_directory_element
 				$member_report_button = '';
 
 				if ( bp_is_active( 'moderation' ) && is_user_logged_in() ) {
-					// Member report button.
+						// Member report button.
 					$report_button = bp_member_get_report_link(
 						array(
 							'button_element' => 'a',
@@ -159,7 +162,7 @@ $enabled_joined_date   = ! function_exists( 'bb_enabled_member_directory_element
 									?>
 
 									<h2 class="list-title member-name">
-										<a href="<?php echo esc_url( $bp_get_member_permalink ); ?>"><?php echo esc_html(bp_member_name()); ?></a>
+										<a href="<?php echo esc_url( $bp_get_member_permalink ); ?>"><?php echo esc_html( bp_member_name() ); ?></a>
 									</h2>
 
 									<?php

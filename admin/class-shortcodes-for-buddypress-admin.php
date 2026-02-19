@@ -56,7 +56,6 @@ class Shortcodes_For_Buddypress_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-
 	}
 
 	/**
@@ -67,16 +66,16 @@ class Shortcodes_For_Buddypress_Admin {
 	 * @return void
 	 */
 	public function enqueue_styles( $hook ) {
-		$page = filter_input( INPUT_GET, 'page' );
+		$page          = filter_input( INPUT_GET, 'page' );
 		$allowed_pages = array(
 			'wbcomplugins',
 			'wbcom-plugins-page',
 			'wbcom-support-page',
-			'shortcodes-for-buddypress'
+			'shortcodes-for-buddypress',
 		);
 
-		// Only load on our admin pages
-		if ( 'wb-plugins_page_shortcodes-for-buddypress' === $hook || in_array( $page, $allowed_pages ) ) {
+		// Only load on our admin pages.
+		if ( 'wb-plugins_page_shortcodes-for-buddypress' === $hook || in_array( $page, $allowed_pages, true ) ) {
 			bp_shortcode_enqueue(
 				$this->plugin_name,
 				'admin/css',
@@ -194,29 +193,29 @@ class Shortcodes_For_Buddypress_Admin {
 		echo '<div class="wbcom-tabs-section">';
 			echo '<div class="nav-tab-wrapper">';
 
-				// Responsive Menu Toggle
+				// Responsive Menu Toggle.
 				echo '<div class="wb-responsive-menu">';
 					echo '<span>' . esc_html__( 'Menu', 'shortcodes-for-buddypress' ) . '</span>';
 					echo '<input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn">';
 					echo '<label class="wb-toggle-icon" for="wb-toggle-btn">';
 						echo '<span class="wb-icon-bars"></span>';
 					echo '</label>';
-				echo '</div>'; // .wb-responsive-menu
+				echo '</div>'; // End .wb-responsive-menu.
 
-				// Tab Navigation List
+				// Tab Navigation List.
 				echo '<ul>';
-					foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
-						$active = ( $current_tab === $tab_key ) ? 'nav-tab-active' : '';
-						echo '<li class="' . esc_attr( $tab_key ) . '">';
-							echo '<a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=' . esc_attr( $this->plugin_name ) . '&tab=' . esc_attr( $tab_key ) . '">';
-								echo esc_html( $tab_caption );
-							echo '</a>';
-						echo '</li>';
-					}
+		foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
+			$active = ( $current_tab === $tab_key ) ? 'nav-tab-active' : '';
+			echo '<li class="' . esc_attr( $tab_key ) . '">';
+				echo '<a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=' . esc_attr( $this->plugin_name ) . '&tab=' . esc_attr( $tab_key ) . '">';
+					echo esc_html( $tab_caption );
+				echo '</a>';
+			echo '</li>';
+		}
 				echo '</ul>';
 
-			echo '</div>'; // .nav-tab-wrapper
-		echo '</div>'; // .wbcom-tabs-section
+			echo '</div>'; // End .nav-tab-wrapper.
+		echo '</div>'; // End .wbcom-tabs-section.
 	}
 
 
@@ -228,17 +227,17 @@ class Shortcodes_For_Buddypress_Admin {
 	 */
 	public function buddypress_shortcodes_plugin_settings() {
 
-		$tabs = [
-			'buddypress-shortcode-welcome'    => [ esc_html__( 'Welcome', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_welcome_content' ],
-			'buddypress-shortcode-general'    => [ esc_html__( 'General', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_general_settings_content' ],
-			'buddypress-shortcode-activities' => [ esc_html__( 'Activities', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_activities_settings_content' ],
-			'buddypress-shortcode-member'     => [ esc_html__( 'Members', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_member_settings_content' ],
-			'buddypress-shortcode-groups'     => [ esc_html__( 'Groups', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_groups_settings_content' ],
-		];
+		$tabs = array(
+			'buddypress-shortcode-welcome'    => array( esc_html__( 'Welcome', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_welcome_content' ),
+			'buddypress-shortcode-general'    => array( esc_html__( 'General', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_general_settings_content' ),
+			'buddypress-shortcode-activities' => array( esc_html__( 'Activities', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_activities_settings_content' ),
+			'buddypress-shortcode-member'     => array( esc_html__( 'Members', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_member_settings_content' ),
+			'buddypress-shortcode-groups'     => array( esc_html__( 'Groups', 'shortcodes-for-buddypress' ), 'buddypress_shortcodes_groups_settings_content' ),
+		);
 
 		foreach ( $tabs as $tab_slug => $tab_data ) {
 			$label    = $tab_data[0];
-			$callback = [ $this, $tab_data[1] ];
+			$callback = array( $this, $tab_data[1] );
 
 			$this->plugin_settings_tabs[ $tab_slug ] = $label;
 			add_settings_section( $tab_slug, ' ', $callback, $tab_slug );
@@ -252,8 +251,8 @@ class Shortcodes_For_Buddypress_Admin {
 	 * @return void
 	 */
 	public function buddypress_shortcodes_welcome_content() {
-		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-welcome-page.php' ) ) {
-			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-welcome-page.php';
+		if ( file_exists( __DIR__ . '/settings/buddypress-shortcode-welcome-page.php' ) ) {
+			require_once __DIR__ . '/settings/buddypress-shortcode-welcome-page.php';
 		}
 	}
 
@@ -264,8 +263,8 @@ class Shortcodes_For_Buddypress_Admin {
 	 * @return void
 	 */
 	public function buddypress_shortcodes_general_settings_content() {
-		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-general-settings.php' ) ) {
-			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-general-settings.php';
+		if ( file_exists( __DIR__ . '/settings/buddypress-shortcode-general-settings.php' ) ) {
+			require_once __DIR__ . '/settings/buddypress-shortcode-general-settings.php';
 		}
 	}
 
@@ -276,8 +275,8 @@ class Shortcodes_For_Buddypress_Admin {
 	 * @return void
 	 */
 	public function buddypress_shortcodes_activities_settings_content() {
-		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-activity-listing.php' ) ) {
-			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-activity-listing.php';
+		if ( file_exists( __DIR__ . '/settings/buddypress-shortcode-activity-listing.php' ) ) {
+			require_once __DIR__ . '/settings/buddypress-shortcode-activity-listing.php';
 		}
 	}
 
@@ -288,8 +287,8 @@ class Shortcodes_For_Buddypress_Admin {
 	 * @return void
 	 */
 	public function buddypress_shortcodes_member_settings_content() {
-		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-member-listing.php' ) ) {
-			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-member-listing.php';
+		if ( file_exists( __DIR__ . '/settings/buddypress-shortcode-member-listing.php' ) ) {
+			require_once __DIR__ . '/settings/buddypress-shortcode-member-listing.php';
 		}
 	}
 
@@ -300,9 +299,8 @@ class Shortcodes_For_Buddypress_Admin {
 	 * @return void
 	 */
 	public function buddypress_shortcodes_groups_settings_content() {
-		if ( file_exists( dirname( __FILE__ ) . '/settings/buddypress-shortcode-groups-listing.php' ) ) {
-			require_once dirname( __FILE__ ) . '/settings/buddypress-shortcode-groups-listing.php';
+		if ( file_exists( __DIR__ . '/settings/buddypress-shortcode-groups-listing.php' ) ) {
+			require_once __DIR__ . '/settings/buddypress-shortcode-groups-listing.php';
 		}
 	}
-
 }
