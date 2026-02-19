@@ -162,7 +162,7 @@ function bp_shortcode_is_elementor_widget( $elementor_data, $widget_type = '' ) 
  * @return string
  */
 function bp_shortcode_member_cover() {
-	$active_theme = wp_get_theme();
+	$active_theme = wp_get_theme()->get( 'Name' );
 	$cover        = '';
 	if ( 'BuddyX' === $active_theme || 'BuddyxPro' === $active_theme ) {
 		if ( function_exists( 'buddyx_render_member_cover_image' ) ) {

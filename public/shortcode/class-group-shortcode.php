@@ -239,7 +239,7 @@ class GroupShortCode extends BPShortCode {
 	 */
 	private function get_container_classes( $grid, $column ) {
 		$classes      = array( 'item-list', 'groups-list', 'groups-dir-list', 'bp-list', 'bpsp-groups-list', $grid, $column );
-		$active_theme = wp_get_theme();
+		$active_theme = wp_get_theme()->get( 'Name' );
 		if ( 'REIGN' === $active_theme && ! class_exists( 'Youzify' ) ) {
 			$bp_nouveau            = bp_nouveau();
 			$classes               = array();
