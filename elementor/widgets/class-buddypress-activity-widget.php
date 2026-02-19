@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Legacy file name.
 /**
  * BuddyPress Activity Elementor Widget
  *
@@ -509,9 +509,8 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 					if ( ! empty( $flat_values ) ) {
 						$args .= $key . '=' . implode( ',', $flat_values ) . ' ';
 					}
-				}
-				// Handle non-empty scalar values.
-				elseif ( ! empty( $setting ) && is_scalar( $setting ) ) {
+				} elseif ( ! empty( $setting ) && is_scalar( $setting ) ) {
+					// Handle non-empty scalar values.
 					$args .= $key . '=' . $setting . ' ';
 				}
 			}

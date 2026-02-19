@@ -1,12 +1,17 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Legacy file name.
 /**
- * Groups shortcode file.
+ * Group shortcode handler.
+ *
+ * @package Shortcodes_For_Buddypress
+ */
+
+/**
+ * Groups shortcode class.
  *
  * @package    Shortcodes_For_Buddypress
  * @subpackage Shortcodes_For_Buddypress/shortcode
  * @since      1.7.0
  */
-
 class GroupShortCode extends BPShortCode {
 
 	/**
@@ -92,7 +97,7 @@ class GroupShortCode extends BPShortCode {
 		$query_args = array_filter(
 			$query_args,
 			function ( $value ) {
-				return $value !== false && $value !== '' && $value !== null;
+				return false !== $value && '' !== $value && null !== $value;
 			}
 		);
 

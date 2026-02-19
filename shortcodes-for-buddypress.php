@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The plugin bootstrap file
  *
@@ -16,7 +15,7 @@
  * Plugin Name:       Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress
  * Plugin URI:        https://github.com/wbcomdesigns/shortcodes-for-buddypress
  * Description:       This plugin adds an extended feature to BuddyPress, providing shortcodes for listing Activity Streams, Members, and Groups on any post or page within your website. It will offer the same features as you are getting on BuddyPress-mapped component pages.
- * Version:           2.9.0
+ * Version:           3.0.0
  * Author:            Wbcom Designs
  * Author URI:        https://wbcomdesigns.com/plugins
  * License:           GPL-2.0+
@@ -59,7 +58,7 @@ if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', app
  * Define plugin version.
  */
 if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' ) ) {
-	define( 'SHORTCODES_FOR_BUDDYPRESS_VERSION', '2.9.0' );
+	define( 'SHORTCODES_FOR_BUDDYPRESS_VERSION', '3.0.0' );
 }
 
 if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR' ) ) {
@@ -150,6 +149,12 @@ shortcodes_for_buddypress_run();
  * @return void
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
+	/**
+	 * Verify that BuddyPress or BuddyBoss is active and deactivate the plugin if not.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
 	function shortcodes_for_buddypress_requires_buddypress() {
 
 		// Checks if the function is called from the admin area.
@@ -279,6 +284,12 @@ add_action( 'admin_init', 'shortcodes_for_buddypress_do_activation_redirect' );
  * @return void
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_required_plugin_admin_notice' ) ) {
+	/**
+	 * Display an admin notice when BuddyPress or BuddyBoss is not active.
+	 *
+	 * @since 2.2.0
+	 * @return void
+	 */
 	function shortcodes_for_buddypress_required_plugin_admin_notice() {
 		// Check if function is called by admin area.
 		if ( ! is_admin() ) {
@@ -334,6 +345,13 @@ if ( ! function_exists( 'shortcodes_for_buddypress_required_plugin_admin_notice'
  * @return void
  */
 if ( ! function_exists( 'shortcodes_for_buddypress_categories_registered' ) ) {
+	/**
+	 * Register the BuddyPress Widgets category in Elementor.
+	 *
+	 * @since 2.2.0
+	 * @param object $elements_manager Elementor elements manager instance.
+	 * @return void
+	 */
 	function shortcodes_for_buddypress_categories_registered( $elements_manager ) {
 
 		if ( class_exists( 'Elements_Manager' ) ) {

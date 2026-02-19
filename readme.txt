@@ -4,7 +4,7 @@ Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, Shortcodes
 Requires at least: 5.0.0
 Tested up to: 6.9
-Stable tag: 2.9.0
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,14 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 4. It is displaying group listing based on the given user ID screenshot-4.png
 
 == Changelog ==
+= 3.0.0 =
+* Code Quality: Fixed all WordPress Coding Standards (WPCS) violations across all PHP files
+* Code Quality: Applied inline comment punctuation, Yoda conditions, and proper spacing
+* Code Quality: Added missing PHPDoc comments for functions and parameters
+* Code Quality: Fixed elseif control structure formatting in Elementor widgets
+* Code Quality: Added phpcs:ignore for legacy file naming and class naming conventions
+* Code Quality: Fixed all Plugin Check errors (0 errors)
+
 = 2.9.0 =
 * Added: Support for shortcode parameter handling in Elementor and Youzify setups.  
 * Added: UI support and styling improvements for Reign, BuddyBoss, and Youzify themes.  

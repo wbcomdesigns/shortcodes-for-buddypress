@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Legacy file name.
 /**
  * BuddyPress Members Elementor Widget
  *
@@ -301,9 +301,7 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 					if ( ! empty( $flat_values ) ) {
 						$args .= $key . '=' . implode( ',', $flat_values ) . ' ';
 					}
-				}
-				// Handle non-empty scalar values.
-				elseif ( ! empty( $setting ) && is_scalar( $setting ) ) {
+				} elseif ( ! empty( $setting ) && is_scalar( $setting ) ) {
 					$args .= $key . '=' . $setting . ' ';
 				}
 			}

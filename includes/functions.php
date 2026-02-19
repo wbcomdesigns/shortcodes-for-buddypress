@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Helper functions for the plugin.
  *
@@ -34,9 +33,9 @@ function bp_shortcode_get_template( $template_name, $args = array(), $template_p
  *
  * @since 1.7.0
  *
- * @param   string $template_name          Template to load.
- * @param   string $string $template_path  Path to templates.
- * @param   string $default_path           Default path to template files.
+ * @param   string $template_name  Template to load.
+ * @param   string $template_path Path to templates.
+ * @param   string $default_path  Default path to template files.
  * @return  string                          Path to the template file.
  */
 function bp_shortcode_locate_template( $template_name, $template_path, $default_path = '' ) {

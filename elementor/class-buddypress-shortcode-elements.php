@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Legacy file name.
 /**
  * Elementor integration for Shortcodes for BuddyPress.
  *
@@ -58,7 +58,7 @@ class BPSP_Elementor_Widgets {
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
 
 		// Add svg support.
-		// add_filter( 'upload_mimes', array( $this, 'hfe_svg_mime_types' ) ); // PHPCS:Ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
+		// add_filter( 'upload_mimes', array( $this, 'hfe_svg_mime_types' ) ); // PHPCS:Ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes.
 	}
 
 	/**
@@ -133,7 +133,7 @@ class BPSP_Elementor_Widgets {
 
 		// if ( bp_is_active( 'groups' ) ) {
 		// $widget_list[] = 'groups';
-		// }
+		// } // End groups check.
 
 		return $widget_list;
 	}

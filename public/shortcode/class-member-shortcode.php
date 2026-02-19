@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Legacy file name.
 /**
  * Members shortcode file.
  *
@@ -16,7 +16,6 @@
  * @subpackage Shortcodes_For_Buddypress/shortcode
  * @author     Wbcom Designs <admin@wbcomdesigns.com>
  */
-
 class MemberShortCode extends BPShortCode {
 
 	/**

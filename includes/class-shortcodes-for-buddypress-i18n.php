@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Internationalization file.
  *
@@ -18,8 +17,8 @@
  * @subpackage Shortcodes_For_Buddypress/includes
  * @author     Wbcom Designs <admin@wbcomdesigns.com>
  */
+// phpcs:ignore PEAR.NamingConventions.ValidClassName.Invalid, Squiz.Commenting.ClassComment.Missing -- Legacy class name; docblock is above.
 class Shortcodes_For_Buddypress_i18n {
-
 
 	/**
 	 * Load plugin textdomain.

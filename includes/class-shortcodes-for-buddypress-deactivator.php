@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin deactivation file.
  *
