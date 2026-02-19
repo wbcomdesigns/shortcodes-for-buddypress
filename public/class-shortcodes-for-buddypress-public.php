@@ -404,7 +404,7 @@ class Shortcodes_For_Buddypress_Public {
 	public function shortcodes_for_buddypress_activity_localize_scripts( $params = array() ) {
 		global $post;
 		$current_component = '';
-		if ( isset( $post->ID ) && '' !== $post->ID && '0' !== $post->ID ) {
+		if ( isset( $post->ID ) && 0 !== (int) $post->ID ) {
 			$_elementor_controls_usage = get_post_meta( get_the_ID(), '_elementor_controls_usage', true );
 			$current_component         = '';
 			if ( ! empty( $_elementor_controls_usage ) ) {
@@ -617,7 +617,7 @@ class Shortcodes_For_Buddypress_Public {
 	public function buddypress_shortcodes_activity_heartbeat_strings( $strings = array() ) {
 		global $post;
 		$flg = false;
-		if ( isset( $post->ID ) && '' !== $post->ID && '0' !== $post->ID ) {
+		if ( isset( $post->ID ) && 0 !== (int) $post->ID ) {
 			$_elementor_controls_usage = get_post_meta( $post->ID, '_elementor_controls_usage', true );
 			if ( ! empty( $_elementor_controls_usage ) ) {
 				foreach ( $_elementor_controls_usage as $key => $value ) {
