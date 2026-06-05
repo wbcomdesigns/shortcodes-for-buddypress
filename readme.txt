@@ -50,6 +50,7 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 
 == Changelog ==
 = 3.0.0 =
+* Admin UX: Rebuilt the admin screen on the new Wbcom card-panel layout (sidebar nav, dashboard overview, reskinned shortcode reference tabs); removed the legacy Wbcom tab wrapper.
 * Code Quality: Fixed all WordPress Coding Standards (WPCS) violations across all PHP files
 * Code Quality: Applied inline comment punctuation, Yoda conditions, and proper spacing
 * Code Quality: Added missing PHPDoc comments for functions and parameters

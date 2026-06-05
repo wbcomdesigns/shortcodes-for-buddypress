@@ -1,0 +1,164 @@
+{
+  "$schema": "https://wpmediaverse.com/schemas/wp-plugin-manifest-v2.json",
+  "plugin": {
+    "slug": "shortcodes-for-buddypress",
+    "name": "Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress",
+    "version": "3.0.0",
+    "namespace": "Shortcodes_For_Buddypress",
+    "main_file": "shortcodes-for-buddypress.php",
+    "text_domain": "shortcodes-for-buddypress",
+    "extends": null,
+    "extension_hook_consumed": null,
+    "extension_hook_fired": null,
+    "pro_companion": "shortcode-for-buddypress-pro",
+    "constants": [
+      "SHORTCODES_FOR_BUDDYPRESS_VERSION",
+      "SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR",
+      "SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL",
+      "SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME"
+    ]
+  },
+  "rest": { "namespace": null, "endpoints": [] },
+  "ajax": [
+    { "action": "bpsp_activities_load", "nopriv": true, "handler": "public/class-shortcodes-for-buddypress-public.php::buddypress_shortcodes_load_activities", "nonce": "bpsp-nonce", "capability": "none (public read)", "purpose": "Paginate the public BuddyPress activity stream (load-more / page 2+)." },
+    { "action": "bpsh_load_more_members", "nopriv": true, "handler": "public/class-shortcodes-for-buddypress-public.php::buddypress_shortcode_ajax_load_more_members", "nonce": "bpsp-nonce", "capability": "none (public read)", "purpose": "Paginate the public members directory (load-more by last member ID)." },
+    { "action": "wbcom_addons_cards", "nopriv": false, "handler": "admin/wbcom/wbcom-admin-settings.php::wbcom_addons_cards_links", "nonce": "wbcom_admin_setting_nonce", "capability": "none (MISSING — should be manage_options)", "purpose": "Echo addon-card markup for the WB Plugins promo page. Hygiene gap: no capability check." }
+  ],
+  "admin_pages": [
+    { "title": "WB Plugins", "menu_title": "WB Plugins", "slug": "wbcomplugins", "parent": null, "capability": "manage_options", "icon": "dashicons-lightbulb", "position": 59, "source": "admin/class-shortcodes-for-buddypress-admin.php:134", "note": "Shared top-level Wbcom menu; only registered if no other Wbcom plugin already created it (guarded by $GLOBALS['admin_page_hooks']['wbcomplugins'])." },
+    { "title": "General", "slug": "wbcomplugins", "parent": "wbcomplugins", "capability": "manage_options", "source": "admin/class-shortcodes-for-buddypress-admin.php:135" },
+    { "title": "Shortcodes", "slug": "shortcodes-for-buddypress", "parent": "wbcomplugins", "capability": "manage_options", "callback": "buddypress_shortcodes_admin_settings_page", "source": "admin/class-shortcodes-for-buddypress-admin.php:137", "note": "Primary plugin admin page. Renders the tabbed settings UI (Welcome/General/Activities/Members/Groups)." },
+    { "title": "Our Plugins", "slug": "wbcom-plugins-page", "parent": "wbcomplugins", "capability": "manage_options", "source": "admin/wbcom/wbcom-admin-settings.php:247" },
+    { "title": "Our Themes", "slug": "wbcom-themes-page", "parent": "wbcomplugins", "capability": "manage_options", "source": "admin/wbcom/wbcom-admin-settings.php:255" },
+    { "title": "Support", "slug": "wbcom-support-page", "parent": "wbcomplugins", "capability": "manage_options", "source": "admin/wbcom/wbcom-admin-settings.php:263" }
+  ],
+  "admin_wrapper": {
+    "classification": "OLD",
+    "evidence": "admin/wbcom/wbcom-admin-settings.php defines class Wbcom_Admin_Settings; admin/class-shortcodes-for-buddypress-admin.php renders a legacy nav-tab-wrapper tabbed settings page via settings_fields()/do_settings_sections(); header injected with do_shortcode('[wbcom_admin_setting_header]').",
+    "wrapper_files": [
+      "admin/wbcom/wbcom-admin-settings.php",
+      "admin/wbcom/templates/wbcom-plugins-page.php",
+      "admin/wbcom/templates/wbcom-support-page.php",
+      "admin/wbcom/templates/wbcom-license-page.php"
+    ],
+    "not_present": [
+      "includes/shared-admin/class-wbcom-shared-dashboard.php (INTERMEDIATE)",
+      "includes/admin/views/shell.php (NEW)"
+    ]
+  },
+  "settings": [
+    { "key": "(none persisted)", "group": null, "type": null, "default": null, "controls": "This plugin persists NO custom options. All five settings tabs (Welcome, General, Activities, Members, Groups) are static informational/documentation panels rendered via add_settings_section() with no register_setting() and no form fields. settings_fields()/do_settings_sections() run but no options are saved." }
+  ],
+  "settings_options_read": [
+    { "key": "_bp_theme_package_id", "owner": "BuddyPress core", "where": "public/class-shortcodes-for-buddypress-public.php", "purpose": "Detect active BP theme package (nouveau/legacy) to choose template." },
+    { "key": "bp_nouveau_appearance", "owner": "BuddyPress Nouveau", "where": "public", "purpose": "Read Nouveau appearance settings for template parity." },
+    { "key": "bb_pinned_post", "owner": "BuddyBoss", "where": "public", "purpose": "BuddyBoss pinned-post support in activity loop." },
+    { "key": "active_plugins", "owner": "WordPress core", "where": "shortcodes-for-buddypress.php", "purpose": "Detect the Pro plugin to prevent simultaneous activation." }
+  ],
+  "shortcodes": [
+    { "tag": "activity-listing", "handler": "public/shortcode/class-shortcode-for-activity-listing.php", "registered_via": "Shortcodes_For_Buddypress_Shortcode base class (tag-driven)", "attrs": ["see SHORTCODE-REFERENCE.md"], "purpose": "Render a BuddyPress activity stream." },
+    { "tag": "members-listing", "handler": "public/shortcode/class-member-shortcode.php", "registered_via": "Shortcodes_For_Buddypress_Shortcode base class", "attrs": ["see SHORTCODE-REFERENCE.md"], "purpose": "Render a BuddyPress members directory." },
+    { "tag": "groups-listing", "handler": "public/shortcode/class-group-shortcode.php", "registered_via": "Shortcodes_For_Buddypress_Shortcode base class", "attrs": ["see SHORTCODE-REFERENCE.md"], "purpose": "Render a BuddyPress groups directory." },
+    { "tag": "wbcom_admin_setting_header", "handler": "admin/wbcom/wbcom-admin-settings.php::wbcom_admin_setting_header_html", "attrs": [], "purpose": "Admin-only: render the Wbcom shared settings header nav bar. Not a public content shortcode." }
+  ],
+  "blocks": [],
+  "elementor_widgets": [
+    { "name": "BuddyPress Activity", "class": "elementor/widgets/class-buddypress-activity-widget.php", "category": "buddypress-widgets", "wraps_shortcode": "activity-listing" },
+    { "name": "BuddyPress Members", "class": "elementor/widgets/class-buddypress-members-widget.php", "category": "buddypress-widgets", "wraps_shortcode": "members-listing" },
+    { "name": "BuddyPress Groups", "class": "elementor/widgets/class-buddypress-groups-widget.php", "category": "buddypress-widgets", "wraps_shortcode": "groups-listing" }
+  ],
+  "elementor_category": { "slug": "buddypress-widgets", "registered_at": "shortcodes-for-buddypress.php:368", "hook": "elementor/elements/categories_registered" },
+  "post_types": [],
+  "taxonomies": [],
+  "tables": [],
+  "capabilities": [
+    { "cap": "manage_options", "default_roles": ["administrator"], "registered_at": "WordPress core", "enforced_at": ["admin/class-shortcodes-for-buddypress-admin.php:134", "admin/class-shortcodes-for-buddypress-admin.php:135", "admin/class-shortcodes-for-buddypress-admin.php:137", "admin/wbcom/wbcom-admin-settings.php:251", "admin/wbcom/wbcom-admin-settings.php:259", "admin/wbcom/wbcom-admin-settings.php:267"], "enforcement_count": 6, "meta": false, "requires_context": "none" }
+  ],
+  "services": [
+    { "key": "loader", "class": "Shortcodes_For_Buddypress_Loader", "added": "1.0.0" },
+    { "key": "i18n", "class": "Shortcodes_For_Buddypress_I18n", "added": "1.0.0" },
+    { "key": "admin", "class": "Shortcodes_For_Buddypress_Admin", "added": "1.0.0" },
+    { "key": "public", "class": "Shortcodes_For_Buddypress_Public", "added": "1.0.0" },
+    { "key": "shortcode_base", "class": "Shortcodes_For_Buddypress_Shortcode", "added": "1.0.0" }
+  ],
+  "hooks_fired": [
+    { "name": "before_enqueue_buddypress_shortcode_scripts", "type": "action", "args_count": 0, "where": "public", "consumed_by": [] },
+    { "name": "before_enqueue_buddypress_shortcode_styles", "type": "action", "args_count": 0, "where": "public", "consumed_by": [] },
+    { "name": "before_activity_shortcode_render", "type": "action", "args_count": 0, "where": "public/shortcode", "consumed_by": [] },
+    { "name": "after_activity_shortcode_render", "type": "action", "args_count": 0, "where": "public/shortcode", "consumed_by": [] },
+    { "name": "activity_shortcode_inside_container", "type": "action", "args_count": 0, "where": "public/shortcode", "consumed_by": [] },
+    { "name": "before_member_shortcode_render", "type": "action", "args_count": 0, "where": "public/shortcode", "consumed_by": [] },
+    { "name": "after_member_shortcode_render", "type": "action", "args_count": 0, "where": "public/shortcode", "consumed_by": [] },
+    { "name": "member_shortcode_inside_container", "type": "action", "args_count": 0, "where": "public/shortcode", "consumed_by": [] },
+    { "name": "member_shortcode_before_output", "type": "action", "args_count": 0, "where": "public/shortcode", "consumed_by": [] },
+    { "name": "before_group_shortcode_render", "type": "action", "args_count": 0, "where": "public/shortcode", "consumed_by": [] },
+    { "name": "after_group_shortcode_render", "type": "action", "args_count": 0, "where": "public/shortcode", "consumed_by": [] },
+    { "name": "group_shortcode_inside_container", "type": "action", "args_count": 0, "where": "public/shortcode", "consumed_by": [] },
+    { "name": "wbcom_add_header_menu", "type": "action", "args_count": 0, "where": "admin/wbcom/wbcom-admin-settings.php:351", "consumed_by": [] },
+    { "name": "wbcom_add_plugin_license_code", "type": "action", "args_count": 0, "where": "admin/wbcom", "consumed_by": [] },
+    { "name": "bp_shortcode_is_shortcode_page", "type": "filter", "args_count": 1, "where": "public/includes", "consumed_by": [] },
+    { "name": "bp_shortcode_locate_template", "type": "filter", "args_count": 1, "where": "public/includes", "consumed_by": [] },
+    { "name": "bp_shortcode_member_cover", "type": "filter", "args_count": 1, "where": "public", "consumed_by": [] },
+    { "name": "{shortcode_tag}_attributes", "type": "filter", "args_count": 1, "where": "public/shortcode/class-shortcodes-for-buddypress-shortcode.php:107", "consumed_by": [], "note": "Dynamic filter name = tag + '_attributes' (e.g. activity-listing_attributes)." }
+  ],
+  "interactivity": [],
+  "ui_activation": [],
+  "static_analysis": {
+    "dead_listeners": [],
+    "cap_context_mismatches": [],
+    "extensibility_gaps": [],
+    "js_only_activation": [
+      { "selector": "AJAX load-more (members & activities)", "default_hidden_by": "n/a", "php_fallback": false, "note": "Pagination beyond page 1 is AJAX-only; first page is server-rendered so content is not fully JS-gated." }
+    ],
+    "rest_hang_risks": [],
+    "visual_required_no_enforcement": [],
+    "grid_track_overflow_risks": [],
+    "hook_signature_drift": [],
+    "nonce_no_cap": [
+      { "where": "admin/wbcom/wbcom-admin-settings.php:44", "action": "wbcom_addons_cards", "verdict": "real_low", "fix": "add current_user_can('manage_options')" },
+      { "where": "public/class-shortcodes-for-buddypress-public.php:303", "action": "bpsh_load_more_members", "verdict": "false_positive", "reason": "public nopriv read endpoint" },
+      { "where": "public/class-shortcodes-for-buddypress-public.php:644", "action": "bpsp_activities_load", "verdict": "false_positive", "reason": "public nopriv read endpoint" }
+    ]
+  },
+  "buddypress_integration": {
+    "enabled_when": "bp_is_active() / BuddyPress (or BuddyBoss) active",
+    "manager": "Shortcodes_For_Buddypress_Public",
+    "template_packs": ["legacy", "nouveau", "youzify"],
+    "sub_classes": ["Member_Shortcode", "Group_Shortcode", "Activity_Listing_Shortcode"]
+  },
+  "frontend_assets": {
+    "js": ["public/js/* (enqueued via bp_shortcode_enqueue)", "admin/wbcom/assets/js/wbcom-admin-setting(.min).js"],
+    "css": ["public/css/*", "admin/css/shortcodes-for-buddypress-admin.css", "admin/wbcom/assets/css/wbcom-admin-setting(.min).css"]
+  },
+  "cron": [],
+  "wp_cli": [],
+  "storage_drivers": [],
+  "security": {
+    "uploads_gate": "n/a",
+    "signing_entry_points": [],
+    "always_sign_filter": null,
+    "rate_limit_middleware": "none",
+    "ajax_nonces": ["bpsp-nonce (public AJAX)", "wbcom_admin_setting_nonce (admin AJAX)"]
+  },
+  "ci_guards": { "script": "gruntfile.js (build/min/rtl)", "url_emission_regex": null, "storage_internal_marker": null, "phpstan_level": null },
+  "coding_rules": [],
+  "build_commands": { "release": "grunt (see GRUNT-TASKS.md)", "ci_local": null },
+  "category_sources": {
+    "ajax": ["includes/class-shortcodes-for-buddypress.php", "public/**/*.php", "admin/wbcom/wbcom-admin-settings.php"],
+    "admin_pages": ["admin/**/*.php"],
+    "settings": ["admin/settings/**/*.php", "admin/class-shortcodes-for-buddypress-admin.php"],
+    "shortcodes": ["public/shortcode/**/*.php", "includes/functions.php"],
+    "elementor_widgets": ["elementor/**/*.php"],
+    "hooks_fired": ["**/*.php"],
+    "capabilities": ["admin/**/*.php"]
+  },
+  "generated": {
+    "at": "2026-06-05T00:00:00Z",
+    "from": "wp-plugin-onboard skill",
+    "branch": "3.0.0",
+    "scan_scope": "fallback_defaults",
+    "scan_path": ".",
+    "php_file_count": 44,
+    "schema_version": "v2.2"
+  }
+}

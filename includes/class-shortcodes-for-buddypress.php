@@ -133,8 +133,12 @@ class Shortcodes_For_Buddypress {
 	 * @return void
 	 */
 	private function load_admin_classes( $path ) {
-		require_once $path . 'admin/class-shortcodes-for-buddypress-admin.php';
-		require_once $path . 'admin/wbcom/wbcom-admin-settings.php';
+		// Card-panel admin (replaces the legacy Wbcom wrapper as of 3.0.0).
+		// The old admin/class-shortcodes-for-buddypress-admin.php +
+		// admin/wbcom/ wrapper held only UI-render code (no save handlers,
+		// no AJAX, no sanitizer), so they are removed entirely — see
+		// references/wbcom-wrapper-migration.md Part 3.
+		require_once $path . 'includes/admin/class-shortcodes-for-buddypress-admin-panel.php';
 	}
 
 	/**
@@ -186,13 +190,12 @@ class Shortcodes_For_Buddypress {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Shortcodes_For_Buddypress_Admin( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'buddypress_shortcodes_add_submenu_page' );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'buddypress_shortcodes_plugin_settings' );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'wbcom_hide_all_admin_notices_from_setting_page' );
+		// New card-panel admin. It owns the menu, enqueue, notice
+		// suppression, and tab rendering. Registers its own hooks via
+		// register() (not the Loader) so the hub-takeover priority-999
+		// hook and in_admin_header ordering match the playbook pattern.
+		$panel = new Shortcodes_For_Buddypress_Admin_Panel();
+		$panel->register();
 	}
 
 	/**
