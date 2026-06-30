@@ -702,3 +702,22 @@ padding: 12px;
 
 
 
+
+/*--------------------------------------------------------------
+# Member card action buttons spacing
+# In the members-listing grid the "Add Friend" and "Message" buttons sat
+# directly against each other (no gap), so on Reign (and any theme that does
+# not add its own gutter) they appeared to overlap. Lay the action row out as
+# a centered flex row with a gap.
+--------------------------------------------------------------*/
+.members-listing .activity-meta.action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.members-listing .activity-meta.action > li {
+    margin: 0;
+}
