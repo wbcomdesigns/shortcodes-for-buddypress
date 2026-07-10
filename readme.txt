@@ -4,6 +4,8 @@ Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, Shortcodes
 Requires at least: 5.0.0
 Tested up to: 6.9
+Requires PHP: 7.4
+Requires Plugins: buddypress
 Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -48,8 +50,26 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 3. It displays activity listing based on the given user ID and allow_posting=true screenshot-3.png
 4. It is displaying group listing based on the given user ID screenshot-4.png
 
+== More Free Tools from Wbcom Designs ==
+
+Shortcodes let you place BuddyPress activity, members and groups anywhere. These other free tools from Wbcom Designs build out the rest of the community around them, from the theme and network itself to forums, media, events, gamification, directories, jobs, and courses.
+
+* **[BuddyX](https://wbcomdesigns.com/downloads/buddyx-theme/)** - A free, fast community theme for BuddyPress, BuddyBoss and PeepSo with a modern layout and dark mode.
+* **[BuddyNext](https://wbcomdesigns.com/downloads/buddynext/)** - Stand up a complete WordPress community with activity streams, member spaces, profiles, direct messaging, and built-in moderation.
+* **[Jetonomy](https://wbcomdesigns.com/downloads/jetonomy/)** - Add forums, question-and-answer boards, and idea spaces that stay tidy through trust-based auto-moderation even past 100,000 topics.
+* **[Mediaverse](https://wbcomdesigns.com/downloads/mediaverse/)** - Let members build photo and video albums, react, follow each other, and message privately while AI moderation keeps things clean.
+* **[Eventonomy](https://wbcomdesigns.com/downloads/eventonomy/)** - Run community events with RSVPs, calendars, and front-end submissions.
+* **[WB Gamification](https://wbcomdesigns.com/downloads/wordpress-gamification-plugin/)** - Reward members with points, badges, and leaderboards to keep engagement high.
+* **[Listora](https://wbcomdesigns.com/downloads/listora/)** - Publish searchable directories across ten listing types with reviews, maps, and member-submitted entries from the front end.
+* **[WP Career Board](https://wbcomdesigns.com/downloads/wp-career-board/)** - Add a job board with front-end listings, applications, and employer profiles.
+* **[Learnomy](https://wbcomdesigns.com/downloads/learnomy/)** - Build and sell online courses, auto-grade quizzes, collect payments, and award certificates when learners finish.
+
 == Changelog ==
 = 3.0.0 =
+* Fix: The [activity-listing] and [groups-listing] shortcodes no longer cause a fatal error on a page when BuddyPress is inactive; they now show the same "enable BuddyPress" notice as the members shortcode.
+* Security: Clamped the load-more AJAX per_page and limit values so a public request cannot force an unbounded query.
+* Improve: Added Requires PHP and Requires Plugins headers and a "More Free Tools from Wbcom Designs" section.
+* Dev: Removed dead code and replaced em-dashes in admin strings.
 * Admin UX: Rebuilt the admin screen on the new Wbcom card-panel layout (sidebar nav, dashboard overview, reskinned shortcode reference tabs); removed the legacy Wbcom tab wrapper.
 * Code Quality: Fixed all WordPress Coding Standards (WPCS) violations across all PHP files
 * Code Quality: Applied inline comment punctuation, Yoda conditions, and proper spacing

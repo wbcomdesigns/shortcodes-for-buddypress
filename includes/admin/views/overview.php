@@ -71,7 +71,7 @@ $bpsp_shortcodes = array(
 		<p class="bpsp-stat__trend">
 			<?php
 			echo $bpsp_elementor_on
-				? esc_html__( 'Elementor active — widgets available', 'shortcodes-for-buddypress' )
+				? esc_html__( 'Elementor active - widgets available', 'shortcodes-for-buddypress' )
 				: esc_html__( 'Available when Elementor is active', 'shortcodes-for-buddypress' );
 			?>
 		</p>
@@ -151,7 +151,7 @@ $bpsp_shortcodes = array(
 				<?php if ( $bpsp_activity_active ) : ?>
 					<span class="bpsp-status-yes"><?php esc_html_e( 'Active', 'shortcodes-for-buddypress' ); ?></span>
 				<?php else : ?>
-					<span class="bpsp-status-off"><?php esc_html_e( 'Inactive — [activity-listing] will not render', 'shortcodes-for-buddypress' ); ?></span>
+					<span class="bpsp-status-off"><?php esc_html_e( 'Inactive - [activity-listing] will not render', 'shortcodes-for-buddypress' ); ?></span>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -161,7 +161,7 @@ $bpsp_shortcodes = array(
 				<?php if ( $bpsp_members_active ) : ?>
 					<span class="bpsp-status-yes"><?php esc_html_e( 'Active', 'shortcodes-for-buddypress' ); ?></span>
 				<?php else : ?>
-					<span class="bpsp-status-off"><?php esc_html_e( 'Inactive — [members-listing] will not render', 'shortcodes-for-buddypress' ); ?></span>
+					<span class="bpsp-status-off"><?php esc_html_e( 'Inactive - [members-listing] will not render', 'shortcodes-for-buddypress' ); ?></span>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -171,7 +171,7 @@ $bpsp_shortcodes = array(
 				<?php if ( $bpsp_groups_active ) : ?>
 					<span class="bpsp-status-yes"><?php esc_html_e( 'Active', 'shortcodes-for-buddypress' ); ?></span>
 				<?php else : ?>
-					<span class="bpsp-status-off"><?php esc_html_e( 'Inactive — [groups-listing] will not render', 'shortcodes-for-buddypress' ); ?></span>
+					<span class="bpsp-status-off"><?php esc_html_e( 'Inactive - [groups-listing] will not render', 'shortcodes-for-buddypress' ); ?></span>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -184,7 +184,7 @@ $bpsp_shortcodes = array(
 	</div>
 	<div class="bpsp-card__body">
 		<ol class="bpsp-doc-list">
-			<li><?php esc_html_e( 'Pick a shortcode — activity, members, or groups.', 'shortcodes-for-buddypress' ); ?></li>
+			<li><?php esc_html_e( 'Pick a shortcode - activity, members, or groups.', 'shortcodes-for-buddypress' ); ?></li>
 			<li><?php esc_html_e( 'Paste it into any post, page, or widget area.', 'shortcodes-for-buddypress' ); ?></li>
 			<li><?php esc_html_e( 'Add parameters to control layout, filtering, and pagination. See the reference tabs for the full list.', 'shortcodes-for-buddypress' ); ?></li>
 		</ol>

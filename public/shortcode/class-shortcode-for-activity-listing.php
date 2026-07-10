@@ -93,6 +93,7 @@ class ActivityShortCode extends BPShortCode {
 	 */
 	private function fix_buddyboss_groups( $atts ) {
 		if ( 'groups' === $atts['object'] &&
+			function_exists( 'bp_is_active' ) &&
 			bp_is_active( 'groups' ) &&
 			function_exists( 'buddypress' ) &&
 			isset( buddypress()->buddyboss ) ) {
@@ -175,7 +176,7 @@ class ActivityShortCode extends BPShortCode {
 
 		ob_start();
 
-		if ( ! bp_is_active( 'activity' ) ) {
+		if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'activity' ) ) {
 			$this->show_disabled_message();
 		} else {
 			$this->show_activities( $atts, $template_vars );
@@ -263,48 +264,6 @@ class ActivityShortCode extends BPShortCode {
 		<?php
 	}
 
-	/**
-	 * Get user IDs by roles.
-	 *
-	 * @since 1.7.0
-	 * @param string|array $roles Roles.
-	 * @return array
-	 */
-	private function get_user_ids_by_roles( $roles ) {
-		// Default return value for invalid/empty results.
-		$invalid_ids = array( 0 );
-
-		// Return default if no roles provided.
-		if ( empty( $roles ) ) {
-			return $invalid_ids;
-		}
-
-		// Convert string of roles to array if needed.
-		if ( ! is_array( $roles ) ) {
-			$roles = explode( ',', $roles );
-		}
-
-		// Sanitize role names by trimming whitespace.
-		$roles = array_map( 'trim', $roles );
-
-		// Query WordPress for users with the specified roles.
-		$user_query = new WP_User_Query(
-			array(
-				'role__in' => $roles, // Find users with any of these roles.
-				'fields'   => 'ID',   // Return only user IDs.
-			)
-		);
-
-		// Get the results from the query.
-		$ids = $user_query->get_results();
-
-		// Return default invalid ID if no users found.
-		if ( empty( $ids ) ) {
-			$ids = $invalid_ids;
-		}
-
-		return $ids;
-	}
 }
 
 ActivityShortCode::get_instance( 'activity-listing' );

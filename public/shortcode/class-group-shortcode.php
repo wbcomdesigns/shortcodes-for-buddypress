@@ -166,7 +166,7 @@ class GroupShortCode extends BPShortCode {
 
 		ob_start();
 
-		if ( ! bp_is_active( 'groups' ) ) {
+		if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'groups' ) ) {
 			$this->show_disabled_message();
 		} else {
 			$this->show_groups( $atts, $template_vars );

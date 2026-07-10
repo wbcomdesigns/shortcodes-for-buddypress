@@ -22,30 +22,36 @@ on any post or page. Three template packs: legacy, nouveau, youzify.
 - Public + AJAX: `public/class-shortcodes-for-buddypress-public.php`
 - Shortcode base: `public/shortcode/class-shortcodes-for-buddypress-shortcode.php`
 
-## Admin UI wrapper: OLD (legacy tab-based)
-- `admin/wbcom/wbcom-admin-settings.php` (class `Wbcom_Admin_Settings`)
-- Main page renders a `nav-tab-wrapper` tabbed UI via the WP Settings API.
-- **No persisted options** — all five tabs are static informational panels
-  (`admin/settings/*.php`). No `register_setting()` anywhere.
-- Menu parent: `wbcomplugins` (shared Wbcom top-level menu). Main page slug:
-  `shortcodes-for-buddypress`. Cap: `manage_options`.
-- Registration: `admin_menu` → `buddypress_shortcodes_add_submenu_page()`;
-  `admin_init` → `buddypress_shortcodes_plugin_settings()` (adds the 5 sections).
+## Admin UI wrapper: NEW card panel (migrated in 3.0.0)
+- The old wbcom tab wrapper is GONE. `admin/` now holds only `index.php` + an icon.
+- Wired admin = `includes/admin/class-shortcodes-for-buddypress-admin-panel.php`
+  (loaded in `includes/class-shortcodes-for-buddypress.php`, ~line 141; registered ~197-198).
+  Views in `includes/admin/views/` (hub.php landing at `?page=wbcomplugins`, overview, shortcode reference tabs).
+- **No persisted options** - informational panels only. No `register_setting()`.
+- All pages gated by `manage_options`; `$_GET['tab']` read via `sanitize_key` + whitelist.
+- Menu parent: `wbcomplugins` (shared hub). Cap: `manage_options`.
 
 ## Important patterns
 - Hooks are collected through a `Loader` then dispatched in `->run()` — do not
   call `add_action` directly in the public/admin classes; register via the loader
   in `define_public_hooks()` / `define_admin_hooks()`.
-- Shortcodes are tag-driven: subclass `Shortcodes_For_Buddypress_Shortcode`, set
+- Shortcodes are tag-driven: subclass `BPShortCode` (the abstract base), set
   `$this->tag`; the base wires `add_shortcode` and a `{tag}_attributes` filter.
+- Every shortcode/widget that calls `bp_is_active()` MUST guard it with
+  `function_exists('bp_is_active')` first - the plugin can be on a page while
+  BuddyPress is inactive (self-deactivation only runs on admin_init, not front end).
 - Build/release via Grunt (see `GRUNT-TASKS.md`) — min + rtl assets are generated.
 
-## Known issues (from wppqa baseline 2026-06-05)
-See `audit/wppqa-baseline-2026-06-05/SUMMARY.md`.
-- `admin/wbcom/wbcom-admin-settings.php:44` — nonce-no-cap (real, LOW): add
-  `current_user_can('manage_options')` to `wbcom_addons_cards_links()`.
-- 2 further nonce-no-cap flags on the public `nopriv` AJAX handlers are false
-  positives (public read endpoints by design).
+## Known issues
+- RESOLVED: the old `wbcom_addons_cards_links()` nonce-no-cap flag - that file
+  (`admin/wbcom/wbcom-admin-settings.php`) and handler were removed in the 3.0.0
+  admin migration. Only 2 AJAX handlers exist now (`bpsp_activities_load`,
+  `bpsh_load_more_members`), both public-read with nonce checks (no cap needed).
+- The shortcode base class is `abstract class BPShortCode`
+  (`public/shortcode/class-shortcodes-for-buddypress-shortcode.php`), with
+  subclasses `ActivityShortCode` / `MemberShortCode` / `GroupShortCode`.
+- audit/manifest.json is STALE (still lists the OLD wrapper, 3 AJAX, wrong base
+  class). Refresh via `/wp-plugin-onboard --refresh`.
 
 ## CSS selectors (for testing/dev)
 - Admin tabs: `.wbcom-tabs-section .nav-tab-wrapper .nav-tab`
@@ -55,4 +61,6 @@ See `audit/wppqa-baseline-2026-06-05/SUMMARY.md`.
 ## Recent changes
 | Date | Type | Description | Files |
 |---|---|---|---|
+| 2026-07-10 | bug-fix | Two RUNTIME bugs the static audit missed (found in-browser). (1) Frontend assets 404'd: bp_shortcode_asset() built public/css/<file>.min.css but the build lives in public/css/min/ (and RTL in rtl/) - rewrote it to prefer min/ then rtl/ then the unminified source, with a file_exists fallback so a missing build never 404s. (2) With the JS finally loading, a crash surfaced: setupEventListeners bound '.bpsh-load-more' (a selector no template renders) to this.handleLoadMore (undefined), so jQuery threw on every page load - removed the dead binding (activity load-more is already wired in setupLoadMore). Rebuilt the min JS. Verified: shortcode page loads styled, zero console errors, load-more intact. | includes/functions.php, public/js/shortcodes-for-buddypress-public.js(+min) |
+| 2026-07-10 | audit | Fresh audit + fixes. Fixed a BuddyPress-inactive FATAL: [activity-listing] + [groups-listing] called bp_is_active() unguarded (member shortcode already guarded) - added function_exists guards so they show the disabled notice instead of white-screening. Clamped the two public load-more AJAX per_page/limit to 50 (unbounded before). Removed dead get_user_ids_by_roles(). Replaced 5 em-dashes in overview.php. Added Requires PHP 7.4 + Requires Plugins: buddypress headers + a "More Free Tools" promo section. Corrected this CLAUDE.md (admin is the NEW card panel not the old wrapper; 2 AJAX not 3; base class BPShortCode). manifest.json still needs a refresh. | public/shortcode/class-shortcode-for-activity-listing.php, public/shortcode/class-group-shortcode.php, public/class-shortcodes-for-buddypress-public.php, includes/admin/views/overview.php, readme.txt, CLAUDE.md |
 | 2026-06-05 | onboard | Generated audit/ manifest + reports + graph + wppqa baseline | audit/* , CLAUDE.md |

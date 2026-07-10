@@ -47,8 +47,10 @@
 			setupEventListeners: function() {
 				// Use document for event delegation to handle dynamically loaded content
 				$(document)
-					.on('click', '#aw-whats-new-reset, #aw-whats-new-submit', this.handleActivityFormActions)
-					.on('click', '.bpsh-load-more', this.handleLoadMore);
+					.on('click', '#aw-whats-new-reset, #aw-whats-new-submit', this.handleActivityFormActions);
+				// Activity load-more is wired in setupLoadMore(); the old
+				// '.bpsh-load-more' binding referenced an undefined handler and a
+				// selector that no template renders, so it only threw on load.
 					
 				// Handle window events with debouncing
 				var resizeTimer;

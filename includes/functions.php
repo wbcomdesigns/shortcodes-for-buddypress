@@ -189,22 +189,30 @@ function bp_shortcode_member_cover() {
  */
 function bp_shortcode_asset( $path, $filename, $type = 'css' ) {
 	$debug = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
+	$base  = plugin_dir_path( __DIR__ );
+	$ext   = ( 'js' === $type ) ? 'js' : 'css';
 
-	// Simple logic for file extension and path.
-	if ( 'css' === $type ) {
-		$suffix = $debug ? '' : '.min';
-		$rtl    = is_rtl() ? '.rtl' : '';
-		$file   = $filename . $rtl . $suffix . '.css';
+	/*
+	 * Build a preference list and return the first candidate that actually
+	 * exists on disk. Minified builds live in a `min/` subfolder and the RTL
+	 * stylesheet in a `rtl/` subfolder; the unminified source is the final
+	 * fallback so a missing build never 404s.
+	 */
+	$candidates = array();
+	if ( 'css' === $type && is_rtl() ) {
+		$candidates[] = $path . '/rtl/' . $filename . '.rtl.' . $ext;
+	}
+	if ( ! $debug ) {
+		$candidates[] = $path . '/min/' . $filename . '.min.' . $ext;
+	}
+	$candidates[] = $path . '/' . $filename . '.' . $ext;
 
-		// For RTL, check if file exists in rtl subfolder.
-		if ( is_rtl() && ! $debug ) {
-			$full_path = $path . '/rtl/' . $filename . $suffix . '.css';
-		} else {
-			$full_path = $path . '/' . $file;
+	$full_path = end( $candidates );
+	foreach ( $candidates as $rel ) {
+		if ( file_exists( $base . $rel ) ) {
+			$full_path = $rel;
+			break;
 		}
-	} else {
-		$suffix    = $debug ? '' : '.min';
-		$full_path = $path . '/' . $filename . $suffix . '.js';
 	}
 
 	return plugin_dir_url( __DIR__ ) . $full_path;

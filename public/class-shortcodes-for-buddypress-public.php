@@ -307,6 +307,8 @@ class Shortcodes_For_Buddypress_Public {
 		// Get the last member ID.
 		$last_id  = isset( $_POST['last_id'] ) ? absint( $_POST['last_id'] ) : 0;
 		$per_page = isset( $_POST['per_page'] ) ? absint( $_POST['per_page'] ) : 10;
+		// Clamp so a public (nopriv) caller cannot force an unbounded query.
+		$per_page = min( 50, max( 1, $per_page ) );
 
 		// Build query args.
 		$args = array(
@@ -644,8 +646,9 @@ class Shortcodes_For_Buddypress_Public {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bpsp-nonce' ) ) {
 			return;
 		}
-		$page  = ! empty( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : '2';
-		$limit = ! empty( $_POST['limit'] ) ? sanitize_text_field( wp_unslash( $_POST['limit'] ) ) : '10';
+		$page = ! empty( $_POST['page'] ) ? absint( wp_unslash( $_POST['page'] ) ) : 2;
+		// Clamp so a public (nopriv) caller cannot force an unbounded query.
+		$limit = ! empty( $_POST['limit'] ) ? min( 50, max( 1, absint( wp_unslash( $_POST['limit'] ) ) ) ) : 10;
 		if ( bp_has_activities(
 			array(
 				'per_page' => $limit,
