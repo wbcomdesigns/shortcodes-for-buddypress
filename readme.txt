@@ -45,10 +45,12 @@ Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to 
 
 == Screenshots ==
 
-1. It is displaying admin documentation page screenshot-1.png
-2. It displays members' listing based on the given user ID screenshot-2.png
-3. It displays activity listing based on the given user ID and allow_posting=true screenshot-3.png
-4. It is displaying group listing based on the given user ID screenshot-4.png
+1. Admin Overview - Shortcode counts, Elementor widget status, and component status at a glance.
+2. Admin Shortcodes reference - Every shortcode with parameters, quick-start guide, and example use cases.
+3. Frontend [activity-listing] - BuddyPress activity stream embedded on any page with comment, favorite, and share actions.
+4. Frontend [members-listing] - Members directory grid with avatars, activity, and Add Friend actions.
+5. Frontend [groups-listing] - Groups grid showing public, private, and hidden groups with membership actions.
+6. Discover tab - More free community tools from Wbcom Designs.
 
 == More Free Tools from Wbcom Designs ==
 
