@@ -66,6 +66,7 @@ $bpsp_version = defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' ) ? SHORTCODES_FOR_
 				$bpsp_printed_groups = array();
 				$bpsp_group_labels   = array(
 					'reference' => esc_html__( 'Reference', 'shortcodes-for-buddypress' ),
+					'more'      => esc_html__( 'More', 'shortcodes-for-buddypress' ),
 				);
 				foreach ( $bpsp_tabs as $bpsp_slug => $bpsp_tab ) {
 					$bpsp_group = isset( $bpsp_tab['group'] ) ? $bpsp_tab['group'] : 'main';

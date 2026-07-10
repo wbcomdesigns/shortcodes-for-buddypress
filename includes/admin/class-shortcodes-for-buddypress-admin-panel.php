@@ -70,6 +70,11 @@ class Shortcodes_For_Buddypress_Admin_Panel {
 				'icon'  => 'dashicons-buddicons-groups',
 				'group' => 'reference',
 			),
+			'discover'   => array(
+				'label' => __( 'Discover', 'shortcodes-for-buddypress' ),
+				'icon'  => 'dashicons-lightbulb',
+				'group' => 'more',
+			),
 		);
 		return apply_filters( 'bpsp_admin_tabs', $tabs );
 	}
@@ -246,6 +251,7 @@ class Shortcodes_For_Buddypress_Admin_Panel {
 			'activities' => 'reference-activities',
 			'members'    => 'reference-members',
 			'groups'     => 'reference-groups',
+			'discover'   => 'discover',
 		);
 		$view_slug = isset( $view_map[ $active ] ) ? $view_map[ $active ] : 'overview';
 		$view_path = plugin_dir_path( __DIR__ ) . 'admin/views/' . $view_slug . '.php';
