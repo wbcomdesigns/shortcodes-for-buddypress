@@ -56,9 +56,6 @@ class BPSP_Elementor_Widgets {
 
 		// Register widgets.
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
-
-		// Add svg support.
-		// add_filter( 'upload_mimes', array( $this, 'hfe_svg_mime_types' ) ); // PHPCS:Ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes.
 	}
 
 	/**
@@ -104,8 +101,6 @@ class BPSP_Elementor_Widgets {
 	 * @return void
 	 */
 	public function include_widgets_files() {
-		// $js_files    = $this->get_widget_script();
-		// $widget_list = $this->get_widget_list();
 		$widget_list = array(
 			'Buddypress_Shortcode_Activity_Widget' => 'activity',
 			'Buddypress_Shortcode_Members_Widget'  => 'members',
@@ -118,25 +113,6 @@ class BPSP_Elementor_Widgets {
 		}
 	}
 
-	/**
-	 * Get widget list.
-	 *
-	 * @since 1.6.1
-	 * @return array
-	 */
-	public static function get_widget_list() {
-		$widget_list = array(
-			'activity',
-			'members',
-			'groups',
-		);
-
-		// if ( bp_is_active( 'groups' ) ) {
-		// $widget_list[] = 'groups';
-		// } // End groups check.
-
-		return $widget_list;
-	}
 }
 
 

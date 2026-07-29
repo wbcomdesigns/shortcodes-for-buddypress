@@ -1,6 +1,6 @@
 # Plugin: Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress
 
-> **READ FIRST:** [`audit/manifest.json`](audit/manifest.json) is the canonical inventory — 0 REST endpoints, 3 frontend shortcodes (+1 admin), 3 Elementor widgets, 3 AJAX handlers, 6 admin pages, 0 tables, 0 cron, 0 blocks. Use it before grepping. See also [`audit/FEATURE_AUDIT.md`](audit/FEATURE_AUDIT.md) and [`audit/CODE_FLOWS.md`](audit/CODE_FLOWS.md). Refresh via `/wp-plugin-onboard --refresh` after non-trivial changes.
+> **READ FIRST:** [`audit/manifest.json`](audit/manifest.json) is the canonical inventory — 0 REST endpoints, 3 shortcodes, 3 Elementor widgets, 1 AJAX handler, 2 admin pages (6 tabs), 0 settings, 0 tables, 0 cron, 0 blocks, 0 CLI. Use it before grepping. See also [`audit/FEATURE_AUDIT.md`](audit/FEATURE_AUDIT.md) and [`audit/CODE_FLOWS.md`](audit/CODE_FLOWS.md). Refresh via `/wp-plugin-onboard --refresh` after non-trivial changes.
 
 ## Quick reference
 - **Main file:** `shortcodes-for-buddypress.php`
@@ -51,8 +51,9 @@ on any post or page. One template pack: nouveau (with BuddyBoss `bb-` variants i
 - The shortcode base class is `abstract class BPShortCode`
   (`public/shortcode/class-shortcodes-for-buddypress-shortcode.php`), with
   subclasses `ActivityShortCode` / `MemberShortCode` / `GroupShortCode`.
-- audit/manifest.json is STALE (still lists the OLD wrapper, 3 AJAX, wrong base
-  class). Refresh via `/wp-plugin-onboard --refresh`.
+- audit/manifest.json was refreshed from source on 2026-07-29 and cross-checked
+  against the code (AJAX, shortcodes, widgets, templates, tabs, PHP file count all
+  verified). Keep it in sync with any hook/endpoint change.
 
 ## CSS selectors (for testing/dev)
 - Admin tabs: `.wbcom-tabs-section .nav-tab-wrapper .nav-tab`

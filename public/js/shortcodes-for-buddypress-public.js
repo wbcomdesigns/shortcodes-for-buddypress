@@ -51,15 +51,6 @@
 				// Activity load-more is wired in setupLoadMore(); the old
 				// '.bpsh-load-more' binding referenced an undefined handler and a
 				// selector that no template renders, so it only threw on load.
-					
-				// Handle window events with debouncing
-				var resizeTimer;
-				$(window).on('resize', function() {
-					clearTimeout(resizeTimer);
-					resizeTimer = setTimeout(function() {
-						BPSH.handleResize();
-					}, 250);
-				});
 			},
 			
 			/**
@@ -121,13 +112,6 @@
 						loadMoreLink.removeClass('loading');
 					}
 				});
-			},
-			
-			/**
-			 * Handle window resize events
-			 */
-			handleResize: function() {
-				// Responsive adjustments if needed
 			}
 		};
     

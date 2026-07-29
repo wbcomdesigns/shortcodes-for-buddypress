@@ -76,42 +76,6 @@ if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME' ) ) {
 }
 
 /**
- * Plugin activation hook.
- *
- * @since 1.0.0
- * @return void
- */
-function shortcodes_for_buddypress_activate() {
-	$activator_file_path = plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-activator.php';
-
-	if ( file_exists( $activator_file_path ) ) {
-		require_once $activator_file_path;
-		if ( class_exists( 'Shortcodes_For_Buddypress_Activator' ) ) {
-			Shortcodes_For_Buddypress_Activator::activate();
-		}
-	}
-}
-register_activation_hook( __FILE__, 'shortcodes_for_buddypress_activate' );
-
-/**
- * Plugin deactivation hook.
- *
- * @since 1.0.0
- * @return void
- */
-function shortcodes_for_buddypress_deactivate() {
-	$deactivator_file_path = plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress-deactivator.php';
-
-	if ( file_exists( $deactivator_file_path ) ) {
-		require_once $deactivator_file_path;
-		if ( class_exists( 'Shortcodes_For_Buddypress_Deactivator' ) ) {
-			Shortcodes_For_Buddypress_Deactivator::deactivate();
-		}
-	}
-}
-register_deactivation_hook( __FILE__, 'shortcodes_for_buddypress_deactivate' );
-
-/**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */

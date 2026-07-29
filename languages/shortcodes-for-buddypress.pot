@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-29T10:12:28+00:00\n"
+"POT-Creation-Date: 2026-07-29T10:26:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: shortcodes-for-buddypress\n"
@@ -40,8 +40,8 @@ msgstr ""
 msgid "https://wbcomdesigns.com/plugins"
 msgstr ""
 
-#: elementor/class-buddypress-shortcode-elements.php:76
-#: shortcodes-for-buddypress.php:364
+#: elementor/class-buddypress-shortcode-elements.php:73
+#: shortcodes-for-buddypress.php:328
 msgid "BuddyPress Widgets"
 msgstr ""
 
@@ -252,7 +252,7 @@ msgstr ""
 
 #: includes/admin/class-shortcodes-for-buddypress-admin-panel.php:123
 #: includes/admin/views/shell.php:30
-#: shortcodes-for-buddypress.php:317
+#: shortcodes-for-buddypress.php:281
 msgid "Shortcodes For BuddyPress"
 msgstr ""
 
@@ -507,7 +507,7 @@ msgid "A shortcode only renders when its BuddyPress component is active."
 msgstr ""
 
 #: includes/admin/views/overview.php:139
-#: shortcodes-for-buddypress.php:318
+#: shortcodes-for-buddypress.php:282
 msgid "BuddyPress"
 msgstr ""
 
@@ -1243,12 +1243,12 @@ msgstr ""
 msgid "%1$s and %2$s cannot be activated simultaneously. Please deactivate %1$s to continue."
 msgstr ""
 
-#: shortcodes-for-buddypress.php:319
+#: shortcodes-for-buddypress.php:283
 msgid "Install BuddyPress"
 msgstr ""
 
 #. translators: 1: Shortcodes For BuddyPress, 2: BuddyPress
-#: shortcodes-for-buddypress.php:323
+#: shortcodes-for-buddypress.php:287
 #, php-format
 msgid "%1$s is ineffective as it requires %2$s to be installed and active. Please %3$s."
 msgstr ""
