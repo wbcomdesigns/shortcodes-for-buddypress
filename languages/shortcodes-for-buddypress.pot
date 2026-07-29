@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-29T11:03:18+00:00\n"
+"POT-Creation-Date: 2026-07-29T11:26:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: shortcodes-for-buddypress\n"
@@ -1221,7 +1221,7 @@ msgstr ""
 msgid "Unpin from Feed"
 msgstr ""
 
-#: public/shortcode/class-group-shortcode.php:181
+#: public/shortcode/class-group-shortcode.php:195
 msgid "To view groups, please enable the group component."
 msgstr ""
 
@@ -1267,22 +1267,6 @@ msgstr ""
 
 #: templates/nouveau/activity/bp-shortcodes-activity.php:169
 msgid "Activity listing is temporarily unavailable. Please try again later."
-msgstr ""
-
-#: templates/nouveau/activity/parts/bp-whats-new-toolbar.php:19
-msgid "Attach photo"
-msgstr ""
-
-#: templates/nouveau/activity/parts/bp-whats-new-toolbar.php:29
-msgid "Attach video"
-msgstr ""
-
-#: templates/nouveau/activity/parts/bp-whats-new-toolbar.php:39
-msgid "Attach document"
-msgstr ""
-
-#: templates/nouveau/activity/parts/bp-whats-new-toolbar.php:48
-msgid "Choose a GIF"
 msgstr ""
 
 #. translators: %s = last activity timestamp (e.g. "active 1 hour ago")

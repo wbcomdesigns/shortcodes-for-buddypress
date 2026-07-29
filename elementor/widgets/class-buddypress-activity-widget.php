@@ -478,49 +478,14 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		// Get all widget settings.
 		$settings = $this->get_settings_for_display();
-		$args     = '';
 
-		// Add quotes around title if it exists.
-		if ( isset( $settings['sfb_title'] ) && ! empty( $settings['sfb_title'] ) ) {
-			$settings['sfb_title'] = '"' . $settings['sfb_title'] . '"';
-		}
-
-		// Special handling for logged-in user activity.
+		// Logged-in user activity is a convenience toggle that resolves to a
+		// concrete user_id attribute.
 		if ( isset( $settings['sfb_loggedin_user_activity'] ) && 'yes' === $settings['sfb_loggedin_user_activity'] ) {
 			$settings['sfb_user_id'] = apply_filters( 'bp_shortcode_pro_loggedin_user_activity', bp_loggedin_user_id() );
 		}
 
-		// Build shortcode attributes from settings.
-		foreach ( $settings as $setting_key => $setting ) {
-			// Only process settings that start with 'sfb_'.
-			if ( false !== strpos( $setting_key, 'sfb_' ) ) {
-				$key = substr( $setting_key, 4 ); // Remove 'sfb_' prefix.
-				// Handle array values.
-				if ( is_array( $setting ) && ! empty( $setting ) ) {
-					// Filter out any nested arrays or objects.
-					$flat_values = array();
-					foreach ( $setting as $val ) {
-						if ( is_scalar( $val ) ) {
-							$flat_values[] = $val;
-						}
-					}
-					if ( ! empty( $flat_values ) ) {
-						$args .= $key . '=' . implode( ',', $flat_values ) . ' ';
-					}
-				} elseif ( ! empty( $setting ) && is_scalar( $setting ) ) {
-					// Handle non-empty scalar values.
-					$args .= $key . '=' . $setting . ' ';
-				}
-			}
-		}
-
-		// Allow filtering of shortcode arguments.
-		$args = apply_filters( 'bp_shortcode_pro_activity_element_args', trim( $args ) );
-
-		// Build and render the shortcode.
-		$shortcode = '[activity-listing ' . $args . ']';
-		echo do_shortcode( $shortcode );
+		echo \BPShortCode::render_from_elementor( 'activity-listing', $settings, 'bp_shortcode_pro_activity_element_args' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Shortcode output is escaped by its own templates.
 	}
 }

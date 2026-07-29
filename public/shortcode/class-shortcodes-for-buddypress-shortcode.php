@@ -141,6 +141,85 @@ abstract class BPShortCode {
 	}
 
 	/**
+	 * Render an Elementor widget through the shortcode.
+	 *
+	 * Widgets used to build a shortcode string out of their settings and hand
+	 * it to do_shortcode(). Any title containing a double quote or a closing
+	 * square bracket broke the parser and the title silently vanished, and
+	 * because every Elementor control shares the sfb_ prefix the style
+	 * controls were injected as bogus attributes too.
+	 *
+	 * The attributes are now whitelisted against the shortcode's own defaults
+	 * and passed as an array, which needs no quoting. The legacy string
+	 * filter is still offered first so shortcode-for-buddypress-pro keeps
+	 * working: if a filter rewrites the string, that string wins and is run
+	 * through do_shortcode() exactly as before.
+	 *
+	 * @since 3.0.0
+	 * @param string $tag         Shortcode tag.
+	 * @param array  $settings    Elementor settings (sfb_-prefixed).
+	 * @param string $args_filter Legacy string filter name for Pro.
+	 * @return string
+	 */
+	public static function render_from_elementor( $tag, $settings, $args_filter ) {
+		$classes = array(
+			'activity-listing' => 'ActivityShortCode',
+			'members-listing'  => 'MemberShortCode',
+			'groups-listing'   => 'GroupShortCode',
+		);
+
+		if ( ! isset( $classes[ $tag ] ) || ! class_exists( $classes[ $tag ] ) ) {
+			return '';
+		}
+
+		$instance = call_user_func( array( $classes[ $tag ], 'get_instance' ), $tag );
+		$allowed  = $instance->defaults;
+
+		$atts = array();
+		foreach ( (array) $settings as $key => $value ) {
+			if ( 0 !== strpos( $key, 'sfb_' ) ) {
+				continue;
+			}
+
+			$att = substr( $key, 4 );
+
+			// Style controls share the sfb_ prefix but are not attributes.
+			if ( ! array_key_exists( $att, $allowed ) ) {
+				continue;
+			}
+
+			if ( is_array( $value ) ) {
+				$flat = array_filter( $value, 'is_scalar' );
+				if ( ! empty( $flat ) ) {
+					$atts[ $att ] = implode( ',', $flat );
+				}
+				continue;
+			}
+
+			if ( is_scalar( $value ) && '' !== $value ) {
+				$atts[ $att ] = $value;
+			}
+		}
+
+		// Rebuild the legacy string so Pro sees the shape it expects.
+		$args = '';
+		foreach ( $atts as $att => $value ) {
+			$args .= $att . '=' . ( 'title' === $att ? '"' . $value . '"' : $value ) . ' ';
+		}
+		$args = trim( $args );
+
+		/** This filter is documented in the Pro companion plugin. */
+		$filtered = apply_filters( $args_filter, $args );
+
+		if ( $filtered !== $args ) {
+			// A Pro filter rewrote the arguments; honour the old contract.
+			return do_shortcode( '[' . $tag . ' ' . $filtered . ']' );
+		}
+
+		return $instance->render( $atts );
+	}
+
+	/**
 	 * Get singleton instance.
 	 *
 	 * @param string $tag Shortcode tag.

@@ -165,7 +165,6 @@
     "template_pack_note": "legacy and youzify were removed in 3.0.0. All three shortcodes now resolve to templates/nouveau/ regardless of _bp_theme_package_id; BuddyBoss uses the bb-*.php variants inside that pack.",
     "templates": [
       "templates/nouveau/activity/bp-shortcodes-activity.php",
-      "templates/nouveau/activity/parts/bp-whats-new-toolbar.php",
       "templates/nouveau/groups/bp-shortcodes-groups.php",
       "templates/nouveau/groups/bb-shortcodes-groups.php",
       "templates/nouveau/members/bp-shortcodes-members.php",
@@ -268,7 +267,8 @@
     "3.0.0 is missing master's 0ba8cfc, a shipped fix for activity posting form residue for logged-out users.",
     "MemberShortCode::handle_classes() and GroupShortCode::get_container_classes() are parallel Reign layout builders that have drifted apart (40 vs 56 lines). Consolidating needs a Reign install to verify.",
     "readme.txt 'Tested up to: 7.0' should be re-confirmed before release.",
-    "Elementor get_widget_list() and the no-op handleResize() JS were removed in this pass; if a future release needs a resize hook, re-add the listener with the handler, not before."
+    "Elementor get_widget_list() and the no-op handleResize() JS were removed in this pass; if a future release needs a resize hook, re-add the listener with the handler, not before.",
+    "BuddyBoss-only functions (bb_*, bp_moderation_*, bp_is_*_media_support_enabled, bp_member_type_*) are called unguarded inside the bb-*.php templates and buddypress_shortcode_activity_entry_bubble_buttons. That is safe because both are reached only when buddypress()->buddyboss is set, but any new call site outside those paths needs a function_exists guard."
   ],
   "generated": {
     "at": "2026-07-29",

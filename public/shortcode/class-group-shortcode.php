@@ -93,6 +93,20 @@ class GroupShortCode extends BPShortCode {
 			'update_meta_cache'  => $atts['update_meta_cache'],
 		);
 
+		/*
+		 * `type` wins over `orderby`/`order` inside bp_has_groups(), and this
+		 * shortcode always sent its default type=alphabetical. That silently
+		 * discarded both ordering attributes: [groups-listing orderby="name"
+		 * order="DESC"] returned exactly the same groups in the same order as
+		 * order="ASC". When the caller sets either ordering attribute, drop
+		 * the default type so their choice actually applies. An explicit
+		 * type= still takes priority, matching BuddyPress.
+		 */
+		$ordering_customised = ( 'DESC' !== $atts['order'] || 'last_activity' !== $atts['orderby'] );
+		if ( $ordering_customised && 'alphabetical' === $atts['type'] ) {
+			unset( $query_args['type'] );
+		}
+
 		// Remove empty values to avoid issues with BuddyPress query.
 		$query_args = array_filter(
 			$query_args,
