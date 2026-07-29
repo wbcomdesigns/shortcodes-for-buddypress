@@ -40,3 +40,4 @@ tmp/
 # package-lock.json
 # yarn.lock
 # composer.lock.claude-tmp/
+.phpunit.result.cache

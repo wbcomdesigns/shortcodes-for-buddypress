@@ -1,0 +1,175 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Action callback returns object but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: elementor/class-buddypress-shortcode-elements.php
+
+		-
+			message: '#^Variable \$widget_list in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: elementor/class-buddypress-shortcode-elements.php
+
+		-
+			message: '#^Method BPSPElementor\\Widgets\\Buddypress_Shortcode_Members_Widget\:\:get_member_types\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: elementor/widgets/class-buddypress-members-widget.php
+
+		-
+			message: '#^Offset ''icon'' on array\{name\: mixed, logo\: ''buddynext\.svg'', icon\: ''groups'', desc\: mixed, url\: ''https\:/…''\}\|array\{name\: mixed, logo\: ''buddyx\.png'', icon\: ''admin\-appearance'', desc\: mixed, url\: ''https\:/…''\}\|array\{name\: mixed, logo\: ''eventonomy\.svg'', icon\: ''calendar\-alt'', desc\: mixed, url\: ''https\:/…''\}\|array\{name\: mixed, logo\: ''jetonomy\.svg'', icon\: ''format\-chat'', desc\: mixed, url\: ''https\:/…''\}\|array\{name\: mixed, logo\: ''learnomy\.svg'', icon\: ''welcome\-learn\-more'', desc\: mixed, url\: ''https\:/…''\}\|array\{name\: mixed, logo\: ''listora\.svg'', icon\: ''list\-view'', desc\: mixed, url\: ''https\:/…''\}\|array\{name\: mixed, logo\: ''mediaverse\.svg'', icon\: ''format\-gallery'', desc\: mixed, url\: ''https\:/…''\}\|array\{name\: mixed, logo\: ''wb\-gamification\.svg'', icon\: ''awards'', desc\: mixed, url\: ''https\:/…''\}\|array\{name\: mixed, logo\: ''wp\-career\-board\.svg'', icon\: ''businessman'', desc\: mixed, url\: ''https\:/…''\} in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.offset
+			count: 1
+			path: includes/admin/views/discover.php
+
+		-
+			message: '#^Parameter \#5 \$priority of method Shortcodes_For_Buddypress_Loader\:\:add\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/class-shortcodes-for-buddypress-loader.php
+
+		-
+			message: '#^Parameter \#6 \$accepted_args of method Shortcodes_For_Buddypress_Loader\:\:add\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/class-shortcodes-for-buddypress-loader.php
+
+		-
+			message: '#^Call to function is_a\(\) with WP_Post and ''WP_Post'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 2
+			path: includes/functions.php
+
+		-
+			message: '#^Variable \$post in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: includes/functions.php
+
+		-
+			message: '#^Function wp_create_nonce invoked with 2 parameters, 0\-1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: public/class-shortcodes-for-buddypress-public.php
+
+		-
+			message: '#^Right side of && is always true\.$#'
+			identifier: booleanAnd.rightAlwaysTrue
+			count: 1
+			path: public/shortcode/class-group-shortcode.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 1
+			path: public/shortcode/class-shortcodes-for-buddypress-shortcode.php
+
+		-
+			message: '#^Function shortcodes_for_buddypress_iterate_comments\(\) should return array but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: shortcodes-for-buddypress.php
+
+		-
+			message: '#^Variable \$activity_atts might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/activity/bp-shortcodes-activity.php
+
+		-
+			message: '#^Variable \$allow_posting might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/activity/bp-shortcodes-activity.php
+
+		-
+			message: '#^Variable \$load_more might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/activity/bp-shortcodes-activity.php
+
+		-
+			message: '#^Variable \$query might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/activity/bp-shortcodes-activity.php
+
+		-
+			message: '#^Function remove_filter invoked with 4 parameters, 2\-3 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: templates/nouveau/groups/bb-shortcodes-groups.php
+
+		-
+			message: '#^Parameter \#2 \$callback of function add_filter expects callable\(\)\: mixed, ''bb_get_group…'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: templates/nouveau/groups/bb-shortcodes-groups.php
+
+		-
+			message: '#^Variable \$classes might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/groups/bb-shortcodes-groups.php
+
+		-
+			message: '#^Variable \$groups_atts might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/groups/bb-shortcodes-groups.php
+
+		-
+			message: '#^Variable \$query might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/groups/bb-shortcodes-groups.php
+
+		-
+			message: '#^Variable \$classes might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/groups/bp-shortcodes-groups.php
+
+		-
+			message: '#^Variable \$groups_atts might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/groups/bp-shortcodes-groups.php
+
+		-
+			message: '#^Variable \$query might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/groups/bp-shortcodes-groups.php
+
+		-
+			message: '#^Variable \$classes might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/members/bb-shortcodes-members.php
+
+		-
+			message: '#^Variable \$members_atts might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/members/bb-shortcodes-members.php
+
+		-
+			message: '#^Variable \$query might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/members/bb-shortcodes-members.php
+
+		-
+			message: '#^Variable \$classes might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/members/bp-shortcodes-members.php
+
+		-
+			message: '#^Variable \$query might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: templates/nouveau/members/bp-shortcodes-members.php

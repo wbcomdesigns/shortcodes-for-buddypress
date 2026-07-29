@@ -112,7 +112,6 @@ class BPSP_Elementor_Widgets {
 			}
 		}
 	}
-
 }
 
 

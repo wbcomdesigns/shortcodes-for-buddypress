@@ -54,7 +54,14 @@ module.exports = function (grunt) {
                         '!composer.json',
                         '!composer.lock',
                         '!phpcs.xml',
-                        '!phpunit.xml'
+                        '!phpunit.xml',
+                        '!phpunit.xml.dist',
+                        '!phpstan.neon',
+                        '!phpstan-baseline.neon',
+                        '!phpstan-bootstrap.php',
+                        '!vendor/**',
+                        '!.github/**',
+                        '!.phpunit.result.cache',
                     ],
                     dest: 'build/<%= pkg.name %>/'
                 }]

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-29T10:33:58+00:00\n"
+"POT-Creation-Date: 2026-07-29T11:03:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: shortcodes-for-buddypress\n"
@@ -1155,6 +1155,10 @@ msgstr ""
 
 #: includes/admin/views/shell.php:98
 msgid "Support"
+msgstr ""
+
+#: includes/functions.php:85
+msgid "This shortcode needs the BuddyPress Nouveau template pack. Switch it on under Settings > BuddyPress > Options to display the listing. Only site administrators can see this message."
 msgstr ""
 
 #. translators: %s: member name

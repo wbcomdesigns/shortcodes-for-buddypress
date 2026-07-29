@@ -18,11 +18,76 @@ defined( 'ABSPATH' ) || exit;
  * @param string $default_path  Default path (default: '').
  */
 function bp_shortcode_get_template( $template_name, $args = array(), $template_path = 'nouveau', $default_path = '' ) {
+	if ( ! bp_shortcode_nouveau_is_available() ) {
+		bp_shortcode_render_nouveau_required_notice();
+		return;
+	}
+
 	if ( $args && is_array( $args ) ) {
 		// phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- Please, forgive us.
 		extract( $args );
 	}
 	include bp_shortcode_locate_template( $template_name, $template_path, $default_path );
+}
+
+/**
+ * Whether the BuddyPress Nouveau template functions are loadable.
+ *
+ * Since 3.0.0 every shortcode renders the Nouveau templates regardless of the
+ * site's `_bp_theme_package_id`, and those templates call Nouveau-only
+ * template tags. BuddyPress defines them only when Nouveau is the active
+ * pack, so on a site running the legacy pack with a non-BuddyPress theme the
+ * shortcode would fatal on an undefined function.
+ *
+ * Loading Nouveau on demand is not an option: its loader ends by
+ * instantiating BP_Nouveau, whose constructor registers bp_replace_the_content
+ * and theme-compat filters and would hijack BuddyPress's own pages mid
+ * request. Detecting and degrading is the contained choice.
+ *
+ * @since 3.0.0
+ * @return bool
+ */
+function bp_shortcode_nouveau_is_available() {
+	$required = array(
+		'bp_nouveau',
+		'bp_nouveau_get_container_classes',
+		'bp_nouveau_before_loop',
+	);
+
+	foreach ( $required as $function ) {
+		if ( ! function_exists( $function ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
+ * Explain that the Nouveau template pack is required.
+ *
+ * Rendered in place of the listing so the page degrades to a readable notice
+ * instead of a fatal error.
+ *
+ * @since 3.0.0
+ * @return void
+ */
+function bp_shortcode_render_nouveau_required_notice() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	?>
+	<div class="bp-messages-feedback">
+		<div class="bp-messages bp-user-messages-feedback">
+			<div class="bp-feedback info">
+				<span class="bp-icon" aria-hidden="true"></span>
+				<p>
+					<?php esc_html_e( 'This shortcode needs the BuddyPress Nouveau template pack. Switch it on under Settings > BuddyPress > Options to display the listing. Only site administrators can see this message.', 'shortcodes-for-buddypress' ); ?>
+				</p>
+			</div>
+		</div>
+	</div>
+	<?php
 }
 
 /**

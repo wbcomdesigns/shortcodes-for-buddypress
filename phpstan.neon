@@ -1,0 +1,46 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+    - phpstan-baseline.neon
+
+parameters:
+    level: 5
+    paths:
+        - shortcodes-for-buddypress.php
+        - includes/
+        - public/
+        - elementor/
+        - templates/
+    excludePaths:
+        analyseAndScan:
+            - vendor/ (?)
+            - node_modules/ (?)
+            - build/ (?)
+            - audit/ (?)
+            - tests/ (?)
+            - public/js/ (?)
+            - public/css/ (?)
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+    scanFiles:
+        # Elementor is an optional runtime dependency, so its classes are
+        # provided as stubs rather than a hard composer requirement.
+        - vendor/arts/elementor-stubs/elementor-stubs.php
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # BuddyPress / BuddyBoss are optional runtime deps with no stubs here.
+        # BuddyPress / BuddyBoss are optional runtime deps and ship no stubs.
+        - '#^Function (bp|bb|bbp|groups|friends|messages|xprofile|youzify)_[a-z_0-9]+ not found#'
+        - '#^Function bp_[a-z_]+ not found#'
+        - '#^Function buddypress not found#'
+        - '#^Function groups_[a-z_]+ not found#'
+        - '#^Function friends_[a-z_]+ not found#'
+        - '#^Function youzify_[a-z_]+ not found#'
+        - '#^Constant (BP|BB|YOUZIFY|RTMEDIA)_[A-Z_]+ not found#'
+        - '#unknown class (BP|BB)_[A-Za-z_]+#'
+        - '#^Instantiated class (BP|BB)_[A-Za-z_]+ not found#'
+        - '#^Access to property .* on an unknown class#'
+        - '#^Call to method .* on an unknown class#'
+        - '#^Class Elementor#'
+        - '#Function apply_filters invoked with#'
+        - '#Function do_action invoked with#'
