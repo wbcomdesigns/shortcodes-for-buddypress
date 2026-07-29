@@ -2,9 +2,9 @@
 Contributors: vapvarun,wbcomdesigns
 Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, Shortcodes
-Requires at least: 5.0.0
+Requires at least: 6.5
 Tested up to: 7.0
-Requires PHP: 7.4
+Requires PHP: 8.0
 Requires Plugins: buddypress
 Stable tag: 3.0.0
 License: GPLv2 or later

@@ -29,7 +29,6 @@ class ActivityShortCode extends BPShortCode {
 			'load_more'        => 0,
 			'display_comments' => 'false',
 			'container_class'  => 'activity',
-			'hide_on_activity' => 1,
 			'allow_posting'    => false,
 
 			// Activity selection.
@@ -117,7 +116,6 @@ class ActivityShortCode extends BPShortCode {
 			'title',
 			'pagination',
 			'display_comments',
-			'hide_on_activity',
 		);
 
 		// Build query args from attributes.
@@ -155,11 +153,6 @@ class ActivityShortCode extends BPShortCode {
 			'allow_posting' => (bool) $atts['allow_posting'],
 			'load_more'     => (bool) $atts['load_more'],
 		);
-
-		// Youzify theme requires different structure.
-		if ( class_exists( 'Youzify' ) ) {
-			$args['activity_atts'] = $args;
-		}
 
 		return apply_filters( 'activity_shortcode_template_args', $args );
 	}
@@ -229,17 +222,9 @@ class ActivityShortCode extends BPShortCode {
 	private function load_template( $template_vars ) {
 		$template = 'activity/bp-shortcodes-activity.php';
 
-		if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
-			$theme = get_option( '_bp_theme_package_id' );
-		} elseif ( class_exists( 'Youzify' ) ) {
-			$theme = 'youzify';
-		} else {
-			$theme = get_option( '_bp_theme_package_id' );
-		}
-
 		// Add fallback error handling for template loading.
 		try {
-			bp_shortcode_get_template( $template, $template_vars, $theme );
+			bp_shortcode_get_template( $template, $template_vars );
 		} catch ( Throwable $e ) {
 			// If template loading fails, show a simple fallback.
 			$this->show_simple_fallback( $template_vars );
@@ -263,7 +248,6 @@ class ActivityShortCode extends BPShortCode {
 		</div>
 		<?php
 	}
-
 }
 
 ActivityShortCode::get_instance( 'activity-listing' );

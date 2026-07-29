@@ -82,9 +82,9 @@ $bpsp_shortcodes = array(
 		<p class="bpsp-stat__trend"><?php esc_html_e( 'Shortcodes whose component is active', 'shortcodes-for-buddypress' ); ?></p>
 	</div>
 	<div class="bpsp-stat">
-		<p class="bpsp-stat__label"><?php esc_html_e( 'Template Packs', 'shortcodes-for-buddypress' ); ?></p>
-		<p class="bpsp-stat__value">3</p>
-		<p class="bpsp-stat__trend"><?php esc_html_e( 'Legacy, Nouveau, Youzify', 'shortcodes-for-buddypress' ); ?></p>
+		<p class="bpsp-stat__label"><?php esc_html_e( 'Template Pack', 'shortcodes-for-buddypress' ); ?></p>
+		<p class="bpsp-stat__value">1</p>
+		<p class="bpsp-stat__trend"><?php esc_html_e( 'Nouveau, with BuddyBoss variants', 'shortcodes-for-buddypress' ); ?></p>
 	</div>
 </div>
 
