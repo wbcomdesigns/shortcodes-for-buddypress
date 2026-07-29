@@ -158,18 +158,23 @@ class Shortcodes_For_Buddypress_Admin_Panel {
 		}
 
 		$version = defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' ) ? SHORTCODES_FOR_BUDDYPRESS_VERSION : '3.0.0';
-		$base    = defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL' ) ? SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL : plugins_url( '/', dirname( __DIR__ ) );
 
+		/*
+		 * Resolve through bp_shortcode_asset() so the Grunt build output is
+		 * actually used: RTL first (when the locale needs it), then the
+		 * minified build, then the unminified source. The source is the final
+		 * fallback, so an unbuilt checkout still loads rather than 404s.
+		 */
 		wp_enqueue_style(
 			'bpsp-admin',
-			$base . 'assets/css/admin.css',
+			bp_shortcode_asset( 'assets/css', 'admin', 'css' ),
 			array(),
 			$version
 		);
 
 		wp_enqueue_script(
 			'bpsp-admin',
-			$base . 'assets/js/admin.js',
+			bp_shortcode_asset( 'assets/js', 'admin', 'js' ),
 			array( 'jquery' ),
 			$version,
 			true

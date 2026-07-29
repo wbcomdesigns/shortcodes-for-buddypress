@@ -12,9 +12,9 @@ module.exports = function (grunt) {
 
         // Clean tasks - remove generated files before rebuild
         clean: {
-            css: ['public/css/min/', 'admin/css/min/', 'admin/wbcom/assets/css/min/'],
-            js: ['public/js/min/', 'admin/js/min/', 'admin/wbcom/assets/js/min/'],
-            rtl: ['public/css/rtl/', 'admin/css/rtl/', 'admin/wbcom/assets/css/rtl/'],
+            css: ['public/css/min/', 'assets/css/min/'],
+            js: ['public/js/min/', 'assets/js/min/'],
+            rtl: ['public/css/rtl/', 'assets/css/rtl/'],
             build: ['build/'],
             temp: ['temp/']
         },
@@ -106,18 +106,9 @@ module.exports = function (grunt) {
             admin: {
                 files: [{
                     expand: true,
-                    cwd: 'admin/css/',
+                    cwd: 'assets/css/',
                     src: ['*.css', '!*.min.css', '!vendor/*.css'],
-                    dest: 'admin/css/min/',
-                    ext: '.min.css'
-                }]
-            },
-            wbcom: {
-                files: [{
-                    expand: true,
-                    cwd: 'admin/wbcom/assets/css/',
-                    src: ['*.css', '!*.min.css', '!vendor/*.css'],
-                    dest: 'admin/wbcom/assets/css/min/',
+                    dest: 'assets/css/min/',
                     ext: '.min.css'
                 }]
             }
@@ -151,18 +142,9 @@ module.exports = function (grunt) {
             admin: {
                 files: [{
                     expand: true,
-                    cwd: 'admin/js/',
+                    cwd: 'assets/js/',
                     src: ['*.js', '!*.min.js', '!vendor/*.js'],
-                    dest: 'admin/js/min/',
-                    ext: '.min.js'
-                }]
-            },
-            wbcom: {
-                files: [{
-                    expand: true,
-                    cwd: 'admin/wbcom/assets/js',
-                    src: ['*.js', '!*.min.js', '!vendor/*.js'],
-                    dest: 'admin/wbcom/assets/js/min/',
+                    dest: 'assets/js/min/',
                     ext: '.min.js'
                 }]
             }
@@ -177,11 +159,11 @@ module.exports = function (grunt) {
             all: [
                 'Gruntfile.js',
                 'public/js/*.js',
-                'admin/js/*.js',
+                'assets/js/*.js',
                 '!public/js/*.min.js',
-                '!admin/js/*.min.js',
+                '!assets/js/*.min.js',
                 '!public/js/vendor/**',
-                '!admin/js/vendor/**'
+                '!assets/js/vendor/**'
             ]
         },
 
@@ -213,18 +195,9 @@ module.exports = function (grunt) {
             admin: {
                 files: [{
                     expand: true,
-                    cwd: 'admin/css/min/',
+                    cwd: 'assets/css/min/',
                     src: ['*.min.css', '!*.rtl.css'],
-                    dest: 'admin/css/rtl/',
-                    ext: '.rtl.css'
-                }]
-            },
-            wbcom: {
-                files: [{
-                    expand: true,
-                    cwd: 'admin/wbcom/assets/css/min/',
-                    src: ['*.min.css', '!*.rtl.css'],
-                    dest: 'admin/wbcom/assets/css/rtl/',
+                    dest: 'assets/css/rtl/',
                     ext: '.rtl.css'
                 }]
             }
@@ -290,24 +263,16 @@ module.exports = function (grunt) {
                 tasks: ['cssmin:public', 'rtlcss:public']
             },
             adminCss: {
-                files: ['admin/css/*.css', '!admin/css/*.min.css'],
+                files: ['assets/css/*.css', '!assets/css/*.min.css'],
                 tasks: ['cssmin:admin', 'rtlcss:admin']
-            },
-            wbcomCss: {
-                files: ['admin/wbcom/assets/css/*.css', '!admin/wbcom/assets/css/*.min.css'],
-                tasks: ['cssmin:wbcom', 'rtlcss:wbcom']
             },
             js: {
                 files: ['public/js/*.js', '!public/js/*.min.js'],
                 tasks: ['jshint', 'uglify:public']
             },
             adminJs: {
-                files: ['admin/js/*.js', '!admin/js/*.min.js'],
+                files: ['assets/js/*.js', '!assets/js/*.min.js'],
                 tasks: ['jshint', 'uglify:admin']
-            },
-            wbcomJs: {
-                files: ['admin/wbcom/assets/js/*.js', '!admin/wbcom/assets/js/*.min.js'],
-                tasks: ['uglify:wbcom']
             },
             php: {
                 files: ['**/*.php', '!node_modules/**', '!build/**'],
@@ -324,9 +289,9 @@ module.exports = function (grunt) {
             options: {
                 logConcurrentOutput: true
             },
-            css: ['cssmin:public', 'cssmin:admin', 'cssmin:wbcom'],
-            js: ['uglify:public', 'uglify:admin', 'uglify:wbcom'],
-            rtl: ['rtlcss:public', 'rtlcss:admin', 'rtlcss:wbcom']
+            css: ['cssmin:public', 'cssmin:admin'],
+            js: ['uglify:public', 'uglify:admin'],
+            rtl: ['rtlcss:public', 'rtlcss:admin']
         }
     });
 
