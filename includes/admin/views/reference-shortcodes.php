@@ -130,7 +130,6 @@ $bpsp_use_cases = array(
 		<div class="bpsp-doc-actions">
 			<a href="https://docs.wbcomdesigns.com/doc_category/shortcodes-for-buddypress/" target="_blank" rel="noopener noreferrer" class="bpsp-btn bpsp-btn-secondary"><span class="dashicons dashicons-book" aria-hidden="true"></span> <?php esc_html_e( 'Read Documentation', 'shortcodes-for-buddypress' ); ?></a>
 			<a href="https://wbcomdesigns.com/support/" target="_blank" rel="noopener noreferrer" class="bpsp-btn bpsp-btn-secondary"><span class="dashicons dashicons-sos" aria-hidden="true"></span> <?php esc_html_e( 'Get Support', 'shortcodes-for-buddypress' ); ?></a>
-			<a href="https://wbcomdesigns.com/submit-review/" target="_blank" rel="noopener noreferrer" class="bpsp-btn bpsp-btn-secondary"><span class="dashicons dashicons-admin-comments" aria-hidden="true"></span> <?php esc_html_e( 'Send Feedback', 'shortcodes-for-buddypress' ); ?></a>
 		</div>
 	</div>
 </div>
