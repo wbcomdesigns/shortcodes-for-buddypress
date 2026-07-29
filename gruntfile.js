@@ -29,12 +29,20 @@ module.exports = function (grunt) {
                         '!node_modules/**',
                         '!build/**',
                         '!temp/**',
+                        // Lowercase too: minimatch is case-sensitive, so
+                        // '!Gruntfile.js' alone shipped gruntfile.js.
                         '!Gruntfile.js',
+                        '!gruntfile.js',
                         '!package.json',
                         '!package-lock.json',
                         '!.git/**',
                         '!.gitignore',
+                        // '!*.md' matches root level only, which shipped
+                        // audit/*.md and docs/*.md to customers.
                         '!*.md',
+                        '!**/*.md',
+                        // Internal QA baselines and feature audits.
+                        '!audit/**',
                         '!.DS_Store',
                         '!**/.DS_Store',
                         '!*.zip',
@@ -226,7 +234,11 @@ module.exports = function (grunt) {
         // Shell commands
         shell: {
             makepot: {
-                command: 'wp i18n make-pot . languages/shortcodes-for-buddypress.pot --exclude=node_modules,build,tests'
+                command: 'wp i18n make-pot . languages/shortcodes-for-buddypress.pot' +
+                    ' --exclude=node_modules,build,tests,audit,docs' +
+                    ' --headers=\'{"Report-Msgid-Bugs-To":"https://github.com/wbcomdesigns/shortcodes-for-buddypress/issues",' +
+                    '"Last-Translator":"Wbcom Designs <admin@wbcomdesigns.com>",' +
+                    '"Language-Team":"Wbcom Designs <admin@wbcomdesigns.com>"}\''
             },
             phpcs: {
                 command: 'phpcs --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/*,*/build/* .'
@@ -321,7 +333,10 @@ module.exports = function (grunt) {
         'concurrent:css',
         'concurrent:js',
         'concurrent:rtl',
-        'makepot',
+        // shell:makepot (wp i18n make-pot), not the grunt-wp-i18n `makepot`
+        // task. The two generators disagree, and grunt-wp-i18n 1.0.3 is what
+        // produced the stale POT that shipped 714 references to deleted files.
+        'shell:makepot',
         'copy:build',
         'compress',
         'clean:build'
@@ -344,7 +359,7 @@ module.exports = function (grunt) {
     // Internationalization task
     grunt.registerTask('i18n', 'Generate translation files', [
         'checktextdomain',
-        'makepot'
+        'shell:makepot'
     ]);
 
     // Code quality task
