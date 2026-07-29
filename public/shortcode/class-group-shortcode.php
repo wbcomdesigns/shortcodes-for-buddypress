@@ -127,12 +127,6 @@ class GroupShortCode extends BPShortCode {
 			'groups_atts' => $query,
 		);
 
-		// Youzify theme requires different structure.
-		if ( class_exists( 'Youzify' ) ) {
-			unset( $args['classes'] );
-			$args['groups_atts'] = $args;
-		}
-
 		return apply_filters( 'group_shortcode_template_args', $args );
 	}
 
@@ -221,18 +215,11 @@ class GroupShortCode extends BPShortCode {
 	 * @param array $template_vars Template variables.
 	 */
 	private function load_template( $template_vars ) {
-		if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
-			$template = 'groups/bb-shortcodes-groups.php';
-			$theme    = get_option( '_bp_theme_package_id' );
-		} elseif ( class_exists( 'Youzify' ) ) {
-			$template = 'groups/bp-shortcodes-groups.php';
-			$theme    = 'youzify';
-		} else {
-			$template = 'groups/bp-shortcodes-groups.php';
-			$theme    = get_option( '_bp_theme_package_id' );
-		}
+		$template = ( function_exists( 'buddypress' ) && buddypress()->buddyboss )
+			? 'groups/bb-shortcodes-groups.php'
+			: 'groups/bp-shortcodes-groups.php';
 
-		bp_shortcode_get_template( $template, $template_vars, $theme );
+		bp_shortcode_get_template( $template, $template_vars );
 	}
 
 	/**
@@ -245,7 +232,7 @@ class GroupShortCode extends BPShortCode {
 	private function get_container_classes( $grid, $column ) {
 		$classes      = array( 'item-list', 'groups-list', 'groups-dir-list', 'bp-list', 'bpsp-groups-list', $grid, $column );
 		$active_theme = wp_get_theme()->get( 'Name' );
-		if ( 'REIGN' === $active_theme && ! class_exists( 'Youzify' ) ) {
+		if ( 'REIGN' === $active_theme ) {
 			$bp_nouveau            = bp_nouveau();
 			$classes               = array();
 			$classes[]             = 'item-list';

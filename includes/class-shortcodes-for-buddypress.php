@@ -78,7 +78,6 @@ class Shortcodes_For_Buddypress {
 	 */
 	private function init() {
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 	}
@@ -122,7 +121,6 @@ class Shortcodes_For_Buddypress {
 	 */
 	private function load_core_classes( $path ) {
 		require_once $path . 'includes/class-shortcodes-for-buddypress-loader.php';
-		require_once $path . 'includes/class-shortcodes-for-buddypress-i18n.php';
 	}
 
 	/**
@@ -170,19 +168,6 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Set plugin locale.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_locale() {
-
-		$plugin_i18n = new Shortcodes_For_Buddypress_i18n();
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-	}
-
-	/**
 	 * Register admin hooks.
 	 *
 	 * @since    1.0.0
@@ -227,8 +212,6 @@ class Shortcodes_For_Buddypress {
 		if ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) {
 			$this->loader->add_filter( 'bb_nouveau_get_activity_entry_bubble_buttons', $plugin_public, 'buddypress_shortcode_activity_entry_bubble_buttons', 10, 2 );
 		}
-		$this->loader->add_action( 'wp_ajax_bpsh_load_more_members', $plugin_public, 'buddypress_shortcode_ajax_load_more_members' );
-		$this->loader->add_action( 'wp_ajax_nopriv_bpsh_load_more_members', $plugin_public, 'buddypress_shortcode_ajax_load_more_members' );
 	}
 
 	/**

@@ -137,62 +137,6 @@
 		});
 
 
-		// load more for activity
-
-		function initLoadMore() {
-			$('.bpsh-load-more-members').on('click', function(e) {
-				e.preventDefault();
-				
-				var $this = $(this);
-				var $container = $this.closest('.members-listing').find('#members-list');
-				var lastId = $this.data('last-id');
-				var perPage = $this.data('per-page');
-				var type = $this.data('type');
-				
-				// Show loading indicator
-				$this.addClass('loading').text('Loading...');
-				
-				// Send AJAX request
-				$.ajax({
-					url: buddypress_shortcode.ajax_url,
-					type: 'POST',
-					data: {
-						action: 'bpsh_load_more_members',
-						nonce: buddypress_shortcode.ajax_nonce,
-						last_id: lastId,
-						per_page: perPage,
-						type: type
-					},
-					success: function(response) {
-						if (response.success) {
-							// Append new members
-							$container.append(response.data.content);
-							
-							// Update last ID
-							$this.data('last-id', response.data.last_id);
-							
-							// Hide button if no more items
-							if (!response.data.has_more) {
-								$this.hide();
-							}
-						} else {
-							// No more results
-							$this.hide();
-						}
-					},
-					complete: function() {
-						// Reset button state
-						$this.removeClass('loading').text('Load More');
-					}
-				});
-			});
-   		}
-
-		initLoadMore();
-		$(document).on('bp_ajax_request', function() {
-            initLoadMore();
-        });
-
 	});
 
 })( jQuery );

@@ -118,19 +118,6 @@ class MemberShortCode extends BPShortCode {
 			)
 		);
 
-		if ( class_exists( 'Youzify' ) ) {
-			unset( $template_args['classes'] );
-			$template_args = apply_filters(
-				'member_shortcode_template_args',
-				array(
-					'query'        => $query,
-					'grid'         => $grid,
-					'column'       => $column,
-					'members_atts' => $template_args,
-				)
-			);
-		}
-
 		$output = '';
 		ob_start();
 		do_action( 'member_shortcode_before_output', $atts );
@@ -152,13 +139,11 @@ class MemberShortCode extends BPShortCode {
 				<?php echo ! empty( $atts['title'] ) ? '<h4>' . esc_html( $atts['title'] ) . '</h4>' : ''; ?>
 				<?php do_action( 'member_shortcode_inside_container', $atts, $template_args ); ?>
 				<?php
-				if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
-							bp_shortcode_get_template( 'members/bb-shortcodes-members.php', $template_args, get_option( '_bp_theme_package_id' ) );
-				} elseif ( class_exists( 'Youzify' ) ) {
-					bp_shortcode_get_template( 'members/bp-shortcodes-members.php', $template_args, 'youzify' );
-				} else {
-					bp_shortcode_get_template( 'members/bp-shortcodes-members.php', $template_args, get_option( '_bp_theme_package_id' ) );
-				}
+				$bpsp_template = ( function_exists( 'buddypress' ) && buddypress()->buddyboss )
+					? 'members/bb-shortcodes-members.php'
+					: 'members/bp-shortcodes-members.php';
+
+				bp_shortcode_get_template( $bpsp_template, $template_args );
 				?>
 			</div>
 			<?php
@@ -184,7 +169,7 @@ class MemberShortCode extends BPShortCode {
 	public function handle_classes( $grid, $column ) {
 		$classes      = array( 'item-list', 'members-list', 'bp-list', 'bpsp-members-list', $grid, $column );
 		$active_theme = wp_get_theme()->get( 'Name' );
-		if ( 'REIGN' === $active_theme && ! class_exists( 'Youzify' ) ) {
+		if ( 'REIGN' === $active_theme ) {
 				$classes   = array();
 				$classes[] = 'item-list';
 				$classes[] = 'members-list';

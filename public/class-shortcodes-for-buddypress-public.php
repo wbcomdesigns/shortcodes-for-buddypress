@@ -77,13 +77,6 @@ class Shortcodes_For_Buddypress_Public {
 			$this->version
 		);
 
-		if ( class_exists( 'Youzify' ) && ( ( bp_shortcode_is_shortcode_page( 'members-listing' ) || bp_shortcode_is_shortcode_page( 'groups-listing' ) || bp_shortcode_is_shortcode_page( 'activity-listing' ) ) ) ) {
-			wp_enqueue_script( 'masonry' );
-			wp_enqueue_style( 'youzify-directories', YOUZIFY_ASSETS . 'css/youzify-directories.min.css', array(), YOUZIFY_VERSION );
-			wp_enqueue_style( 'youzify', YOUZIFY_ASSETS . 'css/youzify.min.css', array(), YOUZIFY_VERSION );
-			wp_enqueue_script( 'youzify-directories', YOUZIFY_ASSETS . 'js/youzify-directories.min.js', array(), YOUZIFY_VERSION, true );
-		}
-
 		if ( bp_shortcode_is_shortcode_page() ) {
 
 			if ( 'nouveau' === get_option( '_bp_theme_package_id' ) && ! wp_style_is( 'bp-nouveau', 'enqueued' ) && class_exists( 'BP_Nouveau' ) ) {
@@ -130,26 +123,29 @@ class Shortcodes_For_Buddypress_Public {
 
 		do_action( 'before_enqueue_buddypress_shortcode_scripts' );
 
-		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
-			$_bp_theme_package = get_option( '_bp_theme_package_id' );
-
-			// Register the script using simplified function.
+		/*
+		 * Register, enqueue and localize together off a single gate.
+		 *
+		 * These three used to sit behind three different conditions, so a page
+		 * could load the script without ever receiving buddypress_shortcode,
+		 * leaving the AJAX handlers with an undefined ajax_url. Keeping them on
+		 * one gate is what guarantees the object exists wherever the script does.
+		 */
+		if ( $this->has_shortcode_on_page() ) {
 			$script_url = bp_shortcode_asset( 'public/js', 'shortcodes-for-buddypress-public', 'js' );
 			wp_register_script( $this->plugin_name, $script_url, array( 'jquery' ), $this->version, true );
-			if ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'activity-listing' ) ) && ( ! class_exists( 'Youzify' ) ) && ( 'nouveau' === $_bp_theme_package ) ) {
-				wp_enqueue_script( $this->plugin_name );
-				wp_localize_script(
-					$this->plugin_name,
-					'buddypress_shortcode',
-					apply_filters(
-						'bp_activity_localized_params',
-						array(
-							'ajax_url'   => admin_url( 'admin-ajax.php' ),
-							'ajax_nonce' => wp_create_nonce( 'bpsp-nonce' ),
-						)
+			wp_enqueue_script( $this->plugin_name );
+			wp_localize_script(
+				$this->plugin_name,
+				'buddypress_shortcode',
+				apply_filters(
+					'bp_activity_localized_params',
+					array(
+						'ajax_url'   => admin_url( 'admin-ajax.php' ),
+						'ajax_nonce' => wp_create_nonce( 'bpsp-nonce' ),
 					)
-				);
-			}
+				)
+			);
 		}
 
 		if ( bp_shortcode_is_shortcode_page( 'activity-listing' ) ) {
@@ -200,8 +196,6 @@ class Shortcodes_For_Buddypress_Public {
 				wp_enqueue_script( 'bp-media-videojs' );
 				wp_enqueue_style( 'bp-media-videojs-css' );
 			}
-
-			wp_enqueue_script( $this->plugin_name );
 
 			if ( defined( 'RTMEDIA_VERSION' ) ) {
 				wp_enqueue_script(
@@ -291,65 +285,6 @@ class Shortcodes_For_Buddypress_Public {
 
 		return false;
 	}
-
-	/**
-	 * AJAX handler for loading more members.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function buddypress_shortcode_ajax_load_more_members() {
-		// Verify nonce.
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bpsp-nonce' ) ) {
-			wp_send_json_error( array( 'message' => 'Security check failed' ) );
-		}
-
-		// Get the last member ID.
-		$last_id  = isset( $_POST['last_id'] ) ? absint( $_POST['last_id'] ) : 0;
-		$per_page = isset( $_POST['per_page'] ) ? absint( $_POST['per_page'] ) : 10;
-		// Clamp so a public (nopriv) caller cannot force an unbounded query.
-		$per_page = min( 50, max( 1, $per_page ) );
-
-		// Build query args.
-		$args = array(
-			'exclude'  => array( $last_id ),
-			'per_page' => $per_page,
-			'page'     => 1,
-		);
-
-		// Add any additional filters from request.
-		if ( isset( $_POST['type'] ) ) {
-			$args['type'] = sanitize_text_field( wp_unslash( $_POST['type'] ) );
-		}
-
-		// Get members.
-		if ( bp_has_members( $args ) ) {
-			ob_start();
-
-			$last_member_id = 0;
-
-			while ( bp_members() ) {
-				bp_the_member();
-				$last_member_id = bp_get_member_user_id();
-
-				// Include the member template part.
-				bp_get_template_part( 'members/members-loop-item' );
-			}
-
-			$content = ob_get_clean();
-
-			wp_send_json_success(
-				array(
-					'content'  => $content,
-					'last_id'  => $last_member_id,
-					'has_more' => bp_members_has_more_items(),
-				)
-			);
-		} else {
-			wp_send_json_error( array( 'message' => 'No more members found' ) );
-		}
-	}
-
 	/**
 	 * Filter for BuddyPress asset loading.
 	 *

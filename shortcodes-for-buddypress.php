@@ -16,6 +16,9 @@
  * Plugin URI:        https://github.com/wbcomdesigns/shortcodes-for-buddypress
  * Description:       This plugin adds an extended feature to BuddyPress, providing shortcodes for listing Activity Streams, Members, and Groups on any post or page within your website. It will offer the same features as you are getting on BuddyPress-mapped component pages.
  * Version:           3.0.0
+ * Requires at least: 6.5
+ * Requires PHP:      8.0
+ * Requires Plugins:  buddypress
  * Author:            Wbcom Designs
  * Author URI:        https://wbcomdesigns.com/plugins
  * License:           GPL-2.0+

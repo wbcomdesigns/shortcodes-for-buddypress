@@ -12,13 +12,13 @@
 ## What it does
 Provides `[activity-listing]`, `[members-listing]`, `[groups-listing]` shortcodes
 (and matching Elementor widgets) to embed BuddyPress activity/members/groups loops
-on any post or page. Three template packs: legacy, nouveau, youzify.
+on any post or page. One template pack: nouveau (with BuddyBoss `bb-` variants inside it).
 
 ## Key entry points
-- Bootstrap: `shortcodes-for-buddypress.php`
+- Bootstrap: `shortcodes-for-buddypress.php` (carries `Requires at least: 6.5`,
+  `Requires PHP: 8.0`, `Requires Plugins: buddypress`)
 - Orchestrator: `includes/class-shortcodes-for-buddypress.php`
 - Hook loader: `includes/class-shortcodes-for-buddypress-loader.php`
-- Admin (menu + tabs): `admin/class-shortcodes-for-buddypress-admin.php`
 - Public + AJAX: `public/class-shortcodes-for-buddypress-public.php`
 - Shortcode base: `public/shortcode/class-shortcodes-for-buddypress-shortcode.php`
 
@@ -45,8 +45,9 @@ on any post or page. Three template packs: legacy, nouveau, youzify.
 ## Known issues
 - RESOLVED: the old `wbcom_addons_cards_links()` nonce-no-cap flag - that file
   (`admin/wbcom/wbcom-admin-settings.php`) and handler were removed in the 3.0.0
-  admin migration. Only 2 AJAX handlers exist now (`bpsp_activities_load`,
-  `bpsh_load_more_members`), both public-read with nonce checks (no cap needed).
+  admin migration. Only 1 AJAX handler exists now (`bpsp_activities_load`),
+  public-read with a nonce check (no cap needed). The `bpsh_load_more_members`
+  endpoint was removed - nothing rendered its button.
 - The shortcode base class is `abstract class BPShortCode`
   (`public/shortcode/class-shortcodes-for-buddypress-shortcode.php`), with
   subclasses `ActivityShortCode` / `MemberShortCode` / `GroupShortCode`.
