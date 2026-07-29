@@ -169,4 +169,73 @@ class Test_BPSP_Attributes_And_Widgets extends WP_UnitTestCase {
 
 		$this->assertSame( 'newest', $args['type'], 'An explicit type should still win.' );
 	}
+
+	/**
+	 * Every attribute the admin reference documents must actually exist.
+	 *
+	 * The reference tables used to list layout, columns, max_members,
+	 * exclude_admins_mods, avatar_size and status. None of them were real
+	 * attributes, so anyone copying an example got silence.
+	 *
+	 * @return void
+	 */
+	public function test_documented_attributes_all_exist() {
+		$map = array(
+			'activities' => array( 'ActivityShortCode', 'activity-listing' ),
+			'members'    => array( 'MemberShortCode', 'members-listing' ),
+			'groups'     => array( 'GroupShortCode', 'groups-listing' ),
+		);
+
+		$property = new ReflectionProperty( 'BPShortCode', 'defaults' );
+		$property->setAccessible( true );
+
+		foreach ( $map as $tab => $pair ) {
+			list( $class, $tag ) = $pair;
+
+			$view = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR . 'includes/admin/views/reference-' . $tab . '.php';
+			$this->assertFileExists( $view );
+
+			$source = file_get_contents( $view ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			preg_match_all( '/<th scope="row"><code>([a-z_0-9]+)<\/code>/', $source, $matches );
+
+			$documented = array_unique( $matches[1] );
+			$this->assertNotEmpty( $documented, "No attributes documented for {$tab}." );
+
+			$real = array_keys( $property->getValue( $class::get_instance( $tag ) ) );
+
+			foreach ( $documented as $attribute ) {
+				$this->assertContains(
+					$attribute,
+					$real,
+					"reference-{$tab}.php documents [{$tag} {$attribute}] but the shortcode has no such attribute."
+				);
+			}
+		}
+	}
+
+	/**
+	 * The group status attribute filters by privacy.
+	 *
+	 * @return void
+	 */
+	public function test_group_status_attribute_filters_by_privacy() {
+		$instance = GroupShortCode::get_instance( 'groups-listing' );
+		$property = new ReflectionProperty( 'BPShortCode', 'defaults' );
+		$property->setAccessible( true );
+
+		$this->assertArrayHasKey(
+			'status',
+			$property->getValue( $instance ),
+			'The documented status attribute is missing from the defaults.'
+		);
+
+		$method = new ReflectionMethod( 'GroupShortCode', 'get_query_args' );
+		$method->setAccessible( true );
+
+		$atts           = $property->getValue( $instance );
+		$atts['status'] = 'private';
+		$args           = $method->invoke( $instance, $atts );
+
+		$this->assertSame( 'private', $args['status'], 'status never reaches the groups query.' );
+	}
 }

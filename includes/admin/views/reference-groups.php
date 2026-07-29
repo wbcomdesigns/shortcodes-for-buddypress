@@ -34,16 +34,12 @@ defined( 'ABSPATH' ) || exit;
 			<td><p class="description"><?php esc_html_e( 'Display a title above the groups list. Type: string.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
 		<tr>
-			<th scope="row"><code>layout</code></th>
-			<td><p class="description"><?php esc_html_e( 'Layout style: list or grid. Default: list.', 'shortcodes-for-buddypress' ); ?></p></td>
+			<th scope="row"><code>grid</code></th>
+			<td><p class="description"><?php esc_html_e( 'Render the list as cards instead of rows. Use grid="yes". Default: no.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
 		<tr>
-			<th scope="row"><code>columns</code></th>
-			<td><p class="description"><?php esc_html_e( 'Number of columns for grid layout (2-5). Default: 3. Only applies when layout="grid".', 'shortcodes-for-buddypress' ); ?></p></td>
-		</tr>
-		<tr>
-			<th scope="row"><code>avatar_size</code></th>
-			<td><p class="description"><?php esc_html_e( 'Group avatar size: thumb (50px) or full (150px). Default: thumb.', 'shortcodes-for-buddypress' ); ?></p></td>
+			<th scope="row"><code>loop_layout</code></th>
+			<td><p class="description"><?php esc_html_e( 'Grid width class applied when grid="yes", for example two, three or four. Default: three.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
 		<tr>
 			<th scope="row"><code>per_page</code></th>
@@ -140,9 +136,9 @@ defined( 'ABSPATH' ) || exit;
 		<p class="bpsp-card__title"><?php esc_html_e( 'Complex Examples', 'shortcodes-for-buddypress' ); ?></p>
 	</div>
 	<div class="bpsp-card__body">
-		<p><code class="bpsp-code-block">[groups-listing type="popular" status="public" layout="grid" columns="3" per_page="9"]</code></p>
+		<p><code class="bpsp-code-block">[groups-listing type="popular" grid="yes" loop_layout="three" per_page="9"]</code></p>
 		<p><code class="bpsp-code-block">[groups-listing user_id="1" type="alphabetical" per_page="15"]</code></p>
 		<p><code class="bpsp-code-block">[groups-listing group_type="team" type="newest" max="20"]</code></p>
-		<p><code class="bpsp-code-block">[groups-listing meta_query="featured:yes" layout="grid" avatar_size="full"]</code></p>
+		<p><code class="bpsp-code-block">[groups-listing meta_query="featured:yes" grid="yes"]</code></p>
 	</div>
 </div>

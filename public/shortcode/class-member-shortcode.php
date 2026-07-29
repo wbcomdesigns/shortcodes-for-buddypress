@@ -49,8 +49,6 @@ class MemberShortCode extends BPShortCode {
 			'container_class'     => 'members',
 			'grid'                => 'yes',
 			'loop_layout'         => 'three',
-			'grid_layout'         => 'list',
-			'grid_columns'        => 'four',
 		);
 	}
 

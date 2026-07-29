@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 	<div class="bpsp-card__body">
 		<p><code class="bpsp-code-block">[members-listing]</code> <?php esc_html_e( 'Display all members with default settings.', 'shortcodes-for-buddypress' ); ?></p>
-		<p><code class="bpsp-code-block">[members-listing per_page="8" max_members="16"]</code> <?php esc_html_e( 'Show 8 members per page, max 16 total.', 'shortcodes-for-buddypress' ); ?></p>
+		<p><code class="bpsp-code-block">[members-listing per_page="8" max="16"]</code> <?php esc_html_e( 'Show 8 members per page, max 16 total.', 'shortcodes-for-buddypress' ); ?></p>
 		<p><code class="bpsp-code-block">[members-listing type="active" per_page="5"]</code> <?php esc_html_e( 'Show the 5 most active members.', 'shortcodes-for-buddypress' ); ?></p>
 		<p><code class="bpsp-code-block">[members-listing search_terms="developer"]</code> <?php esc_html_e( 'Search members for "developer".', 'shortcodes-for-buddypress' ); ?></p>
 	</div>
@@ -34,12 +34,12 @@ defined( 'ABSPATH' ) || exit;
 			<td><p class="description"><?php esc_html_e( 'Display a title above the members list. Type: string.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
 		<tr>
-			<th scope="row"><code>layout</code></th>
-			<td><p class="description"><?php esc_html_e( 'Layout style: list (member details) or grid (member cards). Default: list.', 'shortcodes-for-buddypress' ); ?></p></td>
+			<th scope="row"><code>grid</code></th>
+			<td><p class="description"><?php esc_html_e( 'Render the list as cards instead of rows. Use grid="yes". Default: no.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
 		<tr>
-			<th scope="row"><code>columns</code></th>
-			<td><p class="description"><?php esc_html_e( 'Number of columns for grid layout (2-5). Default: 3. Only applies when layout="grid".', 'shortcodes-for-buddypress' ); ?></p></td>
+			<th scope="row"><code>loop_layout</code></th>
+			<td><p class="description"><?php esc_html_e( 'Grid width class applied when grid="yes", for example two, three or four. Default: three.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
 		<tr>
 			<th scope="row"><code>per_page</code></th>
@@ -50,7 +50,7 @@ defined( 'ABSPATH' ) || exit;
 			<td><p class="description"><?php esc_html_e( 'Which page of results to display. Integer. Default: 1.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
 		<tr>
-			<th scope="row"><code>max_members</code></th>
+			<th scope="row"><code>max</code></th>
 			<td><p class="description"><?php esc_html_e( 'Maximum total members to retrieve. Integer or false (unlimited). Default: false.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
 	</table>
@@ -115,10 +115,6 @@ defined( 'ABSPATH' ) || exit;
 			<th scope="row"><code>populate_extras</code></th>
 			<td><p class="description"><?php esc_html_e( 'Fetch extra member data (last activity, friend counts). Boolean. Default: true.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
-		<tr>
-			<th scope="row"><code>exclude_admins_mods</code></th>
-			<td><p class="description"><?php esc_html_e( 'Exclude site admins and moderators. Boolean (0 or 1). Default: 0.', 'shortcodes-for-buddypress' ); ?></p></td>
-		</tr>
 	</table>
 </div>
 
@@ -127,9 +123,9 @@ defined( 'ABSPATH' ) || exit;
 		<p class="bpsp-card__title"><?php esc_html_e( 'Complex Examples', 'shortcodes-for-buddypress' ); ?></p>
 	</div>
 	<div class="bpsp-card__body">
-		<p><code class="bpsp-code-block">[members-listing type="newest" layout="grid" columns="4" per_page="12"]</code></p>
-		<p><code class="bpsp-code-block">[members-listing type="active" exclude_admins_mods="1" per_page="20"]</code></p>
-		<p><code class="bpsp-code-block">[members-listing member_type="premium" search_terms="developer" max_members="50"]</code></p>
-		<p><code class="bpsp-code-block">[members-listing include="1,5,10,15,20" type="random" layout="grid"]</code></p>
+		<p><code class="bpsp-code-block">[members-listing type="newest" grid="yes" loop_layout="four" per_page="12"]</code></p>
+		<p><code class="bpsp-code-block">[members-listing type="active" per_page="20"]</code></p>
+		<p><code class="bpsp-code-block">[members-listing member_type="premium" search_terms="developer" max="50"]</code></p>
+		<p><code class="bpsp-code-block">[members-listing include="1,5,10,15,20" type="random" grid="yes"]</code></p>
 	</div>
 </div>

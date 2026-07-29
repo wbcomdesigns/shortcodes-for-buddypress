@@ -56,11 +56,11 @@ $bpsp_cards = array(
 
 $bpsp_use_cases = array(
 	array( __( 'Custom Homepage', 'shortcodes-for-buddypress' ), __( 'Latest community activity:', 'shortcodes-for-buddypress' ), '[activity-listing per_page="5" title="Recent Activity"]' ),
-	array( __( 'Featured Members', 'shortcodes-for-buddypress' ), __( 'Showcase specific members:', 'shortcodes-for-buddypress' ), '[members-listing include="1,2,3,4" layout="grid"]' ),
+	array( __( 'Featured Members', 'shortcodes-for-buddypress' ), __( 'Showcase specific members:', 'shortcodes-for-buddypress' ), '[members-listing include="1,2,3,4" grid="yes"]' ),
 	array( __( 'Popular Groups', 'shortcodes-for-buddypress' ), __( 'Most active groups:', 'shortcodes-for-buddypress' ), '[groups-listing type="popular" per_page="6"]' ),
 	array( __( 'Member Search', 'shortcodes-for-buddypress' ), __( 'Members by location:', 'shortcodes-for-buddypress' ), '[members-listing xprofile_query="City:London"]' ),
 	array( __( 'User Dashboard', 'shortcodes-for-buddypress' ), __( 'Personal activity feed:', 'shortcodes-for-buddypress' ), '[activity-listing scope="just-me" per_page="10"]' ),
-	array( __( 'Team Directory', 'shortcodes-for-buddypress' ), __( 'Staff members only:', 'shortcodes-for-buddypress' ), '[members-listing member_type="staff" layout="grid"]' ),
+	array( __( 'Team Directory', 'shortcodes-for-buddypress' ), __( 'Staff members only:', 'shortcodes-for-buddypress' ), '[members-listing member_type="staff" grid="yes"]' ),
 );
 ?>
 

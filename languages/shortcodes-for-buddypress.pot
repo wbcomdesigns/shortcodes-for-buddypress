@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-29T11:26:28+00:00\n"
+"POT-Creation-Date: 2026-07-29T11:54:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: shortcodes-for-buddypress\n"
@@ -613,7 +613,7 @@ msgid "Number of activities per page. Integer. Default: 10."
 msgstr ""
 
 #: includes/admin/views/reference-activities.php:54
-#: includes/admin/views/reference-groups.php:54
+#: includes/admin/views/reference-groups.php:50
 #: includes/admin/views/reference-members.php:50
 msgid "Which page of results to display. Integer. Default: 1."
 msgstr ""
@@ -707,8 +707,8 @@ msgid "Filter by item ID (e.g. group ID for group activities). Integer or comma-
 msgstr ""
 
 #: includes/admin/views/reference-activities.php:135
-#: includes/admin/views/reference-groups.php:140
-#: includes/admin/views/reference-members.php:127
+#: includes/admin/views/reference-groups.php:136
+#: includes/admin/views/reference-members.php:123
 msgid "Complex Examples"
 msgstr ""
 
@@ -741,109 +741,106 @@ msgid "Display a title above the groups list. Type: string."
 msgstr ""
 
 #: includes/admin/views/reference-groups.php:38
-msgid "Layout style: list or grid. Default: list."
+#: includes/admin/views/reference-members.php:38
+msgid "Render the list as cards instead of rows. Use grid=\"yes\". Default: no."
 msgstr ""
 
 #: includes/admin/views/reference-groups.php:42
 #: includes/admin/views/reference-members.php:42
-msgid "Number of columns for grid layout (2-5). Default: 3. Only applies when layout=\"grid\"."
+msgid "Grid width class applied when grid=\"yes\", for example two, three or four. Default: three."
 msgstr ""
 
 #: includes/admin/views/reference-groups.php:46
-msgid "Group avatar size: thumb (50px) or full (150px). Default: thumb."
-msgstr ""
-
-#: includes/admin/views/reference-groups.php:50
 msgid "Groups per page. Integer. Default: 20."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:58
+#: includes/admin/views/reference-groups.php:54
 msgid "Maximum total groups to retrieve. Integer or false (unlimited). Default: false."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:65
+#: includes/admin/views/reference-groups.php:61
 #: includes/admin/views/reference-members.php:61
 msgid "Sorting & Filtering"
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:71
+#: includes/admin/views/reference-groups.php:67
 msgid "Sort groups by criteria. Default: active."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:73
+#: includes/admin/views/reference-groups.php:69
 msgid "Recently active groups"
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:74
+#: includes/admin/views/reference-groups.php:70
 msgid "Newest created groups"
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:75
+#: includes/admin/views/reference-groups.php:71
 msgid "Alphabetical by group name"
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:76
+#: includes/admin/views/reference-groups.php:72
 #: includes/admin/views/reference-members.php:72
 msgid "Random order"
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:77
+#: includes/admin/views/reference-groups.php:73
 msgid "Most members"
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:78
+#: includes/admin/views/reference-groups.php:74
 msgid "Most forum topics"
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:79
+#: includes/admin/views/reference-groups.php:75
 msgid "Most forum posts"
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:85
+#: includes/admin/views/reference-groups.php:81
 msgid "Sort direction: ASC or DESC. Default: DESC."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:89
+#: includes/admin/views/reference-groups.php:85
 msgid "Field to order by: date_created, last_activity, total_member_count, name, random. Default: last_activity."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:96
+#: includes/admin/views/reference-groups.php:92
 msgid "Selection, Type & Status"
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:101
+#: includes/admin/views/reference-groups.php:97
 msgid "Show only groups a specific user belongs to. Integer (user ID)."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:105
+#: includes/admin/views/reference-groups.php:101
 msgid "Include only specific group IDs (comma-separated). Overrides most other filters."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:109
+#: includes/admin/views/reference-groups.php:105
 msgid "Exclude specific group IDs (comma-separated)."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:113
+#: includes/admin/views/reference-groups.php:109
 msgid "Show only subgroups of a parent group. Integer. Requires hierarchical groups."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:117
+#: includes/admin/views/reference-groups.php:113
 msgid "Filter by group type(s). String or comma-separated, e.g. group_type=\"team,project\"."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:121
+#: includes/admin/views/reference-groups.php:117
 msgid "Filter by privacy: public, private, or hidden."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:125
+#: includes/admin/views/reference-groups.php:121
 msgid "Whether to show hidden groups. Boolean. Default: false. Users only see hidden groups they belong to."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:129
+#: includes/admin/views/reference-groups.php:125
 msgid "Search groups by keywords (name and description). Type: string."
 msgstr ""
 
-#: includes/admin/views/reference-groups.php:133
+#: includes/admin/views/reference-groups.php:129
 msgid "Filter by group meta. Format key:value, e.g. meta_query=\"location:London\"."
 msgstr ""
 
@@ -873,10 +870,6 @@ msgstr ""
 
 #: includes/admin/views/reference-members.php:34
 msgid "Display a title above the members list. Type: string."
-msgstr ""
-
-#: includes/admin/views/reference-members.php:38
-msgid "Layout style: list (member details) or grid (member cards). Default: list."
 msgstr ""
 
 #: includes/admin/views/reference-members.php:46
@@ -945,10 +938,6 @@ msgstr ""
 
 #: includes/admin/views/reference-members.php:116
 msgid "Fetch extra member data (last activity, friend counts). Boolean. Default: true."
-msgstr ""
-
-#: includes/admin/views/reference-members.php:120
-msgid "Exclude site admins and moderators. Boolean (0 or 1). Default: 0."
 msgstr ""
 
 #: includes/admin/views/reference-shortcodes.php:19
@@ -1221,11 +1210,11 @@ msgstr ""
 msgid "Unpin from Feed"
 msgstr ""
 
-#: public/shortcode/class-group-shortcode.php:195
+#: public/shortcode/class-group-shortcode.php:197
 msgid "To view groups, please enable the group component."
 msgstr ""
 
-#: public/shortcode/class-member-shortcode.php:127
+#: public/shortcode/class-member-shortcode.php:125
 msgid "To view members, please enable BuddyPress."
 msgstr ""
 
