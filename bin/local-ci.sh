@@ -2,17 +2,16 @@
 #
 # Local CI runner for shortcodes-for-buddypress.
 #
-# Runs the same blocking gates as .github/workflows/ci.yml so a developer can
-# verify before pushing. This matters more than usual here: GitHub Actions is
-# currently disabled at the repository level, so this script is the only place
-# the gates actually run.
+# This is the project's CI. GitHub Actions is disabled at the repository level,
+# so the workflow that used to live in .github/ could never fire and was
+# removed rather than left as dead config. Run this before every push.
 #
 #   bin/local-ci.sh                 lint + WPCS + PHPStan + PHPUnit
 #   bin/local-ci.sh --bootstrap     one-time composer install + WP test suite
 #   bin/local-ci.sh --no-unit       skip PHPUnit (no database needed)
 #   bin/local-ci.sh --only-unit     PHPUnit alone
 #
-# Exit code is 0 only when every gate that ran passed, matching CI.
+# Exit code is 0 only when every gate that ran passed.
 
 set -uo pipefail
 
@@ -103,7 +102,7 @@ fi
 
 if [ "$RUN_CS" -eq 1 ]; then
 	step "WordPress Coding Standards"
-	# Errors block; warnings are advisory, matching the CI job.
+	# Errors block the push; warnings are reported but advisory.
 	if vendor/bin/phpcs --error-severity=1 --warning-severity=0 --report=summary > /dev/null 2>&1; then
 		pass "0 errors"
 		WARNINGS=$(vendor/bin/phpcs --error-severity=0 --warning-severity=1 --report=summary 2>/dev/null \

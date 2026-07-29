@@ -260,11 +260,19 @@
       "phpunit.xml",
       "*.zip"
     ],
-    "release_zip_files": 97
+    "release_zip_files": 97,
+    "ci": {
+      "runner": "bin/local-ci.sh",
+      "gates": [
+        "php -l across the tree",
+        "WPCS errors (warnings advisory)",
+        "PHPStan level 5 with baseline",
+        "PHPUnit functional suite"
+      ],
+      "note": "GitHub Actions is disabled for this repository, so the .github workflow was removed rather than kept as config that can never run. bin/local-ci.sh is the gate; it exits non-zero on failure. If Actions is re-enabled, restore the workflow from git history (commit a8c295d)."
+    }
   },
   "known_gaps": [
-    "The 3.0.0 branch has no CI. The PHP Lint + PHPStan + WPCS workflow exists only on master (.github/workflows/ci.yml, commit 701f410).",
-    "3.0.0 is missing master's 0ba8cfc, a shipped fix for activity posting form residue for logged-out users.",
     "MemberShortCode::handle_classes() and GroupShortCode::get_container_classes() are parallel Reign layout builders that have drifted apart (40 vs 56 lines). Consolidating needs a Reign install to verify.",
     "readme.txt 'Tested up to: 7.0' should be re-confirmed before release.",
     "Elementor get_widget_list() and the no-op handleResize() JS were removed in this pass; if a future release needs a resize hook, re-add the listener with the handler, not before.",

@@ -31,6 +31,22 @@ on any post or page. One template pack: nouveau (with BuddyBoss `bb-` variants i
 - All pages gated by `manage_options`; `$_GET['tab']` read via `sanitize_key` + whitelist.
 - Menu parent: `wbcomplugins` (shared hub). Cap: `manage_options`.
 
+## Quality gates
+
+Run `bin/local-ci.sh` before every push. It is this project's CI - GitHub
+Actions is disabled for the repository, so there is no remote workflow.
+
+| Gate | Blocking |
+|---|---|
+| `php -l` across the tree | yes |
+| WPCS errors (warnings advisory) | yes |
+| PHPStan level 5 against `phpstan-baseline.neon` | yes |
+| PHPUnit functional suite | yes |
+
+First run needs `bin/local-ci.sh --bootstrap` (composer install, WordPress test
+suite, and a copy of BuddyPress the suite cannot run without). `--no-unit`
+skips the database-backed tests.
+
 ## Important patterns
 - Hooks are collected through a `Loader` then dispatched in `->run()` — do not
   call `add_action` directly in the public/admin classes; register via the loader
