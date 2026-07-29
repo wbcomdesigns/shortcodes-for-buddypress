@@ -117,6 +117,30 @@ abstract class BPShortCode {
 	abstract protected function output( $atts, $content = '' );
 
 	/**
+	 * Echo the "component unavailable" notice.
+	 *
+	 * All three shortcodes rendered this identical BuddyPress feedback
+	 * wrapper inline, differing only in the sentence, so the markup lived in
+	 * three places and drifted out of sync whenever one was touched.
+	 *
+	 * @since 3.0.0
+	 * @param string $message Already-translated, human-readable reason.
+	 * @return void
+	 */
+	protected function render_disabled_notice( $message ) {
+		?>
+		<div class="bp-messages-feedback">
+			<div class="bp-messages bp-user-messages-feedback">
+				<div class="bp-feedback info">
+					<span class="bp-icon" aria-hidden="true"></span>
+					<p><?php echo esc_html( $message ); ?></p>
+				</div>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Get singleton instance.
 	 *
 	 * @param string $tag Shortcode tag.

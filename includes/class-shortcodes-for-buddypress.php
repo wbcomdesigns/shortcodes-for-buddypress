@@ -234,16 +234,6 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * Get loader instance.
-	 *
-	 * @since     1.0.0
-	 * @return    Shortcodes_For_Buddypress_Loader
-	 */
-	public function get_loader() {
-		return $this->loader;
-	}
-
-	/**
 	 * Get plugin version.
 	 *
 	 * @since     1.0.0

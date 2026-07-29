@@ -88,22 +88,6 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Get user roles for Elementor options.
-	 *
-	 * @since 1.6.1
-	 * @return array Array of user roles with role slug as key and role name as value.
-	 */
-	private function get_user_roles() {
-		global $wp_roles;
-
-		$all_roles = $wp_roles->roles;
-		foreach ( $all_roles as $key => $value ) {
-			$user_roles[ $key ] = $value['name'];
-		}
-		return $user_roles;
-	}
-
-	/**
 	 * Get BuddyPress member types to display as Elementor options.
 	 *
 	 * Retrieves all registered BuddyPress member types and formats them

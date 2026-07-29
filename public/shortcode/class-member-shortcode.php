@@ -123,16 +123,9 @@ class MemberShortCode extends BPShortCode {
 		do_action( 'member_shortcode_before_output', $atts );
 
 		if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'xprofile' ) ) {
-			?>
-			<div class="bp-messages-feedback">
-				<div class="bp-messages bp-user-messages-feedback">
-					<div class="bp-feedback info">
-						<span class="bp-icon" aria-hidden="true"></span>
-						<p><?php esc_html_e( 'To view members, please enable BuddyPress.', 'shortcodes-for-buddypress' ); ?></p>
-					</div>
-				</div>
-			</div>
-			<?php
+			$this->render_disabled_notice(
+				__( 'To view members, please enable BuddyPress.', 'shortcodes-for-buddypress' )
+			);
 		} else {
 			?>
 			<div class="members-listing <?php echo esc_attr( $atts['container_class'] ); ?>">

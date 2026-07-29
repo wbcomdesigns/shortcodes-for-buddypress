@@ -182,16 +182,9 @@ class ActivityShortCode extends BPShortCode {
 	 * Show disabled message.
 	 */
 	private function show_disabled_message() {
-		?>
-		<div class="bp-messages-feedback">
-			<div class="bp-messages bp-user-messages-feedback">
-				<div class="bp-feedback info">
-					<span class="bp-icon" aria-hidden="true"></span>
-					<p><?php esc_html_e( 'To view activities, please enable the activity component.', 'shortcodes-for-buddypress' ); ?></p>
-				</div>
-			</div>
-		</div>
-		<?php
+		$this->render_disabled_notice(
+			__( 'To view activities, please enable the activity component.', 'shortcodes-for-buddypress' )
+		);
 	}
 
 	/**

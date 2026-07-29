@@ -182,7 +182,7 @@ function bp_shortcode_member_cover() {
  * Simplified function that handles debug mode, minification, and RTL.
  *
  * @since 1.7.0
- * @param string $path     Path relative to plugin root (e.g., 'admin/css').
+ * @param string $path     Path relative to plugin root (e.g., 'assets/css').
  * @param string $filename Base filename without extension.
  * @param string $type     Asset type: 'css' or 'js'.
  * @return string Complete URL to the asset.
