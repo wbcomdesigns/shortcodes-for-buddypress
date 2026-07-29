@@ -80,6 +80,12 @@ Shortcodes let you place BuddyPress activity, members and groups anywhere. These
 * Code Quality: Added phpcs:ignore for legacy file naming and class naming conventions
 * Code Quality: Fixed all Plugin Check errors (0 errors)
 
+= 2.9.1 =
+* Fix      - Load text domain issue.
+* Fix      - Removed redundant functions for activity action wrapper.
+* Fix      - Render BuddyBoss video activity in activity listing widget.
+* Fix      - BuddyBoss video activity not displaying correctly.
+
 = 2.9.0 =
 * Added: Support for shortcode parameter handling in Elementor and Youzify setups.  
 * Added: UI support and styling improvements for Reign, BuddyBoss, and Youzify themes.  

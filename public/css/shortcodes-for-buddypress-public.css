@@ -7,6 +7,14 @@
     display: none;
 }
 
+/*Activity Shortcode*/
+/* BuddyPress renders an empty form wrapper for logged-out visitors; without
+   this the shortcode leaves a blank block above the stream. Merged from
+   master (0ba8cfc). */
+.activity-update-form:empty {
+    display: none;
+}
+
 /*Members and Groups Shortcode*/
 .bpsp-member-count,
 .bpsp-group-count {
