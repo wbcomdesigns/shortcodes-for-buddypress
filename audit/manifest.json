@@ -1,0 +1,289 @@
+{
+  "$schema": "https://wpmediaverse.com/schemas/wp-plugin-manifest-v2.json",
+  "plugin": {
+    "slug": "shortcodes-for-buddypress",
+    "name": "Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress",
+    "version": "3.0.0",
+    "namespace": "Shortcodes_For_Buddypress",
+    "main_file": "shortcodes-for-buddypress.php",
+    "text_domain": "shortcodes-for-buddypress",
+    "requires_wp": "6.5",
+    "requires_php": "8.0",
+    "requires_plugins": [
+      "buddypress"
+    ],
+    "extends": null,
+    "pro_companion": "shortcode-for-buddypress-pro",
+    "mutually_exclusive_with_pro": true,
+    "constants": [
+      "SHORTCODES_FOR_BUDDYPRESS_VERSION",
+      "SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR",
+      "SHORTCODES_FOR_BUDDYPRESS_PLUGIN_URL",
+      "SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME"
+    ]
+  },
+  "summary": "Small, single-purpose plugin: three BuddyPress shortcodes plus three matching Elementor widgets, and an informational admin panel. No settings, no database tables, no REST, no cron, no blocks, no CLI.",
+  "rest": {
+    "namespace": null,
+    "endpoints": []
+  },
+  "ajax": [
+    {
+      "action": "bpsp_activities_load",
+      "nopriv": true,
+      "registered_in": "includes/class-shortcodes-for-buddypress.php",
+      "handler": "public/class-shortcodes-for-buddypress-public.php::buddypress_shortcodes_load_activities",
+      "nonce": "bpsp-nonce",
+      "capability": "none (public read)",
+      "purpose": "Paginate the public BuddyPress activity stream for the load-more control."
+    }
+  ],
+  "shortcodes": [
+    {
+      "tag": "activity-listing",
+      "class": "ActivityShortCode",
+      "handler": "public/shortcode/class-shortcode-for-activity-listing.php",
+      "registered_via": "BPShortCode base class (tag-driven, singleton)",
+      "purpose": "Render a BuddyPress activity stream."
+    },
+    {
+      "tag": "members-listing",
+      "class": "MemberShortCode",
+      "handler": "public/shortcode/class-member-shortcode.php",
+      "registered_via": "BPShortCode base class (tag-driven, singleton)",
+      "purpose": "Render a BuddyPress members directory."
+    },
+    {
+      "tag": "groups-listing",
+      "class": "GroupShortCode",
+      "handler": "public/shortcode/class-group-shortcode.php",
+      "registered_via": "BPShortCode base class (tag-driven, singleton)",
+      "purpose": "Render a BuddyPress groups directory."
+    }
+  ],
+  "elementor_widgets": [
+    {
+      "name": "buddypress_shortcode_activity_widget",
+      "class": "Buddypress_Shortcode_Activity_Widget",
+      "file": "elementor/widgets/class-buddypress-activity-widget.php"
+    },
+    {
+      "name": "buddypress_shortcode_members_widget",
+      "class": "Buddypress_Shortcode_Members_Widget",
+      "file": "elementor/widgets/class-buddypress-members-widget.php"
+    },
+    {
+      "name": "buddypress_shortcode_groups_widget",
+      "class": "Buddypress_Shortcode_Groups_Widget",
+      "file": "elementor/widgets/class-buddypress-groups-widget.php"
+    }
+  ],
+  "elementor_category": {
+    "slug": "buddypress-widgets",
+    "title": "BuddyPress Widgets",
+    "registered_at": "elementor/class-buddypress-shortcode-elements.php",
+    "hook": "elementor/elements/categories_registered"
+  },
+  "elementor_widget_detection": {
+    "note": "has_shortcode_on_page() also scans _elementor_data for these widget names, because Elementor pages have empty post_content and has_shortcode() would miss them.",
+    "location": "public/class-shortcodes-for-buddypress-public.php::check_elementor_data_for_widgets"
+  },
+  "admin_pages": [
+    {
+      "slug": "wbcomplugins",
+      "title": "WB Plugins",
+      "type": "menu_page",
+      "capability": "manage_options",
+      "renderer": "render_hub",
+      "note": "Shared Wbcom hub; registered only when absent."
+    },
+    {
+      "slug": "shortcodes-for-buddypress",
+      "title": "BP Shortcodes",
+      "type": "submenu_page",
+      "parent": "wbcomplugins",
+      "capability": "manage_options",
+      "renderer": "render_page"
+    }
+  ],
+  "admin_tabs": [
+    "overview",
+    "shortcodes",
+    "activities",
+    "members",
+    "groups",
+    "discover"
+  ],
+  "admin_wrapper": {
+    "classification": "card_panel",
+    "evidence": "includes/admin/class-shortcodes-for-buddypress-admin-panel.php + includes/admin/views/*.php",
+    "not_present": "The legacy admin/wbcom/ tab wrapper was removed in 3.0.0. The admin/ directory no longer exists at all.",
+    "tab_filter": "bpsp_admin_tabs"
+  },
+  "settings": [],
+  "settings_note": "No register_setting(), no update_option() anywhere. Every admin tab is an informational partial with no form and no persisted state.",
+  "options_read": [
+    "_bp_theme_package_id",
+    "bp_nouveau_appearance",
+    "bb_pinned_post",
+    "active_plugins"
+  ],
+  "options_written": [],
+  "blocks": [],
+  "post_types": [],
+  "taxonomies": [],
+  "tables": [],
+  "cron": [],
+  "wp_cli": [],
+  "interactivity": [],
+  "storage_drivers": [],
+  "capabilities": [
+    "manage_options"
+  ],
+  "activation_hooks": [],
+  "activation_note": "register_activation_hook / register_deactivation_hook and their Activator/Deactivator classes were removed in 3.0.0 - both methods had empty bodies.",
+  "classes": [
+    "Shortcodes_For_Buddypress",
+    "Shortcodes_For_Buddypress_Loader",
+    "Shortcodes_For_Buddypress_Public",
+    "Shortcodes_For_Buddypress_Admin_Panel",
+    "BPShortCode (abstract)",
+    "ActivityShortCode",
+    "MemberShortCode",
+    "GroupShortCode",
+    "BPSP_Elementor_Widgets",
+    "Buddypress_Shortcode_Activity_Widget",
+    "Buddypress_Shortcode_Members_Widget",
+    "Buddypress_Shortcode_Groups_Widget"
+  ],
+  "buddypress_integration": {
+    "enabled_when": "BuddyPress (or BuddyBoss) active; every bp_is_active() call is function_exists()-guarded",
+    "manager": "Shortcodes_For_Buddypress_Public",
+    "template_packs": [
+      "nouveau"
+    ],
+    "template_pack_note": "legacy and youzify were removed in 3.0.0. All three shortcodes now resolve to templates/nouveau/ regardless of _bp_theme_package_id; BuddyBoss uses the bb-*.php variants inside that pack.",
+    "templates": [
+      "templates/nouveau/activity/bp-shortcodes-activity.php",
+      "templates/nouveau/groups/bp-shortcodes-groups.php",
+      "templates/nouveau/groups/bb-shortcodes-groups.php",
+      "templates/nouveau/members/bp-shortcodes-members.php",
+      "templates/nouveau/members/bb-shortcodes-members.php"
+    ]
+  },
+  "hooks_fired": {
+    "actions": [
+      "before_enqueue_buddypress_shortcode_styles",
+      "before_enqueue_buddypress_shortcode_scripts",
+      "before_activity_shortcode_render",
+      "activity_shortcode_inside_container",
+      "after_activity_shortcode_render",
+      "before_member_shortcode_render",
+      "member_shortcode_before_output",
+      "member_shortcode_inside_container",
+      "after_member_shortcode_render",
+      "before_group_shortcode_render",
+      "group_shortcode_inside_container",
+      "after_group_shortcode_render",
+      "bb_whats_new_toolbar_after"
+    ],
+    "filters": [
+      "activity_shortcode_bash_query",
+      "activity_shortcode_template_args",
+      "member_shortcode_bash_query_args",
+      "member_shortcode_template_args",
+      "member_shortcode_output",
+      "group_shortcode_bash_query_args",
+      "group_shortcode_template_args",
+      "group_shortcode_output",
+      "bp_shortcode_locate_template",
+      "bp_shortcode_is_shortcode_page",
+      "bp_shortcode_member_cover",
+      "bpsp_admin_tabs",
+      "buddypress_shortcode_elementor_widget_type",
+      "bp_shortcode_pro_activity_element_args",
+      "bp_shortcode_pro_members_element_args",
+      "bp_shortcode_pro_groups_element_args",
+      "bp_shortcode_pro_loggedin_user_activity"
+    ],
+    "pro_contract_note": "The bp_shortcode_pro_* filters are the Free/Pro seam consumed by shortcode-for-buddypress-pro. Do not rename or drop without a paired Pro release."
+  },
+  "frontend_assets": {
+    "resolution": "bp_shortcode_asset() in includes/functions.php picks rtl/ then min/ then the unminified source, falling back so a missing build never 404s.",
+    "public_js": "public/js/shortcodes-for-buddypress-public.js (built to public/js/min/)",
+    "public_css": "public/css/shortcodes-for-buddypress-public.css (built to public/css/min/ and public/css/rtl/)",
+    "admin_js": "assets/js/admin.js (built to assets/js/min/)",
+    "admin_css": "assets/css/admin.css (built to assets/css/min/ and assets/css/rtl/)",
+    "localized_object": {
+      "handle": "shortcodes-for-buddypress",
+      "name": "buddypress_shortcode",
+      "keys": [
+        "ajax_url",
+        "ajax_nonce"
+      ],
+      "gate": "has_shortcode_on_page() - register, enqueue and localize all run off this single condition so the object always exists wherever the script does."
+    },
+    "admin_localized_object": {
+      "name": "bpspAdmin",
+      "keys": [
+        "i18n"
+      ]
+    }
+  },
+  "security": {
+    "ajax_nonces": {
+      "bpsp_activities_load": "bpsp-nonce"
+    },
+    "admin_capability": "manage_options on every admin page",
+    "tab_input": "$_GET['tab'] read via sanitize_key() then whitelisted against get_tabs()",
+    "uninstall": "uninstall.php present; the plugin stores no options and no tables, so there is nothing to purge"
+  },
+  "build": {
+    "tool": "Grunt",
+    "tasks": {
+      "build": "clean, checktextdomain, cssmin, uglify, rtlcss, shell:makepot, copy, compress",
+      "minify": "cssmin + uglify only",
+      "i18n": "checktextdomain + shell:makepot"
+    },
+    "pot_generator": "wp i18n make-pot via shell:makepot. The grunt-wp-i18n `makepot` task is deliberately NOT used - it produced the stale POT that shipped 714 references to deleted files.",
+    "packaging_excludes": [
+      "node_modules",
+      "build",
+      "temp",
+      "tests",
+      "audit",
+      "**/*.md",
+      "gruntfile.js",
+      "package*.json",
+      "composer.*",
+      "phpcs.xml",
+      "phpunit.xml",
+      "*.zip"
+    ],
+    "release_zip_files": 97,
+    "ci": {
+      "runner": "bin/local-ci.sh",
+      "gates": [
+        "php -l across the tree",
+        "WPCS errors (warnings advisory)",
+        "PHPStan level 5 with baseline",
+        "PHPUnit functional suite"
+      ],
+      "note": "GitHub Actions is disabled for this repository, so the .github workflow was removed rather than kept as config that can never run. bin/local-ci.sh is the gate; it exits non-zero on failure. If Actions is re-enabled, restore the workflow from git history (commit a8c295d)."
+    }
+  },
+  "known_gaps": [
+    "MemberShortCode::handle_classes() and GroupShortCode::get_container_classes() are parallel Reign layout builders that have drifted apart (40 vs 56 lines). Consolidating needs a Reign install to verify.",
+    "readme.txt 'Tested up to: 7.0' should be re-confirmed before release.",
+    "Elementor get_widget_list() and the no-op handleResize() JS were removed in this pass; if a future release needs a resize hook, re-add the listener with the handler, not before.",
+    "BuddyBoss-only functions (bb_*, bp_moderation_*, bp_is_*_media_support_enabled, bp_member_type_*) are called unguarded inside the bb-*.php templates and buddypress_shortcode_activity_entry_bubble_buttons. That is safe because both are reached only when buddypress()->buddyboss is set, but any new call site outside those paths needs a function_exists guard."
+  ],
+  "generated": {
+    "at": "2026-07-29",
+    "from": "manual refresh from source after the 3.0.0 dead-code and duplication audit",
+    "branch": "3.0.0",
+    "scan_scope": "full_source",
+    "php_file_count": 32,
+    "schema_version": "v2.2"
+  }
+}

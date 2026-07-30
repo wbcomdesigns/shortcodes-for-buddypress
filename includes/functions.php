@@ -1,57 +1,93 @@
 <?php
-
 /**
- * Includes Shortcodes for BuddyPress template file.
+ * Helper functions for the plugin.
  *
- * @since 1.0.0
- * @param string $file_name File name to include the specific template.
- * @return void
+ * @since   1.7.0
+ * @package Shortcodes_For_BuddyPress
  */
 
-function shortcodes_for_buddypress_template( $file_name ) {
-	
-	$template_name = 'shortcodes-for-buddypress/' . $file_name;
-
-	if ( file_exists( get_stylesheet_directory() . '/' . $template_name ) ) {
-		$template_path = get_stylesheet_directory() . '/' . $template_name;
-
-	} elseif ( file_exists( get_template_directory() . '/' . $template_name ) ) {
-		$template_path = get_template_directory() . '/' . $template_name;
-
-	} else {
-		if ( file_exists( SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR . 'templates/' . $file_name ) ){
-			$template_path = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR . 'templates/' . $file_name ;
-		} else {
-			return false;
-		}
-	}
-	
-	/** Apply filter to extend the functionality of template override so that user can use this filter to replace current template path with its own template path.
-	 * If the template path exists, include the template and load the shortcode functionality.
-	 * @since 2.7.2
-	 */
-
-	if ( $template_path ) {
-		$template_path  = apply_filters( 'shortcodes_for_buddypress_custom_template_path' , $template_path );
-		include $template_path;
-	}
-}
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Gets and includes template files.
  *
  * @since 1.7.0
- * @param mixed  $template_name
- * @param array  $args (default: array()).
- * @param string $template_path (default: '').
- * @param string $default_path (default: '').
+ * @param mixed  $template_name Template name.
+ * @param array  $args          Arguments (default: array()).
+ * @param string $template_path Template path (default: '').
+ * @param string $default_path  Default path (default: '').
  */
 function bp_shortcode_get_template( $template_name, $args = array(), $template_path = 'nouveau', $default_path = '' ) {
+	if ( ! bp_shortcode_nouveau_is_available() ) {
+		bp_shortcode_render_nouveau_required_notice();
+		return;
+	}
+
 	if ( $args && is_array( $args ) ) {
 		// phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- Please, forgive us.
 		extract( $args );
 	}
 	include bp_shortcode_locate_template( $template_name, $template_path, $default_path );
+}
+
+/**
+ * Whether the BuddyPress Nouveau template functions are loadable.
+ *
+ * Since 3.0.0 every shortcode renders the Nouveau templates regardless of the
+ * site's `_bp_theme_package_id`, and those templates call Nouveau-only
+ * template tags. BuddyPress defines them only when Nouveau is the active
+ * pack, so on a site running the legacy pack with a non-BuddyPress theme the
+ * shortcode would fatal on an undefined function.
+ *
+ * Loading Nouveau on demand is not an option: its loader ends by
+ * instantiating BP_Nouveau, whose constructor registers bp_replace_the_content
+ * and theme-compat filters and would hijack BuddyPress's own pages mid
+ * request. Detecting and degrading is the contained choice.
+ *
+ * @since 3.0.0
+ * @return bool
+ */
+function bp_shortcode_nouveau_is_available() {
+	$required = array(
+		'bp_nouveau',
+		'bp_nouveau_get_container_classes',
+		'bp_nouveau_before_loop',
+	);
+
+	foreach ( $required as $function ) {
+		if ( ! function_exists( $function ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
+ * Explain that the Nouveau template pack is required.
+ *
+ * Rendered in place of the listing so the page degrades to a readable notice
+ * instead of a fatal error.
+ *
+ * @since 3.0.0
+ * @return void
+ */
+function bp_shortcode_render_nouveau_required_notice() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	?>
+	<div class="bp-messages-feedback">
+		<div class="bp-messages bp-user-messages-feedback">
+			<div class="bp-feedback info">
+				<span class="bp-icon" aria-hidden="true"></span>
+				<p>
+					<?php esc_html_e( 'This shortcode needs the BuddyPress Nouveau template pack. Switch it on under Settings > BuddyPress > Options to display the listing. Only site administrators can see this message.', 'shortcodes-for-buddypress' ); ?>
+				</p>
+			</div>
+		</div>
+	</div>
+	<?php
 }
 
 /**
@@ -62,9 +98,9 @@ function bp_shortcode_get_template( $template_name, $args = array(), $template_p
  *
  * @since 1.7.0
  *
- * @param   string $template_name          Template to load.
- * @param   string $string $template_path  Path to templates.
- * @param   string $default_path           Default path to template files.
+ * @param   string $template_name  Template to load.
+ * @param   string $template_path Path to templates.
+ * @param   string $default_path  Default path to template files.
  * @return  string                          Path to the template file.
  */
 function bp_shortcode_locate_template( $template_name, $template_path, $default_path = '' ) {
@@ -75,7 +111,7 @@ function bp_shortcode_locate_template( $template_name, $template_path, $default_
 			$template_name,
 		)
 	);
-	
+
 	// Get default template.
 	if ( ! $template && false !== $default_path ) {
 		$default_path = $default_path ? $default_path : SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR . 'templates/';
@@ -87,6 +123,13 @@ function bp_shortcode_locate_template( $template_name, $template_path, $default_
 	return apply_filters( 'bp_shortcode_locate_template', $template, $template_name, $template_path, $default_path );
 }
 
+/**
+ * Check if the current page has a BuddyPress shortcode.
+ *
+ * @since 1.7.0
+ * @param string $shortcode Optional. Shortcode to check for.
+ * @return bool
+ */
 function bp_shortcode_is_shortcode_page( $shortcode = '' ) {
 	global $post;
 
@@ -95,7 +138,7 @@ function bp_shortcode_is_shortcode_page( $shortcode = '' ) {
 	}
 
 	if ( empty( $shortcode ) ) {
-		// Check for default shortcodes if $shortcode is empty
+		// Check for default shortcodes if $shortcode is empty.
 		$has_shortcode = (
 			is_a( $post, 'WP_Post' ) &&
 			(
@@ -105,14 +148,14 @@ function bp_shortcode_is_shortcode_page( $shortcode = '' ) {
 			)
 		);
 	} else {
-		// Check for the specified shortcode
+		// Check for the specified shortcode.
 		$has_shortcode = (
 			is_a( $post, 'WP_Post' ) &&
 			has_shortcode( $post->post_content, $shortcode )
 		);
 	}
 
-	// Check for Elementor widgets if Elementor is active
+	// Check for Elementor widgets if Elementor is active.
 	if ( ( defined( 'ELEMENTOR_PRO_VERSION' ) || defined( 'ELEMENTOR_VERSION' ) ) && ! empty( $post ) ) {
 		$elementor_data         = get_post_meta( $post->ID, '_elementor_data', true );
 		$elementor_data_decoded = json_decode( $elementor_data, true );
@@ -141,25 +184,33 @@ function bp_shortcode_is_shortcode_page( $shortcode = '' ) {
 	return apply_filters( 'bp_shortcode_is_shortcode_page', $has_shortcode );
 }
 
+/**
+ * Check if Elementor data contains a specific widget type.
+ *
+ * @since 1.7.0
+ * @param array  $elementor_data Elementor data array.
+ * @param string $widget_type    Widget type to check for.
+ * @return bool
+ */
 function bp_shortcode_is_elementor_widget( $elementor_data, $widget_type = '' ) {
 	if ( ! is_array( $elementor_data ) ) {
-		return false; // If $elementor_data is not an array, return false
+		return false; // If $elementor_data is not an array, return false.
 	}
 
 	foreach ( $elementor_data as $element ) {
 		if ( isset( $element['widgetType'] ) ) {
-			// Check if $widget_type is specified and match widgetType
-			if ( ! empty( $widget_type ) && $element['widgetType'] === $widget_type ) {
+			// Check if $widget_type is specified and match widgetType.
+			if ( ! empty( $widget_type ) && $widget_type === $element['widgetType'] ) {
 				return true;
 			}
 
-			// Check predefined widget types if $widget_type is empty
-			if ( empty( $widget_type ) && in_array( $element['widgetType'], array( 'bpsp_activity', 'bpsp_member', 'bpsp_group' ) ) ) {
+			// Check predefined widget types if $widget_type is empty.
+			if ( empty( $widget_type ) && in_array( $element['widgetType'], array( 'bpsp_activity', 'bpsp_member', 'bpsp_group' ), true ) ) {
 				return true;
 			}
 		}
 
-		// Recursively check nested elements if they exist
+		// Recursively check nested elements if they exist.
 		if ( isset( $element['elements'] ) && bp_shortcode_is_elementor_widget( $element['elements'], $widget_type ) ) {
 			return true;
 		}
@@ -169,17 +220,19 @@ function bp_shortcode_is_elementor_widget( $elementor_data, $widget_type = '' ) 
 }
 
 /**
- * Render the member cover for Reign and Buddyx theme
+ * Render the member cover for Reign and Buddyx theme.
  *
+ * @since 1.7.0
+ * @return string
  */
 function bp_shortcode_member_cover() {
-	$active_theme = wp_get_theme();
+	$active_theme = wp_get_theme()->get( 'Name' );
 	$cover        = '';
-	if ( 'BuddyX' == $active_theme || 'BuddyxPro' == $active_theme ) {
+	if ( 'BuddyX' === $active_theme || 'BuddyxPro' === $active_theme ) {
 		if ( function_exists( 'buddyx_render_member_cover_image' ) ) {
 			$cover = buddyx_render_member_cover_image();
 		}
-	} elseif ( 'REIGN' == $active_theme ) {
+	} elseif ( 'REIGN' === $active_theme ) {
 		if ( function_exists( 'reign_render_member_cover_image' ) ) {
 			$cover = reign_render_member_cover_image();
 		}
@@ -189,73 +242,67 @@ function bp_shortcode_member_cover() {
 }
 
 /**
- * Get the appropriate asset file extension and path based on debug mode and RTL settings.
+ * Get asset URL for CSS or JS files.
  *
- * This utility function centralizes the logic for determining asset paths and extensions,
- * reducing code duplication across admin and public classes.
+ * Simplified function that handles debug mode, minification, and RTL.
  *
- * @since 2.9.1
- * @param string $type The type of asset ('css' or 'js').
- * @return array {
- *     Array containing extension and path information.
- *     @type string $extension The file extension including prefix (e.g., '.min.css', '.rtl.css').
- *     @type string $path      The subdirectory path (e.g., '/min', '/rtl').
- * }
+ * @since 1.7.0
+ * @param string $path     Path relative to plugin root (e.g., 'assets/css').
+ * @param string $filename Base filename without extension.
+ * @param string $type     Asset type: 'css' or 'js'.
+ * @return string Complete URL to the asset.
  */
-function shortcodes_for_buddypress_get_asset_info( $type = 'css' ) {
-	$asset_info = array();
+function bp_shortcode_asset( $path, $filename, $type = 'css' ) {
+	$debug = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
+	$base  = plugin_dir_path( __DIR__ );
+	$ext   = ( 'js' === $type ) ? 'js' : 'css';
 
-	if ( 'css' === $type ) {
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$asset_info['extension'] = is_rtl() ? '.rtl.css' : '.css';
-			$asset_info['path']      = is_rtl() ? '/rtl' : '';
-		} else {
-			$asset_info['extension'] = is_rtl() ? '.rtl.css' : '.min.css';
-			$asset_info['path']      = is_rtl() ? '/rtl' : '/min';
-		}
-	} elseif ( 'js' === $type ) {
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$asset_info['extension'] = '.js';
-			$asset_info['path']      = '';
-		} else {
-			$asset_info['extension'] = '.min.js';
-			$asset_info['path']      = '/min';
+	/*
+	 * Build a preference list and return the first candidate that actually
+	 * exists on disk. Minified builds live in a `min/` subfolder and the RTL
+	 * stylesheet in a `rtl/` subfolder; the unminified source is the final
+	 * fallback so a missing build never 404s.
+	 */
+	$candidates = array();
+	if ( 'css' === $type && is_rtl() ) {
+		$candidates[] = $path . '/rtl/' . $filename . '.rtl.' . $ext;
+	}
+	if ( ! $debug ) {
+		$candidates[] = $path . '/min/' . $filename . '.min.' . $ext;
+	}
+	$candidates[] = $path . '/' . $filename . '.' . $ext;
+
+	$full_path = end( $candidates );
+	foreach ( $candidates as $rel ) {
+		if ( file_exists( $base . $rel ) ) {
+			$full_path = $rel;
+			break;
 		}
 	}
 
-	/**
-	 * Filter the asset information array.
-	 *
-	 * @since 2.9.1
-	 * @param array  $asset_info Array containing extension and path.
-	 * @param string $type       The type of asset ('css' or 'js').
-	 */
-	return apply_filters( 'shortcodes_for_buddypress_asset_info', $asset_info, $type );
+	return plugin_dir_url( __DIR__ ) . $full_path;
 }
 
 /**
- * Build the complete URL for a plugin asset file.
+ * Enqueue a plugin asset (CSS or JS).
  *
- * @since 2.9.1
- * @param string $base_path The base path within the plugin (e.g., 'admin/css', 'public/js').
- * @param string $filename  The base filename without extension (e.g., 'shortcodes-for-buddypress-admin').
- * @param string $type      The type of asset ('css' or 'js').
- * @return string The complete URL to the asset file.
+ * Wrapper function to simplify asset enqueuing.
+ *
+ * @since 1.7.0
+ * @param string $handle   Unique handle for the asset.
+ * @param string $path     Path relative to plugin root.
+ * @param string $filename Base filename without extension.
+ * @param string $type     Asset type: 'css' or 'js'.
+ * @param array  $deps     Dependencies.
+ * @param string $version  Version number.
+ * @return void
  */
-function shortcodes_for_buddypress_get_asset_url( $base_path, $filename, $type = 'css' ) {
-	$asset_info = shortcodes_for_buddypress_get_asset_info( $type );
+function bp_shortcode_enqueue( $handle, $path, $filename, $type = 'css', $deps = array(), $version = SHORTCODES_FOR_BUDDYPRESS_VERSION ) {
+	$url = bp_shortcode_asset( $path, $filename, $type );
 
-	// Build the complete URL
-	$url = plugin_dir_url( dirname( __FILE__ ) ) . $base_path . $asset_info['path'] . '/' . $filename . $asset_info['extension'];
-
-	/**
-	 * Filter the complete asset URL.
-	 *
-	 * @since 2.9.1
-	 * @param string $url       The complete URL to the asset.
-	 * @param string $base_path The base path within the plugin.
-	 * @param string $filename  The base filename without extension.
-	 * @param string $type      The type of asset.
-	 */
-	return apply_filters( 'shortcodes_for_buddypress_asset_url', $url, $base_path, $filename, $type );
+	if ( 'css' === $type ) {
+		wp_enqueue_style( $handle, $url, $deps, $version );
+	} else {
+		wp_enqueue_script( $handle, $url, $deps, $version, true );
+	}
 }

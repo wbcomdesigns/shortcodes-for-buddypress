@@ -1,4 +1,10 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Legacy file name.
+/**
+ * Elementor integration for Shortcodes for BuddyPress.
+ *
+ * @since   1.6.1
+ * @package Shortcodes_For_BuddyPress
+ */
 
 namespace BPSPElementor;
 
@@ -6,24 +12,28 @@ use Elementor\Plugin;
 use Elementor\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-} // Exit if accessed directly
+	exit; // Exit if accessed directly.
+}
 
-
+/**
+ * Elementor Widgets manager class.
+ *
+ * @since 1.6.1
+ */
 class BPSP_Elementor_Widgets {
 
 	/**
-	 * Instance of BPSP_Elementor_Widgets.
+	 * Instance.
 	 *
-	 * @since  1.6.1
-	 * @var null
+	 * @since 1.6.1
+	 * @var null|BPSP_Elementor_Widgets
 	 */
 	private static $_instance = null;
 
 	/**
-	 * Get instance of BPSP_Elementor_Widgets
+	 * Get instance.
 	 *
-	 * @since  1.6.1
+	 * @since 1.6.1
 	 * @return BPSP_Elementor_Widgets
 	 */
 	public static function instance() {
@@ -36,9 +46,9 @@ class BPSP_Elementor_Widgets {
 
 
 	/**
-	 * Setup actions and filters.
+	 * Constructor.
 	 *
-	 * @since  1.6.1
+	 * @since 1.6.1
 	 */
 	private function __construct() {
 		// Register category.
@@ -46,16 +56,14 @@ class BPSP_Elementor_Widgets {
 
 		// Register widgets.
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
-
-		// Add svg support.
-		// add_filter( 'upload_mimes', array( $this, 'hfe_svg_mime_types' ) ); // PHPCS:Ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
 	}
 
 	/**
-	 * Register Category
+	 * Register widget category.
 	 *
 	 * @since 1.6.1
-	 * @param object $this_cat class.
+	 * @param object $this_cat Categories manager.
+	 * @return object
 	 */
 	public function register_widget_category( $this_cat ) {
 
@@ -71,38 +79,32 @@ class BPSP_Elementor_Widgets {
 	}
 
 	/**
-	 * Register Widgets
-	 *
-	 * Register new Elementor widgets.
+	 * Register widgets.
 	 *
 	 * @since 1.6.1
-	 * @access public
+	 * @return void
 	 */
 	public function register_widgets() {
-		// Its is now safe to include Widgets files.
+		// It is now safe to include Widgets files.
 		$this->include_widgets_files();
-	
-		// Register Widgets.
+
+		// Register widgets.
 		Plugin::instance()->widgets_manager->register( new Widgets\Buddypress_Shortcode_Activity_Widget() );
 		Plugin::instance()->widgets_manager->register( new Widgets\Buddypress_Shortcode_Members_Widget() );
 		Plugin::instance()->widgets_manager->register( new Widgets\Buddypress_Shortcode_Groups_Widget() );
 	}
 
 	/**
-	 * Include Widgets files
-	 *
-	 * Load widgets files
+	 * Include widget files.
 	 *
 	 * @since 1.6.1
-	 * @access public
+	 * @return void
 	 */
 	public function include_widgets_files() {
-		// $js_files    = $this->get_widget_script();
-		// $widget_list = $this->get_widget_list();
 		$widget_list = array(
 			'Buddypress_Shortcode_Activity_Widget' => 'activity',
-			'Buddypress_Shortcode_Members_Widget' => 'members',
-			'Buddypress_Shortcode_Groups_Widget' => 'groups',
+			'Buddypress_Shortcode_Members_Widget'  => 'members',
+			'Buddypress_Shortcode_Groups_Widget'   => 'groups',
 		);
 		if ( ! empty( $widget_list ) ) {
 			foreach ( $widget_list as $handle => $data ) {
@@ -110,27 +112,6 @@ class BPSP_Elementor_Widgets {
 			}
 		}
 	}
-
-	/**
-	 * Returns Script array.
-	 *
-	 * @return array()
-	 * @since 1.6.1
-	 */
-	public static function get_widget_list() {
-		$widget_list = array(
-			'activity',
-			'members',
-			'groups',
-		);
-
-		// if ( bp_is_active( 'groups' ) ) {
-		// 	$widget_list[] = 'groups';
-		// }
-
-		return $widget_list;
-	}
-
 }
 
 

@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<ruleset name="Shortcodes For BuddyPress">
+	<description>WordPress Coding Standards for shortcodes-for-buddypress.</description>
+
+	<file>.</file>
+
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/build/*</exclude-pattern>
+	<exclude-pattern>/audit/*</exclude-pattern>
+	<exclude-pattern>*/js/min/*</exclude-pattern>
+	<exclude-pattern>*/js/vendor/*</exclude-pattern>
+	<exclude-pattern>*/css/min/*</exclude-pattern>
+	<exclude-pattern>*/css/rtl/*</exclude-pattern>
+	<exclude-pattern>*.min.js</exclude-pattern>
+	<exclude-pattern>gruntfile.js</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+	<arg name="parallel" value="8"/>
+
+	<rule ref="WordPress">
+		<!--
+		The base class name predates the standard and renaming it would break
+		the Free/Pro contract, so the file-name sniff is handled inline.
+		-->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+	</rule>
+
+	<!--
+	Security sniffs are deliberately NOT excluded. EscapeOutput,
+	NonceVerification and ValidatedSanitizedInput stay on.
+	-->
+
+	<config name="minimum_wp_version" value="6.5"/>
+	<config name="testVersion" value="8.0-"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="shortcodes-for-buddypress"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="bp_shortcode"/>
+				<element value="bpsp"/>
+				<element value="bpsh"/>
+				<element value="shortcodes_for_buddypress"/>
+				<element value="Shortcodes_For_Buddypress"/>
+				<element value="SHORTCODES_FOR_BUDDYPRESS"/>
+				<element value="buddypress_shortcode"/>
+			</property>
+		</properties>
+
+		<!--
+		The hook names (activity_shortcode_*, member_shortcode_*,
+		group_shortcode_*, before/after_*_shortcode_render) are the published
+		Free/Pro contract consumed by shortcode-for-buddypress-pro. Renaming
+		them to add a prefix would silently break every Pro install, so they
+		are frozen until a paired Pro release. New hooks must use one of the
+		prefixes listed above.
+		-->
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound"/>
+
+		<!--
+		BPShortCode and its ActivityShortCode / MemberShortCode /
+		GroupShortCode subclasses predate the standard and are part of the
+		same frozen contract.
+		-->
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound"/>
+	</rule>
+
+	<!--
+	Templates receive their variables from extract() inside
+	bp_shortcode_get_template(), so they are template scope rather than true
+	globals and cannot carry a prefix.
+	-->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound">
+		<exclude-pattern>/templates/*</exclude-pattern>
+		<exclude-pattern>/public/shortcode/*</exclude-pattern>
+		<exclude-pattern>/public/class-shortcodes-for-buddypress-public.php</exclude-pattern>
+		<exclude-pattern>/includes/admin/views/*</exclude-pattern>
+	</rule>
+
+	<!-- WP_TESTS_PHPUNIT_POLYFILLS_PATH is defined by the WP test suite. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound">
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+</ruleset>

@@ -1,10 +1,6 @@
 <?php
-
 /**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
+ * Core plugin class file.
  *
  * @link       https://wbcomdesigns.com/plugins
  * @since      1.0.0
@@ -13,14 +9,10 @@
  * @subpackage Shortcodes_For_Buddypress/includes
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
- * The core plugin class.
- *
- * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
- *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
+ * Core plugin class.
  *
  * @since      1.0.0
  * @package    Shortcodes_For_Buddypress
@@ -30,185 +22,169 @@
 class Shortcodes_For_Buddypress {
 
 	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
+	 * Plugin loader.
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Shortcodes_For_Buddypress_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Shortcodes_For_Buddypress_Loader    $loader
 	 */
 	protected $loader;
 
 	/**
-	 * The unique identifier of this plugin.
+	 * Plugin identifier.
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string    $plugin_name
 	 */
 	protected $plugin_name;
 
 	/**
-	 * The current version of the plugin.
+	 * Plugin version.
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string    $version
 	 */
 	protected $version;
-	
+
+	/**
+	 * Plugin basename.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $plugin_basename
+	 */
 	protected $plugin_basename;
 
 	/**
-	 * Define the core functionality of the plugin.
-	 *
-	 * Set the plugin name and the plugin version that can be used throughout the plugin.
-	 * Load the dependencies, define the locale, and set the hooks for the admin area and
-	 * the public-facing side of the site.
+	 * Constructor.
 	 *
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' ) ) {
-			$this->version = SHORTCODES_FOR_BUDDYPRESS_VERSION;
-		} else {
-			$this->version = '1.0.0';
-		}
+		$this->version = defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' )
+			? SHORTCODES_FOR_BUDDYPRESS_VERSION
+			: '1.0.0';
+
 		$this->plugin_name     = 'shortcodes-for-buddypress';
 		$this->plugin_basename = SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME;
-		$this->load_dependencies();
-		$this->set_locale();
-		$this->define_admin_hooks();
-		$this->define_public_hooks();
 
+		$this->init();
 	}
 
 	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Include the following files that make up the plugin:
-	 *
-	 * - Shortcodes_For_Buddypress_Loader. Orchestrates the hooks of the plugin.
-	 * - Shortcodes_For_Buddypress_i18n. Defines internationalization functionality.
-	 * - Shortcodes_For_Buddypress_Admin. Defines all hooks for the admin area.
-	 * - Shortcodes_For_Buddypress_Public. Defines all hooks for the public side of the site.
-	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
+	 * Initialize components.
+	 */
+	private function init() {
+		$this->load_dependencies();
+		$this->define_admin_hooks();
+		$this->define_public_hooks();
+	}
+
+	/**
+	 * Load dependencies.
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
 	private function load_dependencies() {
+		$plugin_path = plugin_dir_path( __DIR__ );
 
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-shortcodes-for-buddypress-loader.php';
+		// Core classes.
+		$this->load_core_classes( $plugin_path );
 
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-shortcodes-for-buddypress-i18n.php';
+		// Admin classes.
+		$this->load_admin_classes( $plugin_path );
 
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-shortcodes-for-buddypress-admin.php';
+		// Public classes.
+		$this->load_public_classes( $plugin_path );
 
-		/**
-		 * The class responsible review on plugin by user.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-shortcode-for-buddypress-user-review.php';
+		// Shortcode classes.
+		$this->load_shortcode_classes( $plugin_path );
 
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-shortcodes-for-buddypress-public.php';
+		// Elementor integration.
+		if ( did_action( 'elementor/loaded' ) ) {
+			require_once $plugin_path . 'elementor/class-buddypress-shortcode-elements.php';
+		}
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
-
-
-
-		/**
-		 * The class responsible for rendering of all shortcode that occur in the public-facing
-		 * side of the site.
-		 *
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-shortcodes-for-buddypress-shortcode.php';
-
-		/**
-		 * The class responsible for rendering of activity shortcode that occur in the public-facing
-		 * side of the site.
-		 *
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-shortcode-for-activity-listing.php';
-
-		/**
-		 * The class responsible for rendering of group directory shortcode that occur in the public-facing
-		 * side of the site.
-		 *
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-group-shortcode.php';
-
-		/**
-		 * The class responsible for rendering of members shortcode that occur in the public-facing
-		 * side of the site.
-		 *
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcode/class-member-shortcode.php';
-
-		/**
-		 * The class responsible for load and render elementor widgets
-		 *
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'elementor/class-buddypress-shortcode-elements.php';
-
+		// Initialize loader.
 		$this->loader = new Shortcodes_For_Buddypress_Loader();
-
 	}
 
 	/**
-	 * Define the locale for this plugin for internationalization.
+	 * Load core classes.
 	 *
-	 * Uses the Shortcodes_For_Buddypress_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since  1.0.0
+	 * @param  string $path Plugin path.
+	 * @return void
 	 */
-	private function set_locale() {
-
-		$plugin_i18n = new Shortcodes_For_Buddypress_i18n();
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
+	private function load_core_classes( $path ) {
+		require_once $path . 'includes/class-shortcodes-for-buddypress-loader.php';
 	}
 
 	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
+	 * Load admin classes.
+	 *
+	 * @since  1.0.0
+	 * @param  string $path Plugin path.
+	 * @return void
+	 */
+	private function load_admin_classes( $path ) {
+		// Card-panel admin (replaces the legacy Wbcom wrapper as of 3.0.0).
+		// The old admin/class-shortcodes-for-buddypress-admin.php +
+		// admin/wbcom/ wrapper held only UI-render code (no save handlers,
+		// no AJAX, no sanitizer), so they are removed entirely — see
+		// references/wbcom-wrapper-migration.md Part 3.
+		require_once $path . 'includes/admin/class-shortcodes-for-buddypress-admin-panel.php';
+	}
+
+	/**
+	 * Load public classes.
+	 *
+	 * @since  1.0.0
+	 * @param  string $path Plugin path.
+	 * @return void
+	 */
+	private function load_public_classes( $path ) {
+		require_once $path . 'public/class-shortcodes-for-buddypress-public.php';
+	}
+
+	/**
+	 * Load shortcode classes.
+	 *
+	 * @since  1.0.0
+	 * @param  string $path Plugin path.
+	 * @return void
+	 */
+	private function load_shortcode_classes( $path ) {
+		// Base shortcode class.
+		require_once $path . 'public/shortcode/class-shortcodes-for-buddypress-shortcode.php';
+
+		// Individual shortcodes.
+		require_once $path . 'public/shortcode/class-shortcode-for-activity-listing.php';
+		require_once $path . 'public/shortcode/class-group-shortcode.php';
+		require_once $path . 'public/shortcode/class-member-shortcode.php';
+	}
+
+	/**
+	 * Register admin hooks.
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Shortcodes_For_Buddypress_Admin( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'buddypress_shortcodes_add_submenu_page' );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'buddypress_shortcodes_plugin_settings' );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'wbcom_hide_all_admin_notices_from_setting_page' );
+		// New card-panel admin. It owns the menu, enqueue, notice
+		// suppression, and tab rendering. Registers its own hooks via
+		// register() (not the Loader) so the hub-takeover priority-999
+		// hook and in_admin_header ordering match the playbook pattern.
+		$panel = new Shortcodes_For_Buddypress_Admin_Panel();
+		$panel->register();
 	}
 
 	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
+	 * Register public hooks.
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -222,7 +198,6 @@ class Shortcodes_For_Buddypress {
 
 		$this->loader->add_filter( 'bp_nouveau_get_search_primary_object', $plugin_public, 'buddypress_shortcodes_bp_nouveau_get_search_primary_object', 10 );
 		$this->loader->add_filter( 'body_class', $plugin_public, 'buddypress_shortcodes_body_classes' );
-		$this->loader->add_shortcode( 'notifications-listing', $plugin_public, 'buddypress_shortcodes_notifications' );
 
 		$this->loader->add_filter( 'bp_core_get_js_strings', $plugin_public, 'shortcodes_for_buddypress_activity_localize_scripts', 10, 1 );
 
@@ -234,14 +209,13 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_filter( 'bp_activity_reshare_action', $plugin_public, 'buddypress_shortcode_enable_share', 10 );
 		$this->loader->add_filter( 'bp_after_nouveau_wrapper_parse_args', $plugin_public, 'buddypress_shortcode_filter_activity_action_wrapper', 10 );
 
-		if ( function_exists('buddypress') && isset( buddypress()->buddyboss ) ) {
+		if ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) {
 			$this->loader->add_filter( 'bb_nouveau_get_activity_entry_bubble_buttons', $plugin_public, 'buddypress_shortcode_activity_entry_bubble_buttons', 10, 2 );
 		}
-
 	}
 
 	/**
-	 * Run the loader to execute all of the hooks with WordPress.
+	 * Run the loader.
 	 *
 	 * @since    1.0.0
 	 */
@@ -250,34 +224,22 @@ class Shortcodes_For_Buddypress {
 	}
 
 	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
+	 * Get plugin name.
 	 *
 	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
+	 * @return    string
 	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
 	}
 
 	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
+	 * Get plugin version.
 	 *
 	 * @since     1.0.0
-	 * @return    Shortcodes_For_Buddypress_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
-	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
+	 * @return    string
 	 */
 	public function get_version() {
 		return $this->version;
 	}
-
 }
