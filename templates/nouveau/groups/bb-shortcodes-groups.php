@@ -106,7 +106,7 @@ if ( bp_has_groups( $query ) ) {
 											if ( bb_platform_group_element_enable( 'last-activity' ) ) {
 												echo '<p class="last-activity item-meta">' .
 												sprintf(
-														/* translators: %s = last activity timestamp (e.g. "active 1 hour ago") */
+														/* translators: %s: last activity timestamp (e.g. "Active 1 hour ago") */
 													esc_attr__( 'Active %s', 'shortcodes-for-buddypress' ),
 													wp_kses_post( bp_get_group_last_active() )
 												) .

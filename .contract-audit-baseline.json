@@ -1,0 +1,46 @@
+{
+    "generated": "2026-07-30",
+    "note": "Every entry verified against BuddyPress 14.4.0 source (and BuddyBoss Platform for the bb/reshare integration) on 2026-07-30. The audit only sees this plugin's own tree, so hooks fired and options written by the host platform read as orphans. Re-verify when the BuddyPress minimum is raised.",
+    "suppressions": [
+        {
+            "id": "hook-consumed-never-fired:bp_core_get_js_strings",
+            "reason": "BuddyPress core filter. Fired in bp-core/bp-core-cssjs.php. External dependency, not in this plugin's scope."
+        },
+        {
+            "id": "hook-consumed-never-fired:bp_enqueue_assets_in_bp_pages_only",
+            "reason": "BuddyPress core filter. Fired in bp-core/bp-core-cssjs.php. External dependency, not in this plugin's scope."
+        },
+        {
+            "id": "hook-consumed-never-fired:bp_nouveau_get_loop_classes",
+            "reason": "BP Nouveau template-pack filter. Fired in bp-templates/bp-nouveau/includes/template-tags.php. External dependency."
+        },
+        {
+            "id": "hook-consumed-never-fired:bp_nouveau_get_search_primary_object",
+            "reason": "BP Nouveau template-pack filter. Fired in bp-templates/bp-nouveau/includes/template-tags.php. External dependency."
+        },
+        {
+            "id": "hook-consumed-never-fired:bp_nouveau_register_scripts",
+            "reason": "BP Nouveau filter. Fired in bp-templates/bp-nouveau/buddypress-functions.php:388 (filter name on its own line, which is why a naive grep misses it). External dependency."
+        },
+        {
+            "id": "hook-consumed-never-fired:bp_get_group_description_excerpt",
+            "reason": "BuddyPress core filter. Fired in bp-groups/bp-groups-template.php. External dependency."
+        },
+        {
+            "id": "hook-consumed-never-fired:bp_after_nouveau_wrapper_parse_args",
+            "reason": "BuddyBoss Platform hook, not a BuddyPress hook - it is absent from BuddyPress 14.4.0 by design. Paired with the bp_activity_reshare_action and bb_nouveau_get_activity_entry_bubble_buttons callbacks for optional BuddyBoss support. On vanilla BuddyPress the filter simply never fires, which is the intended no-op."
+        },
+        {
+            "id": "hook-consumed-never-fired:bp_activity_reshare_action",
+            "reason": "BuddyBoss Platform hook, absent from BuddyPress 14.4.0 by design. Same optional-BuddyBoss integration as bp_after_nouveau_wrapper_parse_args; a no-op on vanilla BuddyPress."
+        },
+        {
+            "id": "option-read-never-written:_bp_theme_package_id",
+            "reason": "BuddyPress core option. Declared as a default in bp-core/bp-core-options.php:75 and written through the WP Settings API (register_setting in class-bp-admin.php:499), so no literal update_option call exists in either tree. External dependency."
+        },
+        {
+            "id": "option-read-never-written:bp_nouveau_appearance",
+            "reason": "BP Nouveau customizer option. Written by the WP Customizer via its registered settings, never by a literal update_option call. Read in bp-templates/bp-nouveau/includes/functions.php:695. External dependency."
+        }
+    ]
+}

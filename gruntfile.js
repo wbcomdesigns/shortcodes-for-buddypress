@@ -62,6 +62,16 @@ module.exports = function (grunt) {
                         '!vendor/**',
                         '!.github/**',
                         '!.phpunit.result.cache',
+                        // Internal contract-audit suppressions, same category
+                        // as audit/**.
+                        '!.contract-audit-baseline.json',
+                        // '!**/*.md' strips the files but leaves the empty
+                        // docs/ directory entry behind in the archive.
+                        '!docs/**',
+                        // WP.org readme screenshots belong in the SVN assets/
+                        // directory, not in the plugin every user installs.
+                        // These six are ~900KB of dead weight on every site.
+                        '!screenshot-*.png',
                     ],
                     dest: 'build/<%= pkg.name %>/'
                 }]

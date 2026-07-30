@@ -67,18 +67,26 @@ Shortcodes let you place BuddyPress activity, members and groups anywhere. These
 * **[Learnomy](https://wbcomdesigns.com/downloads/learnomy/)** - Build and sell online courses, auto-grade quizzes, collect payments, and award certificates when learners finish.
 
 == Changelog ==
-= 3.0.0 =
-* Fix: The [activity-listing] and [groups-listing] shortcodes no longer cause a fatal error on a page when BuddyPress is inactive; they now show the same "enable BuddyPress" notice as the members shortcode.
-* Security: Clamped the load-more AJAX per_page and limit values so a public request cannot force an unbounded query.
-* Improve: Added Requires PHP and Requires Plugins headers and a "More Free Tools from Wbcom Designs" section.
-* Dev: Removed dead code and replaced em-dashes in admin strings.
-* Admin UX: Rebuilt the admin screen on the new Wbcom card-panel layout (sidebar nav, dashboard overview, reskinned shortcode reference tabs); removed the legacy Wbcom tab wrapper.
-* Code Quality: Fixed all WordPress Coding Standards (WPCS) violations across all PHP files
-* Code Quality: Applied inline comment punctuation, Yoda conditions, and proper spacing
-* Code Quality: Added missing PHPDoc comments for functions and parameters
-* Code Quality: Fixed elseif control structure formatting in Elementor widgets
-* Code Quality: Added phpcs:ignore for legacy file naming and class naming conventions
-* Code Quality: Fixed all Plugin Check errors (0 errors)
+= 3.0.0 - July 2026 =
+
+Major release. The admin screen is rebuilt, the Nouveau template pack is now the only pack, and the performance settings screen has been removed. Read the upgrade notice before updating.
+
+* New      - Rebuilt the admin screen on the Wbcom card-panel layout with sidebar navigation, a dashboard overview, and reskinned shortcode reference tabs.
+* New      - Added a Discover tab listing other free Wbcom tools.
+* New      - Implemented the status attribute on [groups-listing] so you can limit the directory to public, private, or hidden groups.
+* Improve  - Rewrote the Elementor widgets for the three shortcodes so their controls match the shortcode attributes.
+* Improve  - Reduced the plugin to a single Nouveau template pack; all three shortcodes now render through it on both BuddyPress and BuddyBoss.
+* Improve  - Made the admin shortcode reference match the code, so every documented attribute is one the shortcode actually accepts.
+* Improve  - Added Requires PHP and Requires Plugins headers so WordPress can enforce the BuddyPress dependency.
+* Fix      - The [activity-listing] and [groups-listing] shortcodes no longer cause a fatal error when BuddyPress is inactive; they now show the same "enable BuddyPress" notice as the members shortcode.
+* Fix      - Fixed the load-more control on [activity-listing], which could crash or request a missing asset.
+* Fix      - Removed the leftover activity posting form that appeared to logged-out visitors.
+* Fix      - Fixed Add Friend and Message buttons overlapping in the [members-listing] grid layout.
+* Fix      - Fixed the grunt build so the release zip ships the real minified assets and an accurate translation template.
+* Security - Clamped the load-more AJAX per_page and limit values so a public request cannot force an unbounded query.
+* Dev      - Added bin/local-ci.sh as the blocking gate (PHP lint, coding standards, static analysis, functional tests) and a functional test suite covering the shortcode attribute and widget matrix.
+* Dev      - Removed dead code, unused scaffolding, and the duplicated feedback notice.
+* Compat   - Tested with WordPress 7.0. The plugin now requires WordPress 6.5 and PHP 8.0.
 
 = 2.9.1 =
 * Fix      - Load text domain issue.
@@ -209,3 +217,8 @@ Shortcodes let you place BuddyPress activity, members and groups anywhere. These
 
 = 1.0.0 =
 * first version.
+
+== Upgrade Notice ==
+
+= 3.0.0 =
+Major release. The Legacy and Youzify template packs have been removed - all shortcodes now render through the Nouveau pack, so custom template overrides placed in the legacy or youzify folders will no longer load. The unused performance settings screen has also been removed. Requires WordPress 6.5 and PHP 8.0.
