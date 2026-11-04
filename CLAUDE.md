@@ -4,7 +4,7 @@
 
 ## Quick reference
 - **Main file:** `shortcodes-for-buddypress.php`
-- **Version:** `3.0.0`  ·  **Branch:** `3.0.0`
+- **Version:** `3.0.1`  ·  **Branch:** `master` (release branches cut per version)
 - **Namespace prefix:** `Shortcodes_For_Buddypress` (class prefix; not PSR-4)
 - **Text domain:** `shortcodes-for-buddypress`
 - **Extends:** none (Free). Pro companion: `shortcode-for-buddypress-pro` (mutually exclusive — main file blocks dual activation).
@@ -16,7 +16,7 @@ on any post or page. One template pack: nouveau (with BuddyBoss `bb-` variants i
 
 ## Key entry points
 - Bootstrap: `shortcodes-for-buddypress.php` (carries `Requires at least: 6.5`,
-  `Requires PHP: 8.0`, `Requires Plugins: buddypress`)
+  `Requires PHP: 8.1`, `Requires Plugins: buddypress`)
 - Orchestrator: `includes/class-shortcodes-for-buddypress.php`
 - Hook loader: `includes/class-shortcodes-for-buddypress-loader.php`
 - Public + AJAX: `public/class-shortcodes-for-buddypress-public.php`

@@ -9,6 +9,10 @@
  * @subpackage Shortcodes_For_Buddypress/shortcode
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Members shortcode class.
  *
@@ -120,7 +124,7 @@ class MemberShortCode extends BPShortCode {
 		ob_start();
 		do_action( 'member_shortcode_before_output', $atts );
 
-		if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'xprofile' ) ) {
+		if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'members' ) ) {
 			$this->render_disabled_notice(
 				__( 'To view members, please enable BuddyPress.', 'shortcodes-for-buddypress' )
 			);

@@ -13,11 +13,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress
- * Plugin URI:        https://github.com/wbcomdesigns/shortcodes-for-buddypress
+ * Plugin URI:        https://wordpress.org/plugins/shortcodes-for-buddypress/
  * Description:       This plugin adds an extended feature to BuddyPress, providing shortcodes for listing Activity Streams, Members, and Groups on any post or page within your website. It will offer the same features as you are getting on BuddyPress-mapped component pages.
- * Version:           3.0.0
+ * Version:           3.0.1
  * Requires at least: 6.5
- * Requires PHP:      8.0
+ * Requires PHP:      8.1
  * Requires Plugins:  buddypress
  * Author:            Wbcom Designs
  * Author URI:        https://wbcomdesigns.com/plugins
@@ -61,7 +61,7 @@ if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', app
  * Define plugin version.
  */
 if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_VERSION' ) ) {
-	define( 'SHORTCODES_FOR_BUDDYPRESS_VERSION', '3.0.0' );
+	define( 'SHORTCODES_FOR_BUDDYPRESS_VERSION', '3.0.1' );
 }
 
 if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_DIR' ) ) {

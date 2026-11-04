@@ -1,72 +1,86 @@
 === Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress ===
 Contributors: vapvarun,wbcomdesigns
-Donate link: http://wbcomdesigns.com/donate
 Tags: Activity, BuddyPress, Members, Groups, Shortcodes
 Requires at least: 6.5
-Tested up to: 7.0
-Requires PHP: 8.0
+Tested up to: 7.1
+Requires PHP: 8.1
+Tested with BuddyPress: 14.5.2
 Requires Plugins: buddypress
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin generates shortcodes for Listing Activity Streams, Members, and Groups on any website post or page.
+Show the BuddyPress activity stream, members directory and groups directory on any post or page, with shortcodes or Elementor widgets.
 
 == Description ==
 
-This plugin will add an extended feature to BuddyPress. It will use Shortcode for Listing Activity Streams, Members directory, and Groups directory on any post or page within the website.
+BuddyPress puts activity, members and groups on their own directory pages. This plugin lets you place them anywhere else too: a landing page, a sidebar-free welcome page, or a page built in Elementor.
 
-With our current update, we have added three widgets to display the activity stream, member directory, and group directory using Elementor.
+**Three shortcodes**
+
+* `[activity-listing]` - the activity stream with comments, favorites and load more.
+* `[members-listing]` - the members directory with Add Friend and Message buttons, in a grid or a list.
+* `[groups-listing]` - the groups directory with Join and Request Membership buttons, filtered to public, private or hidden groups if you like.
+
+Each shortcode accepts attributes for things like the number of items, the title, grid or list layout and filters. The plugin's admin screen lists every attribute with examples.
+
+**Three Elementor widgets**
+
+If Elementor is active, BuddyPress Activity, BuddyPress Members and BuddyPress Groups widgets appear in the editor, with controls that match the shortcode attributes.
+
+The listings render through BuddyPress's own Nouveau templates, so they pick up your theme's BuddyPress styling.
 
 [vimeo https://vimeo.com/554193567 ]
 
-=== THEME - WORDPRESS THEME WITH OUTSTANDING BUDDYPRESS SUPPORT ===
-* [FREE BuddyPress Theme: BuddyX](https://wordpress.org/themes/buddyx/) - Offers unique layouts with clean code and easy-to-customise options, giving you a whole new way to visualize BuddyPress.
-
 == Installation ==
-This section describes how to install the plugin and get it working.
 
-1. Download the zip file and extract it.
-2. Upload this plugin to the `/wp-content/plugins/` directory
-3. Activate the plugin through the \'Plugins\' menu.
-4. Alternatively, you can use the WordPress Plugin installer from Dashboard->Plugins->Add New to add this plugin
-5. Enjoy
-If you need more help, please contact us for [Custom Development](https://wbcomdesigns.com/hire-us/).
+1. Install and activate BuddyPress.
+2. In WordPress, go to Plugins > Add New, search for "Shortcodes for BuddyPress", then install and activate it.
+3. Go to WB Plugins > BP Shortcodes to see every shortcode and its attributes.
+4. Add `[activity-listing]`, `[members-listing]` or `[groups-listing]` to any page, or use the matching Elementor widget.
 
 == Frequently Asked Questions ==
 
-= Does This plugin require BuddyPress =
+= Does this plugin require BuddyPress? =
 
-Yes, it requires BuddyPress installed and activated.
+Yes. BuddyPress must be installed and active. WordPress will ask you to activate it first.
 
-= Where Do I Ask for Support? =
+= Which BuddyPress components do I need? =
 
-Please visit [wbcomdesigns] (http://wbcomdesigns.com/) for any query related to the plugin and Buddypress.
+Each shortcode needs its component turned on in Settings > BuddyPress: Activity Streams for `[activity-listing]`, User Groups for `[groups-listing]`. Members is always on. If a component is off, the shortcode shows a notice instead of the listing.
+
+= Do I need Elementor? =
+
+No. The shortcodes work in any editor. The Elementor widgets only appear when Elementor is active.
+
+= Where do I ask for support? =
+
+Please use the [plugin support forum](https://wordpress.org/support/plugin/shortcodes-for-buddypress/).
 
 == Screenshots ==
 
-1. Admin Overview - Shortcode counts, Elementor widget status, and component status at a glance.
-2. Admin Shortcodes reference - Every shortcode with parameters, quick-start guide, and example use cases.
-3. Frontend [activity-listing] - BuddyPress activity stream embedded on any page with comment, favorite, and share actions.
-4. Frontend [members-listing] - Members directory grid with avatars, activity, and Add Friend actions.
-5. Frontend [groups-listing] - Groups grid showing public, private, and hidden groups with membership actions.
-6. Discover tab - More free community tools from Wbcom Designs.
+1. The activity stream on a regular page with [activity-listing].
+2. The members directory as a grid with [members-listing].
+3. The groups directory with join and membership buttons with [groups-listing].
+4. The admin overview: shortcodes, Elementor widgets and BuddyPress component status.
+5. The shortcode reference with what each shortcode shows.
+6. Every attribute of [members-listing] with examples.
 
-== More Free Tools from Wbcom Designs ==
+== More from Wbcom Designs ==
 
-Shortcodes let you place BuddyPress activity, members and groups anywhere. These other free tools from Wbcom Designs build out the rest of the community around them, from the theme and network itself to forums, media, events, gamification, directories, jobs, and courses.
-
-* **[BuddyX](https://wbcomdesigns.com/downloads/buddyx-theme/)** - A free, fast community theme for BuddyPress, BuddyBoss and PeepSo with a modern layout and dark mode.
-* **[BuddyNext](https://wbcomdesigns.com/downloads/buddynext/)** - Stand up a complete WordPress community with activity streams, member spaces, profiles, direct messaging, and built-in moderation.
-* **[Jetonomy](https://wbcomdesigns.com/downloads/jetonomy/)** - Add forums, question-and-answer boards, and idea spaces that stay tidy through trust-based auto-moderation even past 100,000 topics.
-* **[Mediaverse](https://wbcomdesigns.com/downloads/mediaverse/)** - Let members build photo and video albums, react, follow each other, and message privately while AI moderation keeps things clean.
-* **[Eventonomy](https://wbcomdesigns.com/downloads/eventonomy/)** - Run community events with RSVPs, calendars, and front-end submissions.
-* **[WB Gamification](https://wbcomdesigns.com/downloads/wordpress-gamification-plugin/)** - Reward members with points, badges, and leaderboards to keep engagement high.
-* **[Listora](https://wbcomdesigns.com/downloads/listora/)** - Publish searchable directories across ten listing types with reviews, maps, and member-submitted entries from the front end.
-* **[WP Career Board](https://wbcomdesigns.com/downloads/wp-career-board/)** - Add a job board with front-end listings, applications, and employer profiles.
-* **[Learnomy](https://wbcomdesigns.com/downloads/learnomy/)** - Build and sell online courses, auto-grade quizzes, collect payments, and award certificates when learners finish.
+* [BuddyX](https://wordpress.org/themes/buddyx/) - free community theme for BuddyPress and BuddyBoss sites.
+* [BuddyNext](https://buddynext.com/features/) - a complete community platform for WordPress.
+* [Jetonomy](https://jetonomy.org/features/) - modern discussion forums for WordPress.
+* [WB Gamification](https://wbcomdesigns.com/downloads/wordpress-gamification-plugin/) - points, badges and leaderboards for your members.
 
 == Changelog ==
+
+= 3.0.1 - November 2026 =
+
+* Fix      - [members-listing] showed "please enable BuddyPress" on sites with the Extended Profiles component turned off. It now only needs the Members component.
+* Security - The three shortcode class files now refuse direct web access.
+* Dev      - Requires PHP 8.1 or later. Tested up to WordPress 7.1 and BuddyPress 14.5.2.
+
 = 3.0.0 - July 2026 =
 
 Major release. The admin screen is rebuilt, the Nouveau template pack is now the only pack, and the performance settings screen has been removed. Read the upgrade notice before updating.
@@ -219,6 +233,9 @@ Major release. The admin screen is rebuilt, the Nouveau template pack is now the
 * first version.
 
 == Upgrade Notice ==
+
+= 3.0.1 =
+Fixes the members shortcode on sites without Extended Profiles. Requires PHP 8.1 or later. Sites on older PHP versions stay on 3.0.0.
 
 = 3.0.0 =
 Major release. The Legacy and Youzify template packs have been removed - all shortcodes now render through the Nouveau pack, so custom template overrides placed in the legacy or youzify folders will no longer load. The unused performance settings screen has also been removed. Requires WordPress 6.5 and PHP 8.0.

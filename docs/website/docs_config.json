@@ -1,0 +1,63 @@
+{
+  "product": "Shortcodes for BuddyPress",
+  "productType": "plugin",
+  "shortId": "bpshortcodes",
+  "sections": [
+    {
+      "slug": "getting-started",
+      "title": "Getting Started",
+      "pages": [
+        { "slug": "introduction", "title": "Introduction" },
+        { "slug": "installation", "title": "Installation and Requirements" }
+      ]
+    },
+    {
+      "slug": "features",
+      "title": "Features",
+      "pages": [
+        { "slug": "overview", "title": "Feature Overview" }
+      ]
+    },
+    {
+      "slug": "usage",
+      "title": "Usage",
+      "pages": [
+        { "slug": "adding-shortcodes", "title": "Adding Shortcodes to a Page" },
+        { "slug": "elementor-widgets", "title": "Elementor Widgets" }
+      ]
+    },
+    {
+      "slug": "shortcodes",
+      "title": "Shortcode Reference",
+      "pages": [
+        { "slug": "overview", "title": "Shortcodes Overview" },
+        { "slug": "activity-listing", "title": "[activity-listing]" },
+        { "slug": "members-listing", "title": "[members-listing]" },
+        { "slug": "groups-listing", "title": "[groups-listing]" }
+      ]
+    },
+    {
+      "slug": "developer-guide",
+      "title": "Developer Guide",
+      "pages": [
+        { "slug": "hooks-and-filters", "title": "Hooks and Filters" },
+        { "slug": "templates", "title": "Template Overrides" },
+        { "slug": "ajax", "title": "Load More AJAX" }
+      ]
+    },
+    {
+      "slug": "faq",
+      "title": "FAQ",
+      "pages": [
+        { "slug": "faq", "title": "Frequently Asked Questions" }
+      ]
+    },
+    {
+      "slug": "troubleshooting",
+      "title": "Troubleshooting",
+      "pages": [
+        { "slug": "troubleshooting", "title": "Troubleshooting" }
+      ]
+    }
+  ]
+}

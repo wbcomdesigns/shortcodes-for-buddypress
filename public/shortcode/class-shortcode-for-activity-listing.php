@@ -9,6 +9,10 @@
  * @subpackage Shortcodes_For_Buddypress/shortcode
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Activity shortcode class.
  *
