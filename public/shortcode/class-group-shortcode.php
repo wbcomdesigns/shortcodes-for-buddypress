@@ -5,6 +5,10 @@
  * @package Shortcodes_For_Buddypress
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Groups shortcode class.
  *
