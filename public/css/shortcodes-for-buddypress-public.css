@@ -141,6 +141,16 @@ p.item-meta.last-activity{
     flex-flow: wrap;
 }
 
+/* The shortcodes print page links without BuddyPress's "Viewing x of y" count,
+   so center the links under the list instead of leaving them floated to one side. */
+.buddypress-wrap .bp-pagination .bpsp-group-pagination,
+.buddypress-wrap .bp-pagination .bpsp-member-pagination {
+    float: none;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
 @media only screen and (max-width: 479px) {
 
     .members.dir-list.two ul.rg-member-list.grid>li,
