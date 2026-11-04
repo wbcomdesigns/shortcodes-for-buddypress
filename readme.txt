@@ -78,6 +78,7 @@ Please use the [plugin support forum](https://wordpress.org/support/plugin/short
 = 3.0.1 - November 2026 =
 
 * Fix      - [members-listing] showed "please enable BuddyPress" on sites with the Extended Profiles component turned off. It now only needs the Members component.
+* Fix      - Page links under [members-listing] and [groups-listing] are now centered below the list.
 * Security - The three shortcode class files now refuse direct web access.
 * Dev      - Requires PHP 8.1 or later. Tested up to WordPress 7.1 and BuddyPress 14.5.2.
 
