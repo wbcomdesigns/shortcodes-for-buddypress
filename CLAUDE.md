@@ -4,7 +4,7 @@
 
 ## Quick reference
 - **Main file:** `shortcodes-for-buddypress.php`
-- **Version:** `3.0.1`  ·  **Branch:** `master` (release branches cut per version)
+- **Version:** `3.0.2`  ·  **Branch:** `master` (release branches cut per version)
 - **Namespace prefix:** `Shortcodes_For_Buddypress` (class prefix; not PSR-4)
 - **Text domain:** `shortcodes-for-buddypress`
 - **Extends:** none (Free). Pro companion: `shortcode-for-buddypress-pro` (mutually exclusive — main file blocks dual activation).

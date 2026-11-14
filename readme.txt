@@ -6,7 +6,7 @@ Tested up to: 7.1
 Requires PHP: 8.1
 Tested with BuddyPress: 14.5.2
 Requires Plugins: buddypress
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,12 @@ Please use the [plugin support forum](https://wordpress.org/support/plugin/short
 * [WB Gamification](https://wbcomdesigns.com/downloads/wordpress-gamification-plugin/) - points, badges and leaderboards for your members.
 
 == Changelog ==
+
+= 3.0.2 - November 2026 =
+
+* Fix      - [activity-listing allow_posting="no"] no longer shows the post form, and logged-out visitors never see it.
+* Fix      - Group cards in [groups-listing] now show the group's own cover image instead of a member cover.
+* Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
 
 = 3.0.1 - November 2026 =
 
