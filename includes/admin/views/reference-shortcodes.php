@@ -1,7 +1,7 @@
 <?php
 /**
  * Reference tab: Shortcodes overview (ported from the legacy Welcome +
- * General informational panels). Rendered inside shell.php as a plain
+ * General informational panels). Rendered inside layout.php as a plain
  * informational partial — this plugin saves nothing.
  *
  * @package Shortcodes_For_Buddypress

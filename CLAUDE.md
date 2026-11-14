@@ -26,7 +26,7 @@ on any post or page. One template pack: nouveau (with BuddyBoss `bb-` variants i
 - The old wbcom tab wrapper is GONE. `admin/` now holds only `index.php` + an icon.
 - Wired admin = `includes/admin/class-shortcodes-for-buddypress-admin-panel.php`
   (loaded in `includes/class-shortcodes-for-buddypress.php`, ~line 141; registered ~197-198).
-  Views in `includes/admin/views/` (hub.php landing at `?page=wbcomplugins`, overview, shortcode reference tabs).
+  Views in `includes/admin/views/` (hub.php landing at `?page=wbcomplugins`, overview, shortcode reference tabs). The page layout file is `layout.php`: never name a file `shell.php` (host WAFs block zips that contain it).
 - **No persisted options** - informational panels only. No `register_setting()`.
 - All pages gated by `manage_options`; `$_GET['tab']` read via `sanitize_key` + whitelist.
 - Menu parent: `wbcomplugins` (shared hub). Cap: `manage_options`.

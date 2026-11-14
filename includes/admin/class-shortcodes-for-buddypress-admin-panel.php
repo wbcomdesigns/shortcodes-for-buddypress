@@ -260,8 +260,8 @@ class Shortcodes_For_Buddypress_Admin_Panel {
 		);
 		$view_slug = isset( $view_map[ $active ] ) ? $view_map[ $active ] : 'overview';
 		$view_path = plugin_dir_path( __DIR__ ) . 'admin/views/' . $view_slug . '.php';
-		$shell     = plugin_dir_path( __DIR__ ) . 'admin/views/shell.php';
+		$layout    = plugin_dir_path( __DIR__ ) . 'admin/views/layout.php';
 
-		include $shell;
+		include $layout;
 	}
 }
