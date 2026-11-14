@@ -77,7 +77,7 @@ defined( 'ABSPATH' ) || exit;
 							// Display group cover image if supported by the theme.
 							// Uses a custom function defined in the plugin.
 							?>
-							<?php bp_shortcode_member_cover(); ?>
+							<?php bp_shortcode_group_cover(); ?>
 
 							<?php
 							// Group avatar section.
