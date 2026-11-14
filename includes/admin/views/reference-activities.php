@@ -43,7 +43,7 @@ defined( 'ABSPATH' ) || exit;
 		</tr>
 		<tr>
 			<th scope="row"><code>allow_posting</code></th>
-			<td><p class="description"><?php esc_html_e( 'Allow users to post new activities from the shortcode. Boolean. Default: false.', 'shortcodes-for-buddypress' ); ?></p></td>
+			<td><p class="description"><?php esc_html_e( 'Show the activity posting form above the list for logged-in members. Accepts true/false or yes/no. Default: false.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
 		<tr>
 			<th scope="row"><code>per_page</code></th>
