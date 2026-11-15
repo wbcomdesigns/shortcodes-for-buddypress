@@ -19,6 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class GroupShortCode extends BPShortCode {
 
 	/**
+	 * Group sort types BuddyPress accepts.
+	 *
+	 * @var string[]
+	 */
+	protected $allowed_types = array( 'active', 'newest', 'popular', 'random', 'alphabetical', 'most-forum-topics', 'most-forum-posts' );
+
+	/**
 	 * Set default attributes.
 	 */
 	protected function set_defaults() {

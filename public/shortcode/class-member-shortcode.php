@@ -23,6 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class MemberShortCode extends BPShortCode {
 
 	/**
+	 * Member sort types BuddyPress accepts.
+	 *
+	 * @var string[]
+	 */
+	protected $allowed_types = array( 'active', 'newest', 'popular', 'online', 'alphabetical', 'random' );
+
+	/**
 	 * Set default attributes.
 	 */
 	protected function set_defaults() {

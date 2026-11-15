@@ -31,6 +31,14 @@ abstract class BPShortCode {
 	protected $defaults = array();
 
 	/**
+	 * Values BuddyPress accepts for the `type` attribute. Empty = no type check.
+	 *
+	 * @since 3.0.2
+	 * @var string[]
+	 */
+	protected $allowed_types = array();
+
+	/**
 	 * Singleton instances.
 	 *
 	 * @var array
@@ -104,6 +112,13 @@ abstract class BPShortCode {
 	 */
 	protected function get_final_attributes( $atts ) {
 		$atts = shortcode_atts( $this->defaults, (array) $atts );
+
+		// An unknown type makes BuddyPress drop its filter (every user account
+		// instead of active members), so fall back to the default type.
+		if ( $this->allowed_types && ! in_array( $atts['type'], $this->allowed_types, true ) ) {
+			$atts['type'] = $this->defaults['type'];
+		}
+
 		return apply_filters( $this->tag . '_attributes', $atts );
 	}
 
