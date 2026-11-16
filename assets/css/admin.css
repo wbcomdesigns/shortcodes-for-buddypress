@@ -143,6 +143,7 @@
 }
 
 .bpsp-settings-sidebar {
+	box-sizing: border-box;
 	width: 240px;
 	flex-shrink: 0;
 	background: var(--bpsp-admin-white);
