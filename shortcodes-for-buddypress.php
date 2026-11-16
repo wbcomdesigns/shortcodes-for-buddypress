@@ -18,7 +18,6 @@
  * Version:           3.0.2
  * Requires at least: 6.5
  * Requires PHP:      8.1
- * Requires Plugins:  buddypress
  * Author:            Wbcom Designs
  * Author URI:        https://wbcomdesigns.com/plugins
  * License:           GPL-2.0+
