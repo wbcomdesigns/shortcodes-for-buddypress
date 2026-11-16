@@ -37,7 +37,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @since 1.0.0
  */
-if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
+// Pro ships the same class names. Key on its class, not its folder: a Pro installed
+// from a renamed folder would otherwise slip past and fatal on the redeclare.
+if ( class_exists( 'Shortcodes_For_Buddypress', false ) || in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 	if ( ! function_exists( 'deactivate_plugins' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 	}
