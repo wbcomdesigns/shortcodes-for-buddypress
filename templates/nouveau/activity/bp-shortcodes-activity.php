@@ -146,8 +146,8 @@ defined( 'ABSPATH' ) || exit;
 						?>
 						<?php if ( $load_more || ( ( isset( $activity_atts['max'] ) && $activity_atts['per_page'] ) && $activity_atts['max'] > $activity_atts['per_page'] ) ) : ?>
 						
-							<li class="load-more" data-query="<?php echo esc_attr( $query ); ?>">
-								<a class="button" id="load-more-activity" href="<?php bp_activity_load_more_link(); ?>" data-limit='<?php echo esc_attr( $activity_atts['per_page'] ); ?>' data-page="2" data-query="<?php echo esc_attr( $query ); ?>"><?php echo esc_html__( 'Load More', 'shortcodes-for-buddypress' ); ?></a>
+							<li class="load-more" data-limit="<?php echo esc_attr( $activity_atts['per_page'] ); ?>" data-page="2" data-query="<?php echo esc_attr( $query ); ?>">
+								<a class="button" id="load-more-activity" href="<?php bp_activity_load_more_link(); ?>"><?php echo esc_html__( 'Load More', 'shortcodes-for-buddypress' ); ?></a>
 							</li>
 						<?php endif; ?>
 

@@ -581,7 +581,7 @@ class Shortcodes_For_Buddypress_Public {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bpsp-nonce' ) ) {
 			return;
 		}
-		$page = ! empty( $_POST['page'] ) ? absint( wp_unslash( $_POST['page'] ) ) : 2;
+		$page = ! empty( $_POST['page'] ) ? max( 1, absint( wp_unslash( $_POST['page'] ) ) ) : 2; // page 0 would make BuddyPress return every activity.
 		// Clamp so a public (nopriv) caller cannot force an unbounded query.
 		$limit = ! empty( $_POST['limit'] ) ? min( 50, max( 1, absint( wp_unslash( $_POST['limit'] ) ) ) ) : 10;
 		if ( bp_has_activities(
