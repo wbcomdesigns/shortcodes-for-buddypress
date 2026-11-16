@@ -88,23 +88,6 @@ class Buddypress_Shortcode_Members_Widget extends Widget_Base {
 	}
 
 	/**
-	 * Get BuddyPress member types to display as Elementor options.
-	 *
-	 * Retrieves all registered BuddyPress member types and formats them
-	 *
-	 * @since 1.6.1
-	 * @return array Member types.
-	 */
-	private function get_member_types() {
-		$member_types = array( '' => 'All' );
-		if ( function_exists( 'bp_get_member_types' ) ) {
-			$member_types += bp_get_member_types( array(), 'names' );
-		}
-
-		return $member_types;
-	}
-
-	/**
 	 * Register widget controls.
 	 *
 	 * @since 1.6.1
