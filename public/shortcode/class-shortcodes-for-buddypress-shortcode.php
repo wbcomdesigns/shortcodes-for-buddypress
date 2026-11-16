@@ -113,11 +113,11 @@ abstract class BPShortCode {
 	protected function get_final_attributes( $atts ) {
 		$atts = shortcode_atts( $this->defaults, (array) $atts );
 
-		// Zero, empty or non-numeric per_page means "no limit" to BuddyPress,
-		// which listed every row (a 502 on big activity tables). Use the
-		// shortcode default instead, capped at 100.
+		// Zero, negative, empty or non-numeric per_page means "no limit" to
+		// BuddyPress, which listed every row (a 502 on big activity tables).
+		// Use the shortcode default instead, capped at 100.
 		if ( isset( $this->defaults['per_page'] ) ) {
-			$per_page         = is_numeric( $atts['per_page'] ) ? absint( $atts['per_page'] ) : 0;
+			$per_page         = is_numeric( $atts['per_page'] ) ? max( 0, (int) $atts['per_page'] ) : 0;
 			$atts['per_page'] = min( $per_page ? $per_page : (int) $this->defaults['per_page'], 100 );
 		}
 
