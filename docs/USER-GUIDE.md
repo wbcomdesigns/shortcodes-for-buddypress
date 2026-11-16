@@ -26,7 +26,7 @@ BuddyPress Shortcodes plugin allows you to display BuddyPress content anywhere o
 
 ### Requirements
 - WordPress 5.0 or higher
-- BuddyPress 5.0 or higher
+- BuddyPress 12.0 or higher
 - PHP 7.0 or higher
 
 ### Installation Steps
