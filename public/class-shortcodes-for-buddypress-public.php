@@ -701,9 +701,16 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		if ( false !== array_search( '-meta', $args['container_classes'], true ) ) {
+			// Shortcode pages have no current component, so BuddyPress prints "-meta"; name the loop that is running.
+			$component = 'activity';
+			if ( ! empty( $GLOBALS['groups_template']->in_the_loop ) ) {
+				$component = 'groups';
+			} elseif ( ! empty( $GLOBALS['members_template']->in_the_loop ) ) {
+				$component = 'members';
+			}
 			$args['container_classes'] = array_map(
-				function ( $str ) {
-					return str_replace( '-meta', 'activity-meta', $str );
+				function ( $str ) use ( $component ) {
+					return '-meta' === $str ? $component . '-meta' : $str;
 				},
 				$args['container_classes']
 			);
