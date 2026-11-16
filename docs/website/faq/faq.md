@@ -40,6 +40,10 @@ For members and groups, use `grid="yes"` with `loop_layout="one|two|three|four"`
 
 Under the shared Wbcom Plugins menu. Its tabs (Overview, Shortcodes, Activities, Members, Groups, Discover) are an informational reference. The plugin has no settings to save.
 
+## Do shortcodes follow my members or groups directory lock?
+
+No, on purpose. A privacy plugin that locks the BuddyPress directories for logged-out visitors does not hide shortcode output, because you choose where each shortcode goes. To keep a listing private, put the shortcode on a page that only logged-in members can open.
+
 ## Does it work with BuddyBoss?
 
 Yes. When the BuddyBoss Platform is active, the members and groups listings render through BuddyBoss template variants automatically.
