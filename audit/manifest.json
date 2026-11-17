@@ -273,7 +273,6 @@
     }
   },
   "known_gaps": [
-    "MemberShortCode::handle_classes() and GroupShortCode::get_container_classes() are parallel Reign layout builders that have drifted apart (40 vs 56 lines). Consolidating needs a Reign install to verify.",
     "readme.txt 'Tested up to: 7.0' should be re-confirmed before release.",
     "Elementor get_widget_list() and the no-op handleResize() JS were removed in this pass; if a future release needs a resize hook, re-add the listener with the handler, not before.",
     "BuddyBoss-only functions (bb_*, bp_moderation_*, bp_is_*_media_support_enabled, bp_member_type_*) are called unguarded inside the bb-*.php templates and buddypress_shortcode_activity_entry_bubble_buttons. That is safe because both are reached only when buddypress()->buddyboss is set, but any new call site outside those paths needs a function_exists guard."

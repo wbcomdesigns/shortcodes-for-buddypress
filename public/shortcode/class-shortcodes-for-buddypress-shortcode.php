@@ -111,7 +111,14 @@ abstract class BPShortCode {
 	 * @return array
 	 */
 	protected function get_final_attributes( $atts ) {
-		$atts = shortcode_atts( $this->defaults, (array) $atts );
+		$given = (array) $atts;
+		$atts  = shortcode_atts( $this->defaults, $given );
+
+		// On Reign an omitted loop_layout follows the site's BuddyPress directory
+		// layout, as Reign's own directories do. An explicit value always wins.
+		if ( isset( $this->defaults['loop_layout'] ) && ! isset( $given['loop_layout'] ) && $this->is_reign() ) {
+			$atts['loop_layout'] = $this->site_loop_layout( $atts['loop_layout'] );
+		}
 
 		// Zero, negative, empty or non-numeric per_page means "no limit" to
 		// BuddyPress, which listed every row (a 502 on big activity tables).
@@ -138,6 +145,52 @@ abstract class BPShortCode {
 	 * @return string
 	 */
 	abstract protected function output( $atts, $content = '' );
+
+	/**
+	 * Whether the active theme is Reign.
+	 *
+	 * @since 3.0.2
+	 * @return bool
+	 */
+	protected function is_reign() {
+		return 'REIGN' === wp_get_theme()->get( 'Name' );
+	}
+
+	/**
+	 * The site's Nouveau directory layout for this listing, as a column class.
+	 *
+	 * @since 3.0.2
+	 * @param string $fallback Column class used when the site has no layout set.
+	 * @return string One of one, two, three, four.
+	 */
+	protected function site_loop_layout( $fallback ) {
+		$appearance = get_option( 'bp_nouveau_appearance' );
+		$layout     = is_array( $appearance ) ? (int) ( $appearance[ strtok( $this->tag, '-' ) . '_layout' ] ?? 0 ) : 0;
+		$choices    = function_exists( 'bp_nouveau_customizer_grid_choices' ) ? bp_nouveau_customizer_grid_choices( 'classes' ) : array();
+
+		return $choices[ $layout ] ?? $fallback;
+	}
+
+	/**
+	 * Build the member or group list classes.
+	 *
+	 * The caller's grid and column classes are always kept. On Reign the
+	 * theme's card classes are appended so its directory styling applies.
+	 *
+	 * @since 3.0.2
+	 * @param string[] $classes Base classes including grid and column.
+	 * @return string
+	 */
+	protected function list_classes( $classes ) {
+		if ( $this->is_reign() ) {
+			global $wbtm_reign_settings;
+			$type      = 'members-listing' === $this->tag ? 'member' : 'group';
+			$classes[] = 'rg-' . $type . '-list';
+			$classes[] = $wbtm_reign_settings['reign_buddyextender'][ $type . '_directory_type' ] ?? 'wbtm-' . $type . '-directory-type-2';
+		}
+
+		return implode( ' ', array_filter( $classes ) );
+	}
 
 	/**
 	 * Echo the "component unavailable" notice.

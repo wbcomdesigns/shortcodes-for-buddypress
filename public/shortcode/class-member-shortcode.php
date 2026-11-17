@@ -169,44 +169,7 @@ class MemberShortCode extends BPShortCode {
 	 * @return string
 	 */
 	public function handle_classes( $grid, $column ) {
-		$classes      = array( 'item-list', 'members-list', 'bp-list', 'bpsp-members-list', $grid, $column );
-		$active_theme = wp_get_theme()->get( 'Name' );
-		if ( 'REIGN' === $active_theme ) {
-				$classes   = array();
-				$classes[] = 'item-list';
-				$classes[] = 'members-list';
-				$classes[] = 'bp-list';
-				$classes[] = 'rg-member-list';
-
-				global $wbtm_reign_settings;
-				$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] : 'wbtm-member-directory-type-2';
-
-				$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-				$members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && '' !== $bp_nouveau_appearance['members_layout'] ) ? $bp_nouveau_appearance['members_layout'] : '3';
-
-			if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-				$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
-				if ( isset( $grid_classes[ $members_layout ] ) ) {
-					$classes = array_merge(
-						$classes,
-						array(
-							'grid',
-							$grid_classes[ $members_layout ],
-						)
-					);
-				}
-			} else {
-				$classes = array_merge(
-					$classes,
-					array(
-						'grid',
-						'three',
-					)
-				);
-			}
-		}
-		$classes = implode( ' ', $classes );
-		return $classes;
+		return $this->list_classes( array( 'item-list', 'members-list', 'bp-list', 'bpsp-members-list', $grid, $column ) );
 	}
 
 	/**
