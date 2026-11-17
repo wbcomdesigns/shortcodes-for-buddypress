@@ -80,6 +80,7 @@ Please use the [plugin support forum](https://wordpress.org/support/plugin/short
 * Fix      - [activity-listing allow_posting="no"] no longer shows the post form, and logged-out visitors never see it.
 * Fix      - Group cards in [groups-listing] now show the group's own cover image instead of a member cover.
 * Fix      - On the Reign theme, grid="no" and loop_layout on [members-listing] and [groups-listing] are now honoured instead of always showing the site grid.
+* Fix      - On BuddyBoss, the Join button row in [groups-listing] carries the groups-meta class, so theme styling for group buttons applies.
 * Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
 
 = 3.0.1 - November 2026 =

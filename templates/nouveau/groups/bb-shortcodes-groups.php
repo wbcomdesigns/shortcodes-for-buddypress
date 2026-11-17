@@ -129,7 +129,8 @@ if ( bp_has_groups( $query ) ) {
 											<?php bb_groups_loop_members(); ?>
 										</div>
 										<?php if ( bb_platform_group_element_enable( 'join-buttons' ) ) { ?>
-											<div class="groups-loop-buttons footer-button-wrap"><?php bp_nouveau_groups_loop_buttons(); ?></div>
+											<?php // BuddyBoss's bp_nouveau_wrapper() has no args filter and a shortcode page has no component, so name the meta classes here. ?>
+											<div class="groups-loop-buttons footer-button-wrap"><?php bp_nouveau_groups_loop_buttons( array( 'container_classes' => array( 'bp-generic-meta', 'groups-meta' ) ) ); ?></div>
 										<?php } ?>
 									</div>
 
