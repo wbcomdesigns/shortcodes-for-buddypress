@@ -13,6 +13,12 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+// Loaded by the shortcode only after it checked the component, kept here so a
+// direct include can never call into a component that is switched off.
+if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'activity' ) ) {
+	return;
+}
 ?>
 <?php
 // Main container with BuddyPress classes.

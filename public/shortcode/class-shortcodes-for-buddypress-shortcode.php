@@ -200,10 +200,16 @@ abstract class BPShortCode {
 	 * three places and drifted out of sync whenever one was touched.
 	 *
 	 * @since 3.0.0
+	 * @since 3.0.2 Shown to administrators only.
 	 * @param string $message Already-translated, human-readable reason.
 	 * @return void
 	 */
 	protected function render_disabled_notice( $message ) {
+		// "Please enable the component" is an instruction for the site owner. Visitors
+		// get nothing rather than a message they cannot act on.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 		?>
 		<div class="bp-messages-feedback">
 			<div class="bp-messages bp-user-messages-feedback">

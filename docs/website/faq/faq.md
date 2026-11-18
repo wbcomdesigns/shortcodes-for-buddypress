@@ -2,7 +2,7 @@
 
 ## Does this plugin require BuddyPress?
 
-Yes. BuddyPress must be installed and activated; it is declared as a required plugin. Each shortcode also needs its matching BuddyPress component enabled (Activity, Extended Profiles, or Groups).
+Yes. BuddyPress must be installed and activated; it is declared as a required plugin. Each shortcode also needs its matching BuddyPress component enabled (Activity, Members, or Groups).
 
 ## How many shortcodes does the plugin add?
 

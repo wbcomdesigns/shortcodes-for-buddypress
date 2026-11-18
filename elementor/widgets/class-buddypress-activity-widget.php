@@ -158,7 +158,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 				'name'     => 'container_background',
 				'label'    => __( 'Background', 'shortcodes-for-buddypress' ),
 				'types'    => array( 'classic', 'gradient' ),
-				'selector' => '{{WRAPPER}} .activity > ul.activity-list > li:not(.load-more)',
+				'selector' => '{{WRAPPER}} #buddypress .activity > ul.activity-list > li:not(.load-more)',
 			)
 		);
 
@@ -167,7 +167,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			array(
 				'name'     => 'container_box_shadow',
-				'selector' => '{{WRAPPER}} .activity > ul.activity-list > li:not(.load-more)',
+				'selector' => '{{WRAPPER}} #buddypress .activity > ul.activity-list > li:not(.load-more)',
 			)
 		);
 
@@ -176,7 +176,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 			Group_Control_Border::get_type(),
 			array(
 				'name'     => 'container_border',
-				'selector' => '{{WRAPPER}} .activity > ul.activity-list > li:not(.load-more)',
+				'selector' => '{{WRAPPER}} #buddypress .activity > ul.activity-list > li:not(.load-more)',
 			)
 		);
 
@@ -188,7 +188,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%', 'em' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .activity > ul.activity-list > li:not(.load-more)' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} #buddypress .activity > ul.activity-list > li:not(.load-more)' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 				),
 			)
 		);
@@ -201,7 +201,7 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .activity > ul.activity-list > li:not(.load-more)' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} #buddypress .activity > ul.activity-list > li:not(.load-more)' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -218,252 +218,8 @@ class Buddypress_Shortcode_Activity_Widget extends Widget_Base {
 					),
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .activity > ul.activity-list > li:not(.load-more)'            => 'margin-top: 0; margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .activity > ul.activity-list > li:last-child' => 'margin-bottom: 0;',
-				),
-			)
-		);
-
-		$this->end_controls_section();
-
-		// Style Section - Load More Button.
-		$this->start_controls_section(
-			'load_more_button_section',
-			array(
-				'label' => __( 'Load More Button', 'shortcodes-for-buddypress' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			)
-		);
-
-		// Base style for load more button.
-		$this->add_control(
-			'base_style',
-			array(
-				'label'     => __( 'Base Style', 'shortcodes-for-buddypress' ),
-				'type'      => Controls_Manager::HIDDEN,
-				'default'   => '1',
-				'selectors' => array(
-					'{{WRAPPER}} .load-more'   => 'background-color: transparent; border: none; margin: 0;',
-					'{{WRAPPER}} .load-newest' => 'background-color: transparent; border: none; margin: 0;',
-				),
-			)
-		);
-
-		// Display type for load more button (block or inline).
-		$this->add_control(
-			'load_more_btn_display_type',
-			array(
-				'label'     => __( 'Display', 'shortcodes-for-buddypress' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'block',
-				'options'   => array(
-					'inline-block' => __( 'Inline', 'shortcodes-for-buddypress' ),
-					'block'        => __( 'Block', 'shortcodes-for-buddypress' ),
-				),
-				'selectors' => array(
-					'{{WRAPPER}} #buddypress .activity-list .load-more a' => 'display: block;',
-				),
-			)
-		);
-
-		// Alignment control for inline load more button.
-		$this->add_responsive_control(
-			'load_more_btn_align',
-			array(
-				'label'     => __( 'Alignment', 'shortcodes-for-buddypress' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options'   => array(
-					'left'   => array(
-						'title' => __( 'Left', 'shortcodes-for-buddypress' ),
-						'icon'  => 'eicon-text-align-left',
-					),
-					'center' => array(
-						'title' => __( 'Center', 'shortcodes-for-buddypress' ),
-						'icon'  => 'eicon-text-align-center',
-					),
-					'right'  => array(
-						'title' => __( 'Right', 'shortcodes-for-buddypress' ),
-						'icon'  => 'eicon-text-align-right',
-					),
-				),
-				'selectors' => array(
-					'{{WRAPPER}} #buddypress .activity-list .load-more a' => 'text-align: {{VALUE}};',
-				),
-				'condition' => array(
-					'load_more_btn_display_type' => 'inline-block',
-				),
-				'default'   => '',
-			)
-		);
-
-		// Base style for inline load more button.
-		$this->add_control(
-			'load_more_btn_display_inline_block',
-			array(
-				'label'     => __( 'Base Style', 'shortcodes-for-buddypress' ),
-				'type'      => Controls_Manager::HIDDEN,
-				'default'   => '1',
-				'selectors' => array(
-					'{{WRAPPER}} #buddypress .activity-list .load-more a' => 'display: inline-block;',
-				),
-				'condition' => array(
-					'load_more_btn_display_type' => 'inline-block',
-				),
-			)
-		);
-
-		// Typography control for load more button.
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			array(
-				'name'     => 'load_more_btn_typography',
-				'label'    => __( 'Typography', 'shortcodes-for-buddypress' ),
-				'selector' => '{{WRAPPER}} #buddypress .activity-list .load-more a, {{WRAPPER}} .load-newest a',
-			)
-		);
-
-		// Normal/Hover state tabs for load more button.
-		$this->start_controls_tabs( 'load_more_btn_style_tabs' );
-
-		// Normal state tab.
-		$this->start_controls_tab(
-			'load_more_btn_style_normal_tab',
-			array(
-				'label' => __( 'Normal', 'shortcodes-for-buddypress' ),
-			)
-		);
-
-		// Normal state background color.
-		$this->add_control(
-			'load_more_btn_background',
-			array(
-				'label'     => __( 'Background', 'shortcodes-for-buddypress' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} #buddypress .activity-list .load-more a'   => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} #buddypress .activity-list .load-newest a' => 'background-color: {{VALUE}}',
-				),
-			)
-		);
-
-		// Normal state text color.
-		$this->add_control(
-			'load_more_btn_text_color',
-			array(
-				'label'     => __( 'Color', 'shortcodes-for-buddypress' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} #buddypress .activity-list .load-more a'   => 'color: {{VALUE}}',
-					'{{WRAPPER}} #buddypress .activity-list .load-newest a' => 'color: {{VALUE}}',
-				),
-			)
-		);
-
-		$this->end_controls_tab();
-
-		// Hover state tab.
-		$this->start_controls_tab(
-			'load_more_btn_style_hover_tab',
-			array(
-				'label' => __( 'Hover', 'shortcodes-for-buddypress' ),
-			)
-		);
-
-		// Hover state background color.
-		$this->add_control(
-			'load_more_btn_hover_background',
-			array(
-				'label'     => __( 'Background', 'shortcodes-for-buddypress' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} #buddypress .activity-list .load-more a:hover'   => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} #buddypress .activity-list .load-newest a:hover' => 'background-color: {{VALUE}}',
-				),
-			)
-		);
-
-		// Hover state text color.
-		$this->add_control(
-			'load_more_btn_hover_text_color',
-			array(
-				'label'     => __( 'Color', 'shortcodes-for-buddypress' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} #buddypress .activity-list .load-more a:hover'   => 'color: {{VALUE}}',
-					'{{WRAPPER}} #buddypress .activity-list .load-newest a:hover' => 'color: {{VALUE}}',
-				),
-			)
-		);
-
-		// Hover state border color.
-		$this->add_control(
-			'load_more_btn_hover_border',
-			array(
-				'label'     => __( 'Border Color', 'shortcodes-for-buddypress' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} #buddypress .activity-list .load-more a:hover'   => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} #buddypress .activity-list .load-newest a:hover' => 'border-color: {{VALUE}}',
-				),
-			)
-		);
-
-		// Hover state box shadow.
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			array(
-				'name'     => 'load_more_btn_hover_shadow',
-				'selector' => '{{WRAPPER}} #buddypress .activity-list .load-more a:hover, #buddypress {{WRAPPER}} .load-newest a:hover',
-			)
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		// Border control for load more button.
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
-			array(
-				'name'      => 'load_more_btn_border',
-				'selector'  => '{{WRAPPER}} #buddypress .activity-list .load-more a, {{WRAPPER}} #buddypress .activity-list .load-newest a',
-				'separator' => 'before',
-			)
-		);
-
-		// Border radius control for load more button.
-		$this->add_control(
-			'load_more_btn_border_radius',
-			array(
-				'label'      => __( 'Border Radius', 'shortcodes-for-buddypress' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', '%', 'em' ),
-				'selectors'  => array(
-					'{{WRAPPER}} #buddypress .activity-list .load-more a'   => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} #buddypress .activity-list .load-newest a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-			)
-		);
-
-		// Box shadow control for load more button.
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			array(
-				'name'     => 'load_more_btn_shadow',
-				'selector' => '{{WRAPPER}} #buddypress .activity-list .load-more a, {{WRAPPER}} #buddypress .activity-list .load-newest a',
-			)
-		);
-
-		// Padding control for load more button.
-		$this->add_responsive_control(
-			'load_more_btn_padding',
-			array(
-				'label'      => __( 'Padding', 'shortcodes-for-buddypress' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} #buddypress .activity-list .load-more a'   => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} #buddypress .activity-list .load-newest a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} #buddypress .activity > ul.activity-list > li:not(.load-more)'            => 'margin-top: 0; margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} #buddypress .activity > ul.activity-list > li:last-child' => 'margin-bottom: 0;',
 				),
 			)
 		);

@@ -5,7 +5,7 @@ The plugin registers exactly three shortcodes. Each is documented on its own pag
 | Shortcode | Renders | Requires component | Reference |
 |---|---|---|---|
 | `[activity-listing]` | Activity stream | Activity | See [activity-listing] |
-| `[members-listing]` | Members directory | Extended Profiles (xprofile) | See [members-listing] |
+| `[members-listing]` | Members directory | Members | See [members-listing] |
 | `[groups-listing]` | Groups directory | Groups | See [groups-listing] |
 
 ## How attributes are handled

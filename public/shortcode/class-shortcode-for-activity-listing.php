@@ -202,7 +202,7 @@ class ActivityShortCode extends BPShortCode {
 	 */
 	private function show_activities( $atts, $template_vars ) {
 		?>
-		<div class="activity-listing">
+		<div class="activity-listing <?php echo esc_attr( $atts['container_class'] ); ?>">
 			<?php if ( ! empty( $atts['title'] ) ) : ?>
 				<h4><?php echo esc_html( $atts['title'] ); ?></h4>
 			<?php endif; ?>

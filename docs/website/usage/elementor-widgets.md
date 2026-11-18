@@ -16,7 +16,7 @@ Drag a widget onto the canvas to place it.
 
 ## Content controls
 
-Each widget's content controls map to the attributes of its shortcode. A control such as Title, Per Page, or Type sets the matching shortcode attribute. Only the widget controls that correspond to a real shortcode attribute are applied; other controls (style controls) do not affect the query.
+Each widget's content controls map to the attributes of its shortcode. The Title and Per Page controls set the matching shortcode attribute. Only the widget controls that correspond to a real shortcode attribute are applied; other controls (style controls) do not affect the query.
 
 ## Style controls
 

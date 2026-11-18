@@ -35,10 +35,10 @@ Each shortcode needs its matching BuddyPress component enabled:
 | Shortcode | Requires component |
 |---|---|
 | `[activity-listing]` | Activity |
-| `[members-listing]` | Extended Profiles (xprofile) |
+| `[members-listing]` | Members |
 | `[groups-listing]` | Groups |
 
-If the component is off, the shortcode shows a short "please enable" notice in place of the listing.
+If the component is off, administrators see a short "please enable" notice in place of the listing and visitors see nothing.
 
 ## The listing needs the Nouveau template pack
 

@@ -9,14 +9,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-14T17:15:36+00:00\n"
+"POT-Creation-Date: 2026-11-18T23:10:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: shortcodes-for-buddypress\n"
 
 #. Plugin Name of the plugin
 #: shortcodes-for-buddypress.php
-#: shortcodes-for-buddypress.php:48
+#: shortcodes-for-buddypress.php:49
 msgid "Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress"
 msgstr ""
 
@@ -41,7 +41,7 @@ msgid "https://wbcomdesigns.com/plugins"
 msgstr ""
 
 #: elementor/class-buddypress-shortcode-elements.php:73
-#: shortcodes-for-buddypress.php:328
+#: shortcodes-for-buddypress.php:329
 msgid "BuddyPress Widgets"
 msgstr ""
 
@@ -51,19 +51,19 @@ msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:101
 #: elementor/widgets/class-buddypress-groups-widget.php:119
-#: elementor/widgets/class-buddypress-members-widget.php:118
+#: elementor/widgets/class-buddypress-members-widget.php:101
 msgid "Query"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:109
 #: elementor/widgets/class-buddypress-groups-widget.php:127
-#: elementor/widgets/class-buddypress-members-widget.php:126
+#: elementor/widgets/class-buddypress-members-widget.php:109
 msgid "Title"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:111
 #: elementor/widgets/class-buddypress-groups-widget.php:129
-#: elementor/widgets/class-buddypress-members-widget.php:128
+#: elementor/widgets/class-buddypress-members-widget.php:111
 msgid "Add activity title"
 msgstr ""
 
@@ -77,13 +77,13 @@ msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:133
 #: elementor/widgets/class-buddypress-groups-widget.php:151
-#: elementor/widgets/class-buddypress-members-widget.php:150
+#: elementor/widgets/class-buddypress-members-widget.php:133
 msgid "Shortcodes for BuddyPress PRO"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:135
 #: elementor/widgets/class-buddypress-groups-widget.php:153
-#: elementor/widgets/class-buddypress-members-widget.php:152
+#: elementor/widgets/class-buddypress-members-widget.php:135
 msgid "Power up your listing with custom queries and templates."
 msgstr ""
 
@@ -92,91 +92,27 @@ msgid "Activity Item Container"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:159
-#: elementor/widgets/class-buddypress-activity-widget.php:340
-#: elementor/widgets/class-buddypress-activity-widget.php:376
 #: elementor/widgets/class-buddypress-groups-widget.php:177
-#: elementor/widgets/class-buddypress-members-widget.php:189
+#: elementor/widgets/class-buddypress-members-widget.php:172
 msgid "Background"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:187
-#: elementor/widgets/class-buddypress-activity-widget.php:438
 #: elementor/widgets/class-buddypress-groups-widget.php:247
 #: elementor/widgets/class-buddypress-groups-widget.php:282
-#: elementor/widgets/class-buddypress-members-widget.php:217
+#: elementor/widgets/class-buddypress-members-widget.php:200
 msgid "Border Radius"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:200
-#: elementor/widgets/class-buddypress-activity-widget.php:461
 #: elementor/widgets/class-buddypress-groups-widget.php:260
 #: elementor/widgets/class-buddypress-groups-widget.php:295
-#: elementor/widgets/class-buddypress-members-widget.php:243
+#: elementor/widgets/class-buddypress-members-widget.php:226
 msgid "Padding"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:213
 msgid "Item Spacing"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:233
-msgid "Load More Button"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:242
-#: elementor/widgets/class-buddypress-activity-widget.php:303
-msgid "Base Style"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:256
-msgid "Display"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:260
-msgid "Inline"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:261
-msgid "Block"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:273
-msgid "Alignment"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:277
-msgid "Left"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:281
-msgid "Center"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:285
-msgid "Right"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:320
-msgid "Typography"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:332
-#: elementor/widgets/class-buddypress-groups-widget.php:190
-msgid "Normal"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:353
-#: elementor/widgets/class-buddypress-activity-widget.php:389
-msgid "Color"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:368
-#: elementor/widgets/class-buddypress-groups-widget.php:209
-msgid "Hover"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-activity-widget.php:402
-msgid "Border Color"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-groups-widget.php:47
@@ -195,27 +131,35 @@ msgstr ""
 msgid "Listing Groups"
 msgstr ""
 
+#: elementor/widgets/class-buddypress-groups-widget.php:190
+msgid "Normal"
+msgstr ""
+
+#: elementor/widgets/class-buddypress-groups-widget.php:209
+msgid "Hover"
+msgstr ""
+
 #: elementor/widgets/class-buddypress-members-widget.php:47
 msgid "Members List"
 msgstr ""
 
-#: elementor/widgets/class-buddypress-members-widget.php:136
+#: elementor/widgets/class-buddypress-members-widget.php:119
 msgid "Per Page"
 msgstr ""
 
-#: elementor/widgets/class-buddypress-members-widget.php:139
+#: elementor/widgets/class-buddypress-members-widget.php:122
 msgid "How many members display on page."
 msgstr ""
 
-#: elementor/widgets/class-buddypress-members-widget.php:166
+#: elementor/widgets/class-buddypress-members-widget.php:149
 msgid "Listing"
 msgstr ""
 
-#: elementor/widgets/class-buddypress-members-widget.php:175
+#: elementor/widgets/class-buddypress-members-widget.php:158
 msgid "View"
 msgstr ""
 
-#: elementor/widgets/class-buddypress-members-widget.php:230
+#: elementor/widgets/class-buddypress-members-widget.php:213
 msgid "Margin"
 msgstr ""
 
@@ -252,7 +196,7 @@ msgstr ""
 
 #: includes/admin/class-shortcodes-for-buddypress-admin-panel.php:123
 #: includes/admin/views/layout.php:30
-#: shortcodes-for-buddypress.php:281
+#: shortcodes-for-buddypress.php:282
 msgid "Shortcodes For BuddyPress"
 msgstr ""
 
@@ -270,7 +214,7 @@ msgid "Continue"
 msgstr ""
 
 #: includes/admin/class-shortcodes-for-buddypress-admin-panel.php:190
-#: public/class-shortcodes-for-buddypress-public.php:478
+#: public/class-shortcodes-for-buddypress-public.php:475
 msgid "Cancel"
 msgstr ""
 
@@ -545,7 +489,7 @@ msgid "A shortcode only renders when its BuddyPress component is active."
 msgstr ""
 
 #: includes/admin/views/overview.php:139
-#: shortcodes-for-buddypress.php:282
+#: shortcodes-for-buddypress.php:283
 msgid "BuddyPress"
 msgstr ""
 
@@ -1147,46 +1091,46 @@ msgid "This shortcode needs the BuddyPress Nouveau template pack. Switch it on u
 msgstr ""
 
 #. translators: %s: member name
-#: public/class-shortcodes-for-buddypress-public.php:394
+#: public/class-shortcodes-for-buddypress-public.php:391
 #, php-format
 msgid "Profile photo of %s"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:442
+#: public/class-shortcodes-for-buddypress-public.php:439
 msgid "Post in: Profile"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:456
+#: public/class-shortcodes-for-buddypress-public.php:453
 msgid "Post in: Group"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:457
+#: public/class-shortcodes-for-buddypress-public.php:454
 msgid "Start typing the group name..."
 msgstr ""
 
 #. translators: %s: display BuddyPress user firstname.
-#: public/class-shortcodes-for-buddypress-public.php:474
+#: public/class-shortcodes-for-buddypress-public.php:471
 #, php-format
 msgid "What's new, %s?"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:475
+#: public/class-shortcodes-for-buddypress-public.php:472
 msgid "Post what's new"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:476
+#: public/class-shortcodes-for-buddypress-public.php:473
 msgid "Post in"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:477
+#: public/class-shortcodes-for-buddypress-public.php:474
 msgid "Post Update"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:519
+#: public/class-shortcodes-for-buddypress-public.php:516
 msgid "Go PRO"
 msgstr ""
 
-#: public/class-shortcodes-for-buddypress-public.php:603
+#: public/class-shortcodes-for-buddypress-public.php:600
 msgid "Sorry, no activities were found."
 msgstr ""
 
@@ -1206,11 +1150,11 @@ msgstr ""
 msgid "Unpin from Feed"
 msgstr ""
 
-#: public/shortcode/class-group-shortcode.php:201
+#: public/shortcode/class-group-shortcode.php:233
 msgid "To view groups, please enable the group component."
 msgstr ""
 
-#: public/shortcode/class-member-shortcode.php:129
+#: public/shortcode/class-member-shortcode.php:142
 msgid "To view members, please enable BuddyPress."
 msgstr ""
 
@@ -1222,41 +1166,41 @@ msgstr ""
 msgid "Activity listing is temporarily unavailable. Please check back later."
 msgstr ""
 
-#: shortcodes-for-buddypress.php:49
+#: shortcodes-for-buddypress.php:50
 msgid "Wbcom Designs - Shortcode For BuddyPress Pro"
 msgstr ""
 
 #. translators: %s:
-#: shortcodes-for-buddypress.php:52
+#: shortcodes-for-buddypress.php:53
 #, php-format
 msgid "%1$s and %2$s cannot be activated simultaneously. Please deactivate %1$s to continue."
 msgstr ""
 
-#: shortcodes-for-buddypress.php:283
+#: shortcodes-for-buddypress.php:284
 msgid "Install BuddyPress"
 msgstr ""
 
 #. translators: 1: Shortcodes For BuddyPress, 2: BuddyPress
-#: shortcodes-for-buddypress.php:287
+#: shortcodes-for-buddypress.php:288
 #, php-format
 msgid "%1$s is ineffective as it requires %2$s to be installed and active. Please %3$s."
 msgstr ""
 
-#: templates/nouveau/activity/bp-shortcodes-activity.php:150
+#: templates/nouveau/activity/bp-shortcodes-activity.php:156
 msgid "Load More"
 msgstr ""
 
-#: templates/nouveau/activity/bp-shortcodes-activity.php:164
+#: templates/nouveau/activity/bp-shortcodes-activity.php:170
 msgid "Activity listing is temporarily unavailable due to BuddyPress compatibility issues. Please contact the site administrator."
 msgstr ""
 
-#: templates/nouveau/activity/bp-shortcodes-activity.php:169
+#: templates/nouveau/activity/bp-shortcodes-activity.php:175
 msgid "Activity listing is temporarily unavailable. Please try again later."
 msgstr ""
 
 #. translators: %s: last activity timestamp (e.g. "Active 1 hour ago")
-#: templates/nouveau/groups/bb-shortcodes-groups.php:110
-#: templates/nouveau/groups/bp-shortcodes-groups.php:120
+#: templates/nouveau/groups/bb-shortcodes-groups.php:116
+#: templates/nouveau/groups/bp-shortcodes-groups.php:126
 #, php-format
 msgid "Active %s"
 msgstr ""

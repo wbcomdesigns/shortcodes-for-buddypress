@@ -77,12 +77,25 @@ Please use the [plugin support forum](https://wordpress.org/support/plugin/short
 
 = 3.0.2 - November 2026 =
 
+* Improve  - The Activity widget no longer lists Load More Button style controls, because the widget never shows that button.
 * Fix      - [activity-listing allow_posting="no"] no longer shows the post form, and logged-out visitors never see it.
 * Fix      - Group cards in [groups-listing] now show the group's own cover image instead of a member cover.
 * Fix      - On the Reign theme, grid="no" and loop_layout on [members-listing] and [groups-listing] are now honoured instead of always showing the site grid.
 * Fix      - loop_layout one, two and four on [members-listing] and [groups-listing] now show that many columns on BuddyBoss Platform, and one is a single column on every theme.
 * Fix      - On BuddyBoss, the Join button row in [groups-listing] carries the groups-meta class, so theme styling for group buttons applies.
+* Fix      - page_arg on [members-listing] and [groups-listing] now changes the page link argument, so two listings on one page paginate separately.
+* Fix      - slug on [groups-listing] now limits the list to the groups with those slugs instead of listing every group.
+* Fix      - include_member_role with a role nobody holds now lists no members instead of every member.
+* Fix      - A search containing an ampersand in [members-listing] or [groups-listing] is no longer cut at the ampersand.
+* Fix      - container_class on [activity-listing] is now added to the wrapper.
+* Fix      - Elementor Padding and Border Radius controls on the Members, Groups and Activity widgets now apply on the Reign theme, and the Background control on the Activity widget.
+* Fix      - Elementor Members and Groups widgets no longer scroll sideways on phones.
+* Fix      - The Add Friend and Message buttons in [members-listing] cards are spaced and centered again.
+* Fix      - On BuddyBoss, the [groups-listing] list no longer carries a stray "-list" class.
+* Fix      - The "please enable the component" notice is now shown to administrators only; visitors see nothing.
+* Security - show_hidden and status="hidden" on [groups-listing] only list hidden groups for site administrators, so a public page can no longer expose them.
 * Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
+* Dev      - Added bin/build-release.sh and a .distignore that is the single exclude list for the release zip.
 
 = 3.0.1 - November 2026 =
 

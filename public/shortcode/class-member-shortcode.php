@@ -105,17 +105,23 @@ class MemberShortCode extends BPShortCode {
 			'meta_value'          => $atts['meta_value'],
 			'populate_extras'     => $atts['populate_extras'],
 			'xprofile_query'      => $atts['xprofile_query'],
+			'page_arg'            => $atts['page_arg'],
 		);
 
 		// Apply filter to modify query arguments.
 		$bash_query_args = apply_filters( 'member_shortcode_bash_query_args', $bash_query_args );
 
-		$query = '';
-		foreach ( $bash_query_args as $bash_query_key => $bash_query ) {
-			$query .= false !== $bash_query && '' !== $bash_query ? '&' . $bash_query_key . '=' . $bash_query : '';
-		}
-			$grid      = 'yes' === $atts['grid'] ? 'grid' : '';
-			$column    = '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '';
+		// Encoded, so a search such as "a&b" or "R&D" is not cut at the ampersand.
+		$query  = http_build_query(
+			array_filter(
+				$bash_query_args,
+				function ( $value ) {
+					return false !== $value && '' !== $value;
+				}
+			)
+		);
+		$grid   = 'yes' === $atts['grid'] ? 'grid' : '';
+		$column = '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '';
 		$template_args = apply_filters(
 			'member_shortcode_template_args',
 			array(
@@ -193,7 +199,10 @@ class MemberShortCode extends BPShortCode {
 			$role_user_ids = $this->get_users_with_roles( $atts['include_member_role'] );
 			$existing_ids  = $this->convert_to_array( isset( $atts['include'] ) ? $atts['include'] : '' );
 
-			$atts['include'] = $this->combine_ids( $role_user_ids, $existing_ids );
+			// A role nobody holds must list nobody. An empty include means "no
+			// filter" to BuddyPress, which listed every member instead.
+			$combined        = $this->combine_ids( $role_user_ids, $existing_ids );
+			$atts['include'] = '' === $combined ? (string) PHP_INT_MAX : $combined;
 			unset( $atts['include_member_role'] );
 		}
 

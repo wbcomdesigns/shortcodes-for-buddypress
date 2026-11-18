@@ -1,5 +1,19 @@
 'use strict';
 module.exports = function (grunt) {
+    // .distignore -> grunt globs ("/x" = root path, "*.ext" = any depth).
+    var distIgnore = [];
+    grunt.file.read('.distignore').split('\n').forEach(function (line) {
+        line = line.trim();
+        if (!line || '#' === line.charAt(0)) {
+            return;
+        }
+        if ('/' === line.charAt(0)) {
+            distIgnore.push('!' + line.slice(1), '!' + line.slice(1) + '/**');
+        } else {
+            distIgnore.push('!**/' + line);
+        }
+    });
+
     // Load all grunt tasks automatically
     require('load-grunt-tasks')(grunt);
 
@@ -24,55 +38,9 @@ module.exports = function (grunt) {
             build: {
                 files: [{
                     expand: true,
-                    src: [
-                        '**',
-                        '!node_modules/**',
-                        '!build/**',
-                        '!temp/**',
-                        // Lowercase too: minimatch is case-sensitive, so
-                        // '!Gruntfile.js' alone shipped gruntfile.js.
-                        '!Gruntfile.js',
-                        '!gruntfile.js',
-                        '!package.json',
-                        '!package-lock.json',
-                        '!.git/**',
-                        '!.gitignore',
-                        // '!*.md' matches root level only, which shipped
-                        // audit/*.md and docs/*.md to customers.
-                        '!*.md',
-                        '!**/*.md',
-                        // Internal QA baselines and feature audits.
-                        '!audit/**',
-                        '!.DS_Store',
-                        '!**/.DS_Store',
-                        '!*.zip',
-                        '!tests/**',
-                        '!bin/**',
-                        '!.editorconfig',
-                        '!.eslintrc',
-                        '!.jshintrc',
-                        '!composer.json',
-                        '!composer.lock',
-                        '!phpcs.xml',
-                        '!phpunit.xml',
-                        '!phpunit.xml.dist',
-                        '!phpstan.neon',
-                        '!phpstan-baseline.neon',
-                        '!phpstan-bootstrap.php',
-                        '!vendor/**',
-                        '!.github/**',
-                        '!.phpunit.result.cache',
-                        // Internal contract-audit suppressions, same category
-                        // as audit/**.
-                        '!.contract-audit-baseline.json',
-                        // '!**/*.md' strips the files but leaves the empty
-                        // docs/ directory entry behind in the archive.
-                        '!docs/**',
-                        // WP.org readme screenshots belong in the SVN assets/
-                        // directory, not in the plugin every user installs.
-                        // These six are ~900KB of dead weight on every site.
-                        '!screenshot-*.png',
-                    ],
+                    // One exclude list for the zip: .distignore.
+                    src: ['**'].concat(distIgnore),
+                    dot: false,
                     dest: 'build/<%= pkg.name %>/'
                 }]
             }
@@ -220,8 +188,10 @@ module.exports = function (grunt) {
             admin: {
                 files: [{
                     expand: true,
-                    cwd: 'assets/css/min/',
-                    src: ['*.min.css', '!*.rtl.css'],
+                    // From the readable source so the token block keeps one custom
+                    // property per line, like admin.css.
+                    cwd: 'assets/css/',
+                    src: ['admin.css'],
                     dest: 'assets/css/rtl/',
                     ext: '.rtl.css'
                 }]

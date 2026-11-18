@@ -3,7 +3,7 @@
   "plugin": {
     "slug": "shortcodes-for-buddypress",
     "name": "Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress",
-    "version": "3.0.0",
+    "version": "3.0.2",
     "namespace": "Shortcodes_For_Buddypress",
     "main_file": "shortcodes-for-buddypress.php",
     "text_domain": "shortcodes-for-buddypress",

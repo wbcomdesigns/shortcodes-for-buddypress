@@ -104,7 +104,22 @@ class GroupShortCode extends BPShortCode {
 			'meta_query'         => $atts['meta_query'],
 			'parent_id'          => $atts['parent_id'],
 			'update_meta_cache'  => $atts['update_meta_cache'],
+			'page_arg'           => $atts['page_arg'],
 		);
+
+		/*
+		 * A hidden group is only for its members. show_hidden="1" or
+		 * status="hidden" on a public page would list every hidden group to
+		 * every visitor, so honour them for site moderators only.
+		 */
+		if ( ! function_exists( 'bp_current_user_can' ) || ! bp_current_user_can( 'bp_moderate' ) ) {
+			$query_args['show_hidden'] = false;
+			if ( 'hidden' === $atts['status'] ) {
+				// Nothing to show: an unknown group id, since an empty include is "no filter".
+				$query_args['status']  = '';
+				$query_args['include'] = (string) PHP_INT_MAX;
+			}
+		}
 
 		/*
 		 * `type` wins over `orderby`/`order` inside bp_has_groups(), and this
@@ -118,6 +133,23 @@ class GroupShortCode extends BPShortCode {
 		$ordering_customised = ( 'DESC' !== $atts['order'] || 'last_activity' !== $atts['orderby'] );
 		if ( $ordering_customised && 'alphabetical' === $atts['type'] ) {
 			unset( $query_args['type'] );
+		}
+
+		/*
+		 * bp_has_groups() ignores `slug`, so the attribute listed every group.
+		 * Resolve the slugs to group ids and limit the query with `include`; a
+		 * slug that matches no group lists nothing.
+		 */
+		if ( ! empty( $atts['slug'] ) && function_exists( 'groups_get_id' ) ) {
+			$group_ids = array();
+			foreach ( array_filter( array_map( 'sanitize_title', explode( ',', (string) $atts['slug'] ) ) ) as $group_slug ) {
+				$group_id = groups_get_id( $group_slug );
+				if ( $group_id ) {
+					$group_ids[] = $group_id;
+				}
+			}
+			$query_args['include'] = $group_ids ? implode( ',', $group_ids ) : (string) PHP_INT_MAX;
+			unset( $query_args['slug'] );
 		}
 
 		// Remove empty values to avoid issues with BuddyPress query.
@@ -164,15 +196,8 @@ class GroupShortCode extends BPShortCode {
 	 * @return string
 	 */
 	private function build_query_string( $query_args ) {
-		$query_parts = array();
-
-		foreach ( $query_args as $key => $value ) {
-			if ( false !== $value && '' !== $value ) {
-				$query_parts[] = $key . '=' . $value;
-			}
-		}
-
-		return implode( '&', $query_parts );
+		// Encoded, so a search such as "a&b" is not cut at the ampersand.
+		return http_build_query( $query_args );
 	}
 
 	/**

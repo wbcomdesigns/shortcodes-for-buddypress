@@ -4,59 +4,108 @@
   "shortId": "bpshortcodes",
   "sections": [
     {
-      "slug": "getting-started",
-      "title": "Getting Started",
+      "name": "Getting Started",
+      "folder": "getting-started",
+      "description": "Install the plugin and place your first listing.",
       "pages": [
-        { "slug": "introduction", "title": "Introduction" },
-        { "slug": "installation", "title": "Installation and Requirements" }
+        {
+          "slug": "introduction",
+          "title": "Introduction"
+        },
+        {
+          "slug": "installation",
+          "title": "Installation and Requirements"
+        }
       ]
     },
     {
-      "slug": "features",
-      "title": "Features",
+      "name": "Features",
+      "folder": "features",
+      "description": "What the shortcodes and Elementor widgets can show.",
       "pages": [
-        { "slug": "overview", "title": "Feature Overview" }
+        {
+          "slug": "overview",
+          "title": "Feature Overview"
+        }
       ]
     },
     {
-      "slug": "usage",
-      "title": "Usage",
+      "name": "Usage",
+      "folder": "usage",
+      "description": "Add listings to pages and build them with Elementor.",
       "pages": [
-        { "slug": "adding-shortcodes", "title": "Adding Shortcodes to a Page" },
-        { "slug": "elementor-widgets", "title": "Elementor Widgets" }
+        {
+          "slug": "adding-shortcodes",
+          "title": "Adding Shortcodes to a Page"
+        },
+        {
+          "slug": "elementor-widgets",
+          "title": "Elementor Widgets"
+        }
       ]
     },
     {
-      "slug": "shortcodes",
-      "title": "Shortcode Reference",
+      "name": "Shortcode Reference",
+      "folder": "shortcodes",
+      "description": "Every attribute of the three listing shortcodes.",
       "pages": [
-        { "slug": "overview", "title": "Shortcodes Overview" },
-        { "slug": "activity-listing", "title": "[activity-listing]" },
-        { "slug": "members-listing", "title": "[members-listing]" },
-        { "slug": "groups-listing", "title": "[groups-listing]" }
+        {
+          "slug": "overview",
+          "title": "Shortcodes Overview"
+        },
+        {
+          "slug": "activity-listing",
+          "title": "[activity-listing]"
+        },
+        {
+          "slug": "members-listing",
+          "title": "[members-listing]"
+        },
+        {
+          "slug": "groups-listing",
+          "title": "[groups-listing]"
+        }
       ]
     },
     {
-      "slug": "developer-guide",
-      "title": "Developer Guide",
+      "name": "Developer Guide",
+      "folder": "developer-guide",
+      "description": "Hooks, filters, template overrides and the load-more request.",
       "pages": [
-        { "slug": "hooks-and-filters", "title": "Hooks and Filters" },
-        { "slug": "templates", "title": "Template Overrides" },
-        { "slug": "ajax", "title": "Load More AJAX" }
+        {
+          "slug": "hooks-and-filters",
+          "title": "Hooks and Filters"
+        },
+        {
+          "slug": "templates",
+          "title": "Template Overrides"
+        },
+        {
+          "slug": "ajax",
+          "title": "Load More AJAX"
+        }
       ]
     },
     {
-      "slug": "faq",
-      "title": "FAQ",
+      "name": "FAQ",
+      "folder": "faq",
+      "description": "Short answers to common questions.",
       "pages": [
-        { "slug": "faq", "title": "Frequently Asked Questions" }
+        {
+          "slug": "faq",
+          "title": "Frequently Asked Questions"
+        }
       ]
     },
     {
-      "slug": "troubleshooting",
-      "title": "Troubleshooting",
+      "name": "Troubleshooting",
+      "folder": "troubleshooting",
+      "description": "Fixes for listings that are empty or look wrong.",
       "pages": [
-        { "slug": "troubleshooting", "title": "Troubleshooting" }
+        {
+          "slug": "troubleshooting",
+          "title": "Troubleshooting"
+        }
       ]
     }
   ]

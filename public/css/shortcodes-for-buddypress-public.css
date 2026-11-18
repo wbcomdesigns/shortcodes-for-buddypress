@@ -122,11 +122,6 @@ p.item-meta.last-activity{
     margin-bottom: 30px;
 }
 
-.elementor-widget-buddypress_shortcode_members_widget ul#members-list.bp-list.grid.three,
-.elementor-widget-buddypress_shortcode_groups_widget ul#groups-list.bp-list.grid.three {
-    margin: 0 -18px;
-}
-
 .buddypress-wrap ul.bp-list.groups-dir-list>li {
     min-width: auto;
 }
@@ -149,6 +144,17 @@ p.item-meta.last-activity{
     width: 100%;
     text-align: center;
     justify-content: center;
+}
+
+/* Themes such as Reign pull the grid out by the card gutter (margin: 0 -15px). A
+   narrow Elementor container has less padding than that, so the list ran past the
+   viewport edge and the page scrolled sideways on phones. */
+@media only screen and (max-width: 767px) {
+    .elementor-widget-buddypress_shortcode_members_widget ul#members-list.bp-list.grid,
+    .elementor-widget-buddypress_shortcode_groups_widget ul#groups-list.bp-list.grid {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 @media only screen and (max-width: 479px) {
@@ -209,7 +215,8 @@ p.item-meta.last-activity{
 # not add its own gutter) they appeared to overlap. Lay the action row out as
 # a centered flex row with a gap.
 --------------------------------------------------------------*/
-.members-listing .activity-meta.action {
+.members-listing .activity-meta.action,
+.members-listing .members-meta.action {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -217,6 +224,8 @@ p.item-meta.last-activity{
     align-items: center;
 }
 
-.members-listing .activity-meta.action > li {
+.members-listing .activity-meta.action > li,
+.members-listing .members-meta.action > li,
+.members-listing .members-meta.action > div {
     margin: 0;
 }

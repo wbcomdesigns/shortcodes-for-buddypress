@@ -1,6 +1,6 @@
 # [groups-listing]
 
-Renders the BuddyPress groups directory. Requires the Groups component. If Groups is disabled, the shortcode shows a "please enable the group component" notice instead.
+Renders the BuddyPress groups directory. Requires the Groups component. If Groups is disabled, administrators see a "please enable the group component" notice and visitors see nothing.
 
 ## Basic usage
 
@@ -25,16 +25,16 @@ These are the exact attributes and defaults the shortcode accepts.
 | `page` | `1` | Page number. |
 | `per_page` | `20` | Groups per page. |
 | `max` | `false` | Maximum number of groups to return. |
-| `show_hidden` | `false` | Set to `true` to include hidden groups. |
-| `status` | (empty) | Limit to a group status: `public`, `private`, or `hidden`. |
-| `page_arg` | `grpage` | Query-string argument used for pagination. |
+| `show_hidden` | `false` | Set to `true` to include hidden groups. Only honoured for site administrators; for everyone else hidden groups stay hidden. |
+| `status` | (empty) | Limit to a group status: `public`, `private`, or `hidden`. `hidden` lists nothing for visitors who are not site administrators. |
+| `page_arg` | `grpage` | Query-string argument used for pagination. Give two listings on one page different values so their page links work separately. |
 | `user_id` | `false` | Limit to a user's groups. |
-| `slug` | `false` | Limit to a group by slug. |
+| `slug` | `false` | Limit to one or more groups by slug (comma-separated). A slug that matches no group lists nothing. |
 | `search_terms` | `false` | Search keywords. |
 | `group_type` | `false` | Group type slug to filter by. |
 | `group_type__in` | (empty) | Comma-separated group types to include. |
 | `group_type__not_in` | (empty) | Comma-separated group types to exclude. |
-| `meta_query` | `false` | Group meta query. |
+| `meta_query` | `false` | Group meta query. It is an array, which a shortcode string cannot carry, so set it from the `group_shortcode_bash_query_args` filter. |
 | `use_compat` | theme value | Theme-compat flag; defaults to the site's BuddyPress theme-compat setting. |
 | `include` | `false` | Comma-separated group IDs to include. |
 | `exclude` | `false` | Comma-separated group IDs to exclude. |

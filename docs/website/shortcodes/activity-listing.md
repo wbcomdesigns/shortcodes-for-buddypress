@@ -1,6 +1,6 @@
 # [activity-listing]
 
-Renders the BuddyPress activity stream. Requires the Activity component. If Activity is disabled, the shortcode shows a "please enable the activity component" notice instead.
+Renders the BuddyPress activity stream. Requires the Activity component. If Activity is disabled, administrators see a "please enable the activity component" notice and visitors see nothing.
 
 ## Basic usage
 
@@ -21,7 +21,7 @@ These are the exact attributes and defaults the shortcode accepts.
 | `pagination` | `1` | Reserved display flag passed to the template. |
 | `load_more` | `0` | Set to `1` to show a load-more control that fetches the next page over AJAX. |
 | `display_comments` | `false` | See the note below; comments are forced off in this version. |
-| `container_class` | `activity` | Extra CSS class on the wrapper. |
+| `container_class` | `activity` | Extra CSS class added to the wrapper element. |
 | `allow_posting` | `false` | Passed to the template to allow the post form. |
 | `include` | `false` | Comma-separated activity IDs to include. |
 | `exclude` | `false` | Comma-separated activity IDs to exclude. |

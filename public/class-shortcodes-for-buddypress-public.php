@@ -92,9 +92,6 @@ class Shortcodes_For_Buddypress_Public {
 				wp_enqueue_style( 'bp-medium-editor' );
 			}
 			if ( class_exists( 'Buddypress_Quotes' ) ) {
-				if ( ! wp_style_is( 'wb-font-awesome', 'enqueued' ) ) {
-					wp_enqueue_style( 'wb-font-awesome' );
-				}
 				if ( ! wp_style_is( 'wb-icons', 'enqueued' ) ) {
 					wp_enqueue_style( 'wb-icons' );
 				}
@@ -616,6 +613,9 @@ class Shortcodes_For_Buddypress_Public {
 	 * @return array
 	 */
 	public function buddypress_shortcode_activity_entry_bubble_buttons( $buttons, $activity_id ) {
+		if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'activity' ) ) {
+			return $buttons;
+		}
 
 		global $activities_template;
 

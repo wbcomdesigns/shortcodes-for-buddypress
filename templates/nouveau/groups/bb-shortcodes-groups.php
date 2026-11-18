@@ -12,6 +12,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Loaded by the shortcode only after it checked the component, kept here so a
+// direct include can never call into a component that is switched off.
+if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'groups' ) ) {
+	return;
+}
+
 add_filter( 'bp_get_group_description_excerpt', 'bb_get_group_description_excerpt_view_more', 99, 2 );
 
 bp_nouveau_before_loop();
@@ -34,7 +40,7 @@ if ( bp_has_groups( $query ) ) {
 		<div class="bpsp-group-count">	
 			<?php echo wp_kses_post( bp_get_groups_pagination_count() ); ?>
 		</div>
-		<ul id="groups-list" class="bb-platform-shortcode <?php bp_nouveau_loop_classes(); ?><?php echo esc_attr( ' ' . $cover_class . ' ' . $group_alignment ); ?> <?php echo esc_attr( $classes ); ?>">
+		<ul id="groups-list" class="bb-platform-shortcode <?php echo esc_attr( $cover_class . ' ' . $group_alignment . ' ' . $classes ); ?>">
 			<?php
 			while ( bp_groups() ) :
 				bp_the_group();
