@@ -25,8 +25,8 @@ These are the exact attributes and defaults the shortcode accepts.
 | `page` | `1` | Page number. |
 | `per_page` | `20` | Groups per page. |
 | `max` | `false` | Maximum number of groups to return. |
-| `show_hidden` | `false` | Set to `true` to include hidden groups. Only honoured for site administrators; for everyone else hidden groups stay hidden. |
-| `status` | (empty) | Limit to a group status: `public`, `private`, or `hidden`. `hidden` lists nothing for visitors who are not site administrators. |
+| `show_hidden` | `false` | Set to `true` to include hidden groups. Only honoured for site administrators and moderators (users with the `bp_moderate` capability); for everyone else hidden groups stay hidden. |
+| `status` | (empty) | Limit to a group status: `public`, `private`, or `hidden`. `hidden` lists nothing for anyone without the `bp_moderate` capability (site administrators and moderators). |
 | `page_arg` | `grpage` | Query-string argument used for pagination. Give two listings on one page different values so their page links work separately. |
 | `user_id` | `false` | Limit to a user's groups. |
 | `slug` | `false` | Limit to one or more groups by slug (comma-separated). A slug that matches no group lists nothing. |

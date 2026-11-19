@@ -87,7 +87,7 @@ class Test_BPSP_3_0_2_Fixes extends WP_UnitTestCase {
 		do_shortcode( '[groups-listing search_terms="R&D"]' );
 		ob_end_clean();
 		remove_filter( 'group_shortcode_template_args', $capture );
-		$this->assertStringContainsString( 'search_terms=R%26D', $captured );
+		$this->assertStringContainsString( 'search_terms=R%26amp%3BD', $captured );
 	}
 
 	/**
@@ -117,5 +117,29 @@ class Test_BPSP_3_0_2_Fixes extends WP_UnitTestCase {
 		$this->assertSame( '', trim( do_shortcode( '[groups-listing]' ) ) );
 		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
 		$this->assertStringContainsString( 'enable the group component', do_shortcode( '[groups-listing]' ) );
+	}
+
+	/**
+	 * BuddyPress searches group names HTML-encoded, so the groups query carries "&amp;".
+	 *
+	 * @return void
+	 */
+	public function test_groups_search_is_html_encoded_for_buddypress() {
+		$captured = '';
+		$capture  = function ( $args ) use ( &$captured ) {
+			$captured = $args['query'];
+			return $args;
+		};
+		add_filter( 'group_shortcode_template_args', $capture );
+		ob_start();
+		do_shortcode( '[groups-listing search_terms="Hiring & Careers"]' );
+		ob_end_clean();
+		$this->assertStringContainsString( 'search_terms=' . rawurlencode( 'Hiring &amp; Careers' ), str_replace( '+', '%20', $captured ) );
+
+		ob_start();
+		do_shortcode( '[groups-listing search_terms="Hiring &amp; Careers"]' );
+		ob_end_clean();
+		remove_filter( 'group_shortcode_template_args', $capture );
+		$this->assertStringNotContainsString( 'amp%3Bamp', $captured, 'An already encoded term must not be encoded twice.' );
 	}
 }

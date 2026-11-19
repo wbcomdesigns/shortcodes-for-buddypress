@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-18T23:10:19+00:00\n"
+"POT-Creation-Date: 2026-11-19T00:10:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: shortcodes-for-buddypress\n"
@@ -99,14 +99,14 @@ msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:187
 #: elementor/widgets/class-buddypress-groups-widget.php:247
-#: elementor/widgets/class-buddypress-groups-widget.php:282
+#: elementor/widgets/class-buddypress-groups-widget.php:295
 #: elementor/widgets/class-buddypress-members-widget.php:200
 msgid "Border Radius"
 msgstr ""
 
 #: elementor/widgets/class-buddypress-activity-widget.php:200
-#: elementor/widgets/class-buddypress-groups-widget.php:260
-#: elementor/widgets/class-buddypress-groups-widget.php:295
+#: elementor/widgets/class-buddypress-groups-widget.php:273
+#: elementor/widgets/class-buddypress-groups-widget.php:308
 #: elementor/widgets/class-buddypress-members-widget.php:226
 msgid "Padding"
 msgstr ""
@@ -139,6 +139,11 @@ msgstr ""
 msgid "Hover"
 msgstr ""
 
+#: elementor/widgets/class-buddypress-groups-widget.php:260
+#: elementor/widgets/class-buddypress-members-widget.php:213
+msgid "Margin"
+msgstr ""
+
 #: elementor/widgets/class-buddypress-members-widget.php:47
 msgid "Members List"
 msgstr ""
@@ -157,10 +162,6 @@ msgstr ""
 
 #: elementor/widgets/class-buddypress-members-widget.php:158
 msgid "View"
-msgstr ""
-
-#: elementor/widgets/class-buddypress-members-widget.php:213
-msgid "Margin"
 msgstr ""
 
 #: includes/admin/class-shortcodes-for-buddypress-admin-panel.php:49
@@ -1150,7 +1151,7 @@ msgstr ""
 msgid "Unpin from Feed"
 msgstr ""
 
-#: public/shortcode/class-group-shortcode.php:233
+#: public/shortcode/class-group-shortcode.php:243
 msgid "To view groups, please enable the group component."
 msgstr ""
 

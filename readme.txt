@@ -78,6 +78,7 @@ Please use the [plugin support forum](https://wordpress.org/support/plugin/short
 = 3.0.2 - November 2026 =
 
 * Improve  - The Activity widget no longer lists Load More Button style controls, because the widget never shows that button.
+* Improve  - The Elementor Groups widget now has a Margin control, like the Members widget.
 * Fix      - [activity-listing allow_posting="no"] no longer shows the post form, and logged-out visitors never see it.
 * Fix      - Group cards in [groups-listing] now show the group's own cover image instead of a member cover.
 * Fix      - On the Reign theme, grid="no" and loop_layout on [members-listing] and [groups-listing] are now honoured instead of always showing the site grid.
@@ -90,10 +91,11 @@ Please use the [plugin support forum](https://wordpress.org/support/plugin/short
 * Fix      - container_class on [activity-listing] is now added to the wrapper.
 * Fix      - Elementor Padding and Border Radius controls on the Members, Groups and Activity widgets now apply on the Reign theme, and the Background control on the Activity widget.
 * Fix      - Elementor Members and Groups widgets no longer scroll sideways on phones.
+* Fix      - A [groups-listing] search containing an ampersand, such as "Hiring & Careers", now finds the group.
 * Fix      - The Add Friend and Message buttons in [members-listing] cards are spaced and centered again.
 * Fix      - On BuddyBoss, the [groups-listing] list no longer carries a stray "-list" class.
 * Fix      - The "please enable the component" notice is now shown to administrators only; visitors see nothing.
-* Security - show_hidden and status="hidden" on [groups-listing] only list hidden groups for site administrators, so a public page can no longer expose them.
+* Security - show_hidden and status="hidden" on [groups-listing] only list hidden groups for site administrators and moderators (users with the bp_moderate capability), so a public page can no longer expose them.
 * Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
 * Dev      - Added bin/build-release.sh and a .distignore that is the single exclude list for the release zip.
 

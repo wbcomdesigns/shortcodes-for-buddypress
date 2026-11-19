@@ -196,7 +196,17 @@ class GroupShortCode extends BPShortCode {
 	 * @return string
 	 */
 	private function build_query_string( $query_args ) {
-		// Encoded, so a search such as "a&b" is not cut at the ampersand.
+		/*
+		 * BuddyPress stores and searches group names HTML-encoded ("Hiring &amp;
+		 * Careers"), so a raw "&" in the term matched nothing. Encode the term for
+		 * the query only; $query_args keeps the raw term for filters. esc_html()
+		 * does not double-encode, so an already encoded term is unchanged.
+		 */
+		if ( ! empty( $query_args['search_terms'] ) && is_string( $query_args['search_terms'] ) ) {
+			$query_args['search_terms'] = esc_html( $query_args['search_terms'] );
+		}
+
+		// URL-encoded, so a search such as "a&b" is not cut at the ampersand.
 		return http_build_query( $query_args );
 	}
 
