@@ -1,6 +1,6 @@
 # [members-listing]
 
-Renders the BuddyPress members directory. Requires the Extended Profiles (xprofile) component. If it is disabled, the shortcode shows a "please enable BuddyPress" notice instead.
+Renders the BuddyPress members directory. Requires the Members component. If it is disabled, administrators see a "please enable BuddyPress" notice and visitors see nothing.
 
 ## Basic usage
 
@@ -23,18 +23,18 @@ These are the exact attributes and defaults the shortcode accepts.
 | `page` | `false` | Page number. |
 | `per_page` | `20` | Members per page. |
 | `max` | `false` | Maximum number of members to return. |
-| `page_arg` | `upage` | Query-string argument used for pagination. |
+| `page_arg` | `upage` | Query-string argument used for pagination. Give two listings on one page different values so their page links work separately. |
 | `include` | `false` | Comma-separated user IDs to include. |
 | `exclude` | `false` | Comma-separated user IDs to exclude. |
 | `user_id` | `false` | Limit to a user's connections (friends). |
 | `user_ids` | `false` | Explicit set of user IDs. |
 | `member_type` | `false` | Member type slug to filter by. |
-| `include_member_role` | (empty) | Comma-separated WordPress roles; their users are added to `include`. |
+| `include_member_role` | (empty) | Comma-separated WordPress roles; their users are added to `include`. A role nobody holds lists no members. |
 | `exclude_member_role` | (empty) | Comma-separated WordPress roles; their users are added to `exclude`. |
 | `member_type__in` | (empty) | Comma-separated member types to include. |
 | `member_type__not_in` | (empty) | Comma-separated member types to exclude. |
 | `search_terms` | `false` | Search keywords. |
-| `xprofile_query` | `false` | Extended-profile field query. |
+| `xprofile_query` | `false` | Extended-profile field query. It is an array, which a shortcode string cannot carry, so set it from the `member_shortcode_bash_query_args` filter. |
 | `use_compat` | theme value | Theme-compat flag; defaults to the site's BuddyPress theme-compat setting. |
 | `meta_key` | `false` | User meta key to filter by. |
 | `meta_value` | `false` | User meta value to filter by. |

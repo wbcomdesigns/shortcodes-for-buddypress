@@ -3,7 +3,7 @@
  * Reference tab: [activity-listing] parameters.
  *
  * Informational documentation panel (ported from the legacy Activities
- * settings tab). Rendered inside shell.php — saves nothing.
+ * settings tab). Rendered inside layout.php — saves nothing.
  *
  * @package Shortcodes_For_Buddypress
  * @since   3.0.0
@@ -43,7 +43,7 @@ defined( 'ABSPATH' ) || exit;
 		</tr>
 		<tr>
 			<th scope="row"><code>allow_posting</code></th>
-			<td><p class="description"><?php esc_html_e( 'Allow users to post new activities from the shortcode. Boolean. Default: false.', 'shortcodes-for-buddypress' ); ?></p></td>
+			<td><p class="description"><?php esc_html_e( 'Show the activity posting form above the list for logged-in members. Accepts true/false or yes/no. Default: false.', 'shortcodes-for-buddypress' ); ?></p></td>
 		</tr>
 		<tr>
 			<th scope="row"><code>per_page</code></th>

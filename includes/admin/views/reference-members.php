@@ -3,7 +3,7 @@
  * Reference tab: [members-listing] parameters.
  *
  * Informational documentation panel (ported from the legacy Members
- * settings tab). Rendered inside shell.php — saves nothing.
+ * settings tab). Rendered inside layout.php — saves nothing.
  *
  * @package Shortcodes_For_Buddypress
  * @since   3.0.0

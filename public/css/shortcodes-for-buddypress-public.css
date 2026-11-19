@@ -21,32 +21,32 @@
     margin: 0 0 15px;
 }
 
-.members.dir-list.one ul.rg-member-list.grid>li,
-.groups.dir-list.one ul.rg-group-list.grid>li {
+.members.dir-list ul.bpsp-members-list.grid.one>li,
+.groups.dir-list ul.bpsp-groups-list.grid.one>li {
     padding-top: 0;
     width: 100%;
     width: 100% !important;
     flex: 0 0 100%;
     max-width: 100%;
 }
-.members.dir-list.two ul.rg-member-list.grid>li,
-.groups.dir-list.two ul.rg-group-list.grid>li {
+.members.dir-list ul.bpsp-members-list.grid.two>li,
+.groups.dir-list ul.bpsp-groups-list.grid.two>li {
     padding-top: 0;
     width: 50%;
     width: calc(100% / 2) !important;
     flex: 0 0 50%;
     max-width: 50%;
 }
-.members.dir-list.three ul.rg-member-list.grid>li,
-.groups.dir-list.three ul.rg-group-list.grid>li {
+.members.dir-list ul.bpsp-members-list.grid.three>li,
+.groups.dir-list ul.bpsp-groups-list.grid.three>li {
     padding-top: 0;
     width: 33.333333%;
     width: calc(100% / 3) !important;
     flex: 0 0 33.333333%;
     max-width: 33.333333%;
 }
-.members.dir-list.four ul.rg-member-list.grid>li,
-.groups.dir-list.four ul.rg-group-list.grid>li {
+.members.dir-list ul.bpsp-members-list.grid.four>li,
+.groups.dir-list ul.bpsp-groups-list.grid.four>li {
     padding-top: 0;
     width: 25%;
     width: calc(100% / 4) !important;
@@ -122,11 +122,6 @@ p.item-meta.last-activity{
     margin-bottom: 30px;
 }
 
-.elementor-widget-buddypress_shortcode_members_widget ul#members-list.bp-list.grid.three,
-.elementor-widget-buddypress_shortcode_groups_widget ul#groups-list.bp-list.grid.three {
-    margin: 0 -18px;
-}
-
 .buddypress-wrap ul.bp-list.groups-dir-list>li {
     min-width: auto;
 }
@@ -151,26 +146,41 @@ p.item-meta.last-activity{
     justify-content: center;
 }
 
+/* Themes such as Reign pull the grid out by the card gutter (margin: 0 -15px). A
+   narrow Elementor container has less padding than that, so the list ran past the
+   viewport edge and the page scrolled sideways on phones. */
+@media only screen and (max-width: 767px) {
+    .elementor-widget-buddypress_shortcode_members_widget ul#members-list.bp-list.grid,
+    .elementor-widget-buddypress_shortcode_groups_widget ul#groups-list.bp-list.grid {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
 @media only screen and (max-width: 479px) {
 
-    .members.dir-list.two ul.rg-member-list.grid>li,
-    .groups.dir-list.two ul.rg-group-list.grid>li,
-    .members.dir-list.three ul.rg-member-list.grid>li,
-    .groups.dir-list.three ul.rg-group-list.grid>li,
-    .members.dir-list.four ul.rg-member-list.grid>li,
-    .groups.dir-list.four ul.rg-group-list.grid>li {
+    .members.dir-list ul.bpsp-members-list.grid.two>li,
+    .groups.dir-list ul.bpsp-groups-list.grid.two>li,
+    .members.dir-list ul.bpsp-members-list.grid.three>li,
+    .groups.dir-list ul.bpsp-groups-list.grid.three>li,
+    .members.dir-list ul.bpsp-members-list.grid.four>li,
+    .groups.dir-list ul.bpsp-groups-list.grid.four>li {
         width: 100%;
         width: 100% !important;
+        flex-basis: 100%;
+        max-width: 100%;
     }
 }
 
 @media only screen and (min-width: 480px) and (max-width: 598px) {
-    .members.dir-list.three ul.rg-member-list.grid>li,
-    .groups.dir-list.three ul.rg-group-list.grid>li,
-    .members.dir-list.four ul.rg-member-list.grid>li,
-    .groups.dir-list.four ul.rg-group-list.grid>li {
+    .members.dir-list ul.bpsp-members-list.grid.three>li,
+    .groups.dir-list ul.bpsp-groups-list.grid.three>li,
+    .members.dir-list ul.bpsp-members-list.grid.four>li,
+    .groups.dir-list ul.bpsp-groups-list.grid.four>li {
         width: 50%;
         width: 50% !important;
+        flex-basis: 50%;
+        max-width: 50%;
     }
 }
 
@@ -205,7 +215,8 @@ p.item-meta.last-activity{
 # not add its own gutter) they appeared to overlap. Lay the action row out as
 # a centered flex row with a gap.
 --------------------------------------------------------------*/
-.members-listing .activity-meta.action {
+.members-listing .activity-meta.action,
+.members-listing .members-meta.action {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -213,6 +224,8 @@ p.item-meta.last-activity{
     align-items: center;
 }
 
-.members-listing .activity-meta.action > li {
+.members-listing .activity-meta.action > li,
+.members-listing .members-meta.action > li,
+.members-listing .members-meta.action > div {
     margin: 0;
 }

@@ -19,6 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class GroupShortCode extends BPShortCode {
 
 	/**
+	 * Group sort types BuddyPress accepts.
+	 *
+	 * @var string[]
+	 */
+	protected $allowed_types = array( 'active', 'newest', 'popular', 'random', 'alphabetical', 'most-forum-topics', 'most-forum-posts' );
+
+	/**
 	 * Set default attributes.
 	 */
 	protected function set_defaults() {
@@ -97,7 +104,22 @@ class GroupShortCode extends BPShortCode {
 			'meta_query'         => $atts['meta_query'],
 			'parent_id'          => $atts['parent_id'],
 			'update_meta_cache'  => $atts['update_meta_cache'],
+			'page_arg'           => $atts['page_arg'],
 		);
+
+		/*
+		 * A hidden group is only for its members. show_hidden="1" or
+		 * status="hidden" on a public page would list every hidden group to
+		 * every visitor, so honour them for site moderators only.
+		 */
+		if ( ! function_exists( 'bp_current_user_can' ) || ! bp_current_user_can( 'bp_moderate' ) ) {
+			$query_args['show_hidden'] = false;
+			if ( 'hidden' === $atts['status'] ) {
+				// Nothing to show: an unknown group id, since an empty include is "no filter".
+				$query_args['status']  = '';
+				$query_args['include'] = (string) PHP_INT_MAX;
+			}
+		}
 
 		/*
 		 * `type` wins over `orderby`/`order` inside bp_has_groups(), and this
@@ -111,6 +133,23 @@ class GroupShortCode extends BPShortCode {
 		$ordering_customised = ( 'DESC' !== $atts['order'] || 'last_activity' !== $atts['orderby'] );
 		if ( $ordering_customised && 'alphabetical' === $atts['type'] ) {
 			unset( $query_args['type'] );
+		}
+
+		/*
+		 * bp_has_groups() ignores `slug`, so the attribute listed every group.
+		 * Resolve the slugs to group ids and limit the query with `include`; a
+		 * slug that matches no group lists nothing.
+		 */
+		if ( ! empty( $atts['slug'] ) && function_exists( 'groups_get_id' ) ) {
+			$group_ids = array();
+			foreach ( array_filter( array_map( 'sanitize_title', explode( ',', (string) $atts['slug'] ) ) ) as $group_slug ) {
+				$group_id = groups_get_id( $group_slug );
+				if ( $group_id ) {
+					$group_ids[] = $group_id;
+				}
+			}
+			$query_args['include'] = $group_ids ? implode( ',', $group_ids ) : (string) PHP_INT_MAX;
+			unset( $query_args['slug'] );
 		}
 
 		// Remove empty values to avoid issues with BuddyPress query.
@@ -157,15 +196,18 @@ class GroupShortCode extends BPShortCode {
 	 * @return string
 	 */
 	private function build_query_string( $query_args ) {
-		$query_parts = array();
-
-		foreach ( $query_args as $key => $value ) {
-			if ( false !== $value && '' !== $value ) {
-				$query_parts[] = $key . '=' . $value;
-			}
+		/*
+		 * BuddyPress stores and searches group names HTML-encoded ("Hiring &amp;
+		 * Careers"), so a raw "&" in the term matched nothing. Encode the term for
+		 * the query only; $query_args keeps the raw term for filters. esc_html()
+		 * does not double-encode, so an already encoded term is unchanged.
+		 */
+		if ( ! empty( $query_args['search_terms'] ) && is_string( $query_args['search_terms'] ) ) {
+			$query_args['search_terms'] = esc_html( $query_args['search_terms'] );
 		}
 
-		return implode( '&', $query_parts );
+		// URL-encoded, so a search such as "a&b" is not cut at the ampersand.
+		return http_build_query( $query_args );
 	}
 
 	/**
@@ -243,60 +285,7 @@ class GroupShortCode extends BPShortCode {
 	 * @return string
 	 */
 	private function get_container_classes( $grid, $column ) {
-		$classes      = array( 'item-list', 'groups-list', 'groups-dir-list', 'bp-list', 'bpsp-groups-list', $grid, $column );
-		$active_theme = wp_get_theme()->get( 'Name' );
-		if ( 'REIGN' === $active_theme ) {
-			$bp_nouveau            = bp_nouveau();
-			$classes               = array();
-			$classes[]             = 'item-list';
-			$classes[]             = 'groups-list';
-			$classes[]             = 'bp-list';
-			$classes[]             = 'groups-dir-list';
-			$classes[]             = 'rg-group-list';
-			$component             = sanitize_key( 'groups' );
-			$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-			$groups_layout         = ( isset( $bp_nouveau_appearance['groups_layout'] ) && '' !== $bp_nouveau_appearance['groups_layout'] ) ? $bp_nouveau_appearance['groups_layout'] : 'three';
-
-			global $wbtm_reign_settings;
-			$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['group_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['group_directory_type'] : 'wbtm-group-directory-type-2';
-
-			if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-				$customizer_option = sprintf( '%s_layout', $component );
-				$layout_prefs      = bp_nouveau_get_temporary_setting(
-					$customizer_option,
-					bp_nouveau_get_appearance_settings( $customizer_option )
-				);
-
-				if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-					$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
-					if ( isset( $grid_classes[ $layout_prefs ] ) ) {
-						$classes = array_merge(
-							$classes,
-							array(
-								'grid',
-								$grid_classes[ $layout_prefs ],
-							)
-						);
-					}
-
-					if ( ! isset( $bp_nouveau->{$component} ) ) {
-						$bp_nouveau->{$component} = new stdClass();
-					}
-					// Set the global for a later use.
-					$bp_nouveau->{$component}->loop_layout = $layout_prefs;
-				}
-			} else {
-				$classes = array_merge(
-					$classes,
-					array(
-						'grid',
-						$groups_layout,
-					)
-				);
-			}
-		}
-		$classes = implode( ' ', $classes );
-		return $classes;
+		return $this->list_classes( array( 'item-list', 'groups-list', 'groups-dir-list', 'bp-list', 'bpsp-groups-list', $grid, $column ) );
 	}
 }
 

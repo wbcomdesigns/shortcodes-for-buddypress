@@ -1,13 +1,13 @@
 # Troubleshooting
 
-## The shortcode shows a "please enable" notice instead of a listing
+## The listing is missing or shows a "please enable" notice
 
-The matching BuddyPress component is disabled. Enable it under Settings > BuddyPress > Components:
+The matching BuddyPress component is disabled. Administrators see a "please enable" notice; visitors see nothing. Enable it under Settings > BuddyPress > Components:
 
 | Shortcode | Component to enable |
 |---|---|
 | `[activity-listing]` | Activity |
-| `[members-listing]` | Extended Profiles (xprofile) |
+| `[members-listing]` | Members |
 | `[groups-listing]` | Groups |
 
 ## An admin-only message asks me to switch on the Nouveau template pack

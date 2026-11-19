@@ -111,7 +111,7 @@ Compact activity feed:
 ## 🔧 Requirements
 
 - WordPress 5.0+
-- BuddyPress 5.0+
+- BuddyPress 12.0+
 - PHP 7.0+
 
 ## 🆘 Getting Help

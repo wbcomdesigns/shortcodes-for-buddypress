@@ -92,9 +92,6 @@ class Shortcodes_For_Buddypress_Public {
 				wp_enqueue_style( 'bp-medium-editor' );
 			}
 			if ( class_exists( 'Buddypress_Quotes' ) ) {
-				if ( ! wp_style_is( 'wb-font-awesome', 'enqueued' ) ) {
-					wp_enqueue_style( 'wb-font-awesome' );
-				}
 				if ( ! wp_style_is( 'wb-icons', 'enqueued' ) ) {
 					wp_enqueue_style( 'wb-icons' );
 				}
@@ -581,7 +578,7 @@ class Shortcodes_For_Buddypress_Public {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'bpsp-nonce' ) ) {
 			return;
 		}
-		$page = ! empty( $_POST['page'] ) ? absint( wp_unslash( $_POST['page'] ) ) : 2;
+		$page = ! empty( $_POST['page'] ) ? max( 1, absint( wp_unslash( $_POST['page'] ) ) ) : 2; // page 0 would make BuddyPress return every activity.
 		// Clamp so a public (nopriv) caller cannot force an unbounded query.
 		$limit = ! empty( $_POST['limit'] ) ? min( 50, max( 1, absint( wp_unslash( $_POST['limit'] ) ) ) ) : 10;
 		if ( bp_has_activities(
@@ -616,6 +613,9 @@ class Shortcodes_For_Buddypress_Public {
 	 * @return array
 	 */
 	public function buddypress_shortcode_activity_entry_bubble_buttons( $buttons, $activity_id ) {
+		if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'activity' ) ) {
+			return $buttons;
+		}
 
 		global $activities_template;
 
@@ -701,9 +701,16 @@ class Shortcodes_For_Buddypress_Public {
 		}
 
 		if ( false !== array_search( '-meta', $args['container_classes'], true ) ) {
+			// Shortcode pages have no current component, so BuddyPress prints "-meta"; name the loop that is running.
+			$component = 'activity';
+			if ( ! empty( $GLOBALS['groups_template']->in_the_loop ) ) {
+				$component = 'groups';
+			} elseif ( ! empty( $GLOBALS['members_template']->in_the_loop ) ) {
+				$component = 'members';
+			}
 			$args['container_classes'] = array_map(
-				function ( $str ) {
-					return str_replace( '-meta', 'activity-meta', $str );
+				function ( $str ) use ( $component ) {
+					return '-meta' === $str ? $component . '-meta' : $str;
 				},
 				$args['container_classes']
 			);

@@ -14,6 +14,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Loaded by the shortcode only after it checked the component, kept here so a
+// direct include can never call into a component that is switched off.
+if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'groups' ) ) {
+	return;
+}
+
 ?>
 <?php
 // Main container with BuddyPress classes.
@@ -77,7 +83,7 @@ defined( 'ABSPATH' ) || exit;
 							// Display group cover image if supported by the theme.
 							// Uses a custom function defined in the plugin.
 							?>
-							<?php bp_shortcode_member_cover(); ?>
+							<?php bp_shortcode_group_cover(); ?>
 
 							<?php
 							// Group avatar section.

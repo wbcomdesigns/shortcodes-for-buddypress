@@ -12,6 +12,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Loaded by the shortcode only after it checked the component, kept here so a
+// direct include can never call into a component that is switched off.
+if ( ! function_exists( 'bp_is_active' ) || ! bp_is_active( 'groups' ) ) {
+	return;
+}
+
 add_filter( 'bp_get_group_description_excerpt', 'bb_get_group_description_excerpt_view_more', 99, 2 );
 
 bp_nouveau_before_loop();
@@ -34,7 +40,7 @@ if ( bp_has_groups( $query ) ) {
 		<div class="bpsp-group-count">	
 			<?php echo wp_kses_post( bp_get_groups_pagination_count() ); ?>
 		</div>
-		<ul id="groups-list" class="bb-platform-shortcode <?php bp_nouveau_loop_classes(); ?><?php echo esc_attr( ' ' . $cover_class . ' ' . $group_alignment ); ?> <?php echo esc_attr( $classes ); ?>">
+		<ul id="groups-list" class="bb-platform-shortcode <?php echo esc_attr( $cover_class . ' ' . $group_alignment . ' ' . $classes ); ?>">
 			<?php
 			while ( bp_groups() ) :
 				bp_the_group();
@@ -129,7 +135,8 @@ if ( bp_has_groups( $query ) ) {
 											<?php bb_groups_loop_members(); ?>
 										</div>
 										<?php if ( bb_platform_group_element_enable( 'join-buttons' ) ) { ?>
-											<div class="groups-loop-buttons footer-button-wrap"><?php bp_nouveau_groups_loop_buttons(); ?></div>
+											<?php // BuddyBoss's bp_nouveau_wrapper() has no args filter and a shortcode page has no component, so name the meta classes here. ?>
+											<div class="groups-loop-buttons footer-button-wrap"><?php bp_nouveau_groups_loop_buttons( array( 'container_classes' => array( 'bp-generic-meta', 'groups-meta' ) ) ); ?></div>
 										<?php } ?>
 									</div>
 

@@ -3,7 +3,7 @@
   "plugin": {
     "slug": "shortcodes-for-buddypress",
     "name": "Wbcom Designs – Shortcodes & Elementor Widgets For BuddyPress",
-    "version": "3.0.0",
+    "version": "3.0.2",
     "namespace": "Shortcodes_For_Buddypress",
     "main_file": "shortcodes-for-buddypress.php",
     "text_domain": "shortcodes-for-buddypress",
@@ -212,6 +212,7 @@
     "resolution": "bp_shortcode_asset() in includes/functions.php picks rtl/ then min/ then the unminified source, falling back so a missing build never 404s.",
     "public_js": "public/js/shortcodes-for-buddypress-public.js (built to public/js/min/)",
     "public_css": "public/css/shortcodes-for-buddypress-public.css (built to public/css/min/ and public/css/rtl/)",
+    "list_columns": "loop_layout columns are styled by one rule set in public_css keyed on the plugin's own list class plus the column class BPShortCode::list_classes() puts on the ul (.dir-list ul.bpsp-members-list.grid.two > li, same for bpsp-groups-list). It sets flex-basis and max-width so it beats BuddyBoss Platform's .buddypress-wrap .grid.bp-list > li fixed 33.33% on every theme; the <=479px and 480-598px rules collapse to 1 and 2 columns.",
     "admin_js": "assets/js/admin.js (built to assets/js/min/)",
     "admin_css": "assets/css/admin.css (built to assets/css/min/ and assets/css/rtl/)",
     "localized_object": {
@@ -273,7 +274,6 @@
     }
   },
   "known_gaps": [
-    "MemberShortCode::handle_classes() and GroupShortCode::get_container_classes() are parallel Reign layout builders that have drifted apart (40 vs 56 lines). Consolidating needs a Reign install to verify.",
     "readme.txt 'Tested up to: 7.0' should be re-confirmed before release.",
     "Elementor get_widget_list() and the no-op handleResize() JS were removed in this pass; if a future release needs a resize hook, re-add the listener with the handler, not before.",
     "BuddyBoss-only functions (bb_*, bp_moderation_*, bp_is_*_media_support_enabled, bp_member_type_*) are called unguarded inside the bb-*.php templates and buddypress_shortcode_activity_entry_bubble_buttons. That is safe because both are reached only when buddypress()->buddyboss is set, but any new call site outside those paths needs a function_exists guard."

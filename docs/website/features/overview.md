@@ -22,7 +22,7 @@ Each widget's content controls map to the same attributes as its shortcode, plus
 
 ## Grid and list layouts
 
-The members and groups shortcodes support a grid layout (`grid="yes"`) with a column count (`loop_layout="one|two|three|four"`), or a plain list (`grid="no"`).
+The members and groups shortcodes support a grid layout (`grid="yes"`) with a column count (`loop_layout="one|two|three|four"`), or a plain list (`grid="no"`). On the Reign theme both attributes are honoured; when `loop_layout` is left out, the column count follows the BuddyPress directory layout set for the site.
 
 ## Theme compatibility
 

@@ -4,7 +4,7 @@
 
 ## Quick reference
 - **Main file:** `shortcodes-for-buddypress.php`
-- **Version:** `3.0.1`  ·  **Branch:** `master` (release branches cut per version)
+- **Version:** `3.0.2`  ·  **Branch:** `master` (release branches cut per version)
 - **Namespace prefix:** `Shortcodes_For_Buddypress` (class prefix; not PSR-4)
 - **Text domain:** `shortcodes-for-buddypress`
 - **Extends:** none (Free). Pro companion: `shortcode-for-buddypress-pro` (mutually exclusive — main file blocks dual activation).
@@ -26,7 +26,7 @@ on any post or page. One template pack: nouveau (with BuddyBoss `bb-` variants i
 - The old wbcom tab wrapper is GONE. `admin/` now holds only `index.php` + an icon.
 - Wired admin = `includes/admin/class-shortcodes-for-buddypress-admin-panel.php`
   (loaded in `includes/class-shortcodes-for-buddypress.php`, ~line 141; registered ~197-198).
-  Views in `includes/admin/views/` (hub.php landing at `?page=wbcomplugins`, overview, shortcode reference tabs).
+  Views in `includes/admin/views/` (hub.php landing at `?page=wbcomplugins`, overview, shortcode reference tabs). The page layout file is `layout.php`: never name a file `shell.php` (host WAFs block zips that contain it).
 - **No persisted options** - informational panels only. No `register_setting()`.
 - All pages gated by `manage_options`; `$_GET['tab']` read via `sanitize_key` + whitelist.
 - Menu parent: `wbcomplugins` (shared hub). Cap: `manage_options`.
@@ -76,9 +76,12 @@ skips the database-backed tests.
 - Admin header: `#wb_admin_header #wb_admin_nav`
 - Shortcode cards: `.wbcom-shortcode-grid .wbcom-shortcode-card`
 
-## Recent changes
-| Date | Type | Description | Files |
-|---|---|---|---|
-| 2026-07-10 | bug-fix | Two RUNTIME bugs the static audit missed (found in-browser). (1) Frontend assets 404'd: bp_shortcode_asset() built public/css/<file>.min.css but the build lives in public/css/min/ (and RTL in rtl/) - rewrote it to prefer min/ then rtl/ then the unminified source, with a file_exists fallback so a missing build never 404s. (2) With the JS finally loading, a crash surfaced: setupEventListeners bound '.bpsh-load-more' (a selector no template renders) to this.handleLoadMore (undefined), so jQuery threw on every page load - removed the dead binding (activity load-more is already wired in setupLoadMore). Rebuilt the min JS. Verified: shortcode page loads styled, zero console errors, load-more intact. | includes/functions.php, public/js/shortcodes-for-buddypress-public.js(+min) |
-| 2026-07-10 | audit | Fresh audit + fixes. Fixed a BuddyPress-inactive FATAL: [activity-listing] + [groups-listing] called bp_is_active() unguarded (member shortcode already guarded) - added function_exists guards so they show the disabled notice instead of white-screening. Clamped the two public load-more AJAX per_page/limit to 50 (unbounded before). Removed dead get_user_ids_by_roles(). Replaced 5 em-dashes in overview.php. Added Requires PHP 7.4 + Requires Plugins: buddypress headers + a "More Free Tools" promo section. Corrected this CLAUDE.md (admin is the NEW card panel not the old wrapper; 2 AJAX not 3; base class BPShortCode). manifest.json still needs a refresh. | public/shortcode/class-shortcode-for-activity-listing.php, public/shortcode/class-group-shortcode.php, public/class-shortcodes-for-buddypress-public.php, includes/admin/views/overview.php, readme.txt, CLAUDE.md |
-| 2026-06-05 | onboard | Generated audit/ manifest + reports + graph + wppqa baseline | audit/* , CLAUDE.md |
+## Release build
+- `bin/build-release.sh` runs `bin/local-ci.sh`, `grunt build` (assets, POT, copy minus `.distignore`, zip) and fails when the zip carries dev files. `.distignore` is the one exclude list; `gruntfile.js` reads it.
+- Per-change history lives in `git log` and `readme.txt`, not here.
+
+## Rendering rules learned the hard way
+- Elementor style controls on Reign must beat the theme: Reign uses `!important` radius and ID selectors, so widget selectors lead with `#buddypress` or carry `!important`.
+- Members and groups queries are built with `http_build_query()`, never string concatenation, so `&` in a search term survives.
+- Hidden groups are shown only to `bp_moderate` users, whatever `show_hidden` or `status` say.
+- The "enable the component" notice is administrator-only.

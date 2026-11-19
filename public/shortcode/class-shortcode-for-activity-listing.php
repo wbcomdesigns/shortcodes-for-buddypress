@@ -154,8 +154,11 @@ class ActivityShortCode extends BPShortCode {
 			'query'         => http_build_query( $query ),
 			'limit'         => ! empty( $atts['per_page'] ) ? $atts['per_page'] : 10,
 			'activity_atts' => $query,
-			'allow_posting' => (bool) $atts['allow_posting'],
-			'load_more'     => (bool) $atts['load_more'],
+			// Accept every boolean spelling (true/false, yes/no, 1/0, on/off): a
+			// (bool) cast read "no" and "false" as true, and Shortcodes Pro
+			// documents yes/no. Posting needs a logged-in member.
+			'allow_posting' => filter_var( $atts['allow_posting'], FILTER_VALIDATE_BOOLEAN ) && is_user_logged_in(),
+			'load_more'     => filter_var( $atts['load_more'], FILTER_VALIDATE_BOOLEAN ),
 		);
 
 		return apply_filters( 'activity_shortcode_template_args', $args );
@@ -199,7 +202,7 @@ class ActivityShortCode extends BPShortCode {
 	 */
 	private function show_activities( $atts, $template_vars ) {
 		?>
-		<div class="activity-listing">
+		<div class="activity-listing <?php echo esc_attr( $atts['container_class'] ); ?>">
 			<?php if ( ! empty( $atts['title'] ) ) : ?>
 				<h4><?php echo esc_html( $atts['title'] ); ?></h4>
 			<?php endif; ?>

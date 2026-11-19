@@ -3,7 +3,7 @@
  * Reference tab: [groups-listing] parameters.
  *
  * Informational documentation panel (ported from the legacy Groups
- * settings tab). Rendered inside shell.php — saves nothing.
+ * settings tab). Rendered inside layout.php — saves nothing.
  *
  * @package Shortcodes_For_Buddypress
  * @since   3.0.0

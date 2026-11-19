@@ -1,6 +1,6 @@
 <?php
 /**
- * Overview dashboard partial: rendered inside shell.php.
+ * Overview dashboard partial: rendered inside layout.php.
  *
  * Summarizes the 3 shortcodes + 3 Elementor widgets this plugin
  * provides and reports which BuddyPress components are active so the

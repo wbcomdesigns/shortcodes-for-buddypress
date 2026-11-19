@@ -2,7 +2,7 @@
 
 ## Does this plugin require BuddyPress?
 
-Yes. BuddyPress must be installed and activated; it is declared as a required plugin. Each shortcode also needs its matching BuddyPress component enabled (Activity, Extended Profiles, or Groups).
+Yes. BuddyPress must be installed and activated; it is declared as a required plugin. Each shortcode also needs its matching BuddyPress component enabled (Activity, Members, or Groups).
 
 ## How many shortcodes does the plugin add?
 
@@ -39,6 +39,10 @@ For members and groups, use `grid="yes"` with `loop_layout="one|two|three|four"`
 ## Where is the plugin's admin screen?
 
 Under the shared Wbcom Plugins menu. Its tabs (Overview, Shortcodes, Activities, Members, Groups, Discover) are an informational reference. The plugin has no settings to save.
+
+## Do shortcodes follow my members or groups directory lock?
+
+No, on purpose. A privacy plugin that locks the BuddyPress directories for logged-out visitors does not hide shortcode output, because you choose where each shortcode goes. To keep a listing private, put the shortcode on a page that only logged-in members can open.
 
 ## Does it work with BuddyBoss?
 

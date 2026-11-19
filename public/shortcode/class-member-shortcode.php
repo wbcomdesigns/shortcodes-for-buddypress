@@ -23,6 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class MemberShortCode extends BPShortCode {
 
 	/**
+	 * Member sort types BuddyPress accepts.
+	 *
+	 * @var string[]
+	 */
+	protected $allowed_types = array( 'active', 'newest', 'popular', 'online', 'alphabetical', 'random' );
+
+	/**
 	 * Set default attributes.
 	 */
 	protected function set_defaults() {
@@ -98,17 +105,23 @@ class MemberShortCode extends BPShortCode {
 			'meta_value'          => $atts['meta_value'],
 			'populate_extras'     => $atts['populate_extras'],
 			'xprofile_query'      => $atts['xprofile_query'],
+			'page_arg'            => $atts['page_arg'],
 		);
 
 		// Apply filter to modify query arguments.
 		$bash_query_args = apply_filters( 'member_shortcode_bash_query_args', $bash_query_args );
 
-		$query = '';
-		foreach ( $bash_query_args as $bash_query_key => $bash_query ) {
-			$query .= false !== $bash_query && '' !== $bash_query ? '&' . $bash_query_key . '=' . $bash_query : '';
-		}
-			$grid      = 'yes' === $atts['grid'] ? 'grid' : '';
-			$column    = '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '';
+		// Encoded, so a search such as "a&b" or "R&D" is not cut at the ampersand.
+		$query  = http_build_query(
+			array_filter(
+				$bash_query_args,
+				function ( $value ) {
+					return false !== $value && '' !== $value;
+				}
+			)
+		);
+		$grid   = 'yes' === $atts['grid'] ? 'grid' : '';
+		$column = '' !== $atts['loop_layout'] && 'yes' === $atts['grid'] ? $atts['loop_layout'] : '';
 		$template_args = apply_filters(
 			'member_shortcode_template_args',
 			array(
@@ -162,44 +175,7 @@ class MemberShortCode extends BPShortCode {
 	 * @return string
 	 */
 	public function handle_classes( $grid, $column ) {
-		$classes      = array( 'item-list', 'members-list', 'bp-list', 'bpsp-members-list', $grid, $column );
-		$active_theme = wp_get_theme()->get( 'Name' );
-		if ( 'REIGN' === $active_theme ) {
-				$classes   = array();
-				$classes[] = 'item-list';
-				$classes[] = 'members-list';
-				$classes[] = 'bp-list';
-				$classes[] = 'rg-member-list';
-
-				global $wbtm_reign_settings;
-				$classes[] = isset( $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] ) ? $wbtm_reign_settings['reign_buddyextender']['member_directory_type'] : 'wbtm-member-directory-type-2';
-
-				$bp_nouveau_appearance = get_option( 'bp_nouveau_appearance' );
-				$members_layout        = ( isset( $bp_nouveau_appearance['members_layout'] ) && '' !== $bp_nouveau_appearance['members_layout'] ) ? $bp_nouveau_appearance['members_layout'] : '3';
-
-			if ( function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-				$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
-				if ( isset( $grid_classes[ $members_layout ] ) ) {
-					$classes = array_merge(
-						$classes,
-						array(
-							'grid',
-							$grid_classes[ $members_layout ],
-						)
-					);
-				}
-			} else {
-				$classes = array_merge(
-					$classes,
-					array(
-						'grid',
-						'three',
-					)
-				);
-			}
-		}
-		$classes = implode( ' ', $classes );
-		return $classes;
+		return $this->list_classes( array( 'item-list', 'members-list', 'bp-list', 'bpsp-members-list', $grid, $column ) );
 	}
 
 	/**
@@ -223,7 +199,10 @@ class MemberShortCode extends BPShortCode {
 			$role_user_ids = $this->get_users_with_roles( $atts['include_member_role'] );
 			$existing_ids  = $this->convert_to_array( isset( $atts['include'] ) ? $atts['include'] : '' );
 
-			$atts['include'] = $this->combine_ids( $role_user_ids, $existing_ids );
+			// A role nobody holds must list nobody. An empty include means "no
+			// filter" to BuddyPress, which listed every member instead.
+			$combined        = $this->combine_ids( $role_user_ids, $existing_ids );
+			$atts['include'] = '' === $combined ? (string) PHP_INT_MAX : $combined;
 			unset( $atts['include_member_role'] );
 		}
 

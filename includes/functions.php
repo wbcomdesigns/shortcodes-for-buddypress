@@ -242,6 +242,37 @@ function bp_shortcode_member_cover() {
 }
 
 /**
+ * Output the theme's group cover for a group card in the groups listing.
+ *
+ * The groups template used bp_shortcode_member_cover(), which printed the
+ * theme's MEMBER cover markup for the loop's member id inside group cards:
+ * the wrong image and member-card CSS that pushed the group name under the
+ * cover. Mirrors bp_shortcode_pro_group_cover() in Shortcodes Pro, and stays
+ * off when the site disables group cover uploads (the themes do the same).
+ *
+ * @since 3.0.2
+ * @return mixed Filtered return value of the theme's render function.
+ */
+function bp_shortcode_group_cover() {
+	$active_theme = wp_get_theme()->get( 'Name' );
+	$cover        = '';
+	if ( function_exists( 'bp_disable_group_cover_image_uploads' ) && bp_disable_group_cover_image_uploads() ) {
+		return apply_filters( 'bp_shortcode_group_cover', $cover, $active_theme );
+	}
+	if ( 'BuddyX' === $active_theme || 'BuddyxPro' === $active_theme ) {
+		if ( function_exists( 'buddyx_render_group_cover_image' ) ) {
+			$cover = buddyx_render_group_cover_image();
+		}
+	} elseif ( 'REIGN' === $active_theme ) {
+		if ( function_exists( 'reign_render_group_cover_image' ) ) {
+			$cover = reign_render_group_cover_image();
+		}
+	}
+
+	return apply_filters( 'bp_shortcode_group_cover', $cover, $active_theme );
+}
+
+/**
  * Get asset URL for CSS or JS files.
  *
  * Simplified function that handles debug mode, minification, and RTL.
