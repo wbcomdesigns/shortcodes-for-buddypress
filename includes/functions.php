@@ -205,8 +205,8 @@ function bp_shortcode_is_elementor_widget( $elementor_data, $widget_type = '' ) 
 				return true;
 			}
 
-			// Check this plugin's own widget types if $widget_type is empty (bpsp_* are the Pro widget names).
-			if ( empty( $widget_type ) && in_array( $element['widgetType'], array( 'buddypress_shortcode_activity_widget', 'buddypress_shortcode_members_widget', 'buddypress_shortcode_groups_widget' ), true ) ) {
+			// Check the known widget types if $widget_type is empty: this plugin's own, plus the Pro bpsp_* names.
+			if ( empty( $widget_type ) && in_array( $element['widgetType'], array( 'buddypress_shortcode_activity_widget', 'buddypress_shortcode_members_widget', 'buddypress_shortcode_groups_widget', 'bpsp_activity', 'bpsp_member', 'bpsp_group' ), true ) ) {
 				return true;
 			}
 		}
