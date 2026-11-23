@@ -731,4 +731,19 @@ class Shortcodes_For_Buddypress_Public {
 		}
 		return $is_enable;
 	}
+
+	/**
+	 * Ask the theme to load its BuddyPress stylesheet on a page that holds a shortcode or widget.
+	 *
+	 * Reign (reign_load_buddypress_assets), BuddyX (buddyx_needs_buddypress_assets) and BuddyX Pro
+	 * (buddyxpro_needs_buddypress_assets) load their BuddyPress CSS only on BuddyPress pages and the
+	 * blocks or widgets they recognise, so a listing on a regular page lost the theme layout.
+	 *
+	 * @since 3.0.2
+	 * @param bool $load Whether the theme already loads its BuddyPress assets.
+	 * @return bool
+	 */
+	public function buddypress_shortcode_theme_load_assets( $load ) {
+		return $load || bp_shortcode_is_shortcode_page();
+	}
 }
