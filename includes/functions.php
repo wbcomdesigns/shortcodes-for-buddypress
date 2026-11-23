@@ -177,7 +177,8 @@ function bp_shortcode_is_shortcode_page( $shortcode = '' ) {
 					$widget_type = apply_filters( 'buddypress_shortcode_elementor_widget_type', $shortcode );
 			}
 
-			$has_shortcode = bp_shortcode_is_elementor_widget( $elementor_data_decoded, $widget_type );
+			// OR, not overwrite: a shortcode in the content still counts on a page that also has Elementor data.
+			$has_shortcode = $has_shortcode || bp_shortcode_is_elementor_widget( $elementor_data_decoded, $widget_type );
 		}
 	}
 
@@ -204,8 +205,8 @@ function bp_shortcode_is_elementor_widget( $elementor_data, $widget_type = '' ) 
 				return true;
 			}
 
-			// Check predefined widget types if $widget_type is empty.
-			if ( empty( $widget_type ) && in_array( $element['widgetType'], array( 'bpsp_activity', 'bpsp_member', 'bpsp_group' ), true ) ) {
+			// Check the known widget types if $widget_type is empty: this plugin's own, plus the Pro bpsp_* names.
+			if ( empty( $widget_type ) && in_array( $element['widgetType'], array( 'buddypress_shortcode_activity_widget', 'buddypress_shortcode_members_widget', 'buddypress_shortcode_groups_widget', 'bpsp_activity', 'bpsp_member', 'bpsp_group' ), true ) ) {
 				return true;
 			}
 		}

@@ -95,6 +95,7 @@ Please use the [plugin support forum](https://wordpress.org/support/plugin/short
 * Fix      - The Add Friend and Message buttons in [members-listing] cards are spaced and centered again.
 * Fix      - On BuddyBoss, the [groups-listing] list no longer carries a stray "-list" class.
 * Fix      - The "please enable the component" notice is now shown to administrators only; visitors see nothing.
+* Fix      - Shortcodes and Elementor widgets on regular pages load the Reign, BuddyX and BuddyX Pro BuddyPress layout.
 * Security - show_hidden and status="hidden" on [groups-listing] only list hidden groups for site administrators and moderators (users with the bp_moderate capability), so a public page can no longer expose them.
 * Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
 * Dev      - Added bin/build-release.sh and a .distignore that is the single exclude list for the release zip.

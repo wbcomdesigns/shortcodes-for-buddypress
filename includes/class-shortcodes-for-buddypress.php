@@ -199,6 +199,11 @@ class Shortcodes_For_Buddypress {
 		$this->loader->add_filter( 'bp_nouveau_get_search_primary_object', $plugin_public, 'buddypress_shortcodes_bp_nouveau_get_search_primary_object', 10 );
 		$this->loader->add_filter( 'body_class', $plugin_public, 'buddypress_shortcodes_body_classes' );
 
+		// Theme BuddyPress CSS on pages that render a shortcode or widget: Reign, BuddyX, BuddyX Pro.
+		foreach ( array( 'reign_load_buddypress_assets', 'buddyx_needs_buddypress_assets', 'buddyxpro_needs_buddypress_assets' ) as $theme_filter ) {
+			$this->loader->add_filter( $theme_filter, $plugin_public, 'buddypress_shortcode_theme_load_assets' );
+		}
+
 		$this->loader->add_filter( 'bp_core_get_js_strings', $plugin_public, 'shortcodes_for_buddypress_activity_localize_scripts', 10, 1 );
 
 		$this->loader->add_filter( 'bp_nouveau_register_scripts', $plugin_public, 'buddypress_shortcodes_bp_nouveau_register_scripts', 20 );
