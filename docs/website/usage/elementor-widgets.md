@@ -20,7 +20,15 @@ Each widget's content controls map to the attributes of its shortcode. The Title
 
 ## Style controls
 
-Each widget also exposes Elementor style controls (for example background and spacing for the item container) under the Style tab. These style the output visually and are separate from the shortcode attributes.
+Each widget also exposes Elementor style controls under the Style tab. These style the output visually and are separate from the shortcode attributes.
+
+| Widget | Style controls |
+|---|---|
+| BuddyPress Activity | Background, Border Radius, Padding and Item Spacing for the activity item container. It has no Load More button controls, because the widget never shows that button. |
+| BuddyPress Members | View, Background, Border Radius, Margin and Padding for the listing. |
+| BuddyPress Groups | Background, Border Radius, Margin and Padding for the listing. |
+
+On the Reign theme the Padding and Border Radius controls apply to all three widgets, and the Background control applies to the Activity widget. The Members and Groups widgets fit a phone screen without scrolling sideways.
 
 ## Pro notice
 
