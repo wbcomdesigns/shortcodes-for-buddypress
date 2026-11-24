@@ -39,9 +39,9 @@ Creates a production-ready build:
 3. Minifies all CSS and JS files
 4. Generates RTL stylesheets
 5. Creates POT file for translations
-6. Copies files to build directory
-7. Creates a versioned ZIP file
-8. Cleans up build directory
+6. Copies files to the build directory (`build/shortcodes-for-buddypress/`)
+
+The release zip is written by `bin/build-release.sh`, which runs `grunt build` and zips `build/shortcodes-for-buddypress/` into `dist/shortcodes-for-buddypress-<version>.zip`.
 
 ### Specific Tasks
 
@@ -121,7 +121,7 @@ Automatically generates RTL versions of all stylesheets.
 - Optional PHP CodeSniffer integration
 
 ### Production Build
-The `grunt build` task creates a production-ready ZIP file with:
+`bin/build-release.sh` (via `grunt build`) creates a production-ready ZIP file with:
 - Minified assets
 - No development files
 - Proper file structure

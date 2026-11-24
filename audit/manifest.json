@@ -242,7 +242,7 @@
   "build": {
     "tool": "Grunt",
     "tasks": {
-      "build": "clean, checktextdomain, cssmin, uglify, rtlcss, shell:makepot, copy, compress",
+      "build": "clean, checktextdomain, cssmin, uglify, rtlcss, shell:makepot, copy (bin/build-release.sh zips build/<slug>/ into dist/)",
       "minify": "cssmin + uglify only",
       "i18n": "checktextdomain + shell:makepot"
     },
