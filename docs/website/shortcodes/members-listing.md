@@ -46,6 +46,7 @@ These are the exact attributes and defaults the shortcode accepts.
 ## Notes
 
 - **Role filtering.** `include_member_role` and `exclude_member_role` are resolved into user IDs and merged into `include` / `exclude` before the query runs. They are a convenience specific to this plugin, not native BuddyPress attributes.
-- **Reign theme.** When the active theme is Reign, the directory container classes are replaced with Reign's own member-directory classes and grid layout so it matches the theme's directory styling.
+- **Reign theme.** When the active theme is Reign, Reign's member-directory card classes are added to the list so it matches the theme's directory styling. `grid="no"` and `loop_layout` are still honoured. When you leave out `loop_layout`, the column count follows the BuddyPress directory layout set for the site, and a `loop_layout` you write always wins.
 - **Cover images.** Member cover images are rendered through a theme-aware helper for the BuddyX and Reign themes.
-- **BuddyBoss.** When the BuddyBoss Platform is active, the members template switches to the BuddyBoss variant automatically.
+- **BuddyBoss.** When the BuddyBoss Platform is active, the members template switches to the BuddyBoss variant automatically. `loop_layout="one"`, `two` and `four` give that many columns, and `one` is a single column on every theme.
+- **Search.** A search term with an ampersand is no longer cut at the ampersand.

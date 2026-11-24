@@ -21,8 +21,8 @@ These are the exact attributes and defaults the shortcode accepts.
 | `pagination` | `1` | Reserved display flag passed to the template. |
 | `load_more` | `0` | Set to `1` to show a load-more control that fetches the next page over AJAX. |
 | `display_comments` | `false` | See the note below; comments are forced off in this version. |
-| `container_class` | `activity` | Extra CSS class added to the wrapper element. |
-| `allow_posting` | `false` | Passed to the template to allow the post form. |
+| `container_class` | `activity` | Extra CSS class added to the `activity-listing` wrapper element. |
+| `allow_posting` | `false` | Set to `true` to show the post form above the list. It accepts `true`/`false`, `yes`/`no`, `1`/`0` and `on`/`off`. The form shows only to logged-in members, so `allow_posting="no"`, or a logged-out visitor, never shows it. |
 | `include` | `false` | Comma-separated activity IDs to include. |
 | `exclude` | `false` | Comma-separated activity IDs to exclude. |
 | `in` | `false` | Limit results to a set of activity IDs. |

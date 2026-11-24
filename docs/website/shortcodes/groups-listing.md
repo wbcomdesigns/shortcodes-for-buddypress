@@ -48,6 +48,8 @@ These are the exact attributes and defaults the shortcode accepts.
 
 - **Ordering vs type.** Inside BuddyPress, `type` overrides `orderby` and `order`. Because this shortcode defaults `type` to `alphabetical`, a custom `orderby` or `order` would normally be ignored. To fix this, when you set `orderby` or `order` to anything other than the defaults and leave `type` at `alphabetical`, the shortcode drops the default `type` so your ordering applies. An explicit `type=` you pass still takes priority, matching BuddyPress behaviour.
 - **`status`.** The `status` attribute (added in 3.0.0) limits the directory to a single group status. It only takes effect when set; empty means all statuses the visitor may see.
-- **Reign theme.** When the active theme is Reign, the directory container classes and grid layout are replaced with Reign's own group-directory classes.
-- **BuddyBoss.** When the BuddyBoss Platform is active, the groups template switches to the BuddyBoss variant automatically.
+- **Reign theme.** When the active theme is Reign, Reign's group-directory card classes are added to the list. `grid="no"` and `loop_layout` are still honoured. When you leave out `loop_layout`, the column count follows the BuddyPress directory layout set for the site, and a `loop_layout` you write always wins.
+- **BuddyBoss.** When the BuddyBoss Platform is active, the groups template switches to the BuddyBoss variant automatically. `loop_layout="one"`, `two` and `four` give that many columns, and the Join button row carries the `groups-meta` class so the theme's group button styling applies.
+- **Cover images.** Each group card shows the group's own cover image. BuddyX, BuddyX Pro and Reign draw it with their own group cover. No cover shows when group cover uploads are switched off in BuddyPress.
+- **Search.** A search term with an ampersand, such as `search_terms="Hiring & Careers"`, finds the group.
 - Empty and `false` attributes are stripped before the query runs, so they do not constrain results.
