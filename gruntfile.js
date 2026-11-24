@@ -235,22 +235,6 @@ module.exports = function (grunt) {
             }
         },
 
-        // Create plugin zip file
-        compress: {
-            main: {
-                options: {
-                    archive: 'shortcodes-for-buddypress-v<%= pkg.version %>.zip',
-                    mode: 'zip'
-                },
-                files: [{
-                    expand: true,
-                    cwd: 'build/',
-                    src: ['**'],
-                    dest: '/'
-                }]
-            }
-        },
-
         // Watch for file changes
         watch: {
             options: {
@@ -324,9 +308,8 @@ module.exports = function (grunt) {
         // task. The two generators disagree, and grunt-wp-i18n 1.0.3 is what
         // produced the stale POT that shipped 714 references to deleted files.
         'shell:makepot',
-        'copy:build',
-        'compress',
-        'clean:build'
+        // The zip is written by bin/build-release.sh from build/<slug>/ (one zip builder).
+        'copy:build'
     ]);
 
     // CSS only task

@@ -77,7 +77,7 @@ skips the database-backed tests.
 - Shortcode cards: `.wbcom-shortcode-grid .wbcom-shortcode-card`
 
 ## Release build
-- `bin/build-release.sh` runs `bin/local-ci.sh`, `grunt build` (assets, POT, copy minus `.distignore`, zip) and fails when the zip carries dev files. `.distignore` is the one exclude list; `gruntfile.js` reads it.
+- `bin/build-release.sh` runs `bin/local-ci.sh` and `grunt build` (assets, POT, copy minus `.distignore` into `build/`), then writes `dist/shortcodes-for-buddypress-<version>.zip` (every entry deflated, WordPress.org folder lock) and fails when the zip carries dev files. `.distignore` is the one exclude list; `gruntfile.js` reads it.
 - Per-change history lives in `git log` and `readme.txt`, not here.
 
 ## Rendering rules learned the hard way

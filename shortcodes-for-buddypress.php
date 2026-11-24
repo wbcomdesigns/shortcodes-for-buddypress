@@ -32,6 +32,12 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+// One copy only: stop if this plugin is already loaded from another folder.
+if ( defined( 'SHORTCODES_FOR_BUDDYPRESS_LOADED' ) ) {
+	return;
+}
+define( 'SHORTCODES_FOR_BUDDYPRESS_LOADED', __FILE__ ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- One-copy guard is named after the WordPress.org slug.
+
 /**
  * Check for plugin conflicts with Pro version.
  *
@@ -83,20 +89,22 @@ if ( ! defined( 'SHORTCODES_FOR_BUDDYPRESS_PLUGIN_BASENAME' ) ) {
 require_once plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-shortcodes-for-buddypress.php';
 
-/**
- * Initialize the plugin.
- *
- * @since 1.0.0
- * @return void
- */
-function shortcodes_for_buddypress_run() {
-	if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) && function_exists( 'run_shortcodes_for_buddypress_pro' ) ) {
-		// Deactivate the core plugin if the Pro version is active.
-		deactivate_plugins( 'shortcodes-for-buddypress/shortcodes-for-buddypress.php' );
-	} else {
-		// Otherwise, begin execution of the current plugin.
-		$plugin = new Shortcodes_For_Buddypress();
-		$plugin->run();
+if ( ! function_exists( 'shortcodes_for_buddypress_run' ) ) {
+	/**
+	 * Initialize the plugin.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	function shortcodes_for_buddypress_run() {
+		if ( in_array( 'shortcode-for-buddypress-pro/shortcodes-for-buddypress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) && function_exists( 'run_shortcodes_for_buddypress_pro' ) ) {
+			// Deactivate the core plugin if the Pro version is active.
+			deactivate_plugins( 'shortcodes-for-buddypress/shortcodes-for-buddypress.php' );
+		} else {
+			// Otherwise, begin execution of the current plugin.
+			$plugin = new Shortcodes_For_Buddypress();
+			$plugin->run();
+		}
 	}
 }
 shortcodes_for_buddypress_run();
@@ -161,78 +169,82 @@ if ( ! function_exists( 'shortcodes_for_buddypress_requires_buddypress' ) ) {
 	add_action( 'admin_init', 'shortcodes_for_buddypress_requires_buddypress', 20 );
 }
 
-/**
- * Handles the redirection to the plugin settings page after activation.
- *
- * This function is triggered when the plugin is activated. It checks if BuddyPress
- * (or BuddyBoss) is active and then redirects the user to the plugin's settings page.
- * The redirection occurs only in the admin area and is performed using wp_safe_redirect() for enhanced security.
- * All input parameters are sanitized to ensure safe processing.
- *
- * @since 1.0.0
- * @param string $plugin Path to the plugin file relative to the plugins directory.
- * @return void
- */
-function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
+if ( ! function_exists( 'shortcodes_for_buddypress_activation_redirect_settings' ) ) {
+	/**
+	 * Handles the redirection to the plugin settings page after activation.
+	 *
+	 * This function is triggered when the plugin is activated. It checks if BuddyPress
+	 * (or BuddyBoss) is active and then redirects the user to the plugin's settings page.
+	 * The redirection occurs only in the admin area and is performed using wp_safe_redirect() for enhanced security.
+	 * All input parameters are sanitized to ensure safe processing.
+	 *
+	 * @since 1.0.0
+	 * @param string $plugin Path to the plugin file relative to the plugins directory.
+	 * @return void
+	 */
+	function shortcodes_for_buddypress_activation_redirect_settings( $plugin ) {
 
-	// Ensures that the function only runs in the admin area.
-	if ( ! is_admin() ) {
-		return;
-	}
-
-	// Sanitize the plugin parameter.
-	$plugin = sanitize_text_field( $plugin );
-	// phpcs:disable
-	$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
-	$requested_plugin = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : '';
-	// phpcs:enable
-	// Verify if the activated plugin matches the current plugin and BuddyPress is active.
-	if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
-		// Sanitize the $_REQUEST parameters to prevent any potential security issues.
-
-		// Check if the plugin was activated via the WordPress Plugins page.
-		if ( 'activate' === $action && $plugin === $requested_plugin ) {
-			// Safely redirect to the plugin settings page.
-			wp_safe_redirect( esc_url( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) ) );
-			exit;
+		// Ensures that the function only runs in the admin area.
+		if ( ! is_admin() ) {
+			return;
 		}
-	}
 
-	// Set a transient if the plugin was newly activated for a potential redirection.
-	if ( $requested_plugin === $plugin && class_exists( 'BuddyPress' ) ) {
-		if ( 'activate-plugin' === $action ) {
-			set_transient( '_bp_shortcode_is_new_install', true, 30 );
+		// Sanitize the plugin parameter.
+		$plugin = sanitize_text_field( $plugin );
+		// phpcs:disable
+		$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
+		$requested_plugin = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : '';
+		// phpcs:enable
+		// Verify if the activated plugin matches the current plugin and BuddyPress is active.
+		if ( plugin_basename( __FILE__ ) === $plugin && class_exists( 'BuddyPress' ) ) {
+			// Sanitize the $_REQUEST parameters to prevent any potential security issues.
+
+			// Check if the plugin was activated via the WordPress Plugins page.
+			if ( 'activate' === $action && $plugin === $requested_plugin ) {
+				// Safely redirect to the plugin settings page.
+				wp_safe_redirect( esc_url( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) ) );
+				exit;
+			}
+		}
+
+		// Set a transient if the plugin was newly activated for a potential redirection.
+		if ( $requested_plugin === $plugin && class_exists( 'BuddyPress' ) ) {
+			if ( 'activate-plugin' === $action ) {
+				set_transient( '_bp_shortcode_is_new_install', true, 30 );
+			}
 		}
 	}
 }
 // Hook into 'activated_plugin' to handle redirection after plugin activation.
 add_action( 'activated_plugin', 'shortcodes_for_buddypress_activation_redirect_settings' );
 
-/**
- *
- * This function is triggered after the plugin is activated and ensures that the user
- * is redirected to the Shortcodes for BuddyPress settings page if the plugin was newly
- * installed. The redirection only occurs in the admin area and uses `wp_safe_redirect()`
- * for security.
- *
- * @since 1.0.0
- * @return void
- */
-function shortcodes_for_buddypress_do_activation_redirect() {
+if ( ! function_exists( 'shortcodes_for_buddypress_do_activation_redirect' ) ) {
+	/**
+	 *
+	 * This function is triggered after the plugin is activated and ensures that the user
+	 * is redirected to the Shortcodes for BuddyPress settings page if the plugin was newly
+	 * installed. The redirection only occurs in the admin area and uses `wp_safe_redirect()`
+	 * for security.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	function shortcodes_for_buddypress_do_activation_redirect() {
 
-	// Validating if function is called from admin area.
-	if ( ! is_admin() ) {
-		return;
-	}
+		// Validating if function is called from admin area.
+		if ( ! is_admin() ) {
+			return;
+		}
 
-	// Check if the transient for new installation is set.
-	if ( get_transient( '_bp_shortcode_is_new_install' ) ) {
-		// Deleting the already set transient to avoid repeated redirections.
-		delete_transient( '_bp_shortcode_is_new_install' );
+		// Check if the transient for new installation is set.
+		if ( get_transient( '_bp_shortcode_is_new_install' ) ) {
+			// Deleting the already set transient to avoid repeated redirections.
+			delete_transient( '_bp_shortcode_is_new_install' );
 
-		// Redirecting to the setting page of the plugin.
-		wp_safe_redirect( esc_url( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) ) );
-		exit;
+			// Redirecting to the setting page of the plugin.
+			wp_safe_redirect( esc_url( admin_url( 'admin.php?page=shortcodes-for-buddypress' ) ) );
+			exit;
+		}
 	}
 }
 // Hook to admin_init.
@@ -336,138 +348,142 @@ if ( ! function_exists( 'shortcodes_for_buddypress_categories_registered' ) ) {
 	add_action( 'elementor/elements/categories_registered', 'shortcodes_for_buddypress_categories_registered' );
 }
 
-/**
- * Processes and formats BuddyPress comments for activity streams.
- *
- * This function iterates over a list of comment data and processes each comment,
- * preparing it for use in a BuddyPress activity stream. It extracts and sanitizes
- * user information, comment metadata, and recursively handles nested comments.
- * The function is optimized for large sites by limiting recursion depth to avoid
- * memory exhaustion and to handle large data sets gracefully.
- *
- * @since 2.2.0
- * @param array $comments      Array of comments to process, each containing comment metadata.
- * @param int   $max_depth     Maximum depth to iterate through nested comments (default is 5).
- * @param int   $current_depth The current recursion depth (default is 1).
- * @return array $comments     Array of sub comments/replies on the main comment of the activity.
- */
-function shortcodes_for_buddypress_iterate_comments( $comments, $max_depth = 5, $current_depth = 1 ) {
-	$children = array();
+if ( ! function_exists( 'shortcodes_for_buddypress_iterate_comments' ) ) {
+	/**
+	 * Processes and formats BuddyPress comments for activity streams.
+	 *
+	 * This function iterates over a list of comment data and processes each comment,
+	 * preparing it for use in a BuddyPress activity stream. It extracts and sanitizes
+	 * user information, comment metadata, and recursively handles nested comments.
+	 * The function is optimized for large sites by limiting recursion depth to avoid
+	 * memory exhaustion and to handle large data sets gracefully.
+	 *
+	 * @since 2.2.0
+	 * @param array $comments      Array of comments to process, each containing comment metadata.
+	 * @param int   $max_depth     Maximum depth to iterate through nested comments (default is 5).
+	 * @param int   $current_depth The current recursion depth (default is 1).
+	 * @return array $comments     Array of sub comments/replies on the main comment of the activity.
+	 */
+	function shortcodes_for_buddypress_iterate_comments( $comments, $max_depth = 5, $current_depth = 1 ) {
+		$children = array();
 
-	if ( is_array( $comments ) && ! empty( $comments ) ) {
-		foreach ( $comments as $comment ) {
-			$user_id  = intval( $comment['user_id'] );
-			$userdata = get_userdata( $user_id );
+		if ( is_array( $comments ) && ! empty( $comments ) ) {
+			foreach ( $comments as $comment ) {
+				$user_id  = intval( $comment['user_id'] );
+				$userdata = get_userdata( $user_id );
 
-			// Continue next loop execution if userdata is empty.
-			if ( ! $userdata ) {
-				continue;
+				// Continue next loop execution if userdata is empty.
+				if ( ! $userdata ) {
+					continue;
+				}
+
+				$user_login    = sanitize_text_field( $userdata->data->user_login );
+				$user_email    = sanitize_email( $userdata->data->user_email );
+				$user_nicename = sanitize_text_field( $userdata->data->user_nicename );
+
+				$primary_link      = esc_url( get_site_url() . '/member/' . $user_login );
+				$comment_id        = intval( $comment['id'] );
+				$component         = sanitize_text_field( $comment['component'] );
+				$comment_type      = sanitize_text_field( $comment['type'] );
+				$action            = sanitize_text_field( $comment['title'] );
+				$content           = wp_kses_post( $comment['content']['rendered'] );
+				$item_id           = intval( $comment['primary_item_id'] );
+				$secondary_item_id = intval( $comment['secondary_item_id'] );
+				$date_gmt          = sanitize_text_field( $comment['date_gmt'] );
+
+				$obj_comment = new stdClass();
+
+				$obj_comment->id                = $comment_id;
+				$obj_comment->user_id           = $user_id;
+				$obj_comment->component         = $component;
+				$obj_comment->type              = $comment_type;
+				$obj_comment->action            = $action;
+				$obj_comment->content           = $content;
+				$obj_comment->primary_link      = $primary_link;
+				$obj_comment->item_id           = $item_id;
+				$obj_comment->secondary_item_id = $secondary_item_id;
+				$obj_comment->date_recorded     = strtotime( $date_gmt );
+				$obj_comment->user_email        = $user_email;
+				$obj_comment->user_nicename     = $user_nicename;
+				$obj_comment->user_login        = $user_login;
+				$obj_comment->display_name      = $user_nicename;
+				$obj_comment->user_fullname     = $user_nicename;
+				$obj_comment->children          = array();
+				$obj_comment->depth             = $current_depth;
+
+				// Process nested comments if the current depth is less than the max depth.
+				if ( isset( $comment['comments'] ) && is_array( $comment['comments'] ) && $current_depth < $max_depth ) {
+					$obj_comment->children = shortcodes_for_buddypress_iterate_comments( $comment['comments'], $max_depth, $current_depth + 1 );
+				}
+				// Add the processed comment to the children array.
+				$children[ $comment_id ] = $obj_comment;
 			}
 
-			$user_login    = sanitize_text_field( $userdata->data->user_login );
-			$user_email    = sanitize_email( $userdata->data->user_email );
-			$user_nicename = sanitize_text_field( $userdata->data->user_nicename );
-
-			$primary_link      = esc_url( get_site_url() . '/member/' . $user_login );
-			$comment_id        = intval( $comment['id'] );
-			$component         = sanitize_text_field( $comment['component'] );
-			$comment_type      = sanitize_text_field( $comment['type'] );
-			$action            = sanitize_text_field( $comment['title'] );
-			$content           = wp_kses_post( $comment['content']['rendered'] );
-			$item_id           = intval( $comment['primary_item_id'] );
-			$secondary_item_id = intval( $comment['secondary_item_id'] );
-			$date_gmt          = sanitize_text_field( $comment['date_gmt'] );
-
-			$obj_comment = new stdClass();
-
-			$obj_comment->id                = $comment_id;
-			$obj_comment->user_id           = $user_id;
-			$obj_comment->component         = $component;
-			$obj_comment->type              = $comment_type;
-			$obj_comment->action            = $action;
-			$obj_comment->content           = $content;
-			$obj_comment->primary_link      = $primary_link;
-			$obj_comment->item_id           = $item_id;
-			$obj_comment->secondary_item_id = $secondary_item_id;
-			$obj_comment->date_recorded     = strtotime( $date_gmt );
-			$obj_comment->user_email        = $user_email;
-			$obj_comment->user_nicename     = $user_nicename;
-			$obj_comment->user_login        = $user_login;
-			$obj_comment->display_name      = $user_nicename;
-			$obj_comment->user_fullname     = $user_nicename;
-			$obj_comment->children          = array();
-			$obj_comment->depth             = $current_depth;
-
-			// Process nested comments if the current depth is less than the max depth.
-			if ( isset( $comment['comments'] ) && is_array( $comment['comments'] ) && $current_depth < $max_depth ) {
-				$obj_comment->children = shortcodes_for_buddypress_iterate_comments( $comment['comments'], $max_depth, $current_depth + 1 );
-			}
-			// Add the processed comment to the children array.
-			$children[ $comment_id ] = $obj_comment;
+			return $children;
 		}
-
-		return $children;
 	}
 }
 
 
-/**
- * Adds custom classes to the BuddyPress groups loop.
- *
- * This function adjusts the classes applied to the BuddyPress groups loop based on user preferences
- * and customizer settings. The function retrieves the layout preferences for the groups loop and applies
- * the corresponding grid classes to adjust the display of groups. This helps provide a customized
- * layout experience for BuddyPress groups within themes that support BuddyPress.
- *
- * It is optimized to ensure performance with large groups by directly retrieving the necessary
- * layout preferences and applying only the required classes. The function uses `esc_html()`
- * to ensure that all output strings are safely rendered.
- *
- * @since 2.2.0
- * @param array  $classes   Array of existing classes for the groups loop.
- * @param string $component The current BuddyPress component, in this case 'groups'.
- * @return array Modified array of classes for the groups loop.
- */
-function shortcodes_for_buddypress_get_groups_loop_class( $classes, $component ) {
-	// Get the BuddyPress Nouveau instance.
-	$bp_nouveau = bp_nouveau();
+if ( ! function_exists( 'shortcodes_for_buddypress_get_groups_loop_class' ) ) {
+	/**
+	 * Adds custom classes to the BuddyPress groups loop.
+	 *
+	 * This function adjusts the classes applied to the BuddyPress groups loop based on user preferences
+	 * and customizer settings. The function retrieves the layout preferences for the groups loop and applies
+	 * the corresponding grid classes to adjust the display of groups. This helps provide a customized
+	 * layout experience for BuddyPress groups within themes that support BuddyPress.
+	 *
+	 * It is optimized to ensure performance with large groups by directly retrieving the necessary
+	 * layout preferences and applying only the required classes. The function uses `esc_html()`
+	 * to ensure that all output strings are safely rendered.
+	 *
+	 * @since 2.2.0
+	 * @param array  $classes   Array of existing classes for the groups loop.
+	 * @param string $component The current BuddyPress component, in this case 'groups'.
+	 * @return array Modified array of classes for the groups loop.
+	 */
+	function shortcodes_for_buddypress_get_groups_loop_class( $classes, $component ) {
+		// Get the BuddyPress Nouveau instance.
+		$bp_nouveau = bp_nouveau();
 
-	// Ensure the component is 'groups' before proceeding.
-	if ( 'groups' === $component ) {
-		// Retrieve layout preferences from the customizer for the groups component.
-		$customizer_option = sprintf( '%s_layout', $component );
-		$layout_prefs      = bp_nouveau_get_temporary_setting(
-			$customizer_option,
-			bp_nouveau_get_appearance_settings( $customizer_option )
-		);
+		// Ensure the component is 'groups' before proceeding.
+		if ( 'groups' === $component ) {
+			// Retrieve layout preferences from the customizer for the groups component.
+			$customizer_option = sprintf( '%s_layout', $component );
+			$layout_prefs      = bp_nouveau_get_temporary_setting(
+				$customizer_option,
+				bp_nouveau_get_appearance_settings( $customizer_option )
+			);
 
-		// Apply grid classes if layout preferences are set and valid.
-		if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
-			$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
+			// Apply grid classes if layout preferences are set and valid.
+			if ( $layout_prefs && (int) $layout_prefs > 1 && function_exists( 'bp_nouveau_customizer_grid_choices' ) ) {
+				$grid_classes = bp_nouveau_customizer_grid_choices( 'classes' );
 
-			// If the layout preference corresponds to a valid grid class, merge it with existing classes.
-			if ( isset( $grid_classes[ $layout_prefs ] ) ) {
-				$classes = array_merge(
-					$classes,
-					array(
-						'grid',
-						esc_html( $grid_classes[ $layout_prefs ] ),
-					)
-				);
-			}
+				// If the layout preference corresponds to a valid grid class, merge it with existing classes.
+				if ( isset( $grid_classes[ $layout_prefs ] ) ) {
+					$classes = array_merge(
+						$classes,
+						array(
+							'grid',
+							esc_html( $grid_classes[ $layout_prefs ] ),
+						)
+					);
+				}
 
-			// Set the layout preference globally for use in other templates if necessary.
-			if ( ! isset( $bp_nouveau->{$component} ) ) {
-				$bp_nouveau->{$component} = new stdClass();
-			}
+				// Set the layout preference globally for use in other templates if necessary.
+				if ( ! isset( $bp_nouveau->{$component} ) ) {
+					$bp_nouveau->{$component} = new stdClass();
+				}
 
-			// Store the layout preference for the groups loop.
-			if ( property_exists( $bp_nouveau, 'loop_layout' ) ) {
-				$bp_nouveau->{$component}->loop_layout = $layout_prefs;
+				// Store the layout preference for the groups loop.
+				if ( property_exists( $bp_nouveau, 'loop_layout' ) ) {
+					$bp_nouveau->{$component}->loop_layout = $layout_prefs;
+				}
 			}
 		}
+		return $classes;
 	}
-	return $classes;
 }
 
 // Hook into the BuddyPress loop classes filter.
